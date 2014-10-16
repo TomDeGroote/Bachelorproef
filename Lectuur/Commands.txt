@@ -1,0 +1,25 @@
+Commands
+========
+
+* cd 
+	-> = change directory
+* ls
+	-> list files in current directory
+* git clone "URL from github.com"
+	-> copies the repo corresponding to the url to the current location
+* git add NameOfFile.txt
+	-> you have made changes to this file or made a new file with this name and need to add it to your working directory
+* git commit -m "Message"
+	-> you commit all the files in your current working directory
+	-> -m "Message" represents the message you give to help your friends to understand your changes
+	-> if you forget -m you will get into a screen for a multiline commit message
+		-> type message press "esc" and :qw to save and exit
+* git push
+	-> pushes the current commits to github.com
+* git pull
+	-> pulls all the changes currently made on github.com
+* git status
+	-> gives you the status of your directory
+* Pullrequests, branches, ect.
+	-> https://www.youtube.com/watch?v=oFYyTZwMyAg&src_vid=0fKg7e37bQE&feature=iv&annotation_id=annotation_3593094967
+* Aanpassing
