@@ -22,3 +22,4 @@ Commands
 	-> gives you the status of your directory
 * Pullrequests, branches, ect.
 	-> https://www.youtube.com/watch?v=oFYyTZwMyAg&src_vid=0fKg7e37bQE&feature=iv&annotation_id=annotation_3593094967
+* Test
