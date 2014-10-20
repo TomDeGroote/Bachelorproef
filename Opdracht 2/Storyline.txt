@@ -1,9 +1,17 @@
-* PBE
-	- Imagine a world.. (voorbeeld examens automatisch gegenereerd, opgelost en feedback)
-* Spreadsheet Table Transformation
-	- Een voorbeeld om het concept van solution generation te demonstreren
-* Wat ons doel
-	- Eventueel demo flashfill
-	- Flash fill voor cijfers
-* Equation discovery voor nodig 
-	- hfst 3. Equation discovery
+* Examplebased Learning
+	- Conceptual vs Procedural
+		+ Solution Generation
+		+ Example Generation
+		+ Feedback Generation
+	- Aan de hand van een voorbeeld:  Examens automatisch laten gegenereren, oplossen en feedback voorzien.
+* Spreadsheet Table Transformation from Examples
+	- Een voorbeeld om het concept van solution generation te demonstreren.
+	- Benodigdheden om conceptuele problemen op te lossen. (Domein kennis)
+	- End-User programming.
+* Wat ons doel in dit? 
+	- Demo flashfill tonen (strings)
+	- Flash fill voor cijfers (Uitleggen)
+* Equation Discovery voor nodig 
+	- Inductive Language Bias (Uitleggen)
+	- Equation Discovery and Language Bias
+		+ Langramge
