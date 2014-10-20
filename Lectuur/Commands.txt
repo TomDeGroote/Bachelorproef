@@ -14,7 +14,7 @@ Commands
 	-> -m "Message" represents the message you give to help your friends to understand your changes
 	-> if you forget -m you will get into a screen for a multiline commit message
 		-> type message press "esc" and :qw to save and exit
-* git pushes
+* git pushen
 	-> pushes the current commits to github.com
 * git pull
 	-> pulls all the changes currently made on github.com
