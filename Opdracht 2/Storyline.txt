@@ -14,4 +14,4 @@
 * Equation Discovery voor nodig 
 	- Inductive Language Bias (Uitleggen)
 	- Equation Discovery and Language Bias
-		+ Langramge
+		+ Lagramge
