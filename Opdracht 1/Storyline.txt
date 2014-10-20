@@ -1,0 +1,9 @@
+* PBE
+	- Imagine a world.. (voorbeeld examens automatisch gegenereerd, opgelost en feedback)
+* Spreadsheet Table Transformation
+	- Een voorbeeld om het concept van solution generation te demonstreren
+* Wat ons doel
+	- Eventueel demo flashfill
+	- Flash fill voor cijfers
+* Equation discovery voor nodig 
+	- hfst 3. Equation discovery
