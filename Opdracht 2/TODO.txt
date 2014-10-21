@@ -1,0 +1,5 @@
+TODO
+
+* Aanpassen thema/lay-out\
+* Slide 4: Voorbeeld (Betere titel) -> slide 6\
+* Equation discovery (na de bespreking)\
