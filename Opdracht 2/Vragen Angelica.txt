@@ -1,5 +1,0 @@
-* Taalconsistentie powerpoint
-	- Example-based learning vs Leren aan de hand van voorbeeld
-* Equation discovery
-	- Waar moeten wij dat plaatsen?
-	- Interpreteren we het juist?
