@@ -1,4 +1,4 @@
-* Examplebased Learning
+* Example-based Learning
 	- Conceptual vs Procedural
 		+ Solution Generation
 		+ Example Generation
