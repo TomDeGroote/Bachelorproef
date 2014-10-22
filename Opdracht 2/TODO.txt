@@ -11,3 +11,4 @@ TODO
 * Bedankt voor aandacht
 * (Tom) figuurtjes
 * (Tom) Afbeelding equation discovery
+* (Tom) Inverteren table frequenties... Table Sheet afbeeldingen
