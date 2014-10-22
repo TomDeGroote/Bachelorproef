@@ -3,12 +3,9 @@ TODO
 * Aanpassen thema lay-out 
 	- consistentie taal
 	- consistentie hoofdletters
-* Equation discovery (na de bespreking)
-* (Jeroen) Voorbeeld spreadsheet uitwerken -> meer tekst
-* (Jeroen) End-User Programming uitbreiden
 * Conclusie
 * Vragen
 * Bedankt voor aandacht
-* (Tom) figuurtjes
-* (Tom) Afbeelding equation discovery
-* (Tom) Inverteren table frequenties... Table Sheet afbeeldingen
+* (Tom) figuurtjes Examplebased learning
+* (Tom) Inverteren afbeeldingen
+* Vullen van slides -> meer afbeeldingen, groter lettertype, ...
