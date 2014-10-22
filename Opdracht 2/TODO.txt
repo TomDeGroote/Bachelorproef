@@ -1,5 +1,13 @@
 TODO
 
-* Aanpassen thema/lay-out\
-* Slide 4: Voorbeeld (Betere titel) -> slide 6\
-* Equation discovery (na de bespreking)\
+* Aanpassen thema lay-out 
+	- consistentie taal
+	- consistentie hoofdletters
+* Equation discovery (na de bespreking)
+* (Jeroen) Voorbeeld spreadsheet uitwerken -> meer tekst
+* (Jeroen) End-User Programming uitbreiden
+* Conclusie
+* Vragen
+* Bedankt voor aandacht
+* (Tom) figuurtjes
+* (Tom) Afbeelding equation discovery
