@@ -1,8 +1,2 @@
-* Taalconsistentie powerpoint
-	- Example-based learning vs Leren aan de hand van voorbeeld
-	- Language Bias
-	- Programming by Example
-* Equation discovery
-	- Waar moeten wij dat plaatsen?
-	- Interpreteren we het juist?
+
 
