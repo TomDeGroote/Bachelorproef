@@ -1,11 +1,11 @@
 Slidenr + aanpassing
 --------------------
 
+4: Volledig aangepast
 
+13 - 16 + 17(Extra Slide): Allemaal aangepast, Figuren zijn behouden maar hebben nu de correcte bronvermelding.
 
-
-
-
+24 (Conclusie): Eerste poging gedaan.
 
 
 
@@ -14,3 +14,4 @@ Slidenr + aanpassing
 
 Layout wensen
 -------------
+4: Behouden figuur(SmartArt) en animaties
