@@ -1,0 +1,41 @@
+
+public class Symbol {
+
+	String name;
+	Equation eq;
+	int value;
+	public Symbol(String name, Equation eq, int value) {
+		this.name = name;
+		this.eq = eq;
+		this.value = value;
+	}
+	
+	public boolean isNonTerminal() {
+		if(value == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isTerminal() {
+		if(value == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean Operand() {
+		if(value == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	
+	
+
+}

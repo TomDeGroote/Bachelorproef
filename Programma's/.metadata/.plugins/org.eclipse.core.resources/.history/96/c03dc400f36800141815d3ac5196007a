@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+
+/**
+ * This class can evaluate if a given equation is equal to the goal
+ *
+ */
+public class Evaluate {
+
+	private int goal;
+	
+	/**
+	 * 
+	 * @param goal
+	 * 		The goal to be achived
+	 */
+	public Evaluate(int goal) {
+		this.goal = goal;
+	}
+	
+	public boolean evaluate(Equation equation) {
+		ArrayList<Symbol> symbols = equation.getElements();
+		double result = ((Terminal) symbols.get(0)).getNumericValue();
+		for(int i = 1; i < symbols.size(); i = i+2) {
+			if(symbols.get(i).getRepresentation().equals("*")) {
+				// berekening van *
+				result = result*(((Terminal) symbols.get(i+1)).getNumericValue());
+			} else if(symbols.get(i).getRepresentation().equals("+")) {
+				// berekening van +
+				result = result+(((Terminal) symbols.get(i+1)).getNumericValue());
+			} else if(symbols.get(i).getRepresentation().equals("-")) {
+				// berekening van -
+				result = result-(((Terminal) symbols.get(i+1)).getNumericValue());
+			} else if(symbols.get(i).getRepresentation().equals("/")) {
+				// berekening van /
+				result = result/(((Terminal) symbols.get(i+1)).getNumericValue());
+			}
+		}
+		
+		// controleer of uitkomst de gewenste is
+		if(result == goal) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}

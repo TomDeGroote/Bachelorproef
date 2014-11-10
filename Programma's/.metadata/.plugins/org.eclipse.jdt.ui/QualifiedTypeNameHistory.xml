@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="Symbol"/>
+<fullyQualifiedTypeName name="NonTerminal"/>
+<fullyQualifiedTypeName name="Operand"/>
+<fullyQualifiedTypeName name="Terminal"/>
+<fullyQualifiedTypeName name="Equation"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="Evaluate"/>
+</qualifiedTypeNameHistroy>

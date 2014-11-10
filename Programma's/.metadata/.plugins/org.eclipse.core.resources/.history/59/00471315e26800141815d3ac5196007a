@@ -1,0 +1,13 @@
+
+public class NonTerminal extends Symbol{
+
+	private final String value;
+	public NonTerminal(Equation eq, String value) {
+		super(eq);
+		this.value = value;
+	}
+	
+	public String getValue() {
+		return value;
+	}
+}

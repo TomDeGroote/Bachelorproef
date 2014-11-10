@@ -1,0 +1,3 @@
+* Aantal kolommen gebruiken
+	-> Eén genoeg?
+* Programmeertaal voorkeur

@@ -1,0 +1,17 @@
+
+public class Terminal extends Symbol {
+
+	private final int value;
+	public Terminal(int value) {
+		this.value = value;
+		super.terminal = true;
+	}
+	
+	public int getValue() {
+		return value;
+	}
+	
+	public String getValue() {
+		return value + "";
+	}
+}

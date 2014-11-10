@@ -1,0 +1,4 @@
+* Schrijf elk getal in double apart (anders afrondingsfouten)
+	double a = 10
+	double b = 3
+	NIET: double a = 10/3
