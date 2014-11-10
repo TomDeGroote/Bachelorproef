@@ -1,0 +1,9 @@
+S -> E
+E -> E*E | E/E
+E -> E + E | E - E
+(E -> N)				N : 2, #kolommen
+E -> (E)
+
+
+Test moment: E -> Kolom1 | Kolom2 | ... | KolomI
+
