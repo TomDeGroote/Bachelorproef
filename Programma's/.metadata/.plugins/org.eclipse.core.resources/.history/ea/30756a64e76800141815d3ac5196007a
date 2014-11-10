@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+
+
+public class Main {
+
+	private static ArrayList<Equation> equations;
+
+	public static void main(String[] args) {
+		ArrayList<Equation> equations = new ArrayList<>();
+		equations.add(new Equation(null));
+		equations = equations.get(0).Expand();
+		nextLevel();
+		
+		print();
+	}
+	
+	private static void nextLevel(){
+		ArrayList<Equation> newEquations = new ArrayList<>();
+		for(Equation equation : equations) {
+			for(Equation e : equation.Expand()) {
+				newEquations.add(e);
+			}
+		}
+	}
+	
+	private static void print() {
+		for(Equation eq : equations) {
+			for(Symbol s : eq.getElements()) {
+				System.out.print(s.getRepresentation());
+			}
+			System.out.println();
+		}
+	}
+	
+}

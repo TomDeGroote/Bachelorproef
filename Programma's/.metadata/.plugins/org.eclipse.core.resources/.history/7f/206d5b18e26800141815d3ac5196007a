@@ -1,0 +1,13 @@
+
+public class Terminal extends Symbol {
+
+	private final int value;
+	public Terminal(Equation eq, int value) {
+		super(eq);
+		this.value = value;
+	}
+	
+	public int getValue() {
+		return value;
+	}
+}

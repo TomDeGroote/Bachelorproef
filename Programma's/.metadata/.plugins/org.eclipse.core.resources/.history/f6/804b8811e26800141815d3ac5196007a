@@ -1,0 +1,8 @@
+
+public class Symbol {
+
+	Equation eq;
+	public Symbol(Equation eq) {
+		this.eq = eq;
+	}
+}

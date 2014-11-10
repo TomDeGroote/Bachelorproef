@@ -1,0 +1,8 @@
+
+public class Terminal {
+
+	public Terminal() extends Symbol {
+		
+	}
+
+}

@@ -1,0 +1,13 @@
+
+public class NonTerminal {
+
+	String name;
+	Equation eq;
+	public NonTerminal(String name, Equation eq) {
+		this.name = name;
+		this.eq = eq;
+	}
+	
+	
+
+}

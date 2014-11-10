@@ -1,0 +1,16 @@
+
+public class NonTerminal extends Symbol{
+
+	private final String value;
+	public NonTerminal(String value) {
+		this.value = value;
+		super.representation = value;
+		super.nonTerminal = true;
+	}
+	
+	public String getValue() {
+		return value;
+	}
+	
+	
+}

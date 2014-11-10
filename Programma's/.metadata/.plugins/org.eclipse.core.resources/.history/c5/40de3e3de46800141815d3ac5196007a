@@ -1,0 +1,36 @@
+import java.util.ArrayList;
+
+
+public class Expansions {	
+	public ArrayList<ArrayList<Symbol>> getExpansions(String value) {
+		ArrayList<ArrayList<Symbol>> expansions = new ArrayList<>();
+		
+		if(value.equals("E")) {
+			// Definitie vermenigvuldigingen
+			ArrayList<Symbol> multiply = new ArrayList<>();
+			multiply.add(new NonTerminal(value));
+			multiply.add(new Operand("*"));
+			multiply.add(new NonTerminal(value));
+			
+			// Definitie Waarden
+			ArrayList<Symbol> value1 = new ArrayList<>();
+			value1.add(new Terminal(1));
+			
+			// Definitie Waarden
+			ArrayList<Symbol> value2 = new ArrayList<>();
+			value2.add(new Terminal(2));
+			
+			// Definitie Waarden
+			ArrayList<Symbol> value3 = new ArrayList<>();
+			value3.add(new Terminal(3));
+						
+						
+		}
+		
+		
+		
+		
+		
+		return expansions;
+	}
+}

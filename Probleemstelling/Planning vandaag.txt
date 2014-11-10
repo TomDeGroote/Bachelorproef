@@ -1,0 +1,15 @@
+* PowerPoint uploaden
+* Wat
+	-> Flashfill voor getallen
+	-> Grammatica opstellen om de ruimte waarbinnen we vergelijkingen zoeken te bepalen
+	-> Algoritme dat aan de hand van de grammatica de mogelijke vergelijkingen zoekt
+	-> Algoritme versnellen
+		- Equivalente relaties
+		- Heuristiek: Doormiddel van onderzoek op huidige algoritme bepalen wat een goede zou zijn
+	-> Flash Fill: de keuze maken welke vergelijking
+* Waarom dat
+	-> Geen idee...
+* Hoe aanpakken
+	-> Concreet
+* Hoe evalueren
+	-> Toepassen
