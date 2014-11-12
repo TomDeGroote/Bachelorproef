@@ -1,12 +1,18 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * The hart of the program
  */
 public class Main {
 
+	private static final double K1 = 12.0;
+	private static final double K2 = 3.0;
+	private static final double K3 = 29.0;
+	private static final double GOAL = 2305.0;
+	private static final int NROFLEVELS = 10;
+
+	
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level
 	private static Evaluate evaluation; // contains the evaluation class
 
@@ -16,12 +22,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		equations.add(new Equation(null, 0));
-		HashSet<Double> colunms1 = new HashSet<>(); // TODO columns moeten nu uniek zijn
-		colunms1.add(3.0);
-		colunms1.add(8.0);
-		colunms1.add(12.0);
-		evaluation = new Evaluate(19, colunms1);
-		for(int i = 0; i < 3; i++) {
+		ArrayList<Double> colunms1 = new ArrayList<>(); // TODO columns moeten nu uniek zijn
+		colunms1.add(K1);
+		colunms1.add(K2);
+		colunms1.add(K3);
+		evaluation = new Evaluate(GOAL, colunms1);
+		for(int i = 0; i < NROFLEVELS; i++) {
 			nextLevel();
 			System.out.println("Level " + (i+1));
 			//printAll();
@@ -59,8 +65,11 @@ public class Main {
 	 * Evaluates the current equation 
 	 */
 	private static void evaluate() {
-		for(Equation solution : evaluation.evaluate(equations)) {
-			System.out.println(solution.getString());
+		HashMap<Equation, ArrayList<String>> sol = evaluation.evaluate(equations);
+		for(ArrayList<String> s : sol.values()) {
+			for(int i = 0; i < s.size(); i++) { 
+				System.out.println(s.get(i));
+			}
 		}
 	}
 	

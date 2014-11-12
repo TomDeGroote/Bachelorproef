@@ -1,0 +1,2 @@
+* Onthoud welke kolom werd gebruikt -> E is te algemeen
+* We berekenen heel vaak exact hetzelfde: eruit filteren
