@@ -14,6 +14,7 @@ import java.util.ArrayList;
  *
  */
 public class Expansions {	
+	
 	public static ArrayList<ArrayList<Symbol>> getExpansions(String value) {
 		ArrayList<ArrayList<Symbol>> expansions = new ArrayList<>();
 		
@@ -45,13 +46,13 @@ public class Expansions {
 			div.add(new Operand("/"));
 			div.add(new NonTerminal(value));
 			expansions.add(div);
-			
-			// Definition constant values
-			for(int i = 1; i <= 3; i++) {
-				ArrayList<Symbol> value1 = new ArrayList<>();
-				value1.add(new Terminal(i));
-				expansions.add(value1);
-			}
+//			
+//			// Definition constant values
+//			for(int i = 1; i <= 3; i++) {
+//				ArrayList<Symbol> value1 = new ArrayList<>();
+//				value1.add(new Terminal(i));
+//				expansions.add(value1);
+//			}
 		}
 		
 		return expansions;

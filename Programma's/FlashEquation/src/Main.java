@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * The hart of the program
@@ -6,7 +8,7 @@ import java.util.ArrayList;
 public class Main {
 
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level
-	private static Evaluate evaluation = new Evaluate(4); // contains the evaluation class
+	private static Evaluate evaluation; // contains the evaluation class
 
 	/**
 	 * 1. create the starting equation : E 
@@ -14,10 +16,15 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		equations.add(new Equation(null, 0));
-		for(int i = 0; i < 10; i++) {
+		HashSet<Double> colunms1 = new HashSet<>(); // TODO columns moeten nu uniek zijn
+		colunms1.add(3.0);
+		colunms1.add(8.0);
+		colunms1.add(12.0);
+		evaluation = new Evaluate(19, colunms1);
+		for(int i = 0; i < 3; i++) {
 			nextLevel();
 			System.out.println("Level " + (i+1));
-			//print();
+			//printAll();
 			evaluate();
 		}
 	}
@@ -27,8 +34,12 @@ public class Main {
 	 */
 	private static void nextLevel(){
 		ArrayList<Equation> newEquations = new ArrayList<>();
+		HashMap<String, ArrayList<Equation>> newPrevious = new HashMap<>();
 		for(Equation equation : equations) {
-			for(Equation e : equation.Expand()) {
+			ArrayList<Equation> expansion = equation.Expand();
+			String key = equation.getString();
+			newPrevious.put(key, expansion);
+			for(Equation e : expansion) {
 				newEquations.add(e);
 			}
 		}
@@ -38,32 +49,18 @@ public class Main {
 	/**
 	 * Prints the current equations in the equations list
 	 */
-	private static void print() {
+	private static void printAll() {
 		for(Equation eq : equations) {
-			printEquation(eq);
+			System.out.println(eq.getString());
 		}
-	}
-	
-	/**
-	 * Prints equation
-	 */
-	private static void printEquation(Equation eq) {
-		for(Symbol s : eq.getElements()) {
-			System.out.print(s.getRepresentation());
-		}
-		System.out.println();
 	}
 	
 	/**
 	 * Evaluates the current equation 
 	 */
 	private static void evaluate() {
-		for(Equation eq : equations) {	
-			if(!eq.containsNonTerminal()) {
-				if(evaluation.evaluate(eq)) {
-					printEquation(eq);
-				}
-			}
+		for(Equation solution : evaluation.evaluate(equations)) {
+			System.out.println(solution.getString());
 		}
 	}
 	

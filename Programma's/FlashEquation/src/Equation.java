@@ -29,6 +29,19 @@ public class Equation {
 	}
 	
 	/**
+	 * Generates a string version of the equation
+	 * @return
+	 * 		A string version of the equation
+	 */
+	public String getString() {
+		String s = "";
+		for(Symbol symbol : elements) {
+			s = s + symbol.getRepresentation();
+		}
+		return s;
+	}
+	
+	/**
 	 * Checks if the equation contains nonterminals
 	 * @return
 	 * 		True if the equation contains nonterminals
