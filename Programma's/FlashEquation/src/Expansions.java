@@ -8,9 +8,7 @@ import java.util.ArrayList;
  * E -> E+E
  * E -> E-E
  * E -> E/E
- * E -> 1
- * E -> 2
- * E -> 3
+ * E -> K..
  *
  */
 public class Expansions {	

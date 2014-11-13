@@ -1,3 +1,7 @@
 * Aantal kolommen gebruiken
 	-> Eén genoeg?
 * Programmeertaal voorkeur
+* Constantes toelaten? -> vergroot branchingfactor
+* Hoe bewijzen?
+* Weet de gebruiker de vergelijking die hij wenst of niet?
+* Hoe diep zoeken naar de vergelijking? Bv met tijdslimiet

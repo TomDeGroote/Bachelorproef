@@ -1,2 +1,5 @@
 * Onthoud welke kolom werd gebruikt -> E is te algemeen
 * We berekenen heel vaak exact hetzelfde: eruit filteren
+* Constantes toelaten? -> vergroot branchingfactor
+* We rekenen van rechts bij * en /
+* N toevoegen -> N \ {K...}

@@ -6,11 +6,12 @@ import java.util.HashMap;
  */
 public class Main {
 
-	private static final double K1 = 3.0;
-	private static final double K2 = 4.0;
-	private static final double K3 = 9.0;
-	private static final double GOAL = 19.0;
-	private static final int NROFLEVELS = 4;
+	private static final double K0 = 4.0;
+	private static final double K1 = 16.0;
+	private static final double K2 = 2.0;
+	private static final double K3 = 8.0;
+	private static final double GOAL = 666.0;
+	private static final int NROFLEVELS = 6;
 
 	
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level
@@ -23,6 +24,7 @@ public class Main {
 	public static void main(String[] args) {
 		equations.add(new Equation(null, 0));
 		ArrayList<Double> colunms1 = new ArrayList<>(); // TODO columns moeten nu uniek zijn
+		colunms1.add(K0);
 		colunms1.add(K1);
 		colunms1.add(K2);
 		colunms1.add(K3);
@@ -52,14 +54,14 @@ public class Main {
 		equations = newEquations;
 	}
 	
-	/**
-	 * Prints the current equations in the equations list
-	 */
-	private static void printAll() {
-		for(Equation eq : equations) {
-			System.out.println(eq.getString());
-		}
-	}
+//	/**
+//	 * Prints the current equations in the equations list
+//	 */
+//	private static void printAll() {
+//		for(Equation eq : equations) {
+//			System.out.println(eq.getString());
+//		}
+//	}
 	
 	/**
 	 * Evaluates the current equation 
