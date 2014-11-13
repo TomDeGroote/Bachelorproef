@@ -62,6 +62,7 @@ public class Main {
 //			System.out.println(eq.getString());
 //		}
 //	}
+
 	
 	/**
 	 * Evaluates the current equation 

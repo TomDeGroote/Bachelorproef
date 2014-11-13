@@ -3,20 +3,9 @@
 * Constantes toelaten? -> vergroot branchingfactor
 * We rekenen van rechts bij * en /
 * N toevoegen -> N \ {K...}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* Algoritme om te bepalen welke vergelijking het beste is (Ordening)
+* Vaste tijd zoeken. 
+* Afweging diepte en branchingfactor maken
 
 Equivalenties
 --------------
@@ -28,3 +17,4 @@ Domme Opmerking
 ---------------
 * Boom op voorhand 1 malig berekenen?
 * Pruning vraagt veel tijd dus kan groot voordeel zijn
+
