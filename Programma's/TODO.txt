@@ -3,3 +3,6 @@
 * Constantes toelaten? -> vergroot branchingfactor
 * We rekenen van rechts bij * en /
 * N toevoegen -> N \ {K...}
+* Algoritme om te bepalen welke vergelijking het beste is (Ordening)
+* Vaste tijd zoeken. 
+* Afweging diepte en branchingfactor maken
