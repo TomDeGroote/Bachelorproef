@@ -6,11 +6,11 @@ import java.util.HashMap;
  */
 public class Main {
 
-	private static final double K1 = 12.0;
-	private static final double K2 = 3.0;
-	private static final double K3 = 29.0;
-	private static final double GOAL = 2305.0;
-	private static final int NROFLEVELS = 10;
+	private static final double K1 = 3.0;
+	private static final double K2 = 4.0;
+	private static final double K3 = 9.0;
+	private static final double GOAL = 19.0;
+	private static final int NROFLEVELS = 4;
 
 	
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level
