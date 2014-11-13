@@ -3,3 +3,28 @@
 * Constantes toelaten? -> vergroot branchingfactor
 * We rekenen van rechts bij * en /
 * N toevoegen -> N \ {K...}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Equivalenties
+--------------
+* E + A = E + B als A equivalent is met B (kunnen nooit meer wijzigen)
+* E - A1 + A2 = E - B1 + B2 als A1 == B1 en A2 is equivalent met B2 (A1 en B1 zo kort mogelijk) <- normaal in bovenstaande regel al vermeden
+
+
+Domme Opmerking
+---------------
+* Boom op voorhand 1 malig berekenen?
+* Pruning vraagt veel tijd dus kan groot voordeel zijn

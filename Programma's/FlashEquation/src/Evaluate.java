@@ -211,7 +211,7 @@ public class Evaluate {
 	 */
 	private HashMap<Double, ArrayList<String>> calculateThreeElements(ArrayList<Symbol> elements) {
 		HashMap<Double, ArrayList<String>> result = new HashMap<Double, ArrayList<String>>();
-		// TODO grote vermindering, aangezien +, -, * commutatief zijn
+		// TODO Min verplaatsen!!!! niet equivalent op deze manier
 		if(elements.get(1).getRepresentation().equals("/")) {
 			for(int i = 0; i < columns.size(); i++) {
 				for(int j = 0; j < columns.size(); j++) {
