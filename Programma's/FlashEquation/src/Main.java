@@ -11,7 +11,7 @@ public class Main {
 	private static final double K2 = 2.0;
 	private static final double K3 = 8.0;
 	private static final double GOAL = 666.0;
-	private static final int NROFLEVELS = 6;
+	private static final int NROFLEVELS = 10;
 
 	
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level

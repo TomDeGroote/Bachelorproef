@@ -1,9 +1,9 @@
 * Aantal kolommen gebruiken
-	-> EŽn genoeg?	
+	-> Eén genoeg?	
 * Heuristiek: Is meerdere variabelen beter?
-* Programmeertaal voorkeur -> java
+x Programmeertaal voorkeur -> java
 * Constantes toelaten? -> vergroot branchingfactor
-* Hoe bewijzen?
+* Hoe bewijzen? -> via toepassen?
 * Weet de gebruiker de vergelijking die hij wenst of niet?
 * Hoe diep zoeken naar de vergelijking? Bv met tijdslimiet
 * Branching factor van de boom verminderen (Pruning)
