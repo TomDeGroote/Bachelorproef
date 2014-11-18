@@ -1,0 +1,21 @@
+Prune Regels
+------------
+(* Quick Check: vgl1.length == vgl2.length)
+* Herschrijf -E -> + (-E)
+* Splits op elke +
+* Vergelijk alle termen
+	-> Equivalent als elke term overeenkomst heeft
+
+Voorbeeld
+---------
+a) E + E*E - E + E/E
+b) E + E/E + E*E - E
+* Stap 1 + 2:
+	a) {E, E*E, -E, E/E}
+	b) {E, E/E, E*E, -E}
+* Stap 3:
+	- E == E
+	- E*E == E*E
+	- -E == -E
+	- E/E == E/E
+	- Elke term heeft overeenkomst -> Equivalent!
