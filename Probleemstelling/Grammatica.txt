@@ -1,9 +1,7 @@
 S -> E
-E -> E*E | E/E
-E -> E + E | E - E
-(E -> N)				N : 2, #kolommen
-E -> (E)
-
-
-Test moment: E -> Kolom1 | Kolom2 | ... | KolomI
+E -> E*T
+E -> E/T
+E -> E + T
+E -> E - T
+E -> T
 

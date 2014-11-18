@@ -11,7 +11,7 @@ public class Main {
 	private static final double K2 = 2.0;
 	private static final double K3 = 8.0;
 	private static final double GOAL = 666.0;
-	private static final int NROFLEVELS = 10;
+	private static final int NROFLEVELS = 5;
 
 	
 	private static ArrayList<Equation> equations = new ArrayList<>(); // contains all equations on this level
@@ -32,8 +32,8 @@ public class Main {
 		for(int i = 0; i < NROFLEVELS; i++) {
 			nextLevel();
 			System.out.println("Level " + (i+1));
-			//printAll();
-			evaluate();
+			printAll();
+			//evaluate();
 		}
 	}
 	
@@ -54,14 +54,14 @@ public class Main {
 		equations = newEquations;
 	}
 	
-//	/**
-//	 * Prints the current equations in the equations list
-//	 */
-//	private static void printAll() {
-//		for(Equation eq : equations) {
-//			System.out.println(eq.getString());
-//		}
-//	}
+	/**
+	 * Prints the current equations in the equations list
+	 */
+	private static void printAll() {
+		for(Equation eq : equations) {
+			System.out.println(eq.getString());
+		}
+	}
 
 	
 	/**
