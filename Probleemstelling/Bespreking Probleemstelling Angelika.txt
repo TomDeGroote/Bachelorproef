@@ -1,0 +1,16 @@
+* Aantal kolommen gebruiken							: zelf bepalen
+	-> Eén genoeg?	
+* Heuristiek: Is meerdere variabelen beter?					: niet nodig
+x Programmeertaal voorkeur -> java						: ok
+* Constantes toelaten? -> vergroot branchingfactor				: verschillende versies
+* Hoe bewijzen? -> via toepassen?						: Zelf een aantal (verschillende) toepassingen doen
+* Weet de gebruiker de vergelijking die hij wenst of niet?			: Boeit ni
+* Hoe diep zoeken naar de vergelijking? Bv met tijdslimiet			: Tijdslimiet is een goed idee, altijd blijven zoeken gedurende die limiet
+* Branching factor van de boom verminderen (Pruning)				: Super idee
+* Beperkingen opleggen op variabelen						: Zelf bepalen
+
+										: Equivalenties bepalen en prune
+
+
+
+
