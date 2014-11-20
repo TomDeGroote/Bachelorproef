@@ -1,11 +1,6 @@
-* Onthoud welke kolom werd gebruikt -> E is te algemeen
-* We berekenen heel vaak exact hetzelfde: eruit filteren
-* Constantes toelaten? -> vergroot branchingfactor
-* We rekenen van rechts bij * en /
-* N toevoegen -> N \ {K...}
-* Algoritme om te bepalen welke vergelijking het beste is (Ordening)
-* Vaste tijd zoeken. 
-* Afweging diepte en branchingfactor maken
+TODO
+------
+* Opgelet afronding 1.29 = 1*1
 
 Equivalenties
 --------------
