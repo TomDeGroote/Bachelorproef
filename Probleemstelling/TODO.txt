@@ -1,2 +1,5 @@
 * Verzinnen naam
 	- Flashquation, EquationFill, FillDiscovery, FlashDiscovery, ....
+* Namen Proffen op slides?
+* Slide nummering?
+
