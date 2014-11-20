@@ -1,6 +1,15 @@
 TODO
-------
-* Opgelet afronding 1.29 = 1*1
+----
+* Skelet Genereren
+	- Bepalen welke lijsten: 
+* Operand Enum
+* Takenverdeling: 
+	- Jeroen
+
+
+Opgelet
+-------
+* Afronding 1.29 = 1*1
 
 Equivalenties
 --------------
