@@ -18,7 +18,15 @@ public class TreeMain {
 
 	}
 	
-	private void expand(){
+	private static void expand(){
+		for(Equation currentEquation : listOfLevels.get(levelCount)){
+			Grammar.expand(currentEquation);
+		}
+		return;
+	}
+	
+	private static void prune(){
+		PruneRules.prune(listOfLevels.get(levelCount));
 		return;
 	}
 	
