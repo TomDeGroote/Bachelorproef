@@ -22,12 +22,10 @@ public class TreeMain {
 		for(Equation currentEquation : listOfLevels.get(levelCount)){
 			Grammar.expand(currentEquation);
 		}
-		return;
 	}
 	
 	private static void prune(){
 		PruneRules.prune(listOfLevels.get(levelCount));
-		return;
 	}
 	
 
