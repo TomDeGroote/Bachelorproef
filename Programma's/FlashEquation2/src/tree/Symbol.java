@@ -1,3 +1,4 @@
+package tree;
 /**
  * A superclass that represents operands, non-terminals and terminals.
  * @author Jeroen

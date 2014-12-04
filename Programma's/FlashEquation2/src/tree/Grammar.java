@@ -1,3 +1,4 @@
+package tree;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
 public class Grammar {
 
 	//TODO Gebruik operand en Non-terminal om dynamisch te werken.
-	public List<Equation> Expand(Equation equation){
+	public List<Equation> expand(Equation equation){
 		return null;
 	}
 	

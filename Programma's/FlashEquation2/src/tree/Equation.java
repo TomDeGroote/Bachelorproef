@@ -1,8 +1,9 @@
+package tree;
 import java.util.List;
 
 /**
  * Represents an equation that can be formed by combining symbols.
- * @author Jeroen
+ * @author Jeroen en Tom
  *
  */
 public class Equation{

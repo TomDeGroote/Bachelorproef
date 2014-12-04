@@ -1,3 +1,4 @@
+package tree;
 /**
  * Represents the non-terminal symbols.
  * @author Jeroen

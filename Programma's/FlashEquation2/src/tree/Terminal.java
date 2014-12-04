@@ -1,17 +1,18 @@
+package tree;
 /**
- * Represents the operand symbols.
+ * Represents the terminal symbols.
  * @author Jeroen
  *
  */
-public class Operand extends Symbol {
+public class Terminal extends Symbol {
 
-	public Operand(String value) {
-		super.representation = value;
+	public Terminal(String terminal){
+		super.representation = terminal;
 	}
 	
 	@Override
 	public boolean isOperand() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class Operand extends Symbol {
 
 	@Override
 	public boolean isTerminal() {
-		return false;
+		return true;
 	}
 
 	@Override
