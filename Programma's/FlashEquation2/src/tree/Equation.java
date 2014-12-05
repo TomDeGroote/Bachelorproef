@@ -1,5 +1,5 @@
 package tree;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents an equation that can be formed by combining symbols.
@@ -11,7 +11,19 @@ public class Equation {
 	List<Symbol> listOfSymbols;
 	String representation;
 	
-	public Equation(List<Symbol> inputlist) {
+	public Equation(){
+		Symbol startSymbol = new NonTerminal("E");
+		List<Symbol> newList = new ArrayList<Symbol>();
+		newList.add(startSymbol);
+		listOfSymbols = newList;
+		String currentString = "";
+		for(Symbol currentSymbol: this.getListOfSymbols() ){
+			currentString.concat(currentSymbol.symbolToString());
+		}
+		this.representation = currentString;
+	}
+	
+	public Equation(List<Symbol> inputlist){
 		listOfSymbols = inputlist;
 		String currentString = "";
 		for(Symbol currentSymbol: this.getListOfSymbols() ) {
