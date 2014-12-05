@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class PruneRules {
 	
-	public static List<Equation> prune(List<Equation> listOfEquations){
+	public static List<Equation> prune(List<Equation> listOfEquations) {
 		return null;
 	}
 

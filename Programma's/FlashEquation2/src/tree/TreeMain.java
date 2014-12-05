@@ -18,13 +18,13 @@ public class TreeMain {
 
 	}
 	
-	private static void expand(){
+	private static void expand() {
 		for(Equation currentEquation : listOfLevels.get(levelCount)){
 			Grammar.expand(currentEquation);
 		}
 	}
 	
-	private static void prune(){
+	private static void prune() {
 		PruneRules.prune(listOfLevels.get(levelCount));
 	}
 	

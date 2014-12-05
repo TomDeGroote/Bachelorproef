@@ -1,33 +1,13 @@
 package tree;
 /**
  * Represents the non-terminal symbols.
- * @author Jeroen
+ * @author Jeroen & Tom
  *
  */
 public class NonTerminal extends Symbol {
 
-	public NonTerminal(String nonTerminal){
+	public NonTerminal(String nonTerminal) {
 		super.representation = nonTerminal;
+		super.nonTerminal = true;
 	}
-	
-	@Override
-	public boolean isOperand() {
-		return false;
-	}
-
-	@Override
-	public boolean isNonTerminal() {
-		return true;
-	}
-
-	@Override
-	public boolean isTerminal() {
-		return false;
-	}
-
-	@Override
-	public String symbolToString() {
-		return super.representation;
-	}
-
 }

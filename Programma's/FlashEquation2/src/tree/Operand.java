@@ -1,33 +1,13 @@
 package tree;
 /**
  * Represents the operand symbols.
- * @author Jeroen
+ * @author Jeroen & Tom
  *
  */
 public class Operand extends Symbol {
 
 	public Operand(String value) {
 		super.representation = value;
+		super.operand = true;
 	}
-	
-	@Override
-	public boolean isOperand() {
-		return true;
-	}
-
-	@Override
-	public boolean isNonTerminal() {
-		return false;
-	}
-
-	@Override
-	public boolean isTerminal() {
-		return false;
-	}
-
-	@Override
-	public String symbolToString() {
-		return super.representation;
-	}
-
 }

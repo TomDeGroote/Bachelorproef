@@ -9,7 +9,7 @@ import java.util.List;
 public class Grammar {
 
 	//TODO Gebruik operand en Non-terminal om dynamisch te werken.
-	public static List<Equation> expand(Equation equation){
+	public static List<Equation> expand(Equation equation) {
 		return null;
 	}
 	

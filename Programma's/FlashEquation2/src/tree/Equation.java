@@ -6,26 +6,26 @@ import java.util.List;
  * @author Jeroen en Tom
  *
  */
-public class Equation{
+public class Equation {
 	
 	List<Symbol> listOfSymbols;
 	String representation;
 	
-	public Equation(List<Symbol> inputlist){
+	public Equation(List<Symbol> inputlist) {
 		listOfSymbols = inputlist;
 		String currentString = "";
-		for(Symbol currentSymbol: this.getListOfSymbols() ){
+		for(Symbol currentSymbol: this.getListOfSymbols() ) {
 			currentString.concat(currentSymbol.symbolToString());
 		}
 		this.representation = currentString;
 	}
 	
-	public List<Symbol> getListOfSymbols(){
+	public List<Symbol> getListOfSymbols() {
 		return this.listOfSymbols;
 	}
 	
 	@Override
-	public String toString(){
+	public String toString() {
 		return representation;
 	}
 }
