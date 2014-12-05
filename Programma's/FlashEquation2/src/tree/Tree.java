@@ -1,5 +1,7 @@
 package tree;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -7,46 +9,41 @@ import java.util.*;
  * @author Jeroen & Tom
  *
  */
-public class TreeMain {
+public class Tree implements Serializable{
 
+	private static final long serialVersionUID = 1L; // default serialVersionUID
 	private static int levelCount;
 	private final static int nrOfLevels = 10;
 	private static Equation startEquation;
 	private static List<List<Equation>> listOfLevels;
-	
+
 	/**
-	 * Main method of the tree-program
-	 * This will initialize the tree, expand it and prune it
+	 * Constructor of the tree
 	 * 
-	 * When the tree is build it will be written to a file (as an object)
+	 * Will initialize the tree and expand it to a constant level
 	 */
-	public static void main(String[] args) {
-		initialize();
-		for(int i = 0; i < nrOfLevels; i++) {
-			expand();
-			prune();
-			levelCount++;
-		}
-		// TODO write to file
-	}
-	
-	/**
-	 * Creates the first level, and initializes levelCount
-	 */
-	private static void initialize() {
+	public Tree() {
+		// initialises the tree
 		levelCount = 1;
 		startEquation = new Equation();
 		listOfLevels = new ArrayList<List<Equation>>();
 		ArrayList<Equation> firstLevel = new ArrayList<Equation>();
 		firstLevel.add(startEquation);
 		listOfLevels.add(firstLevel);
+		
+		// expands and prunes the tree (level per level)
+		for(int i = 0; i < nrOfLevels; i++) {
+			expand();
+			prune();
+			levelCount++;
+		}
 	}
 	
 	/**
 	 * Expands the current level (given by levelCount)
 	 * 		After expansion the level will be added to the level list
 	 */
-	private static void expand() {
+	private void expand() {
 		List<Equation> newLevel = new ArrayList<Equation>();
 		for(Equation currentEquation : listOfLevels.get(levelCount)) {
 			for(Equation newEquation : Grammar.expand(currentEquation)) {
@@ -59,8 +56,16 @@ public class TreeMain {
 	 * Prunes the current level (given by levelCount)
 	 * 		Because a pointer will be given, the current level will be changed
 	 */
-	private static void prune() {
+	private void prune() {
 		PruneRules.prune(listOfLevels.get(levelCount));
+	}
+	
+	/**
+	 * @return
+	 * 		The tree created with the main method
+	 */
+	public List<List<Equation>> getTree() {
+		return listOfLevels;
 	}
 	
 
