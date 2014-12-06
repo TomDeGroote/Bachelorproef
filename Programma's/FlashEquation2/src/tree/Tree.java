@@ -11,11 +11,15 @@ import java.util.List;
  */
 public class Tree implements Serializable{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L; // default serialVersionUID
-	private static int levelCount;
-	private final static int nrOfLevels = 10;
-	private static Equation startEquation;
-	private static List<List<Equation>> listOfLevels;
+	private int levelCount;
+	private final int nrOfLevels = 10;
+	private Equation startEquation;
+	private List<List<Equation>> listOfLevels;
+	private List<Equation> temporaryLevel;
 
 	/**
 	 * Constructor of the tree
@@ -41,7 +45,7 @@ public class Tree implements Serializable{
 	
 	/**
 	 * Expands the current level (given by levelCount)
-	 * 		After expansion the level will be added to the level list
+	 * 		After expansion the level will be added to temporaryLevel
 	 */
 	private void expand() {
 		List<Equation> newLevel = new ArrayList<Equation>();
@@ -50,14 +54,16 @@ public class Tree implements Serializable{
 				newLevel.add(newEquation);
 			}
 		}
+		temporaryLevel = newLevel;
 	}
 	
 	/**
-	 * Prunes the current level (given by levelCount)
-	 * 		Because a pointer will be given, the current level will be changed
+	 * Prunes the current level (given by temporaryLevel)
+	 * 
+	 * After pruning the level will be added to listOfLevels
 	 */
 	private void prune() {
-		PruneRules.prune(listOfLevels.get(levelCount));
+		listOfLevels.add(PruneRules.prune(temporaryLevel));
 	}
 	
 	/**

@@ -1,5 +1,9 @@
 package tree;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Given a list of pruning rules it reduces the amount of valid equations in a certain list
@@ -8,8 +12,293 @@ import java.util.List;
  */
 public class PruneRules {
 	
-	public static List<Equation> prune(List<Equation> listOfEquations) {
+	/**
+	 * @param listOfEquations
+	 * 			The list of equations to prune
+	 * @return
+	 * 			A pruned list of equations
+	 */
+	public static List<Equation> prune(List<Equation> listOfEquations) {		
+		// every equation will be split and added to splitEquations
+		List<List<String>> splitEquations = splitIntoParts(listOfEquations);
+		
+		// Divide the equations by splitLength (to be equal two equations should count the same number of parts)
+		HashMap<String, List<List<String>>> buckets = divideInBuckets(splitEquations);
+		
+		// Searches in the buckets which equation are equal to another one
+		// every equation of every group of equal equations, except one per group, will be in this list
+		List<String> equationsToRemoveString = searchBuckets(buckets);
+		
+		// Given a list of strings the corresponding equations will be given back
+		List<Equation> equationsToRemove = representiveEquations(equationsToRemoveString, listOfEquations);
+		
+		// removes the equations to remove
+		List<Equation> prunedListOfEquations = removeEquations(equationsToRemove, listOfEquations);
+		
+		return prunedListOfEquations;
+	}
+	
+	/**
+	 * @param equationsToRemove
+	 * 			List of equations which should be removed from listOfEquations
+	 * @param listOfEquations
+	 * 			The list of equations where we will remove equations
+	 * @return
+	 * 			A list of equations without the list of removed equations TODO is return wel nodig?
+	 * 
+	 * TODO will this remove the equations from listOfEquation?
+	 */
+	private static List<Equation> removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
+		for(Equation eq : equationsToRemove) {
+			listOfEquations.remove(eq);
+		}
+		return listOfEquations;
+	}
+
+	/**
+	 * Given a list of strings the corresponding equations will be given back
+	 * @param listOfEquationsString
+	 * 			A list of equations in String from who the equal equation needs to be found
+	 * @param listOfEquations
+	 * 			A list of equations
+	 * @return
+	 * 			The list of equations corresponding to the strings
+	 * 			Null if not all the strings have matching equations
+	 * 
+	 * TODO efficiënter schrijven?
+	 */
+	private static List<Equation> representiveEquations(List<String> listOfEquationsString, List<Equation> listOfEquations) {
+		List<Equation> result = new ArrayList<Equation>();
+		for(Equation equation : listOfEquations) {
+			for(String string : listOfEquationsString) {
+				if(equation.toString().equals(string)) {
+					result.add(equation);
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @param buckets
+	 * 			The buckets containing the equations to be checked if they are equal
+	 * @return
+	 * 			A list of equal equations which can be removed
+	 * 			(thus one equation of the equal group will not be in this list)
+	 */
+	private static List<String> searchBuckets(HashMap<String, List<List<String>>> buckets) {
+		List<String> equationsToRemove = new ArrayList<String>();
+		
+		// search in every bucket
+		for(String bucketName : buckets.keySet()) {
+			List<List<String>> bucket = buckets.get(bucketName);
+			
+			// search for equal equations in a given bucket (given by bucketName)
+			List<List<String>> equalEquations = getEqualEqautions(bucket);
+			
+			// generates a String of all equations (At this time the are represented by a List<String>)
+			// The string will then be added to the equationsToRemove
+			for(List<String> equationInEquals : equalEquations) {
+				equationsToRemove.add(createOneStringEquation(equationInEquals));
+			}
+		}
+
+		return equationsToRemove;
+	}
+	
+
+	/**
+	 * @param equation
+	 * 			A list of terms (String) which represents a given representation
+	 * @return
+	 * 			A String which will represent the complete equation
+	 */
+	private static String createOneStringEquation(List<String> equation) {
+		String completeEquation = "";
+		for(String term : equation) {
+			completeEquation += term;
+		}
+		return completeEquation;
+	}
+
+	/**
+	 * @param bucket
+	 * 			The bucket to be searched for equal equations
+	 * @return
+	 * 			All the equal equations in the bucket that can be removed
+	 */
+	private static List<List<String>> getEqualEqautions(List<List<String>> bucket) {
+		List<List<String>> equalEquations = new ArrayList<List<String>>();
+		
+		while(bucket.size() >= 2) {
+			List<List<String>> whichToRemove = new ArrayList<List<String>>(); // Contains the indexes of the equations which will be in equalEquation or will have no equals
+			List<String> eq1 = bucket.get(0); // get the first Equation in the bucket
+			whichToRemove.add(eq1); // the first equation will never be in equalEquations but it's equals (if they exist) will
+			
+			// checks which equations still in the bucket are equal to the first one 
+			for(int i = 1; i < bucket.size(); i++) {
+				List<String> eq2 = bucket.get(i);
+				if(areTheseEquationsEqual(eq1, eq2)) {
+					equalEquations.add(eq2);
+					whichToRemove.add(eq2);
+				}
+			}
+			
+			// removes equations from the bucket
+			// this means the first equation and all its equals
+			for(List<String> removeEquation : whichToRemove) {
+				bucket.remove(removeEquation);
+			}
+		}
+		
+		return equalEquations;
+	}
+	
+	
+	/**
+	 * Checks whether two given equations are equal to each other
+	 * 
+	 * The equations should be of equal length
+	 * 
+	 * @param eq1
+	 * 			The first equation
+	 * @param eq2
+	 * 			The second equation
+	 * @return
+	 * 			A boolean
+	 * 			True if the equations are equal
+	 * 			False if the equations are not equal
+	 */
+	private static boolean areTheseEquationsEqual(List<String> eq1, List<String> eq2) {
+		// the first term of an equation should be equal
+		if(eq1.get(0).equals(eq2.get(0))) {
+			for(String term : eq1) {
+				eq2 = equationContainsTerm(term, eq2);
+				if(eq2 == null) {
+					return false;
+				}
+			}
+			return true;
+		} 	
+		return false;
+	}
+
+	/**
+	 * Checks whether the equation contains the term and removes it one time
+	 * @param term
+	 * 			The term to be searched for in the equation
+	 * @param eq
+	 * 			The equation to be searched
+	 * @return
+	 * 			The equation which will contain the term one time less
+	 * 			Or return null if the equation doesn't contain the term
+	 */
+	private static List<String> equationContainsTerm(String term, List<String> eq) {
+		for(String termEq : eq) {
+			if(termEq.equals(term)) {
+				eq.remove(termEq);
+				return eq;
+			}
+		}
 		return null;
 	}
+
+	/**
+	 * Divides the given list of Equation parts into buckets
+	 * 
+	 * The buckets: nrOfParts_#Multiplications_#Divisions_#Minus
+	 * 
+	 * @param splitEquations
+	 * 			List of equation parts
+	 * @return
+	 * 			HashMap containing the buckets (represented by strings) and there content
+	 * 
+	 * TODO make independent of *, / and -
+	 */
+	private static HashMap<String, List<List<String>>> divideInBuckets(List<List<String>> splitEquations) {
+		// initialize place where we will keep the buckets
+		HashMap<String, List<List<String>>> buckets = new HashMap<String, List<List<String>>>();
+		
+		// for every equation see what bucket it belongs to and add it
+		for(List<String> equation : splitEquations) {
+			
+			// calculate the name in which bucket this equation will go
+			int nrOfParts = equation.size();
+			int multiplications = 0;
+			int divisions = 0;
+			int minus = 0;
+			for(String part : equation) {
+				multiplications += StringUtils.countMatches("*", part);
+				divisions += StringUtils.countMatches("/", part);
+				minus += StringUtils.countMatches("-", part);
+			}
+			
+			// create bucket name
+			String bucketName = nrOfParts + "_" + multiplications + "_" + divisions + "_" + minus;
+			
+			// check if bucket name exists
+			// if so add to that bucket else create a new bucket
+			if(buckets.containsKey(bucketName)) {
+				buckets.get(bucketName).add(equation);
+			} else {
+				List<List<String>> newBucket =  new ArrayList<List<String>>();
+				newBucket.add(equation);
+				buckets.put(bucketName, newBucket);
+			}
+		}
+		return buckets;
+	}
+
+	/**
+	 * @param equations
+	 * 			The equations to be split into parts
+	 * @return
+	 * 			A list of of a list of strings
+	 * 			f.e. {E+E, E*E} becomes {{E, E}, {E*E}}
+	 */
+	private static List<List<String>> splitIntoParts(List<Equation> equations) {
+		List<List<String>> splitEquations = new ArrayList<List<String>>();
+		for(Equation eq : equations) {
+			splitEquations.add(splitEquation(eq));
+		}
+		return splitEquations;
+	}	
+	
+	/**
+	 * @param 
+	 * 		The equation to be split
+	 * @return
+	 * 		A list of strings, the different strings represent the different parts of the equation
+	 * 		f.e. equation : E*E + E - E becomes {"E*E", "E", "-E"}
+	 */
+	private static List<String> splitEquation(Equation eq) {
+		List<String> split = new ArrayList<String>();
+		String temporary = "";
+		for(Symbol symbol : eq.getListOfSymbols()) {
+			if(symbol.isNonTerminal()) {
+				temporary += symbol.toString();
+			} else if(symbol.isOperand()) {
+				// TODO make independent of *, /, +, -
+				if(symbol.toString().equals("*") || symbol.toString().equals("/")) {
+					temporary += symbol.toString();
+				} else if(symbol.toString().equals("+")){
+					split.add(temporary);
+					temporary = "";
+				} else if(symbol.toString().equals("-")) {
+					split.add(temporary);
+					temporary = "-";
+				}
+			} else if(symbol.isTerminal()) {
+				// TODO terminals not supported, are we gonna use them? or say if nonTerminal make Terminal
+				temporary += symbol.toString();
+			}
+		}	
+		return split;
+	}
+	
+	
+	
+	
 
 }
