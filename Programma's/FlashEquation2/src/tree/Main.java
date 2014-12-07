@@ -14,8 +14,9 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int nrOfLevels = 4;
-	private static final String fileName = "tree";
+	private static final int NROFLEVELS = 8;
+	private static final String FILENAME = "tree";
+	private static final boolean REMOVEPRUNED = true;
 	/**
 	 * Main method of the tree-program
 	 * 
@@ -23,9 +24,17 @@ public class Main {
 	 * when the tree is build it will be written to a file (as an object)
 	 */
 	public static void main(String[] args) {
-		Tree tree = new Tree(nrOfLevels, false);
+		Tree tree = new Tree(NROFLEVELS, REMOVEPRUNED);
 		printTree(tree);
 		writeTree(tree);
+	}
+	
+	/**
+	 * @return
+	 * 			The filename where you can find back the tree object (in workspace)
+	 */
+	public static String getFileNameTreeObject() {
+		return FILENAME;
 	}
 	
 	
@@ -61,7 +70,7 @@ public class Main {
 	 */
 	private static void writeTree(Tree tree) {
 		try {
-			FileOutputStream fout = new FileOutputStream(fileName);
+			FileOutputStream fout = new FileOutputStream(FILENAME);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(tree);
 			oos.close();
