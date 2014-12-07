@@ -48,7 +48,7 @@ public class PruneRules {
 	 * 
 	 * TODO will this remove the equations from listOfEquation?
 	 */
-	private static List<Equation> removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
+	public static List<Equation> removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
 		for(Equation eq : equationsToRemove) {
 			listOfEquations.remove(eq);
 		}
@@ -87,7 +87,7 @@ public class PruneRules {
 	 * 			A list of equivalent equations which can be removed
 	 * 			(thus one equation of the equivalent group will not be in this list)
 	 */
-	private static List<String> searchBuckets(HashMap<String, List<List<String>>> buckets) {
+	public static List<String> searchBuckets(HashMap<String, List<List<String>>> buckets) {
 		List<String> equationsToRemove = new ArrayList<String>();
 		
 		// search in every bucket
@@ -114,7 +114,7 @@ public class PruneRules {
 	 * @return
 	 * 			A String which will represent the complete equation
 	 */
-	private static String createOneStringEquation(List<String> equation) {
+	public static String createOneStringEquation(List<String> equation) {
 		String completeEquation = "";
 		for(String term : equation) {
 			completeEquation += term;
@@ -128,7 +128,7 @@ public class PruneRules {
 	 * @return
 	 * 			All the equivalent equations in the bucket that can be removed
 	 */
-	private static List<List<String>> getEquivalentEqautions(List<List<String>> bucket) {
+	public static List<List<String>> getEquivalentEqautions(List<List<String>> bucket) {
 		List<List<String>> equalEquations = new ArrayList<List<String>>();
 		
 		while(bucket.size() >= 2) {
@@ -170,7 +170,7 @@ public class PruneRules {
 	 * 			True if the equations are equivalent
 	 * 			False if the equations are not equivalent
 	 */
-	private static boolean areTheseEquationsEquivalent(List<String> eq1, List<String> eq2) {
+	public static boolean areTheseEquationsEquivalent(List<String> eq1, List<String> eq2) {
 		// the first term of an equation should be equivalent
 		if(eq1.get(0).equals(eq2.get(0))) {
 			for(String term : eq1) {
@@ -194,7 +194,7 @@ public class PruneRules {
 	 * 			The equation which will contain the term one time less
 	 * 			Or return null if the equation doesn't contain the term
 	 */
-	private static List<String> equationContainsTerm(String term, List<String> eq) {
+	public static List<String> equationContainsTerm(String term, List<String> eq) {
 		for(String termEq : eq) {
 			if(termEq.equals(term)) {
 				eq.remove(termEq);
@@ -216,7 +216,7 @@ public class PruneRules {
 	 * 
 	 * TODO make independent of *, / and -
 	 */
-	private static HashMap<String, List<List<String>>> divideInBuckets(List<List<String>> splitEquations) {
+	public static HashMap<String, List<List<String>>> divideInBuckets(List<List<String>> splitEquations) {
 		// initialize place where we will keep the buckets
 		HashMap<String, List<List<String>>> buckets = new HashMap<String, List<List<String>>>();
 		
@@ -257,7 +257,7 @@ public class PruneRules {
 	 * 			A list of of a list of strings
 	 * 			f.e. {E+E, E*E} becomes {{E, E}, {E*E}}
 	 */
-	private static List<List<String>> splitIntoParts(List<Equation> equations) {
+	public static List<List<String>> splitIntoParts(List<Equation> equations) {
 		List<List<String>> splitEquations = new ArrayList<List<String>>();
 		for(Equation eq : equations) {
 			splitEquations.add(splitEquation(eq));
@@ -270,9 +270,9 @@ public class PruneRules {
 	 * 		The equation to be split
 	 * @return
 	 * 		A list of strings, the different strings represent the different parts of the equation
-	 * 		f.e. equation : E*E + E - E becomes {"E*E", "E", "-E"}
+	 * 		f.e. equation : E*E + E - E becomes {"E*E", "+E", "-E"}
 	 */
-	private static List<String> splitEquation(Equation eq) {
+	public static List<String> splitEquation(Equation eq) {
 		List<String> split = new ArrayList<String>();
 		String temporary = "";
 		for(Symbol symbol : eq.getListOfSymbols()) {
@@ -284,7 +284,7 @@ public class PruneRules {
 					temporary += symbol.toString();
 				} else if(symbol.toString().equals("+")){
 					split.add(temporary);
-					temporary = "";
+					temporary = "+";
 				} else if(symbol.toString().equals("-")) {
 					split.add(temporary);
 					temporary = "-";
@@ -294,6 +294,7 @@ public class PruneRules {
 				temporary += symbol.toString();
 			}
 		}	
+		split.add(temporary); // adds the final term
 		return split;
 	}
 	
