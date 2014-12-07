@@ -18,6 +18,7 @@ public class Equation {
 	 */
 	public Equation(){
 		Symbol startSymbol = new NonTerminal("E");
+		this.listOfSymbols = new ArrayList<Symbol>();
 		this.listOfSymbols.add(startSymbol);
 		this.setRepresentation();
 	}
@@ -40,8 +41,8 @@ public class Equation {
 	 */
 	private void setRepresentation() {
 		String currentString = "";
-		for(Symbol currentSymbol: this.getListOfSymbols() ){
-			currentString.concat(currentSymbol.toString());
+		for(Symbol currentSymbol: listOfSymbols){
+			currentString += currentSymbol.toString();
 		}
 		this.representation = currentString;
 	}

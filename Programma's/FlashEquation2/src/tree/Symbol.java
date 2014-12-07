@@ -1,4 +1,7 @@
 package tree;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 /**
  * A superclass that represents operands, non-terminals and terminals.
  * @author Jeroen & Tom
@@ -47,5 +50,22 @@ public abstract class Symbol {
 	public String toString() {
 		return representation;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+		if (!(obj instanceof Symbol))
+			return false;
+		if (obj == this)
+			return true;
+
+		Symbol otherSymbol = (Symbol) obj;
+		return new EqualsBuilder().
+				// if deriving: appendSuper(super.equals(obj)).
+				append(representation, otherSymbol.representation).
+				append(operand, otherSymbol.operand).
+				append(terminal, otherSymbol.terminal).
+				append(nonTerminal, otherSymbol.nonTerminal).
+				isEquals();
+    }
 	
 }
