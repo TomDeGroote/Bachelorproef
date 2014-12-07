@@ -139,9 +139,10 @@ public class PruneRules {
 			// checks which equations still in the bucket are equivalent to the first one 
 			for(int i = 1; i < bucket.size(); i++) {
 				List<String> eq2 = bucket.get(i);
+				List<String> eq2Clone = new ArrayList<String>(eq2);
 				if(areTheseEquationsEquivalent(eq1, eq2)) {
-					equalEquations.add(eq2);
-					whichToRemove.add(eq2);
+					equalEquations.add(eq2Clone);
+					whichToRemove.add(eq2Clone);
 				}
 			}
 			
@@ -229,9 +230,9 @@ public class PruneRules {
 			int divisions = 0;
 			int minus = 0;
 			for(String part : equation) {
-				multiplications += StringUtils.countMatches("*", part);
-				divisions += StringUtils.countMatches("/", part);
-				minus += StringUtils.countMatches("-", part);
+				multiplications += StringUtils.countMatches(part, "*");
+				divisions += StringUtils.countMatches(part, "/");
+				minus += StringUtils.countMatches(part, "-");
 			}
 			
 			// create bucket name

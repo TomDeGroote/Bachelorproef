@@ -1,6 +1,7 @@
 package tree.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -96,8 +97,8 @@ public class PruneRulesTest {
 		split3.add("-E");
 		// the list of a list of strings
 		List<List<String>> splits = new ArrayList<List<String>>();
-		splits.add(split1);
-		splits.add(split3);
+		splits.add(new ArrayList<String>(split1));
+		splits.add(new ArrayList<String>(split3));
 		// puts eq1 and eq3 in a list
 		List<Equation> eqs = new ArrayList<Equation>();
 		eqs.add(eq1);
@@ -150,7 +151,142 @@ public class PruneRulesTest {
 		Assert.assertEquals(false, PruneRules.areTheseEquationsEquivalent(split1, split3));
 	}
 	
+	@Test
+	public void divideInBuckets() {
+		// parts based on eq1
+		List<String> split1 = new ArrayList<String>();
+		split1.add("E");
+		split1.add("+E*E");
+		split1.add("+E");
+		// parts based on eq2
+		List<String> split2 = new ArrayList<String>();
+		split2.add("E");
+		split2.add("+E");
+		split2.add("+E*E");
+		// parts based on eq3
+		List<String> split3 = new ArrayList<String>();
+		split3.add("E*E*E");
+		split3.add("-E");
+		// all the parts of eq1, eq2, eq3 in a list
+		List<List<String>> splitEquations = new ArrayList<List<String>>();
+		splitEquations.add(new ArrayList<String>(split1));
+		splitEquations.add(new ArrayList<String>(split2));
+		splitEquations.add(new ArrayList<String>(split3));
+		// the expected buckets
+		HashMap<String, List<List<String>>> expected = new HashMap<String, List<List<String>>>();
+		// bucket for eq1 and eq2
+		String eq1AndEq2String = "3_1_0_0";
+		List<List<String>> eq1AndEq2 = new ArrayList<List<String>>();
+		eq1AndEq2.add(new ArrayList<String>(split1));
+		eq1AndEq2.add(new ArrayList<String>(split2));
+		expected.put(eq1AndEq2String, eq1AndEq2);
+		// bucket for eq3
+		String eq3String = "2_2_0_1";
+		List<List<String>> eq3 = new ArrayList<List<String>>();
+		eq3.add(new ArrayList<String>(split3));
+		expected.put(eq3String, eq3);
+		
+		Assert.assertEquals(expected, PruneRules.divideInBuckets(splitEquations));		
+	}
 	
+	@Test
+	public void searchBuckets() {
+		// parts based on eq1
+		List<String> split1 = new ArrayList<String>();
+		split1.add("E");
+		split1.add("+E*E");
+		split1.add("+E");
+		// parts based on eq2
+		List<String> split2 = new ArrayList<String>();
+		split2.add("E");
+		split2.add("+E");
+		split2.add("+E*E");
+		// parts based on eq3
+		List<String> split3 = new ArrayList<String>();
+		split3.add("E*E*E");
+		split3.add("-E");
+		// all the parts of eq1, eq2, eq3 in a list
+		List<List<String>> splitEquations = new ArrayList<List<String>>();
+		splitEquations.add(new ArrayList<String>(split1));
+		splitEquations.add(new ArrayList<String>(split2));
+		splitEquations.add(new ArrayList<String>(split3));
+		// the expected buckets
+		HashMap<String, List<List<String>>> buckets = new HashMap<String, List<List<String>>>();
+		// bucket for eq1 and eq2
+		String eq1AndEq2String = "3_1_0_0";
+		List<List<String>> eq1AndEq2 = new ArrayList<List<String>>();
+		eq1AndEq2.add(new ArrayList<String>(split1));
+		eq1AndEq2.add(new ArrayList<String>(split2));
+		buckets.put(eq1AndEq2String, eq1AndEq2);
+		// bucket for eq3
+		String eq3String = "2_2_0_1";
+		List<List<String>> eq3 = new ArrayList<List<String>>();
+		eq3.add(new ArrayList<String>(split3));
+		buckets.put(eq3String, eq3);
+		
+		List<String> expected = new ArrayList<String>();
+		expected.add(eqString2);
+		Assert.assertEquals(expected, PruneRules.searchBuckets(buckets));		
+	}
+	
+
+	@Test
+	public void getEquivalentEquations() {
+		// parts based on eq1
+		List<String> split1 = new ArrayList<String>();
+		split1.add("E");
+		split1.add("+E*E");
+		split1.add("+E");
+		// parts based on eq2
+		List<String> split2 = new ArrayList<String>();
+		split2.add("E");
+		split2.add("+E");
+		split2.add("+E*E");
+		// parts based on eq3
+		List<String> split3 = new ArrayList<String>();
+		split3.add("E*E*E");
+		split3.add("-E");
+		// the bucket with eq1 and eq2 buckets
+		List<List<String>> eq1AndEq2Bucket = new ArrayList<List<String>>();
+		eq1AndEq2Bucket.add(new ArrayList<String>(split1));
+		eq1AndEq2Bucket.add(new ArrayList<String>(split2));
+		// bucket for eq3
+		List<List<String>> eq3Bucket = new ArrayList<List<String>>();
+		eq3Bucket.add(new ArrayList<String>(split3));
+		
+		// expected result for bucket containting eq1 and eq2
+		List<List<String>> possibleRemovals = new ArrayList<List<String>>();
+		possibleRemovals.add(new ArrayList<String>(split2));
+		
+		Assert.assertEquals(possibleRemovals, PruneRules.getEquivalentEqautions(eq1AndEq2Bucket));
+		Assert.assertEquals(new ArrayList<List<String>>(), PruneRules.getEquivalentEqautions(eq3Bucket));
+	}
+	
+	@Test
+	public void removeEquations() {
+		List<Equation> toRemove = new ArrayList<Equation>();
+		toRemove.add(eq1);
+		List<Equation> equations = new ArrayList<Equation>();
+		equations.add(eq1);
+		equations.add(eq2);
+		equations.add(eq3);
+		List<Equation> expected = new ArrayList<Equation>();
+		expected.add(eq2);
+		expected.add(eq3);
+		Assert.assertEquals(expected, PruneRules.removeEquations(toRemove, equations));
+	}
+	
+	@Test
+	public void prune() {
+		List<Equation> equations = new ArrayList<Equation>();
+		equations.add(eq1);
+		equations.add(eq2);
+		equations.add(eq3);
+		List<Equation> expected = new ArrayList<Equation>();
+		expected.add(eq1);
+		expected.add(eq3);
+		Assert.assertEquals(expected, PruneRules.prune(equations));
+	}
 	/**
 	 * Generates an equation with length =
 	 * 			length if length is odd
