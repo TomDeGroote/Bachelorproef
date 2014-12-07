@@ -1,4 +1,5 @@
 package tree;
+import java.io.Serializable;
 import java.util.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -8,10 +9,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  * @author Jeroen en Tom
  *
  */
-public class Equation {
+@SuppressWarnings("serial")
+public class Equation implements Serializable {
 	
 	List<Symbol> listOfSymbols;
 	String representation;
+	private boolean prooned = false;
 	
 	/**
 	 * Constructor when no parameters are given
@@ -83,4 +86,18 @@ public class Equation {
 				append(listOfSymbols, otherSymbol.listOfSymbols).
 				isEquals();
     }
+
+
+	public boolean isProoned() {
+		return prooned;
+	}
+
+
+	public void setProoned(boolean prooned) {
+		this.prooned = prooned;
+	}
+
+	
+	
+	
 }

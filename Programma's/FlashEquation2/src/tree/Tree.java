@@ -9,14 +9,14 @@ import java.util.List;
  * @author Jeroen & Tom
  *
  */
-public class Tree implements Serializable{
+public class Tree implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L; // default serialVersionUID
 	private int levelCount;
-	private final int nrOfLevels = 10;
+	private final int nrOfLevels;
 	private Equation startEquation;
 	private List<List<Equation>> listOfLevels;
 	private List<Equation> temporaryLevel;
@@ -25,9 +25,15 @@ public class Tree implements Serializable{
 	 * Constructor of the tree
 	 * 
 	 * Will initialize the tree and expand it to a constant level
+	 * 
+	 * @param nrOfLevels
+	 * 			The number of levels this tree needs to be
+	 * @param remove
+	 * 			If the tree should remove the equations while pruning or set the equations to pruned
 	 */
-	public Tree() {
+	public Tree(int nrOfLevels, boolean remove) {
 		// initialises the tree
+		this.nrOfLevels = nrOfLevels;
 		levelCount = 1;
 		startEquation = new Equation();
 		listOfLevels = new ArrayList<List<Equation>>();
@@ -36,9 +42,9 @@ public class Tree implements Serializable{
 		listOfLevels.add(firstLevel);
 		
 		// expands and prunes the tree (level per level)
-		for(int i = 0; i < nrOfLevels; i++) {
+		for(int i = 0; i < this.nrOfLevels; i++) {
 			expand();
-			prune();
+			prune(remove);
 			levelCount++;
 		}
 	}
@@ -49,7 +55,7 @@ public class Tree implements Serializable{
 	 */
 	private void expand() {
 		List<Equation> newLevel = new ArrayList<Equation>();
-		for(Equation currentEquation : listOfLevels.get(levelCount)) {
+		for(Equation currentEquation : listOfLevels.get(levelCount-1)) {
 			for(Equation newEquation : Grammar.expand(currentEquation)) {
 				newLevel.add(newEquation);
 			}
@@ -62,8 +68,8 @@ public class Tree implements Serializable{
 	 * 
 	 * After pruning the level will be added to listOfLevels
 	 */
-	private void prune() {
-		listOfLevels.add(PruneRules.prune(temporaryLevel));
+	private void prune(boolean remove) {
+		listOfLevels.add(PruneRules.prune(temporaryLevel, remove));
 	}
 	
 	/**
@@ -74,5 +80,21 @@ public class Tree implements Serializable{
 		return listOfLevels;
 	}
 	
+	@Override
+	public String toString() {
+		String tree = "";
+		for(List<Equation> level : listOfLevels) {
+			for(Equation eq : level) {
+				if(eq.isProoned()) {
+					tree += eq.toString().toLowerCase()  + "  ";
+				} else {
+					tree += eq.toString() + "  ";
+				}
+			}
+			tree += "\n";
+		}
+		return tree;
+	}
+
 
 }

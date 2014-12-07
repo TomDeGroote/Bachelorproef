@@ -286,7 +286,7 @@ public class PruneRulesTest {
 		List<Equation> expected = new ArrayList<Equation>();
 		expected.add(eq1);
 		expected.add(eq3);
-		Assert.assertEquals(expected, PruneRules.prune(equations));
+		Assert.assertEquals(expected, PruneRules.prune(equations, true));
 	}
 	/**
 	 * Generates an equation with length =

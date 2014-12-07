@@ -8,6 +8,7 @@ import java.util.List;
  * @author Jeroen & Tom
  *
  */
+@SuppressWarnings("serial")
 public class Terminal extends Symbol {
 
 	private static List<Double> columnValues = new  ArrayList<Double>();

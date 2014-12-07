@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
@@ -7,7 +9,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  * @author Jeroen & Tom
  *
  */
-public abstract class Symbol {
+@SuppressWarnings("serial")
+public abstract class Symbol implements Serializable {
 	
 	protected String representation;
 	

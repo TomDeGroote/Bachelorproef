@@ -1,6 +1,9 @@
 package tree;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -11,6 +14,7 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
+	private static final int nrOfLevels = 4;
 	private static final String fileName = "tree";
 	/**
 	 * Main method of the tree-program
@@ -19,13 +23,41 @@ public class Main {
 	 * when the tree is build it will be written to a file (as an object)
 	 */
 	public static void main(String[] args) {
-		Tree tree = new Tree();
+		Tree tree = new Tree(nrOfLevels, false);
+		printTree(tree);
 		writeTree(tree);
 	}
 	
 	
 	/**
+	 * Writes a text form of a tree to a text file
+	 * @param tree
+	 * 			the tree to be written to a text file
+	 */
+	private static void printTree(Tree tree) {
+        BufferedWriter writer = null;
+        try {
+            File treeText = new File("TreeText");
+
+            // This will output the full path where the file will be written to...
+            System.out.println(treeText.getCanonicalPath());
+
+            writer = new BufferedWriter(new FileWriter(treeText));
+            writer.write(tree.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the writer regardless of what happens...
+                writer.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+	
+	/**
 	 * Writes the created tree to a file (name is given as a constant fileName)
+	 * As an object
 	 */
 	private static void writeTree(Tree tree) {
 		try {

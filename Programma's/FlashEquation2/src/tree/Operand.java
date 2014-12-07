@@ -1,9 +1,12 @@
 package tree;
+
+
 /**
  * Represents the operand symbols.
  * @author Jeroen & Tom
  *
  */
+@SuppressWarnings("serial")
 public class Operand extends Symbol {
 
 	private final boolean splitable;

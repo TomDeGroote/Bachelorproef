@@ -18,7 +18,7 @@ public class PruneRules {
 	 * @return
 	 * 			A pruned list of equations
 	 */
-	public static List<Equation> prune(List<Equation> listOfEquations) {		
+	public static List<Equation> prune(List<Equation> listOfEquations, boolean remove) {		
 		// every equation will be split and added to splitEquations
 		List<List<String>> splitEquations = splitIntoParts(listOfEquations);
 		
@@ -32,10 +32,17 @@ public class PruneRules {
 		// Given a list of strings the corresponding equations will be given back
 		List<Equation> equationsToRemove = representiveEquations(equationsToRemoveString, listOfEquations);
 		
-		// removes the equations to remove
-		// no return needed since listOfEquations is an ArrayList and thus a pointer will be given
-		// that means that the equations will be removed from listOfEquations
-		removeEquations(equationsToRemove, listOfEquations);
+		if(remove) {
+			// removes the equations to remove
+			// no return needed since listOfEquations is an ArrayList and thus a pointer will be given
+			// that means that the equations will be removed from listOfEquations
+			removeEquations(equationsToRemove, listOfEquations);
+		} else {
+			// sets the equations boolean prooned on true
+			// no return needed since listOfEquations is an ArrayList and thus a pointer will be given
+			// that means that the equations will be removed from listOfEquations
+			noRemoveEquations(equationsToRemove, listOfEquations);
+		}
 		
 		return listOfEquations;
 	}
@@ -51,6 +58,20 @@ public class PruneRules {
 	public static void removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
 		for(Equation eq : equationsToRemove) {
 			listOfEquations.remove(eq);
+		}
+	}
+	
+	/**
+	 * @param equationsToRemove
+	 * 			List of equations which should be removed from listOfEquations
+	 * @param listOfEquations
+	 * 			The list of equations where we will remove equations				
+	 * 			The removes will happen in the listOfEquations since a pointer is given this will 
+	 * 			happen (no return needed)
+	 */
+	public static void noRemoveEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
+		for(Equation eq : equationsToRemove) {
+			eq.setProoned(true);
 		}
 	}
 
@@ -171,6 +192,9 @@ public class PruneRules {
 	 * 			False if the equations are not equivalent
 	 */
 	public static boolean areTheseEquationsEquivalent(List<String> eq1, List<String> eq2) {
+		if(eq1.isEmpty() || eq2.isEmpty()) { // TODO Deze check zou niet nodig moeten zijn?
+			return false;
+		}
 		// the first term of an equation should be equivalent
 		if(eq1.get(0).equals(eq2.get(0))) {
 			for(String term : eq1) {
