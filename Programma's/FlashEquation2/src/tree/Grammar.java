@@ -13,10 +13,9 @@ public class Grammar {
 	private static final String nonTerminalRepresentation = "E";
 	
 	/**
-	 * Constructor
-	 * 		This constructor will add all possible operands to operandPossiblities
+	 * 	This method will add all possible operands to operandPossiblities
 	 */
-	public Grammar() {
+	public static void initialize() {
 		// define all the possible operands
 		operandPossibilities.add(new Operand("*", false));
 		operandPossibilities.add(new Operand("/", false));
@@ -33,6 +32,9 @@ public class Grammar {
 	 * 			null if the equation does not start with a nonTerminal
 	 */
 	public static List<Equation> expand(Equation equation) {
+		if(operandPossibilities.isEmpty()) {
+			initialize();
+		}
 		List<Equation> expandedEquations = new ArrayList<Equation>();
 		// we replace the first nonTerminal in the equation
 		Symbol firstSymbol = equation.getListOfSymbols().get(0); // get the first symbol
