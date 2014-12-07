@@ -67,6 +67,7 @@ public class Main {
 	/**
 	 * Evaluates the current equation 
 	 */
+	@SuppressWarnings("unused")
 	private static void evaluate() {
 		HashMap<Equation, ArrayList<String>> sol = evaluation.evaluate(equations);
 		for(ArrayList<String> s : sol.values()) {
