@@ -22,11 +22,11 @@ public class PruneRules {
 		// every equation will be split and added to splitEquations
 		List<List<String>> splitEquations = splitIntoParts(listOfEquations);
 		
-		// Divide the equations by splitLength (to be equal two equations should count the same number of parts)
+		// Divide the equations by splitLength (to be equivalent two equations should count the same number of parts)
 		HashMap<String, List<List<String>>> buckets = divideInBuckets(splitEquations);
 		
-		// Searches in the buckets which equation are equal to another one
-		// every equation of every group of equal equations, except one per group, will be in this list
+		// Searches in the buckets which equation are equivalent to another one
+		// every equation of every group of equivalent equations, except one per group, will be in this list
 		List<String> equationsToRemoveString = searchBuckets(buckets);
 		
 		// Given a list of strings the corresponding equations will be given back
@@ -58,7 +58,7 @@ public class PruneRules {
 	/**
 	 * Given a list of strings the corresponding equations will be given back
 	 * @param listOfEquationsString
-	 * 			A list of equations in String form from who the equal equation needs to be found
+	 * 			A list of equations in String form from who the equivalent equation needs to be found
 	 * @param listOfEquations
 	 * 			A list of equations
 	 * @return
@@ -82,10 +82,10 @@ public class PruneRules {
 
 	/**
 	 * @param buckets
-	 * 			The buckets containing the equations to be checked if they are equal
+	 * 			The buckets containing the equations to be checked if they are equivalent
 	 * @return
-	 * 			A list of equal equations which can be removed
-	 * 			(thus one equation of the equal group will not be in this list)
+	 * 			A list of equivalent equations which can be removed
+	 * 			(thus one equation of the equivalent group will not be in this list)
 	 */
 	private static List<String> searchBuckets(HashMap<String, List<List<String>>> buckets) {
 		List<String> equationsToRemove = new ArrayList<String>();
@@ -94,8 +94,8 @@ public class PruneRules {
 		for(String bucketName : buckets.keySet()) {
 			List<List<String>> bucket = buckets.get(bucketName);
 			
-			// search for equal equations in a given bucket (given by bucketName)
-			List<List<String>> equalEquations = getEqualEqautions(bucket);
+			// search for equivalent equations in a given bucket (given by bucketName)
+			List<List<String>> equalEquations = getEquivalentEqautions(bucket);
 			
 			// generates a String of all equations (At this time the are represented by a List<String>)
 			// The string will then be added to the equationsToRemove
@@ -124,29 +124,29 @@ public class PruneRules {
 
 	/**
 	 * @param bucket
-	 * 			The bucket to be searched for equal equations
+	 * 			The bucket to be searched for equivalent equations
 	 * @return
-	 * 			All the equal equations in the bucket that can be removed
+	 * 			All the equivalent equations in the bucket that can be removed
 	 */
-	private static List<List<String>> getEqualEqautions(List<List<String>> bucket) {
+	private static List<List<String>> getEquivalentEqautions(List<List<String>> bucket) {
 		List<List<String>> equalEquations = new ArrayList<List<String>>();
 		
 		while(bucket.size() >= 2) {
-			List<List<String>> whichToRemove = new ArrayList<List<String>>(); // Contains the indexes of the equations which will be in equalEquation or will have no equals
+			List<List<String>> whichToRemove = new ArrayList<List<String>>(); // Contains the indexes of the equations which will be in equivalentEquation or will have no equivalents
 			List<String> eq1 = bucket.get(0); // get the first Equation in the bucket
-			whichToRemove.add(eq1); // the first equation will never be in equalEquations but it's equals (if they exist) will
+			whichToRemove.add(eq1); // the first equation will never be in equivalentEquations but it's equivalents (if they exist) will
 			
-			// checks which equations still in the bucket are equal to the first one 
+			// checks which equations still in the bucket are equivalent to the first one 
 			for(int i = 1; i < bucket.size(); i++) {
 				List<String> eq2 = bucket.get(i);
-				if(areTheseEquationsEqual(eq1, eq2)) {
+				if(areTheseEquationsEquivalent(eq1, eq2)) {
 					equalEquations.add(eq2);
 					whichToRemove.add(eq2);
 				}
 			}
 			
 			// removes equations from the bucket
-			// this means the first equation and all its equals
+			// this means the first equation and all its equivalents
 			for(List<String> removeEquation : whichToRemove) {
 				bucket.remove(removeEquation);
 			}
@@ -157,9 +157,9 @@ public class PruneRules {
 	
 	
 	/**
-	 * Checks whether two given equations are equal to each other
+	 * Checks whether two given equations are equivalent to each other
 	 * 
-	 * The equations should be of equal length
+	 * The equations should be of equivalent length
 	 * 
 	 * @param eq1
 	 * 			The first equation
@@ -167,11 +167,11 @@ public class PruneRules {
 	 * 			The second equation
 	 * @return
 	 * 			A boolean
-	 * 			True if the equations are equal
-	 * 			False if the equations are not equal
+	 * 			True if the equations are equivalent
+	 * 			False if the equations are not equivalent
 	 */
-	private static boolean areTheseEquationsEqual(List<String> eq1, List<String> eq2) {
-		// the first term of an equation should be equal
+	private static boolean areTheseEquationsEquivalent(List<String> eq1, List<String> eq2) {
+		// the first term of an equation should be equivalent
 		if(eq1.get(0).equals(eq2.get(0))) {
 			for(String term : eq1) {
 				eq2 = equationContainsTerm(term, eq2);

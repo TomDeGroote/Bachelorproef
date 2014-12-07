@@ -51,6 +51,10 @@ public abstract class Symbol {
 		return representation;
 	}
 	
+	/**
+	 * Overrides the equal method
+	 * this method sees if a given symbol and this symbol are equal
+	 */
 	@Override
     public boolean equals(Object obj) {
 		if (!(obj instanceof Symbol))

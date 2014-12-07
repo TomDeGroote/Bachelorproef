@@ -41,5 +41,14 @@ public class SymbolTest {
 		Assert.assertEquals(true, operand.isOperand());
 		Assert.assertEquals(false, operand.isTerminal());
 	}
+	
+	@Test
+	public void isEqual() {
+		Operand o1 = new Operand("*");
+		Operand o2 = new Operand("*");
+		Operand o3 = new Operand("-");
+		Assert.assertEquals(o1, o2);
+		Assert.assertNotEquals(o1, o3);
+	}
 
 }

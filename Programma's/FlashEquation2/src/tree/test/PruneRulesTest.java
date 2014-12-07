@@ -56,8 +56,7 @@ public class PruneRulesTest {
 		List<Equation> expected = new ArrayList<Equation>();
 		expected.add(eq1);
 		List<Equation> actual = PruneRules.representiveEquations(strings, equations);
-		Assert.assertEquals(expected.size(), actual.size());
-		Assert.assertEquals(expected.get(0), actual.get(0));
+		Assert.assertEquals(expected, actual);
 	}
 	
 	
@@ -68,7 +67,8 @@ public class PruneRulesTest {
 	 * 			length if length is odd
 	 * 			length + 1 if length is even
 	 */
-	public Equation generateRandomEquation(int length) {
+	@SuppressWarnings("unused")
+	private Equation generateRandomEquation(int length) {
 		Random randomGenerator = new Random();
 		
 		// generate the input list for the equation
