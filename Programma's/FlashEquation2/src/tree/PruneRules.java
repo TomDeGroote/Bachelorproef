@@ -33,26 +33,25 @@ public class PruneRules {
 		List<Equation> equationsToRemove = representiveEquations(equationsToRemoveString, listOfEquations);
 		
 		// removes the equations to remove
-		List<Equation> prunedListOfEquations = removeEquations(equationsToRemove, listOfEquations);
+		// no return needed since listOfEquations is an ArrayList and thus a pointer will be given
+		// that means that the equations will be removed from listOfEquations
+		removeEquations(equationsToRemove, listOfEquations);
 		
-		return prunedListOfEquations;
+		return listOfEquations;
 	}
 	
 	/**
 	 * @param equationsToRemove
 	 * 			List of equations which should be removed from listOfEquations
 	 * @param listOfEquations
-	 * 			The list of equations where we will remove equations
-	 * @return
-	 * 			A list of equations without the list of removed equations TODO is return wel nodig?
-	 * 
-	 * TODO will this remove the equations from listOfEquation?
+	 * 			The list of equations where we will remove equations				
+	 * 			The removes will happen in the listOfEquations since a pointer is given this will 
+	 * 			happen (no return needed)
 	 */
-	public static List<Equation> removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
+	public static void removeEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
 		for(Equation eq : equationsToRemove) {
 			listOfEquations.remove(eq);
 		}
-		return listOfEquations;
 	}
 
 	/**
@@ -208,35 +207,28 @@ public class PruneRules {
 	/**
 	 * Divides the given list of Equation parts into buckets
 	 * 
-	 * The buckets: nrOfParts_#Multiplications_#Divisions_#Minus
+	 * The buckets: nrOfParts_#OperandOccurrences_
+	 * 			with #OperandOccurrences_ repeated for every operand given by Grammar
 	 * 
 	 * @param splitEquations
 	 * 			List of equation parts
 	 * @return
 	 * 			HashMap containing the buckets (represented by strings) and there content
-	 * 
-	 * TODO make independent of *, / and -
 	 */
 	public static HashMap<String, List<List<String>>> divideInBuckets(List<List<String>> splitEquations) {
 		// initialize place where we will keep the buckets
 		HashMap<String, List<List<String>>> buckets = new HashMap<String, List<List<String>>>();
 		
 		// for every equation see what bucket it belongs to and add it
-		for(List<String> equation : splitEquations) {
-			
+		for(List<String> equation : splitEquations) {	
 			// calculate the name in which bucket this equation will go
-			int nrOfParts = equation.size();
-			int multiplications = 0;
-			int divisions = 0;
-			int minus = 0;
-			for(String part : equation) {
-				multiplications += StringUtils.countMatches(part, "*");
-				divisions += StringUtils.countMatches(part, "/");
-				minus += StringUtils.countMatches(part, "-");
-			}
+			String bucketName = equation.size() + "_"; // the first part will be the number of parts
+			String equationString = createOneStringEquation(equation); // get the complete equation string
 			
-			// create bucket name
-			String bucketName = nrOfParts + "_" + multiplications + "_" + divisions + "_" + minus;
+			// for every possible operand calculate the number of occurrences for the bucket name
+			for(Operand operand : Grammar.getPossibleOperands()) {
+				 bucketName += StringUtils.countMatches(equationString, operand.toString()) + "_";	
+			}
 			
 			// check if bucket name exists
 			// if so add to that bucket else create a new bucket
@@ -280,18 +272,14 @@ public class PruneRules {
 			if(symbol.isNonTerminal()) {
 				temporary += symbol.toString();
 			} else if(symbol.isOperand()) {
-				// TODO make independent of *, /, +, -
-				if(symbol.toString().equals("*") || symbol.toString().equals("/")) {
+				if(!((Operand) symbol).isSplitable()) {
 					temporary += symbol.toString();
-				} else if(symbol.toString().equals("+")){
+				} else {
 					split.add(temporary);
-					temporary = "+";
-				} else if(symbol.toString().equals("-")) {
-					split.add(temporary);
-					temporary = "-";
-				}
+					temporary = symbol.toString();
+				} 
 			} else if(symbol.isTerminal()) {
-				// TODO terminals not supported, are we gonna use them? or say if nonTerminal make Terminal
+				// TODO terminals not supported, are we going use them? or say if nonTerminal becomes Terminal
 				temporary += symbol.toString();
 			}
 		}	

@@ -175,13 +175,13 @@ public class PruneRulesTest {
 		// the expected buckets
 		HashMap<String, List<List<String>>> expected = new HashMap<String, List<List<String>>>();
 		// bucket for eq1 and eq2
-		String eq1AndEq2String = "3_1_0_0";
+		String eq1AndEq2String = "3_1_0_2_0_";
 		List<List<String>> eq1AndEq2 = new ArrayList<List<String>>();
 		eq1AndEq2.add(new ArrayList<String>(split1));
 		eq1AndEq2.add(new ArrayList<String>(split2));
 		expected.put(eq1AndEq2String, eq1AndEq2);
 		// bucket for eq3
-		String eq3String = "2_2_0_1";
+		String eq3String = "2_2_0_0_1_";
 		List<List<String>> eq3 = new ArrayList<List<String>>();
 		eq3.add(new ArrayList<String>(split3));
 		expected.put(eq3String, eq3);
@@ -273,7 +273,8 @@ public class PruneRulesTest {
 		List<Equation> expected = new ArrayList<Equation>();
 		expected.add(eq2);
 		expected.add(eq3);
-		Assert.assertEquals(expected, PruneRules.removeEquations(toRemove, equations));
+		PruneRules.removeEquations(toRemove, equations);
+		Assert.assertEquals(expected, equations);
 	}
 	
 	@Test

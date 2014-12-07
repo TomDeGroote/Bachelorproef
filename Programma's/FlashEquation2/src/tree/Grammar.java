@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Grammar {
 
-	private static List<Operand> operandPossibilities = new ArrayList<Operand>();
+	private static List<Operand> possibleOperands = new ArrayList<Operand>();
 	private static final String nonTerminalRepresentation = "E";
 	
 	/**
@@ -17,10 +17,10 @@ public class Grammar {
 	 */
 	public static void initialize() {
 		// define all the possible operands
-		operandPossibilities.add(new Operand("*", false));
-		operandPossibilities.add(new Operand("/", false));
-		operandPossibilities.add(new Operand("+", true));
-		operandPossibilities.add(new Operand("-", true));
+		possibleOperands.add(new Operand("*", false));
+		possibleOperands.add(new Operand("/", false));
+		possibleOperands.add(new Operand("+", true));
+		possibleOperands.add(new Operand("-", true));
 	}
 	
 	/**
@@ -32,14 +32,14 @@ public class Grammar {
 	 * 			null if the equation does not start with a nonTerminal
 	 */
 	public static List<Equation> expand(Equation equation) {
-		if(operandPossibilities.isEmpty()) {
+		if(possibleOperands.isEmpty()) {
 			initialize();
 		}
 		List<Equation> expandedEquations = new ArrayList<Equation>();
 		// we replace the first nonTerminal in the equation
 		Symbol firstSymbol = equation.getListOfSymbols().get(0); // get the first symbol
 		if(firstSymbol.isNonTerminal()) {
-			for(Operand operand : operandPossibilities) {
+			for(Operand operand : possibleOperands) {
 				// for every possible operand generate the expansion
 				List<Symbol> newSymbols = new ArrayList<Symbol>();
 				newSymbols.add(new NonTerminal(nonTerminalRepresentation));
@@ -56,4 +56,14 @@ public class Grammar {
 		return expandedEquations;
 	}
 	
+	/**
+	 * @return
+	 * 			A list of possible operands
+	 */
+	public static List<Operand> getPossibleOperands() {
+		if(possibleOperands.isEmpty()) {
+			initialize();
+		}
+		return possibleOperands;
+	}
 }
