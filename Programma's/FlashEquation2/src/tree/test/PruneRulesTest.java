@@ -18,6 +18,8 @@ public class PruneRulesTest {
 	
 	Equation eq1;
 	Equation eq2;
+	String eqString1 = "E+E*E+E";
+	String eqString2 = "E+E+E*E";
 	
 	@Before
 	public void setUp() {
