@@ -18,7 +18,7 @@ public class Equation {
 		listOfSymbols = newList;
 		String currentString = "";
 		for(Symbol currentSymbol: this.getListOfSymbols() ){
-			currentString.concat(currentSymbol.symbolToString());
+			currentString.concat(currentSymbol.toString());
 		}
 		this.representation = currentString;
 	}
@@ -27,7 +27,7 @@ public class Equation {
 		listOfSymbols = inputlist;
 		String currentString = "";
 		for(Symbol currentSymbol: this.getListOfSymbols() ) {
-			currentString.concat(currentSymbol.symbolToString());
+			currentString.concat(currentSymbol.toString());
 		}
 		this.representation = currentString;
 	}

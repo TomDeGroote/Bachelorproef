@@ -43,7 +43,8 @@ public abstract class Symbol {
 	 * @return
 	 * 		The representation of the symbol
 	 */
-	public String symbolToString() {
+	@Override
+	public String toString() {
 		return representation;
 	}
 	

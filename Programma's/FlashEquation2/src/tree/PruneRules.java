@@ -58,7 +58,7 @@ public class PruneRules {
 	/**
 	 * Given a list of strings the corresponding equations will be given back
 	 * @param listOfEquationsString
-	 * 			A list of equations in String from who the equal equation needs to be found
+	 * 			A list of equations in String form from who the equal equation needs to be found
 	 * @param listOfEquations
 	 * 			A list of equations
 	 * @return
@@ -67,7 +67,7 @@ public class PruneRules {
 	 * 
 	 * TODO efficiënter schrijven?
 	 */
-	private static List<Equation> representiveEquations(List<String> listOfEquationsString, List<Equation> listOfEquations) {
+	public static List<Equation> representiveEquations(List<String> listOfEquationsString, List<Equation> listOfEquations) {
 		List<Equation> result = new ArrayList<Equation>();
 		for(Equation equation : listOfEquations) {
 			for(String string : listOfEquationsString) {
