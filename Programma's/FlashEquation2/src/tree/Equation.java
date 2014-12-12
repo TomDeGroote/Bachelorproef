@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Represents an equation that can be formed by combining symbols.
@@ -86,6 +87,19 @@ public class Equation implements Serializable {
 				append(listOfSymbols, otherSymbol.listOfSymbols).
 				isEquals();
     }
+	
+	/**
+	 * Overrides the method to create a hash code for this object class
+	 */
+	@Override
+	public int hashCode() {
+       return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+           // if deriving: appendSuper(super.hashCode()).
+           append(listOfSymbols).
+           append(prooned).
+           append(representation).
+           toHashCode();
+	}
 
 
 	public boolean isProoned() {

@@ -3,6 +3,7 @@ package tree;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * A superclass that represents operands, non-terminals and terminals.
@@ -74,5 +75,19 @@ public abstract class Symbol implements Serializable {
 				append(nonTerminal, otherSymbol.nonTerminal).
 				isEquals();
     }
+	
+	/**
+	 * Overrides the method to create a hash code for this object class
+	 */
+	@Override
+	public int hashCode() {
+       return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+           // if deriving: appendSuper(super.hashCode()).
+           append(representation).
+           append(operand).
+           append(terminal).
+           append(nonTerminal).
+           toHashCode();
+	}
 	
 }

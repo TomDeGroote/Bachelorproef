@@ -58,13 +58,38 @@ class CopyOfEvaluate {
 	 * 
 	 * @param eq
 	 */
-	private void evaluateEquation(Equation eq) {
+	private HashMap<Double, List<Equation>> evaluateEquation(Equation eq) {
 		// split in two parts on splitable operand
-		List<Equation> splitEquations = splitInThreeSplitableParts(eq);
-		// evaluate first part
-
-		// evaluate second part
-				
+		List<Equation> splitEquations = splitSplitableInThreeParts(eq);
+		
+		if(splitEquations.size() == 3) {
+			// evaluate first part, index = 0 in splitEquations
+			HashMap<Double, List<Equation>> solutionPart1;
+			int indexPart1 = 0;
+			if(alreadySolved.containsKey(splitEquations.get(indexPart1))) {
+				solutionPart1 = alreadySolved.get(indexPart1);
+			} else {
+				solutionPart1 = evaluateEquation(splitEquations.get(indexPart1));
+			}
+			
+			// evaluate second part, index = 2 in splitEquations
+			HashMap<Double, List<Equation>> solutionPart2;
+			int indexPart2 = 2;
+			if(alreadySolved.containsKey(splitEquations.get(indexPart2))) {
+				solutionPart2 = alreadySolved.get(indexPart2);
+			} else {
+				solutionPart2 = evaluateEquation(splitEquations.get(indexPart2));
+			}
+			
+			// bring results together
+			
+			
+		} else { // size will be 1, can happen when there was no splitable equation f.e. E*E*E
+			// this means the first two symbols (or the first one in case of equation == E)
+			// are not calculated but the rest of the equation has been
+		}	
+		
+		return null;
 	}
 	
 	
@@ -78,11 +103,14 @@ class CopyOfEvaluate {
 	 * 			eq1: first part of eq
 	 * 			eq2: an operand (splitable)
 	 * 			eq3: second part of eq (after operand)
+	 * 		Or a list containing the same equation as given (thus one element)
+	 * 			-> happens when equation did not contain any splitable parts
+	 * 			
 	 * 
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	private List<Equation> splitInThreeSplitableParts(Equation eq) {
+	private List<Equation> splitSplitableInThreeParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
@@ -116,18 +144,13 @@ class CopyOfEvaluate {
 		}
 		
 		// add second part to split
-		split.add(new Equation(seconPart));		
+		if(seconPart.isEmpty()) {
+			// if no parts were added to the second part this means that the first part is not added to split yet
+			split.add(new Equation(firstPart));
+		} else {
+			split.add(new Equation(seconPart));		
+		}
 		
 		return split;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
