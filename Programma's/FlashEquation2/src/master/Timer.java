@@ -12,7 +12,7 @@ public class Timer {
 	
   private long timerStarted; // the time this timer started (in milliseconds)
   private final long LENGTH_TIMER; // in milliseconds
-  
+  private long timeLeftPrevious = 0;
   /**
    * Constructor of the timer
    * @param lengthTimer
@@ -36,8 +36,14 @@ public class Timer {
    */
   public boolean timesUp()  {
      // calculates how much time is left on the timer
-     long timeLeft = LENGTH_TIMER - (System.currentTimeMillis() - timerStarted); 
-     if (timeLeft > 0) {   
+	 long currentTime = System.currentTimeMillis();
+     long timeLeft = LENGTH_TIMER - (currentTime - timerStarted); 
+	 long differencePrevious = (timeLeftPrevious - timeLeft);
+     
+     // smart part
+     // timeNeededEstimate = differencePrevious (instead of 0)  
+     if (timeLeft > differencePrevious) {  
+    	 timeLeftPrevious = timeLeft;
     	 return false;
      }
      return true;
