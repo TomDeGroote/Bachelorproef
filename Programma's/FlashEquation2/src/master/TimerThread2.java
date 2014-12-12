@@ -1,19 +1,20 @@
 package master;
 
+
 /* TimerThread.java
 - Copyright (c) 2014, HerongYang.com, All Rights Reserved.
 */
 
-class TimerThread2 extends Thread {
+public class TimerThread2 extends Thread {
 	
   private final long TIMER_STARTED; // the time this timer started (in milliseconds)
-  private final long LENGTH_TIMER;
+  private final long LENGTH_TIMER; // in milliseconds
   private final static int CLOCK_INTERVAL = 100; // in milliseconds < 1000
   
   /**
    * Constructor of the time thread
    * @param lengthTimer
-   * 		Number of seconds this timer needs to run
+   * 		Number of milliseconds this timer needs to run
    */
   public TimerThread2(int lengthTimer) {
 	  this.LENGTH_TIMER = lengthTimer;
@@ -24,19 +25,16 @@ class TimerThread2 extends Thread {
    * This methods runs the timer
    */
   public void run() {
-     while (!isInterrupted()) {
-        try {
-           sleep(CLOCK_INTERVAL);
-        } catch (InterruptedException e) {
-           break; // the main thread wants this thread to end
-        }
-        
-        // calculates how much time is left on the timer
-        long timeLeft = LENGTH_TIMER - (System.currentTimeMillis() - TIMER_STARTED);
-        if(timeLeft <= 0) {
-        	// if the timeLeft < 0 leave the while loop and thus return
-        	break;
-        }  
+	 long timeLeft = LENGTH_TIMER;
+     while (timeLeft >= 0) {      
+    	 try {
+			Thread.sleep(CLOCK_INTERVAL);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+         // calculates how much time is left on the timer
+         timeLeft = LENGTH_TIMER - (System.currentTimeMillis() - TIMER_STARTED); 
      }
+     throw new NullPointerException(); // TODO vervang door eigen exception
   }
 }

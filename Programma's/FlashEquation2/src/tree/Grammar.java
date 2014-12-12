@@ -66,4 +66,21 @@ public class Grammar {
 		}
 		return possibleOperands;
 	}
+	
+	/**
+	 * @param s
+	 * 		The string to be tested if it is an operand
+	 * @return
+	 * 		True if s is an operand
+	 * 		False if s is not an operand
+	 */
+	public static boolean isOperand(String s) {
+		for(Operand operand : possibleOperands) {
+			if(operand.toString().equals(s)) {
+				return true;
+			}
+		} 
+		return false;
+	}
+	
 }
