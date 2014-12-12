@@ -12,10 +12,12 @@ import java.util.List;
 public class Terminal extends Symbol {
 
 	private static List<Double> columnValues = new  ArrayList<Double>();
+	private final Double value;
 	
-	public Terminal(String terminal) {
+	public Terminal(String terminal, Double value) {
 		super.representation = terminal;
 		super.terminal = true;
+		this.value = value;
 	}
 	
 	/**
@@ -38,12 +40,20 @@ public class Terminal extends Symbol {
 	 * @return
 	 * 		{1, 2, ..., 10}
 	 */
-	public List<Double> getConstants() {
+	public static List<Double> getConstants() {
 		List<Double> constants = new ArrayList<Double>();
 		for(double i = 1; i < 11; i++) {
 			constants.add(i);
 		}
 		return constants;
+	}
+
+	/**
+	 * @return
+	 * 		The value of this terminal
+	 */
+	public Double getValue() {
+		return value;
 	}
 	
 	

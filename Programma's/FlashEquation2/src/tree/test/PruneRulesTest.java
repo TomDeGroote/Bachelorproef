@@ -29,33 +29,33 @@ public class PruneRulesTest {
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true));
+		inputEq1.add(new Operand("+", true,true));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("*", false));
+		inputEq1.add(new Operand("*", false,true));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true));
+		inputEq1.add(new Operand("+", true,true));
 		inputEq1.add(new NonTerminal("E"));
 		eq1 = new Equation(inputEq1);
 		
 		// generate equation 2 E+E+E*E
 		List<Symbol> inputEq2 = new ArrayList<Symbol>();
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("+", true));
+		inputEq2.add(new Operand("+", true,true));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("+", true));
+		inputEq2.add(new Operand("+", true,true));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("*", false));
+		inputEq2.add(new Operand("*", false,true));
 		inputEq2.add(new NonTerminal("E"));
 		eq2 = new Equation(inputEq2);		
 		
 		// generate equation 3 E*E*E-E
 		List<Symbol>inputEq3 = new ArrayList<Symbol>();
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false));
+		inputEq3.add(new Operand("*", false,true));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false));
+		inputEq3.add(new Operand("*", false,true));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("-", true));
+		inputEq3.add(new Operand("-", true,false));
 		inputEq3.add(new NonTerminal("E"));
 		eq3 = new Equation(inputEq3);
 	}
@@ -305,16 +305,16 @@ public class PruneRulesTest {
 			int random = randomGenerator.nextInt(4);
 			switch (random) {
 			case 0:
-				inputEq.add(new Operand("+", true));
+				inputEq.add(new Operand("+", true, true));
 				break;
 			case 1:
-				inputEq.add(new Operand("-", true));
+				inputEq.add(new Operand("-", true, false));
 				break;
 			case 2:
-				inputEq.add(new Operand("*", false));
+				inputEq.add(new Operand("*", false, true));
 				break;
 			case 3:
-				inputEq.add(new Operand("/", false));
+				inputEq.add(new Operand("/", false, false));
 				break;	
 			}
 			// add a nonTerminal

@@ -20,28 +20,28 @@ public class GrammarTest {
 		// E*E
 		List<Symbol> mul = new ArrayList<Symbol>();
 		mul.add(new NonTerminal("E"));
-		mul.add(new Operand("*", false));
+		mul.add(new Operand("*", false,true));
 		mul.add(new NonTerminal("E"));
 		expansion.add(new Equation(mul));
 		
 		// E/E
 		List<Symbol> div = new ArrayList<Symbol>();
 		div.add(new NonTerminal("E"));
-		div.add(new Operand("/", false));
+		div.add(new Operand("/", false,false));
 		div.add(new NonTerminal("E"));
 		expansion.add(new Equation(div));
 		
 		// E+E
 		List<Symbol> sum = new ArrayList<Symbol>();
 		sum.add(new NonTerminal("E"));
-		sum.add(new Operand("+", false));
+		sum.add(new Operand("+", false,true));
 		sum.add(new NonTerminal("E"));
 		expansion.add(new Equation(sum));
 		
 		// E-E
 		List<Symbol> sub = new ArrayList<Symbol>();
 		sub.add(new NonTerminal("E"));
-		sub.add(new Operand("-", false));
+		sub.add(new Operand("-", false,false));
 		sub.add(new NonTerminal("E"));
 		expansion.add(new Equation(sub));
 		

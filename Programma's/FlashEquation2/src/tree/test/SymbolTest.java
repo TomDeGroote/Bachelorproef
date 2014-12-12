@@ -26,16 +26,19 @@ public class SymbolTest {
 	
 	@Test
 	public void terminal() {
-		Terminal terminal = new Terminal("T");
+		Double value = 5.0;
+		Terminal terminal = new Terminal("T", value);
 		Assert.assertEquals("T", terminal.toString());
 		Assert.assertEquals(false, terminal.isNonTerminal());
 		Assert.assertEquals(false, terminal.isOperand());
 		Assert.assertEquals(true, terminal.isTerminal());
+		Assert.assertEquals(value, terminal.getValue());
+
 	}
 	
 	@Test
 	public void operand() {
-		Operand operand = new Operand("*", false);
+		Operand operand = new Operand("*", false, true);
 		Assert.assertEquals("*", operand.toString());
 		Assert.assertEquals(false, operand.isNonTerminal());
 		Assert.assertEquals(true, operand.isOperand());
@@ -44,9 +47,9 @@ public class SymbolTest {
 	
 	@Test
 	public void isEqual() {
-		Operand o1 = new Operand("*", false);
-		Operand o2 = new Operand("*", false);
-		Operand o3 = new Operand("-", true);
+		Operand o1 = new Operand("*", false, true);
+		Operand o2 = new Operand("*", false, true);
+		Operand o3 = new Operand("-", true, false);
 		Assert.assertEquals(o1, o2);
 		Assert.assertNotEquals(o1, o3);
 	}
