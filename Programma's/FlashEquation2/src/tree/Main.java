@@ -79,4 +79,12 @@ public class Main {
 		}
 	}
 	
+	
+	/*
+	 * Returns the filename of tree
+	 */
+	public static String getFileNameTree() {
+		return FILENAME;
+	}
+	
 }
