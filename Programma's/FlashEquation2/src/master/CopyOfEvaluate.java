@@ -20,7 +20,7 @@ class CopyOfEvaluate {
 	private int equationCount = 0;
 	
 	private List<Equation> bufferSolutions = new ArrayList<Equation>();
-	private List<List<Terminal>> examples = new ArrayList<List<Terminal>>();
+	private List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
 	
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
 	
@@ -29,11 +29,11 @@ class CopyOfEvaluate {
 	}
 	
 	/**
-	 * TODO
+	 * evaluate continues to evaluate the tree with every time more and more examples
 	 * @param Ks
 	 * 		List of K's, last element in the list is the desired solution
 	 */
-	public void evaluate(List<Terminal> Ks) {
+	public void evaluate(HashMap<String, Double> Ks) {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		
@@ -48,7 +48,8 @@ class CopyOfEvaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				Equation eq = level.get(equationCount);
-				evaluateEquation(eq); // TODO returned?
+				// add the result of the evaluation of this equation to alreadySolved
+				alreadySolved.put(eq, evaluateEquation(eq));
 			}
 			// Don't forget to reset equationCount after for loop
 			equationCount = 0;
@@ -56,12 +57,15 @@ class CopyOfEvaluate {
 	}
 
 	/**
-	 * 
+	 * Evaluates an equation in all possible ways
 	 * @param eq
+	 * 		The equation to be evaluated
+	 * @return
+	 * 		all possible solutions of this equation
 	 */
 	private HashMap<Double, List<Equation>> evaluateEquation(Equation eq) {
 		if(eq.getListOfSymbols().size() == 1) {
-			
+			// TODO hier worden de K's ingebracht
 		}
 		// split in two parts on splitable operand
 		List<Equation> splitEquations = splitSplitableInThreeParts(eq);
@@ -96,22 +100,123 @@ class CopyOfEvaluate {
 		return concatenateResults(solutionPart1, operand, solutionPart2);
 	}	
 	
+	/**
+	 * Concatenates all possible combinations of the solution for a first equation and a second
+	 * with in between the operand
+	 * @return
+	 * 		The resulting combination
+	 */
 	private HashMap<Double, List<Equation>> concatenateResults(HashMap<Double, List<Equation>> solutionPart1, Operand operand, HashMap<Double, List<Equation>> solutionPart2) {
+		HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();		
+		// loop over every element in hashMap solutionPart1
 		for(Double valueSolution1 : solutionPart1.keySet()) {
 			List<Equation> equationsValue1 = solutionPart1.get(valueSolution1);
+			
+			// loop over every element in hashMap solutionPart2
 			for(Double valueSolution2 : solutionPart2.keySet()) {
 				List<Equation> equationsValue2 = solutionPart2.get(valueSolution2);
-				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, equationsValue2);
+				
+				// All the possible equations when combining part1 and part2
+				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, operand, equationsValue2);
+				
+				// the resulting value
 				Double value = Grammar.getValue(valueSolution1, operand, valueSolution2);
+				
+				// if the value is the value we are looking for, add it to possible solutions
+				addPossibelSolutions(value, equationsValue1_2);
+				
+				// put it in result
+				result.put(value, equationsValue1_2);
 			}
 		}	
-		return null;
+		return result;
 	}
 
-	private List<Equation> concatenateEquationLists(
-			List<Equation> equationsValue1, List<Equation> equationsValue2) {
+	/**
+	 * TODO wow wat een klasse
+	 * @param value
+	 * @param equationsValue1_2
+	 */
+	private void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
+		// extract the value of the first equation
+		if(examples.get(0).get(Master.getNameOfGoalK()) == value) {
+			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
+			// for every example test if there is a possible equation
+			for(HashMap<String, Double> Ks : examples) {
+				List<Equation> newEquationsToCheck = new ArrayList<Equation>();
+				for(Equation equation : equationsToCheck) {
+					List<Symbol> toEvaluateList = new ArrayList<Symbol>();
+					for(Symbol symbol : equation.getListOfSymbols()) {
+						if(symbol.isOperand()) {
+							toEvaluateList.add(symbol);
+						} else if (symbol.isTerminal()) {
+							// no if test containsKey needed
+							// adds the terminal of this example to the equation (indirectly)
+							toEvaluateList.add(new Terminal(symbol.toString(), Ks.get(symbol.toString())));
+						} else {
+							// TODO should never happen
+						}
+					}
+					// generate the resulting equation for the next example
+					Equation equationToEvaluate = new Equation(toEvaluateList);
+					if(evaluateTerminalEquation(equationToEvaluate)) {
+						// is possible solution
+						newEquationsToCheck.add(equationToEvaluate);
+					} else {
+						// is not a possible solution for this equation, do nothing
+					}
+				}
+				// check only equations who are still valid
+				equationsToCheck = newEquationsToCheck;
+			}
+			// all equations who are still in equationsToCheck are possible solutions given the current examples
+			bufferSolutions.addAll(equationsToCheck);
+		}
+		
+	}
+
+	private boolean evaluateTerminalEquation(Equation equationToEvaluate) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	/**
+	 * Concatenates two lists of equations to all possible combinations
+	 * @param equationsValue1
+	 * 			first list containing equations
+	 * @param operand
+	 * 			the operand between the two equations
+	 * @param equationsValue2
+	 * 			second list containing equations
+	 * @return
+	 * 			list with all possible combinations of the two list with in between the operand
+	 * 
+	 * 
+	 * 
+	 * TODO remove possible doubles
+	 */
+	private List<Equation> concatenateEquationLists(List<Equation> equationsValue1, Operand operand, List<Equation> equationsValue2) {
+		List<Equation> result = new ArrayList<Equation>();
+		for(Equation eq1 : equationsValue1) {
+			for(Equation eq2 : equationsValue2) {
+				result.add(concatenateEquations(eq1, operand, eq2));
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Makes an equation which list of symbols will look like:
+	 * 		{eq1.getListOfSymbols, operand, eq2.getListOfSymbols}
+	 * @return
+	 * 		{eq1.getListOfSymbols, operand, eq2.getListOfSymbols}
+	 */
+	private Equation concatenateEquations(Equation eq1, Operand operand, Equation eq2) {
+		List<Symbol> symbolsResult = new ArrayList<Symbol>();
+		symbolsResult.addAll(eq1.getListOfSymbols());
+		symbolsResult.add(operand);
+		symbolsResult.addAll(eq2.getListOfSymbols());
+		return new Equation(symbolsResult);
 	}
 
 	/**

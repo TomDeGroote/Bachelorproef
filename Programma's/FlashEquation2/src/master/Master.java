@@ -110,6 +110,12 @@ public class Master {
 	private static int getInputCount(){
 		return inputCount;
 	}
+
+
+	public static String getNameOfGoalK() {
+		// TODO Auto-generated method stub
+		return "Goal";
+	}
 	
 	
 }
