@@ -55,14 +55,4 @@ class TimerThread extends Thread {
         }
      }
   }
-  public String getClock() {
-     // returning the clock as a string of HH:mm:ss:SSS format
-     GregorianCalendar c = new GregorianCalendar();
-     c.set(Calendar.HOUR_OF_DAY,c_hour);
-     c.set(Calendar.MINUTE,c_minute);
-     c.set(Calendar.SECOND,c_second);
-     c.set(Calendar.MILLISECOND,c_millisecond);
-     SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss:SSS");
-     return f.format(c.getTime());
-  }
 }
