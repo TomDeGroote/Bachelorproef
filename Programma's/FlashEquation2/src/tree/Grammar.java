@@ -83,4 +83,28 @@ public class Grammar {
 		return false;
 	}
 	
+	/**
+	 * @param valueSolution1
+	 * 		A double
+	 * @param operand
+	 * 		the operand
+	 * @param valueSolution2
+	 * 		A double
+	 * @return
+	 * 		result of value1 operand value2
+	 * TODO could also be located in evaluate itself no?
+	 */
+	public static Double getValue(Double value1, Operand operand, Double value2) {
+		if(operand.toString().equals("+")) {
+			return value1 + value2;
+		} else if(operand.toString().equals("-")) {
+			return value1 - value2;
+		} else if(operand.toString().equals("*")) {
+			return value1 * value2;
+		} else if(operand.toString().equals("/")) {
+			return value1 / value2;
+		} else 
+			return 0.0;
+	}
+	
 }
