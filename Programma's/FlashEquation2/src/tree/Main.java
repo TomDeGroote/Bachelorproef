@@ -53,17 +53,19 @@ public class Main {
 		
 		try {
 			for(int i = 0; i < nrOfLevels; i++) {
-				System.out.println("Level " + (i+1));
+				System.out.print("#Levels: " + (i+1) +" => started ");
 				// creates a prooned tree with i levels and times it
 				long timeStarted = System.currentTimeMillis();
 				treeProoned = new Tree(i+1, true);
 				long timeNeededProoned = System.currentTimeMillis() - timeStarted;
 				
+				System.out.print('.');
 				// creates a non prooned tree with i levels and times it
 				timeStarted = System.currentTimeMillis();
 				treeNotProoned = new Tree(i+1, false);
 				long timeNeededNotProoned = System.currentTimeMillis() - timeStarted;
 				
+				System.out.print(". ");
 				// will add information about the time needed to calculate a tree of 
 				timeNeeded += 	" ---------------------\n" +
 								"| Number of Levels: " + (i+1) + " |\n" + 
@@ -83,6 +85,7 @@ public class Main {
 								"Not Prooned:       " + treeNotProoned.getTree().get(i).size() + "\n\n" +
 								"Total Prooned:     " + totalElementsProoned + "\n" +
 								"Total Not Prooned: " + totalElementsNotProoned + "\n\n";
+				System.out.println("= Done in " + (timeNeededProoned+timeNeededNotProoned) + "ms");
 			}
 		} catch (Error e) {
 			e.printStackTrace();
