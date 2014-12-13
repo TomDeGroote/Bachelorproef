@@ -18,6 +18,8 @@ public class Master {
 	private static Evaluate evaluation; // contains the evaluation class
 	private static Terminal terminal;
 	
+	private static Timer timer = new Timer(100);
+	
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		
@@ -113,8 +115,18 @@ public class Master {
 
 
 	public static String getNameOfGoalK() {
-		// TODO Auto-generated method stub
 		return "Goal";
+	}
+	
+	/**
+	 * Method used to check if there is still time on the clock
+	 * 
+	 * @return
+	 * 		True if the there is no more time left
+	 * 		False if there is time left
+	 */
+	public static boolean timesUp() {
+		return timer.timesUp();
 	}
 	
 	

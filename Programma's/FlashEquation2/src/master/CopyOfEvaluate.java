@@ -11,7 +11,12 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-class CopyOfEvaluate {
+// TODO make it stop 
+// TODO master check solutionspace
+// TODO master write away bufferSolutions
+// TODO boom efficienter laten zoeken bv K1*K2 en K2*K1 komen nog voor
+// TODO master voorkeur geven aan vergelijking die meerdere Ks bevatten
+public class CopyOfEvaluate {
 	
 	private final List<List<Equation>> TREE;
 
@@ -19,8 +24,8 @@ class CopyOfEvaluate {
 	private int equationCount = 0;
 	
 	private List<Equation> bufferSolutions = new ArrayList<Equation>();
-	private List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
-	
+	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
+	private boolean bufferRead = true;
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
 	
 	/**
@@ -33,13 +38,26 @@ class CopyOfEvaluate {
 	}
 	
 	/**
+	 * @return
+	 * 		All solutions in buffered solutions
+	 * 		With the next evaluate run this buffer will be cleaned
+	 */
+	public List<Equation> getBufferSolutions() {
+		bufferRead = true;
+		return bufferSolutions;
+	}
+	
+	/**
 	 * evaluate continues to evaluate the tree with every time more and more examples
 	 * @param Ks
 	 * 		List of K's, last element in the list is the desired solution
 	 */
 	public void evaluate(HashMap<String, Double> Ks) {
-		// empty the buffer containing solutions
-		bufferSolutions = new ArrayList<Equation>();
+		if(bufferRead) {
+			// empty the buffer containing solutions
+			bufferSolutions = new ArrayList<Equation>();
+			bufferRead = false;
+		}
 		
 		// add current example to examples list
 		examples.add(Ks);
@@ -51,9 +69,15 @@ class CopyOfEvaluate {
 			List<Equation> level =  TREE.get(levelCount);
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
-				Equation eq = level.get(equationCount);
-				// add the result of the evaluation of this equation to alreadySolved
-				alreadySolved.put(eq, evaluateEquation(eq));
+				// keep running while master decides we need to keep going
+				if(!Master.timesUp()) {
+					Equation eq = level.get(equationCount);
+					// add the result of the evaluation of this equation to alreadySolved
+					alreadySolved.put(eq, evaluateEquation(eq));
+				} else {
+					// return when terminated
+					return;
+				}
 			}
 			// Don't forget to reset equationCount after for loop
 			equationCount = 0;
@@ -155,15 +179,16 @@ class CopyOfEvaluate {
 	}
 
 	/**
-	 * Checks if an value is a possible solution for every example already given
+	 * Checks if the value is a possible solution for the first example
+	 * an if so if the equations are a solution for every example already given
 	 * @param value
-	 * 			The value that was calculated
+	 * 			The value that was calculated for the first example
 	 * @param equationsValue1_2
-	 * 			The possible equations that create this value
+	 * 			The possible equations that create this value for the first example
 	 */
 	public void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
 		// extract the value of the first equation
-		if(examples.get(0).get(Master.getNameOfGoalK()) == value) {
+		if(examples.get(0).get(Master.getNameOfGoalK()).equals(value)) {
 			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
 			// for every example test if there is a possible equation
 			for(HashMap<String, Double> Ks : examples) {
@@ -234,7 +259,7 @@ class CopyOfEvaluate {
 		for(int i = 0; i < operands.size(); i++) {
 			result = Grammar.getValue(result, operands.get(i), valueTerms.get(i+1));
 		}
-		return result == goal;
+		return result.equals(goal);
 	}
 	
 	/**
@@ -410,7 +435,7 @@ class CopyOfEvaluate {
 		}
 		
 		// start copying to second part
-		for(; i < eqSymbols.size(); i++) {
+		for(i++; i < eqSymbols.size(); i++) {
 			seconPart.add(eqSymbols.get(i));
 		}
 		
