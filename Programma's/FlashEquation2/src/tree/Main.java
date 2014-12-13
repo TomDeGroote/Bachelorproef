@@ -53,46 +53,59 @@ public class Main {
 		
 		try {
 			for(int i = 0; i < nrOfLevels; i++) {
-				System.out.print("#Levels: " + (i+1) +" => started ");
+				int iNot = i;
+				System.out.print("#Levels: " + (i+1) +" => Started");
 				// creates a prooned tree with i levels and times it
 				long timeStarted = System.currentTimeMillis();
 				treeProoned = new Tree(i+1, true);
-				long timeNeededProoned = System.currentTimeMillis() - timeStarted;
+				long timeNeededProoned = System.currentTimeMillis() - timeStarted;			
+				// calculates the total elements in a tree of size i
+				totalElementsProoned += treeProoned.getTree().get(i).size();
 				
-				System.out.print('.');
-				// creates a non prooned tree with i levels and times it
-				timeStarted = System.currentTimeMillis();
-				treeNotProoned = new Tree(i+1, false);
-				long timeNeededNotProoned = System.currentTimeMillis() - timeStarted;
+				long timeNeededNotProoned = 0;
+				if(i < 9) {
+					System.out.print("..");
+					// creates a non prooned tree with i levels and times it
+					timeStarted = System.currentTimeMillis();
+					treeNotProoned = new Tree(i+1, false);
+					timeNeededNotProoned = System.currentTimeMillis() - timeStarted;
+					totalElementsNotProoned += treeNotProoned.getTree().get(i).size();
+				} else {
+					iNot = 0;
+				}
 				
-				System.out.print(". ");
+				System.out.print(".. ");
 				// will add information about the time needed to calculate a tree of 
 				timeNeeded += 	" ---------------------\n" +
 								"| Number of Levels: " + (i+1) + " |\n" + 
 								" ---------------------\n" +
 								"Prooned:     " + (timeNeededProoned) + "ms\n" +
 								"Not Prooned: " + (timeNeededNotProoned) + "ms\n\n";
-		
-				// calculates the total elements in a tree of size i
-				totalElementsProoned += treeProoned.getTree().get(i).size();
-				totalElementsNotProoned += treeNotProoned.getTree().get(i).size();
+
 				
 				// will add information about the size of the current level and the size of the tree
 				nrOfElements += " ---------------------\n" + 
 								"| Number of Levels: " + (i+1) + " |\n" + 
 								" ---------------------\n" +
 								"Prooned:           " + treeProoned.getTree().get(i).size() + "\n" +
-								"Not Prooned:       " + treeNotProoned.getTree().get(i).size() + "\n\n" +
+								"Not Prooned:       " + treeNotProoned.getTree().get(iNot).size() + "\n\n" +
 								"Total Prooned:     " + totalElementsProoned + "\n" +
 								"Total Not Prooned: " + totalElementsNotProoned + "\n\n";
-				System.out.println("= Done in " + (timeNeededProoned+timeNeededNotProoned) + "ms");
+				System.out.println(" Done in " + (timeNeededProoned+timeNeededNotProoned) + "ms");
 				
 				// Write some temporary results, so we can stop the process and still have results
+				// Writing these things takes a lot of time for big trees
+				System.out.print("           => Writing");
 				writeToFile(timeNeeded, "Time Needed");
+				System.out.print(".");
 				writeToFile(nrOfElements, "Nr Of Elements");
+				System.out.print(".");
 				writeTree(treeProoned); // writes tree object of current calculated thing
+				System.out.print(".");
 				writeToFile(treeProoned.toString(), "Tree Prooned");
+				System.out.print(".");
 				writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
+				System.out.println("  Done");
 			}
 		} catch (Error e) {
 			e.printStackTrace();
@@ -130,9 +143,6 @@ public class Main {
 		BufferedWriter writer = null;
         try {
             File file = new File(fileName);
-
-            // This will output the full path where the file will be written to...
-            System.out.println(file.getCanonicalPath());
 
             writer = new BufferedWriter(new FileWriter(file));
             writer.write(s);
