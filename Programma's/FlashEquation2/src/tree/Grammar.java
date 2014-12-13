@@ -11,7 +11,7 @@ public class Grammar {
 
 	private static List<Operand> possibleOperands = new ArrayList<Operand>();
 	private static final String nonTerminalRepresentation = "E";
-	
+
 	/**
 	 * 	This method will add all possible operands to operandPossiblities
 	 */
@@ -22,7 +22,7 @@ public class Grammar {
 		possibleOperands.add(new Operand("+", true, true));
 		possibleOperands.add(new Operand("-", true, false));
 	}
-	
+
 	/**
 	 * This method expands a given equation
 	 * @param equation
@@ -55,7 +55,7 @@ public class Grammar {
 		}	
 		return expandedEquations;
 	}
-	
+
 	/**
 	 * @return
 	 * 			A list of possible operands
@@ -66,7 +66,7 @@ public class Grammar {
 		}
 		return possibleOperands;
 	}
-	
+
 	/**
 	 * @param s
 	 * 		The string to be tested if it is an operand
@@ -82,7 +82,7 @@ public class Grammar {
 		} 
 		return false;
 	}
-	
+
 	/**
 	 * @param valueSolution1
 	 * 		A double
@@ -106,5 +106,47 @@ public class Grammar {
 		} else 
 			return 0.0;
 	}
-	
+
+	/**
+	 * @param valueSolution1
+	 * 		A double
+	 * @param string
+	 * 		the operand
+	 * @param valueSolution2
+	 * 		A double
+	 * @return
+	 * 		result of value1 operand value2
+	 * TODO could also be located in evaluate itself no?
+	 */
+	public static Double getValue(Double value1, String operand, Double value2) {
+		if(operand.equals("+")) {
+			return value1 + value2;
+		} else if(operand.equals("-")) {
+			return value1 - value2;
+		} else if(operand.equals("*")) {
+			return value1 * value2;
+		} else if(operand.equals("/")) {
+			return value1 / value2;
+		} else 
+			return 0.0;
+	}
+
+	/**
+	 * @param str
+	 * 		The string to be tested if it is a splittable operand
+	 * @return
+	 * 		True if s is a splittable operand
+	 * 		False if s is not a splittable operand
+	 */
+	public static boolean isSplittableOperand(String str) {
+
+		for(Operand operand : possibleOperands) {
+			if(operand.toString().equals(str) && operand.isSplitable()) {
+				return true;
+			}
+		} 
+		return false;
+
+	}
+
 }
