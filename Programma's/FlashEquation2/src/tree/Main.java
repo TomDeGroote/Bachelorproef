@@ -74,7 +74,7 @@ public class Main {
 					iNot = 0;
 				}
 				
-				System.out.print(".. ");
+				System.out.print("... ");
 				// will add information about the time needed to calculate a tree of 
 				timeNeeded += 	" ---------------------\n" +
 								"| Number of Levels: " + (i+1) + " |\n" + 
@@ -105,7 +105,7 @@ public class Main {
 				writeToFile(treeProoned.toString(), "Tree Prooned");
 				System.out.print(".");
 				writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
-				System.out.println("  Done");
+				System.out.println(".  Done");
 			}
 		} catch (Error e) {
 			e.printStackTrace();
