@@ -63,8 +63,8 @@ public class Main {
 				totalElementsProoned += treeProoned.getTree().get(i).size();
 				
 				long timeNeededNotProoned = 0;
-				if(i < 9) {
-					System.out.print("..");
+				System.out.print("..");
+				if(i < 8) {
 					// creates a non prooned tree with i levels and times it
 					timeStarted = System.currentTimeMillis();
 					treeNotProoned = new Tree(i+1, false);
@@ -100,7 +100,7 @@ public class Main {
 				System.out.print(".");
 				writeToFile(nrOfElements, "Nr Of Elements");
 				System.out.print(".");
-				writeTree(treeProoned); // writes tree object of current calculated thing
+				writeTree(treeProoned); // writes tree object of current calculated thing, takes a lot of time
 				System.out.print(".");
 				if(i < 6) // only write tree to string for the first 5 levels
 					writeToFile(treeProoned.toString(), "Tree Prooned");
