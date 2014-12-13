@@ -86,15 +86,17 @@ public class Main {
 								"Total Prooned:     " + totalElementsProoned + "\n" +
 								"Total Not Prooned: " + totalElementsNotProoned + "\n\n";
 				System.out.println("= Done in " + (timeNeededProoned+timeNeededNotProoned) + "ms");
+				
+				// Write some temporary results, so we can stop the process and still have results
+				writeToFile(timeNeeded, "Time Needed");
+				writeToFile(nrOfElements, "Nr Of Elements");
+				writeTree(treeProoned); // writes tree object of current calculated thing
+				writeToFile(treeProoned.toString(), "Tree Prooned");
+				writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
 			}
 		} catch (Error e) {
 			e.printStackTrace();
 		} finally {
-			writeToFile(timeNeeded, "Time Needed");
-			writeToFile(nrOfElements, "Nr Of Elements");
-			writeToFile(treeProoned.toString(), "Tree Prooned");
-			writeTree(treeProoned); // writes tree object of largest tree calculatable
-			writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
 			System.out.println("Done");
 		}
 	}
