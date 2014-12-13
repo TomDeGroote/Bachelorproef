@@ -1,10 +1,4 @@
 package master;
-
-/* TimerThread.java
-- Copyright (c) 2014, HerongYang.com, All Rights Reserved.
-*/
-import java.util.*;
-import java.text.*;
 class TimerThread extends Thread {
   private int c_millisecond, c_second, c_minute, c_hour;
   private static int clock_interval = 100; // in milliseconds < 1000
@@ -17,7 +11,8 @@ class TimerThread extends Thread {
         c_millisecond = 0;
 
   }
-  public void run() {
+  @Override
+public void run() {
      while (!isInterrupted()) {
         try {
            sleep(clock_interval);

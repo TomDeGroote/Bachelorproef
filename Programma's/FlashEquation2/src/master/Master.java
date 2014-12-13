@@ -1,7 +1,9 @@
 package master;
 
 import java.util.*;
+
 import com.fathzer.soft.javaluator.DoubleEvaluator;
+
 import tree.*;
 
 
@@ -31,7 +33,7 @@ public class Master {
 		double mainGoal = columnValues.remove(columnValues.size()-1);
 
 		terminal = new Terminal("Master");
-		terminal.setColumnValues(columnValues);
+		Terminal.setColumnValues(columnValues);
 		evaluation = new Evaluate(mainGoal,terminal); 
 		
 		TimerThread timer = new TimerThread(5);
@@ -48,7 +50,7 @@ public class Master {
         	
         	
         	try {
-                timer.sleep(1);
+                Thread.sleep(1);
              } catch (InterruptedException e) {
                 System.out.println("Interrupted.");
              }

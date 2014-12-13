@@ -309,10 +309,6 @@ public class PruneRules {
 		}	
 		split.add(temporary); // adds the final term
 		return split;
-	}
-	
-	
-	
-	
+	}	
 
 }

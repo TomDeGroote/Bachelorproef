@@ -14,9 +14,10 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int NROFLEVELS = 3;
+	private static final int NROFLEVELS = 20;
 	private static final String FILENAME = "tree";
 	private static final boolean REMOVEPRUNED = true;
+	private static final boolean EXECUTE_STATISTICS = true;
 	/**
 	 * Main method of the tree-program
 	 * 
@@ -24,9 +25,75 @@ public class Main {
 	 * when the tree is build it will be written to a file (as an object)
 	 */
 	public static void main(String[] args) {
-		Tree tree = new Tree(NROFLEVELS, REMOVEPRUNED);
-		printTree(tree);
-		writeTree(tree);
+		if(EXECUTE_STATISTICS) {
+			mainStatistics(NROFLEVELS);
+		} else {
+			Tree tree = new Tree(NROFLEVELS, REMOVEPRUNED);
+			printTreeToFile(tree);
+			writeTree(tree);
+		}
+	}
+	
+	/**
+	 * Executes some statistics for a tree of a number of levels and all trees smaller than this number of levels
+	 * 
+	 * Calculates elements per level and the total in the tree for prooned and non prooned
+	 * The time it takes to calculate a tree of a given level prooned and non prooned
+	 * 
+	 * These statistics will be written to files named Nr Of Elements and Time Needed
+	 */
+	public static void mainStatistics(int nrOfLevels) {
+		String timeNeeded = "";
+		String nrOfElements = "";
+		
+		Tree treeProoned = null;
+		Tree treeNotProoned = null;
+		int totalElementsProoned = 0;
+		int totalElementsNotProoned = 0;
+		
+		try {
+			for(int i = 0; i < nrOfLevels; i++) {
+				System.out.println("Level " + (i+1));
+				// creates a prooned tree with i levels and times it
+				long timeStarted = System.currentTimeMillis();
+				treeProoned = new Tree(i+1, true);
+				long timeNeededProoned = System.currentTimeMillis() - timeStarted;
+				
+				// creates a non prooned tree with i levels and times it
+				timeStarted = System.currentTimeMillis();
+				treeNotProoned = new Tree(i+1, false);
+				long timeNeededNotProoned = System.currentTimeMillis() - timeStarted;
+				
+				// will add information about the time needed to calculate a tree of 
+				timeNeeded += 	" ---------------------\n" +
+								"| Number of Levels: " + (i+1) + " |\n" + 
+								" ---------------------\n" +
+								"Prooned:     " + (timeNeededProoned) + "ms\n" +
+								"Not Prooned: " + (timeNeededNotProoned) + "ms\n\n";
+		
+				// calculates the total elements in a tree of size i
+				totalElementsProoned += treeProoned.getTree().get(i).size();
+				totalElementsNotProoned += treeNotProoned.getTree().get(i).size();
+				
+				// will add information about the size of the current level and the size of the tree
+				nrOfElements += " ---------------------\n" + 
+								"| Number of Levels: " + (i+1) + " |\n" + 
+								" ---------------------\n" +
+								"Prooned:           " + treeProoned.getTree().get(i).size() + "\n" +
+								"Not Prooned:       " + treeNotProoned.getTree().get(i).size() + "\n\n" +
+								"Total Prooned:     " + totalElementsProoned + "\n" +
+								"Total Not Prooned: " + totalElementsNotProoned + "\n\n";
+			}
+		} catch (Error e) {
+			e.printStackTrace();
+		} finally {
+			writeToFile(timeNeeded, "Time Needed");
+			writeToFile(nrOfElements, "Nr Of Elements");
+			writeToFile(treeProoned.toString(), "Tree Prooned");
+			writeTree(treeProoned); // writes tree object of largest tree calculatable
+			writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
+			System.out.println("Done");
+		}
 	}
 	
 	/**
@@ -43,16 +110,27 @@ public class Main {
 	 * @param tree
 	 * 			the tree to be written to a text file
 	 */
-	private static void printTree(Tree tree) {
-        BufferedWriter writer = null;
+	private static void printTreeToFile(Tree tree) {
+        writeToFile(tree.toString(), FILENAME);
+    }
+	
+	/**
+	 * Writes a given string s to a file named fileName
+	 * @param s
+	 * 		The string to be written
+	 * @param fileName
+	 * 		The file name where the string s will be written
+	 */
+	private static void writeToFile(String s, String fileName) {
+		BufferedWriter writer = null;
         try {
-            File treeText = new File("TreeText");
+            File file = new File(fileName);
 
             // This will output the full path where the file will be written to...
-            System.out.println(treeText.getCanonicalPath());
+            System.out.println(file.getCanonicalPath());
 
-            writer = new BufferedWriter(new FileWriter(treeText));
-            writer.write(tree.toString());
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(s);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -62,7 +140,7 @@ public class Main {
             } catch (Exception e) {
             }
         }
-    }
+	}
 	
 	/**
 	 * Writes the created tree to a file (name is given as a constant fileName)
