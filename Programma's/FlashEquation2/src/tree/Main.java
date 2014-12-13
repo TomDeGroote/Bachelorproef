@@ -102,9 +102,11 @@ public class Main {
 				System.out.print(".");
 				writeTree(treeProoned); // writes tree object of current calculated thing
 				System.out.print(".");
-				writeToFile(treeProoned.toString(), "Tree Prooned");
+				if(i < 6) // only write tree to string for the first 5 levels
+					writeToFile(treeProoned.toString(), "Tree Prooned");
 				System.out.print(".");
-				writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
+				if(i < 6) // only write tree to string for the first 5 levels
+					writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
 				System.out.println(".  Done");
 			}
 		} catch (Error e) {
