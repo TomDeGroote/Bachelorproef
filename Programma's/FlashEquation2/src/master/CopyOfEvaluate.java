@@ -13,7 +13,6 @@ import tree.Tree;
 
 class CopyOfEvaluate {
 	
-	
 	private final List<List<Equation>> TREE;
 
 	private int levelCount = 0;
@@ -24,6 +23,11 @@ class CopyOfEvaluate {
 	
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
 	
+	/**
+	 * Constructor of Evaluate
+	 * @param tree
+	 * 		The tree where evaluate will be working on
+	 */
 	public CopyOfEvaluate(Tree tree) {
 		this.TREE = tree.getTree();
 	}
@@ -63,10 +67,28 @@ class CopyOfEvaluate {
 	 * @return
 	 * 		all possible solutions of this equation
 	 */
-	private HashMap<Double, List<Equation>> evaluateEquation(Equation eq) {
+	public HashMap<Double, List<Equation>> evaluateEquation(Equation eq) {
+		// Here the size will be 1, Thus the equation will just be E
 		if(eq.getListOfSymbols().size() == 1) {
-			// TODO hier worden de K's ingebracht
+			HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();
+			for(String K : examples.get(0).keySet()) {
+				if(K.equals(Master.getNameOfGoalK())) {
+					// do not make an possible equation for this
+				} else {
+					// create the basic structure for later
+					// Thus calculate an equation T for the K value
+					// Put that in a list with equations
+					// and put that list with the value of the equation in the result
+					List<Equation> kEquation = new ArrayList<Equation>();
+					List<Symbol> terminalK = new ArrayList<Symbol>();
+					terminalK.add(new Terminal(K, examples.get(0).get(K)));
+					kEquation.add(new Equation(terminalK));
+					result.put(examples.get(0).get(K), kEquation);
+				}
+			}
+			return result;
 		}
+		
 		// split in two parts on splitable operand
 		List<Equation> splitEquations = splitSplitableInThreeParts(eq);
 		HashMap<Double, List<Equation>> solutionPart1;
@@ -106,7 +128,7 @@ class CopyOfEvaluate {
 	 * @return
 	 * 		The resulting combination
 	 */
-	private HashMap<Double, List<Equation>> concatenateResults(HashMap<Double, List<Equation>> solutionPart1, Operand operand, HashMap<Double, List<Equation>> solutionPart2) {
+	public HashMap<Double, List<Equation>> concatenateResults(HashMap<Double, List<Equation>> solutionPart1, Operand operand, HashMap<Double, List<Equation>> solutionPart2) {
 		HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();		
 		// loop over every element in hashMap solutionPart1
 		for(Double valueSolution1 : solutionPart1.keySet()) {
@@ -133,11 +155,13 @@ class CopyOfEvaluate {
 	}
 
 	/**
-	 * TODO wow wat een klasse
+	 * Checks if an value is a possible solution for every example already given
 	 * @param value
+	 * 			The value that was calculated
 	 * @param equationsValue1_2
+	 * 			The possible equations that create this value
 	 */
-	private void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
+	public void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
 		// extract the value of the first equation
 		if(examples.get(0).get(Master.getNameOfGoalK()) == value) {
 			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
@@ -159,7 +183,7 @@ class CopyOfEvaluate {
 					}
 					// generate the resulting equation for the next example
 					Equation equationToEvaluate = new Equation(toEvaluateList);
-					if(evaluateTerminalEquation(equationToEvaluate)) {
+					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(Master.getNameOfGoalK()))) {
 						// is possible solution
 						newEquationsToCheck.add(equationToEvaluate);
 					} else {
@@ -175,9 +199,88 @@ class CopyOfEvaluate {
 		
 	}
 
-	private boolean evaluateTerminalEquation(Equation equationToEvaluate) {
-		// TODO Auto-generated method stub
-		return false;
+	/**
+	 * Evaluates if a equation containing only terminals equals the goal
+	 * @param equationToEvaluate
+	 * 			The equation to evaluate
+	 * @param goal
+	 * 			The goal that should be met
+	 * @return
+	 * 			True if the goal is met
+	 * 			False if the goal is not met
+	 */
+	public boolean evaluateTerminalEquation(Equation equationToEvaluate, Double goal) {
+		// first split on every equation
+		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
+		
+		// second evaluate every term
+		// the values of the terms and operands need to be read in the same order
+		List<Double> valueTerms = new ArrayList<Double>();
+		List<Operand> operands = new ArrayList<Operand>();
+		for(List<Symbol> term : terms) {
+			if(term.size() == 1) { // or operand or T
+				if(term.get(0).isOperand()) {
+					operands.add((Operand) term.get(0)); // in case of operand, save operand
+				} else {
+					valueTerms.add(((Terminal) term.get(0)).getValue()); // in case of T, save value of terminal
+				}
+			} else {
+				valueTerms.add(calculateTerm(term));
+			}
+		}
+		
+		// calculate the concatenation of the terms
+		Double result = valueTerms.get(0);
+		for(int i = 0; i < operands.size(); i++) {
+			result = Grammar.getValue(result, operands.get(i), valueTerms.get(i+1));
+		}
+		return result == goal;
+	}
+	
+	/**
+	 * Calculates the value of a term (thus containing only nonSplitable parts
+	 * @param term
+	 * 		The term to be evaluated
+	 * 		Contains only non splitable operands
+	 * 		Starts with an Terminal then a Operand then a Terminal and so on...
+	 * @return
+	 * 		The value of the term
+	 */
+	public Double calculateTerm(List<Symbol> term) {
+		Double result = ((Terminal) term.get(0)).getValue();
+		for(int i = 1; i < term.size(); i = i+2) {
+			result = Grammar.getValue(result, (Operand) term.get(i), ((Terminal) term.get(i+1)).getValue());
+		}
+		return result;
+	}
+
+	/**
+	 * E+E*E
+	 * -> {E, +, E*E}
+	 * @param equation
+	 * 			Equation containing only terminals to be split
+	 * @return
+	 */
+	public List<List<Symbol>> splitOnEverySplitable(Equation equation) {
+		List<List<Symbol>> result = new ArrayList<List<Symbol>>();
+		List<Symbol> term = new ArrayList<Symbol>();
+		for(Symbol symbol : equation.getListOfSymbols()) {
+			if(symbol.isTerminal()) {
+				term.add(symbol);
+			} else {
+				if(((Operand) symbol).isSplitable()) {
+					result.add(new ArrayList<Symbol>(term));
+					term = new ArrayList<Symbol>();
+					term.add(symbol);
+					result.add(new ArrayList<Symbol>(term));
+					term = new ArrayList<Symbol>();
+				} else {
+					term.add(symbol);
+				}
+			}
+		}
+		result.add(term);
+		return result;
 	}
 
 	/**
@@ -195,7 +298,7 @@ class CopyOfEvaluate {
 	 * 
 	 * TODO remove possible doubles
 	 */
-	private List<Equation> concatenateEquationLists(List<Equation> equationsValue1, Operand operand, List<Equation> equationsValue2) {
+	public List<Equation> concatenateEquationLists(List<Equation> equationsValue1, Operand operand, List<Equation> equationsValue2) {
 		List<Equation> result = new ArrayList<Equation>();
 		for(Equation eq1 : equationsValue1) {
 			for(Equation eq2 : equationsValue2) {
@@ -211,7 +314,7 @@ class CopyOfEvaluate {
 	 * @return
 	 * 		{eq1.getListOfSymbols, operand, eq2.getListOfSymbols}
 	 */
-	private Equation concatenateEquations(Equation eq1, Operand operand, Equation eq2) {
+	public Equation concatenateEquations(Equation eq1, Operand operand, Equation eq2) {
 		List<Symbol> symbolsResult = new ArrayList<Symbol>();
 		symbolsResult.addAll(eq1.getListOfSymbols());
 		symbolsResult.add(operand);
@@ -235,7 +338,7 @@ class CopyOfEvaluate {
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	private List<Equation> splitNonSplitableInThreeParts(Equation eq) {
+	public List<Equation> splitNonSplitableInThreeParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
@@ -278,7 +381,7 @@ class CopyOfEvaluate {
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	private List<Equation> splitSplitableInThreeParts(Equation eq) {
+	public List<Equation> splitSplitableInThreeParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
