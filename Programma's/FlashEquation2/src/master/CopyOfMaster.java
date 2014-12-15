@@ -84,28 +84,43 @@ public class CopyOfMaster {
 
 
 	/**
-	 * Prints the best solution
-	 * Or the one who contains all smallest K's or if no one contains all K's the smallest one
+	 * Prints the solution containing all Ks and is the smallest or
+	 * prints the solution containing the most nr of Ks
 	 */
 	private static void returnBestSolution() {
-		boolean printed = false;
+		Equation bestSolution = null; // variable to remember best solution
+		int nrOfKeys = 0; // variable to remember nr of Ks in best solution
+		
+		// check every solution in solutionSpace
 		for(Equation eq : solutionSpace) {
 			boolean containsAll = true;
+			int temp = 0;
+			
+			// check how many Ks this solution contains
 			for(String K : example.keySet()) {
 				if(!K.equals(Master.getNameOfGoalK())) {
 					if(!eq.toString().contains(K)) {
+						temp++;
 						containsAll = false;
 					}
 				}
 			}
+			
+			// if this solution contains more Ks than the previous one, remember this one
+			if(temp > nrOfKeys) {
+				nrOfKeys = temp;
+				bestSolution = eq;
+			}
+			
+			// if this solution contains all Ks, this will be the best solution
 			if(containsAll) {
-				System.out.println(eq.toString());
-				printed = true;
+				bestSolution = eq;
 				break;
 			}
 		}
-		if(!printed && solutionSpace.size() > 0)
-			System.out.println(solutionSpace.get(0));
+		// print the best solution
+		if(!(bestSolution == null) && solutionSpace.size() > 0)
+			System.out.println(bestSolution);
 	}
 	/**
 	 * @return
