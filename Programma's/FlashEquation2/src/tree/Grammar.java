@@ -92,7 +92,6 @@ public class Grammar {
 	 * 		A double
 	 * @return
 	 * 		result of value1 operand value2
-	 * TODO could also be located in evaluate itself no?
 	 */
 	public static Double getValue(Double value1, Operand operand, Double value2) {
 		if(operand.toString().equals("+")) {
@@ -116,7 +115,6 @@ public class Grammar {
 	 * 		A double
 	 * @return
 	 * 		result of value1 operand value2
-	 * TODO could also be located in evaluate itself no?
 	 */
 	public static Double getValue(Double value1, String operand, Double value2) {
 		if(operand.equals("+")) {

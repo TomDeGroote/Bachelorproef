@@ -13,12 +13,13 @@ public class Input {
 	private List<HashMap<String, Double>> inputList;
 	
 	/**
-	 * TODO commentaar schrijven
+	 * Constructor of class input
+	 * This constructor will read the inputExample.txt file and the tree file.
 	 */
 	public Input() {
 		inputList = new ArrayList<HashMap<String, Double>>();
 		try {
-			text = new File("inputExample.txt"); // TODO maak
+			text = new File("inputExample.txt");
 			readTree();
 			readFile1(text);
 		} catch (IOException e) {
@@ -29,9 +30,11 @@ public class Input {
 	}
 	
 	/**
-	 * TODO commentaar schrijven
-	 * @param fin
-	 * @throws IOException
+	 * Reads a file. This will convert a text file with column values to a list of HashMap<String, Double>
+	 * e.g. text file: 3 6 8 -> {(K0, 3), (K1, 6), (Goal, 8)}
+	 * @param
+	 * 		The file to be read
+	 * 
 	 */
 	private void readFile1(File fin) throws IOException {
 		FileInputStream fis = new FileInputStream(fin);
@@ -74,7 +77,7 @@ public class Input {
 	/**
 	 * 
 	 * @return
-	 * 		TODO commentaar schrijven
+	 * 		A list containing all input lines
 	 */
 	public List<HashMap<String, Double>> getList() {
 		return inputList;

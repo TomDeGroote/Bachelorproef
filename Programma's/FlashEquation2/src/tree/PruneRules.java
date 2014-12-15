@@ -85,7 +85,6 @@ public class PruneRules {
 	 * 			The list of equations corresponding to the strings
 	 * 			Null if not all the strings have matching equations
 	 * 
-	 * TODO efficiënter schrijven?
 	 */
 	public static List<Equation> representiveEquations(List<String> listOfEquationsString, List<Equation> listOfEquations) {
 		List<Equation> result = new ArrayList<Equation>();
@@ -192,7 +191,7 @@ public class PruneRules {
 	 * 			False if the equations are not equivalent
 	 */
 	public static boolean areTheseEquationsEquivalent(List<String> eq1, List<String> eq2) {
-		if(eq1.isEmpty() || eq2.isEmpty()) { // TODO Deze check zou niet nodig moeten zijn?
+		if(eq1.isEmpty() || eq2.isEmpty()) {
 			return false;
 		}
 		// the first term of an equation should be equivalent

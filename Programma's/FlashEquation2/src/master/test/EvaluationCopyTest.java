@@ -238,19 +238,19 @@ public class EvaluationCopyTest {
 
 	@Test
 	public void testEvaluateTerminalEquation() {
-		Assert.assertEquals(true, evaluate.evaluateTerminalEquation(eqTerminal2, 13.5));
-		Assert.assertEquals(true, evaluate.evaluateTerminalEquation(eqTerminal1, 15.0));
+		Assert.assertEquals(true, CopyOfEvaluate.evaluateTerminalEquation(eqTerminal2, 13.5));
+		Assert.assertEquals(true, CopyOfEvaluate.evaluateTerminalEquation(eqTerminal1, 15.0));
 	}
 
 	@Test
 	public void testCalculateTerm() {
 		Double d = 13.5;
-		Assert.assertEquals(d, evaluate.calculateTerm(eqTerminal2.getListOfSymbols()));
+		Assert.assertEquals(d, CopyOfEvaluate.calculateTerm(eqTerminal2.getListOfSymbols()));
 	}
 
 	@Test
 	public void testSplitOnEverySplitable() {
-		List<List<Symbol>> split = evaluate.splitOnEverySplitable(eqTerminal1);
+		List<List<Symbol>> split = CopyOfEvaluate.splitOnEverySplitable(eqTerminal1);
 		Assert.assertEquals(5, split.size());
 		Assert.assertEquals("T", new Equation(split.get(0)).toString());
 		Assert.assertEquals("+", new Equation(split.get(1)).toString());
@@ -347,6 +347,7 @@ public class EvaluationCopyTest {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
+	@SuppressWarnings("unused")
 	private Tree readTree() throws IOException, ClassNotFoundException {
 		Tree tree;
 		FileInputStream fis = new FileInputStream(new File(Main.getFileNameTree()));

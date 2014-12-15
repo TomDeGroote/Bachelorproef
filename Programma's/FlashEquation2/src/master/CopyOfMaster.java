@@ -59,7 +59,6 @@ public class CopyOfMaster {
 	public static void checkSolutionSpace(HashMap<String, Double> Ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
-			Equation toEvaluate;
 			List<Symbol> symbols = new ArrayList<Symbol>();
 			for(Symbol s : eq.getListOfSymbols()) {
 				if(s.isTerminal()) {
@@ -79,8 +78,8 @@ public class CopyOfMaster {
 
 
 	/**
-	 * TODO comment
 	 * @return
+	 * 		The name of the goal column value
 	 */
 	public static String getNameOfGoalK() {
 		return NAME_GOAL;

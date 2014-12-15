@@ -11,10 +11,6 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-// TODO master check solutionspace
-// TODO master write away bufferSolutions
-// TODO boom efficienter laten zoeken bv K1*K2 en K2*K1 komen nog voor
-// TODO master voorkeur geven aan vergelijking die meerdere Ks bevatten
 public class CopyOfEvaluate {
 	
 	private final List<List<Equation>> TREE;
@@ -58,7 +54,7 @@ public class CopyOfEvaluate {
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
 				if(!CopyOfMaster.timesUp()) {
-					Equation eq = level.get(equationCount); // TODO
+					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					alreadySolved.put(eq, evaluateEquation(eq));
 				} else {
@@ -191,7 +187,7 @@ public class CopyOfEvaluate {
 							// adds the terminal of this example to the equation (indirectly)
 							toEvaluateList.add(new Terminal(symbol.toString(), Ks.get(symbol.toString())));
 						} else {
-							// TODO should never happen
+							// should never happen
 						}
 					}
 					// generate the resulting equation for the next example
@@ -222,7 +218,7 @@ public class CopyOfEvaluate {
 	 * 			True if the goal is met
 	 * 			False if the goal is not met
 	 */
-	public static boolean evaluateTerminalEquation(Equation equationToEvaluate, Double goal) {
+	public static boolean evaluateTerminalEquation(Equation equationToEvaluate, double goal) {
 		// first split on every equation
 		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
 		
@@ -243,11 +239,11 @@ public class CopyOfEvaluate {
 		}
 		
 		// calculate the concatenation of the terms
-		Double result = valueTerms.get(0);
+		double result = valueTerms.get(0);
 		for(int i = 0; i < operands.size(); i++) {
 			result = Grammar.getValue(result, operands.get(i), valueTerms.get(i+1));
 		}
-		return result.equals(goal);
+		return result == goal;
 	}
 	
 	/**
@@ -307,9 +303,6 @@ public class CopyOfEvaluate {
 	 * @return
 	 * 			list with all possible combinations of the two list with in between the operand
 	 * 
-	 * 
-	 * 
-	 * TODO remove possible doubles
 	 */
 	public List<Equation> concatenateEquationLists(List<Equation> equationsValue1, Operand operand, List<Equation> equationsValue2) {
 		List<Equation> result = new ArrayList<Equation>();
@@ -437,4 +430,8 @@ public class CopyOfEvaluate {
 		
 		return split;
 	}	
+	
+	public List<Equation> getBufferSolutions() {
+		return bufferSolutions;
+	}
 }

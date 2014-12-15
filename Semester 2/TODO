@@ -1,0 +1,31 @@
+Legende
+--------
++ Misschien als je nog tijd over hebt
+* Zeker te doen
+
+
+Implementeren
+-------------
+* Gewichten voor Grammatica
+* Evaluate oplossingen prunen
+	- K1+K2 en K2+K1 eruit halen want zelfde resultaat
+	- K2*K1/K1 eruit halen want K1/K1 = 1 en dus het neutraal element van de vermenigvuldiging
+	- K2 + K1 - K1 eruit halen want K1 - K1 = 0
+	- Neutraal element ondersteunen
++ Support inlezen Grammatica uit tekstbestand
++ Multicore support evaluate
+* Master moet voorkeur geven aan vergelijkingen die gebruik maken van alle K's
+* Master moet slechts één oplossing terug geven
+
+
+Interface
+---------
+* Gebruikers input mogelijk maken van K waarden
+* Soort van mini excel interface schrijven
++ Implementeren in LibreOffice
+
+
+Onderzoeken
+-----------
+* Werken met een geprunede boom vs werken met een niet geprunede boom
+* Werken met een grammatica met gewichten vs werken met een grammatica zonder gewichten
