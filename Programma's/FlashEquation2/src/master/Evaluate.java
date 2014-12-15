@@ -34,10 +34,12 @@ public class Evaluate{
 	public Evaluate(Tree tree, ArrayList<Double> mainExample){
 		//Sets the given tree as final value TREE
 		this.TREE = tree.getTree();
-		this.GOAL = mainExample.remove(mainExample.size());
-		this.MAIN_EXAMPLE = mainExample;
+		this.GOAL = mainExample.get(mainExample.size()-1);
+		this.MAIN_EXAMPLE = mainExample.subList(0, mainExample.size()-2);
 		this.alreadySolved = new HashMap<String,HashMap<Double,List<String>>>();
 		this.nameByValue = new HashMap<Double,List<String>>();
+		this.allExamples = new ArrayList<List<Double>>();
+		this.bufferSolutions = new ArrayList<String>();
 		for(int i = 0; i < mainExample.size(); i++) {
 			if(!nameByValue.containsKey(mainExample.get(i))) {
 				ArrayList<String> newList = new ArrayList<String>();
@@ -55,23 +57,29 @@ public class Evaluate{
 	 * 	A list of doubles that contains the 'K'-values and goal value for a new example
 	 * 
 	 */
-	public void evaluate(ArrayList<Double> newExample) {
+	public List<String> evaluate(ArrayList<Double> newExample) {
 		//Adding the new example to the list of already known examples.
 		if(newExample != null)
 			allExamples.add(newExample);
-
+		bufferSolutions = new ArrayList<String>();
+		//TODO
+		System.out.println(levelCounter);
+		System.out.println(elementCounter);
 		//Finds the latest equation that has not yet been evaluated.
 		for(;levelCounter < TREE.size(); levelCounter++) {
 			List<Equation> level = TREE.get(levelCounter);
 			for(;elementCounter < level.size(); elementCounter++) {
-				Equation currentEquation = level.get(elementCounter);
-				//Gets all possible options for a certain equation.
-				HashMap<Double,List<String>> options = evaluateEquation(currentEquation.toString());
-				//Add these options to the alreadySolved hashmap for easier lookup.
-				alreadySolved.put(currentEquation.toString(),options);
+				if(!Master.timesUp()) {
+					Equation currentEquation = level.get(elementCounter);
+					//Gets all possible options for a certain equation.
+					HashMap<Double,List<String>> options = evaluateEquation(currentEquation.toString());
+					//Add these options to the alreadySolved hashmap for easier lookup.
+					alreadySolved.put(currentEquation.toString(),options);
+				}
 			}
-
+			elementCounter = 0;
 		}
+		return getBufferSolutions();
 	}
 
 	/**
@@ -91,10 +99,11 @@ public class Evaluate{
 		//In this case het K-values of the main example.
 		if(stringEQ.length() == 1) {
 			for(double current : MAIN_EXAMPLE) {
-				List<String> currentStrings = nameByValue.get(current);
+				List<String> currentStrings = getNamesByValue().get(current);
 				for(String name : currentStrings) {
 					if(options.containsKey(current)){
-						options.get(current).add(name);
+						if(!options.get(current).contains(name))
+							options.get(current).add(name);
 					} else {
 						ArrayList<String> newList = new ArrayList<String>();
 						newList.add(name);
@@ -161,15 +170,15 @@ public class Evaluate{
 		//Split the entire equation on all splittable operands
 		List<String> listOfParts = splitStringSplittable(equationStr);
 		//If there are no examples, then it is true.
-		Boolean correctForAll = true;
+		boolean correctForAll = true;
 		//Go over all the examples that are given
 		for(List<Double> example: getAllExamples()) {
 			HashMap<String,Double> valueByName = new HashMap<String,Double>();
 			ArrayList<String> listOfValuesAndOperands = new ArrayList<String>();
 			//Getting the goal from the example
-			double goal = example.remove(example.size());
+			double goal = example.get(example.size()-1);
 			//Combining the K values and their corresponding "name"
-			for(int i = 0; i < example.size(); i++) {
+			for(int i = 0; i < example.size()-1; i++) {
 				valueByName.put(("K"+(i+1)), example.get(i));
 			}
 			//init
@@ -178,6 +187,7 @@ public class Evaluate{
 			for(String str : listOfParts) {
 				//If the string is of the size < 3 and it's not an operand
 				//Then add the corresponding value as a string to the list
+				//TODO <3 is hardcoded
 				if(str.length() < 3 && !Grammar.isOperand(str)) {
 					listOfValuesAndOperands.add(valueByName.get(str).toString());
 				} else if(Grammar.isOperand(str)) {
@@ -223,6 +233,14 @@ public class Evaluate{
 		return correctForAll;
 	}
 
+	public List<String> getBufferSolutions() {
+		return bufferSolutions;
+	}
+
+	public void setBufferSolutions(List<String> bufferSolutions) {
+		this.bufferSolutions = bufferSolutions;
+	}
+
 	/**
 	 * Splits the equation in three seperate parts. 
 	 * 
@@ -230,7 +248,7 @@ public class Evaluate{
 	 * 		The equation to be split
 	 * @return
 	 * 		A list of strings, the different strings represent the different parts of the equation
-	 * 		f.e. equation : E*E + E - E becomes {"E*E", "+" , "E"}
+	 * 		e.g. equation : E*E + E - E becomes {"E*E", "+" , "E"}
 	 */
 	public List<String> splitStringInThreeParts(String str) {
 		//Initialize
@@ -241,7 +259,7 @@ public class Evaluate{
 
 		int i = 0;
 		for(; i < str.length(); i++) {
-			String currentSymbol = str.substring(i,i);
+			String currentSymbol = str.substring(i,i+1);
 
 			//if operand is splittable, then split the string at that position.
 			if(Grammar.isSplittableOperand(currentSymbol)){
@@ -255,16 +273,17 @@ public class Evaluate{
 		}
 
 		for(i++; i < str.length(); i++) {
-			secondPart += (str.substring(i,i));
+			secondPart += (str.substring(i,i+1));
 		}
+		split.add(secondPart);
 
 		//If the secondPart is empty, meaning there was no splittable operand.
 		//Then the first operand becomes a splittable operand.
 		if(secondPart.isEmpty()) {
-			firstPart = str.substring(0, 0);
-			operandPart = str.substring(1,1);
+			firstPart = str.substring(0, 1);
+			operandPart = str.substring(1,2);
 			secondPart = str.substring(2);
-
+			split = new ArrayList<String>();
 			split.add(firstPart);
 			split.add(operandPart);
 			split.add(secondPart);
@@ -285,17 +304,17 @@ public class Evaluate{
 		List<String> split = new ArrayList<String>();
 		String tempStr = "";
 		for(int i = 0; i < str.length(); i++) {
-			String currentSymbol = str.substring(i,i);
+			String currentSymbol = str.substring(i,i+1);
 
 			if(Grammar.isSplittableOperand(currentSymbol)){
 				split.add(tempStr);
-				split.add(str);
+				split.add(currentSymbol);
 				tempStr = "";
 			} else {
-				tempStr += str;
+				tempStr += currentSymbol;
 			}
 		}
-
+		split.add(tempStr);
 		return split;
 	}
 
@@ -305,8 +324,88 @@ public class Evaluate{
 	 * @return
 	 *  currentList of all Examples
 	 */
-	private List<List<Double>> getAllExamples(){
+	public List<List<Double>> getAllExamples(){
 		return this.allExamples;
+	}
+
+	/**
+	 * @return
+	 * 	returns the hashmap from the mainExample. For each value there is one or more corresponding string.
+	 */
+	public HashMap<Double,List<String>> getNamesByValue() {
+		return nameByValue;
+	}
+
+
+	public HashMap<String, HashMap<Double, List<String>>> getAlreadySolved() {
+		return alreadySolved;
+	}
+
+	public void setAlreadySolved(
+			HashMap<String, HashMap<Double, List<String>>> alreadySolved) {
+		this.alreadySolved = alreadySolved;
+	}
+
+
+	public boolean evalString(HashMap<String,Double> variables, String equationStr) {
+		//Split the entire equation on all splittable operands
+		List<String> listOfParts = splitStringSplittable(equationStr);
+		//Go over all the examples that are given
+
+		ArrayList<String> listOfValuesAndOperands = new ArrayList<String>();
+		//Getting the goal from the example
+		double goal = variables.get(Master.getNameOfGoalK());
+		//init
+		double tempValue = 0;
+		//Go over each part of the equation individually 
+		for(String str : listOfParts) {
+			//If the string is of the size < 3 and it's not an operand
+			//Then add the corresponding value as a string to the list
+			//TODO <3 is hardcoded
+			if(str.length() < 3 && !Grammar.isOperand(str)) {
+				listOfValuesAndOperands.add(variables.get(str).toString());
+			} else if(Grammar.isOperand(str)) {
+				//The string is an operand. Add it to the list
+				listOfValuesAndOperands.add(str);
+			}
+			else {
+				//The string contains multiple variables.
+				//Split the string in seperate parts in the form of [variable,operand,variable,...]
+				List<String> splitStr = new ArrayList<String>(Arrays.asList(str.split("(?<=[+*/-])|(?=[+*/-])")));
+				//Evaluate this string and add it to the list of values and operands
+				for(int i = 0; i < splitStr.size(); i+=2) {
+					if(i == 0) {
+						//Evaluate the first string
+						tempValue = variables.get(splitStr.get(i));
+					} else {
+						//The previous string is an operand
+						//create a new tempValue from the current tempValue in combination of the operand and the next variable
+						double val = variables.get(splitStr.get(i));
+						tempValue = Grammar.getValue(tempValue, splitStr.get(i-1), val);
+					}
+				}
+				listOfValuesAndOperands.add(tempValue+"");
+			}
+		}
+		//Evaluate the entire equation without any unsplittable operands.
+		double solution = 0;
+		for(int i = 0; i < listOfValuesAndOperands.size(); i+=2) {
+			if(i == 0) {
+				solution = Double.parseDouble(listOfValuesAndOperands.get(i));
+			} else {
+				double val = Double.parseDouble(listOfValuesAndOperands.get(i));
+				solution = Grammar.getValue(solution, listOfValuesAndOperands.get(i-1), val);
+			}
+		}
+		//If the solution generated by filling in the corresponding values does not give the goal value,
+		//Then the given equation is not correct for all the examples.
+		System.out.println(goal + "=" + solution);
+		if(goal != solution) {
+			System.out.println("False");
+			return false;
+		}
+		System.out.println("True");
+		return true;
 	}
 
 }
