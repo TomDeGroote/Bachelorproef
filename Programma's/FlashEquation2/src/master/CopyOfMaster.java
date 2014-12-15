@@ -20,6 +20,8 @@ public class CopyOfMaster {
 	
 	public static List<Equation> solutionSpace = new ArrayList<Equation>();
 	
+	public static HashMap<String, Double> example;
+	
 	public static void main(String[] args) {
 		// read the tree generated earlier
 		Input input = new Input();
@@ -30,6 +32,9 @@ public class CopyOfMaster {
 		
 		int i = 1; // counter to say how many examples have passed
 		for(HashMap<String, Double> Ks : input.getList()) {
+			// remember the example
+			example = Ks;
+			
 			// start timer
 			timer.start();
 			
@@ -40,10 +45,11 @@ public class CopyOfMaster {
 			solutionSpace.addAll(evaluate.evaluate(Ks));
 
 			// Print possible solutions
-			System.out.println("Solutions after " + i + " number of examples");
-			for(Equation solution : solutionSpace) {
-				System.out.println(solution.toString());
-			}
+			System.out.println("Best Solution after " + i + " number of examples");
+//			for(Equation solution : solutionSpace) {
+//				System.out.println(solution.toString());
+//			}
+			returnBestSolution();
 			i++;
 		}
 	}
@@ -77,6 +83,30 @@ public class CopyOfMaster {
 
 
 
+	/**
+	 * Prints the best solution
+	 * Or the one who contains all smallest K's or if no one contains all K's the smallest one
+	 */
+	private static void returnBestSolution() {
+		boolean printed = false;
+		for(Equation eq : solutionSpace) {
+			boolean containsAll = true;
+			for(String K : example.keySet()) {
+				if(!K.equals(Master.getNameOfGoalK())) {
+					if(!eq.toString().contains(K)) {
+						containsAll = false;
+					}
+				}
+			}
+			if(containsAll) {
+				System.out.println(eq.toString());
+				printed = true;
+				break;
+			}
+		}
+		if(!printed && solutionSpace.size() > 0)
+			System.out.println(solutionSpace.get(0));
+	}
 	/**
 	 * @return
 	 * 		The name of the goal column value
