@@ -41,12 +41,15 @@ public class Master {
 			timer.start();
 
 			// Check solution space for possible solution
-			checkSolutionSpace(input.getList().get(j));
-
-			System.out.println("Solutions before " + h + " number of examples");
-			for(String solution : solutionSpace) {
-				System.out.println(solution);
+			HashMap<String,Double> temp = new HashMap<String,Double>();
+			for(int i = 0; i < KsList.size(); i++) {
+				if(i == KsList.size()-1)
+					temp.put("Goal", KsList.get(i));
+				else 
+					temp.put("K"+(i+1),KsList.get(i));
 			}
+			checkSolutionSpace(temp);
+
 			// start to evaluate
 			solutionSpace.addAll(evaluate.evaluate(KsList));
 
@@ -71,9 +74,7 @@ public class Master {
 	public static void checkSolutionSpace(HashMap<String, Double> Ks) {
 		List<String> newSolutionSpace = new ArrayList<String>();
 		for(String eq : solutionSpace) {
-			System.out.println("Is here?");
 			if(evaluate.evalString(Ks, eq)) {
-				System.out.println("Added to new solspace");
 				newSolutionSpace.add(eq);
 				
 			}
