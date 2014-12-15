@@ -14,10 +14,10 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int NROFLEVELS = 20;
+	private static final int NROFLEVELS = 7;
 	private static final String FILENAME = "tree";
 	private static final boolean REMOVEPRUNED = true;
-	private static final boolean EXECUTE_STATISTICS = true;
+	private static final boolean EXECUTE_STATISTICS = false;
 	/**
 	 * Main method of the tree-program
 	 * 
@@ -31,6 +31,7 @@ public class Main {
 			Tree tree = new Tree(NROFLEVELS, REMOVEPRUNED);
 			printTreeToFile(tree);
 			writeTree(tree);
+			System.out.println("Done!");
 		}
 	}
 	
@@ -131,7 +132,7 @@ public class Main {
 	 * 			the tree to be written to a text file
 	 */
 	private static void printTreeToFile(Tree tree) {
-        writeToFile(tree.toString(), FILENAME);
+        writeToFile(tree.toString(), "TreeText");
     }
 	
 	/**

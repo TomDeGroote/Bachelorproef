@@ -11,7 +11,6 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-// TODO make it stop 
 // TODO master check solutionspace
 // TODO master write away bufferSolutions
 // TODO boom efficienter laten zoeken bv K1*K2 en K2*K1 komen nog voor
@@ -25,7 +24,6 @@ public class CopyOfEvaluate {
 	
 	private List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
-	private boolean bufferRead = true;
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
 	
 	/**
@@ -38,26 +36,15 @@ public class CopyOfEvaluate {
 	}
 	
 	/**
-	 * @return
-	 * 		All solutions in buffered solutions
-	 * 		With the next evaluate run this buffer will be cleaned
-	 */
-	public List<Equation> getBufferSolutions() {
-		bufferRead = true;
-		return bufferSolutions;
-	}
-	
-	/**
 	 * evaluate continues to evaluate the tree with every time more and more examples
 	 * @param Ks
 	 * 		List of K's, last element in the list is the desired solution
+	 * @return
+	 * 		The buffer with solutions
 	 */
-	public void evaluate(HashMap<String, Double> Ks) {
-		if(bufferRead) {
-			// empty the buffer containing solutions
-			bufferSolutions = new ArrayList<Equation>();
-			bufferRead = false;
-		}
+	public List<Equation> evaluate(HashMap<String, Double> Ks) {
+		// empty the buffer containing solutions
+		bufferSolutions = new ArrayList<Equation>();
 		
 		// add current example to examples list
 		examples.add(Ks);
@@ -70,18 +57,19 @@ public class CopyOfEvaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!Master.timesUp()) {
-					Equation eq = level.get(equationCount);
+				if(!CopyOfMaster.timesUp()) {
+					Equation eq = level.get(equationCount); // TODO
 					// add the result of the evaluation of this equation to alreadySolved
 					alreadySolved.put(eq, evaluateEquation(eq));
 				} else {
-					// return when terminated
-					return;
+					// return the buffer when terminated
+					return bufferSolutions;
 				}
 			}
 			// Don't forget to reset equationCount after for loop
 			equationCount = 0;
 		}
+		return bufferSolutions; // return buffered solutions when we are at the end of the tree
 	}
 
 	/**
@@ -96,7 +84,7 @@ public class CopyOfEvaluate {
 		if(eq.getListOfSymbols().size() == 1) {
 			HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();
 			for(String K : examples.get(0).keySet()) {
-				if(K.equals(Master.getNameOfGoalK())) {
+				if(K.equals(CopyOfMaster.getNameOfGoalK())) {
 					// do not make an possible equation for this
 				} else {
 					// create the basic structure for later
@@ -188,7 +176,7 @@ public class CopyOfEvaluate {
 	 */
 	public void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
 		// extract the value of the first equation
-		if(examples.get(0).get(Master.getNameOfGoalK()).equals(value)) {
+		if(examples.get(0).get(CopyOfMaster.getNameOfGoalK()).equals(value)) {
 			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
 			// for every example test if there is a possible equation
 			for(HashMap<String, Double> Ks : examples) {
@@ -208,7 +196,7 @@ public class CopyOfEvaluate {
 					}
 					// generate the resulting equation for the next example
 					Equation equationToEvaluate = new Equation(toEvaluateList);
-					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(Master.getNameOfGoalK()))) {
+					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(CopyOfMaster.getNameOfGoalK()))) {
 						// is possible solution
 						newEquationsToCheck.add(equationToEvaluate);
 					} else {
@@ -234,7 +222,7 @@ public class CopyOfEvaluate {
 	 * 			True if the goal is met
 	 * 			False if the goal is not met
 	 */
-	public boolean evaluateTerminalEquation(Equation equationToEvaluate, Double goal) {
+	public static boolean evaluateTerminalEquation(Equation equationToEvaluate, Double goal) {
 		// first split on every equation
 		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
 		
@@ -271,7 +259,7 @@ public class CopyOfEvaluate {
 	 * @return
 	 * 		The value of the term
 	 */
-	public Double calculateTerm(List<Symbol> term) {
+	public static Double calculateTerm(List<Symbol> term) {
 		Double result = ((Terminal) term.get(0)).getValue();
 		for(int i = 1; i < term.size(); i = i+2) {
 			result = Grammar.getValue(result, (Operand) term.get(i), ((Terminal) term.get(i+1)).getValue());
@@ -286,7 +274,7 @@ public class CopyOfEvaluate {
 	 * 			Equation containing only terminals to be split
 	 * @return
 	 */
-	public List<List<Symbol>> splitOnEverySplitable(Equation equation) {
+	public static List<List<Symbol>> splitOnEverySplitable(Equation equation) {
 		List<List<Symbol>> result = new ArrayList<List<Symbol>>();
 		List<Symbol> term = new ArrayList<Symbol>();
 		for(Symbol symbol : equation.getListOfSymbols()) {

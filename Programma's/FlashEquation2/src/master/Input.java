@@ -10,14 +10,17 @@ public class Input {
 	
 	private File text;
 	private Tree tree;
-	private List<List<Double>> inputList;
+	private List<HashMap<String, Double>> inputList;
 	
+	/**
+	 * TODO commentaar schrijven
+	 */
 	public Input() {
-		inputList = new ArrayList<List<Double>>();
+		inputList = new ArrayList<HashMap<String, Double>>();
 		try {
-			text = new File("src/inputExample.txt");
-			readFile1(text);
+			text = new File("inputExample.txt"); // TODO maak
 			readTree();
+			readFile1(text);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -25,6 +28,11 @@ public class Input {
 		}
 	}
 	
+	/**
+	 * TODO commentaar schrijven
+	 * @param fin
+	 * @throws IOException
+	 */
 	private void readFile1(File fin) throws IOException {
 		FileInputStream fis = new FileInputStream(fin);
 	 
@@ -32,17 +40,20 @@ public class Input {
 		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 	 
 		String line = null;
-		ArrayList<Double> doublesLine;
+		HashMap<String, Double> doublesLine;
 		while ((line = br.readLine()) != null) {
-			String[] test = line.split(" ");
-			doublesLine = new ArrayList<Double>();
-			for(String t : test){
-				doublesLine.add(Double.parseDouble(t));
+			String[] splitOnSpace = line.split(" ");
+			doublesLine = new HashMap<String, Double>();
+			
+			// add all K elements to hashmap
+			for(int i = 0; i < splitOnSpace.length-1; i++) {
+				doublesLine.put("K" + i, Double.parseDouble(splitOnSpace[i]));
 			}
+			// add last element, the goal to hashmap
+			doublesLine.put(Master.getNameOfGoalK(), Double.parseDouble(splitOnSpace[splitOnSpace.length-1]));
 			inputList.add(doublesLine);
 		}
 		
-	 
 		br.close();
 	}
 	
@@ -63,8 +74,9 @@ public class Input {
 	/**
 	 * 
 	 * @return
+	 * 		TODO commentaar schrijven
 	 */
-	public List<List<Double>> getList() {
+	public List<HashMap<String, Double>> getList() {
 		return inputList;
 	}
 

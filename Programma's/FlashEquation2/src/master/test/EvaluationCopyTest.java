@@ -39,7 +39,7 @@ public class EvaluationCopyTest {
 	
 	@Before
 	public void initialize() throws ClassNotFoundException, IOException {
-		Tree tree = readTree();
+		Tree tree = new Tree(1, true);//readTree();
 		evaluate = new CopyOfEvaluate(tree);
 		
 		// put K1 = 2, K2 = 3, Goal = 6
