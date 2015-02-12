@@ -8,7 +8,7 @@ import tree.*;
  * @author Jeroen and Tom
  *
  */
-public class Evaluate{
+public class StringEvaluate{
 
 	//List of all examples until now.
 	private List<List<Double>> allExamples;
@@ -31,7 +31,7 @@ public class Evaluate{
 	 * Creates the evaluate class from the variable tree.
 	 * @param tree
 	 */
-	public Evaluate(Tree tree, ArrayList<Double> mainExample){
+	public StringEvaluate(Tree tree, ArrayList<Double> mainExample){
 		//Sets the given tree as final value TREE
 		this.TREE = tree.getTree();
 		this.GOAL = mainExample.get(mainExample.size()-1);
@@ -67,7 +67,7 @@ public class Evaluate{
 		for(;levelCounter < TREE.size(); levelCounter++) {
 			List<Equation> level = TREE.get(levelCounter);
 			for(;elementCounter < level.size(); elementCounter++) {
-				if(!Master.timesUp()) {
+				if(!StringMaster.timesUp()) {
 					Equation currentEquation = level.get(elementCounter);
 					//Gets all possible options for a certain equation.
 					HashMap<Double,List<String>> options = evaluateEquation(currentEquation.toString());
@@ -353,7 +353,7 @@ public class Evaluate{
 
 		ArrayList<String> listOfValuesAndOperands = new ArrayList<String>();
 		//Getting the goal from the example
-		double goal = variables.get(Master.getNameOfGoalK());
+		double goal = variables.get(StringMaster.getNameOfGoalK());
 		//init
 		double tempValue = 0;
 		//Go over each part of the equation individually 

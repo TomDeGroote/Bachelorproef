@@ -24,8 +24,6 @@ public class Input {
 			readFile1(text);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -37,11 +35,12 @@ public class Input {
 	 * 
 	 */
 	private void readFile1(File fin) throws IOException {
-		FileInputStream fis = new FileInputStream(fin);
-	 
+		InputStream in = getClass().getResourceAsStream("/inputExample.txt");
+		//FileInputStream fis = new FileInputStream(fin);
+		
 		//Construct BufferedReader from InputStreamReader
-		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-	 
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));//fis));
+		
 		String line = null;
 		HashMap<String, Double> doublesLine;
 		while ((line = br.readLine()) != null) {
@@ -53,7 +52,7 @@ public class Input {
 				doublesLine.put("K" + i, Double.parseDouble(splitOnSpace[i]));
 			}
 			// add last element, the goal to hashmap
-			doublesLine.put(Master.getNameOfGoalK(), Double.parseDouble(splitOnSpace[splitOnSpace.length-1]));
+			doublesLine.put(StringMaster.getNameOfGoalK(), Double.parseDouble(splitOnSpace[splitOnSpace.length-1]));
 			inputList.add(doublesLine);
 		}
 		
@@ -61,17 +60,52 @@ public class Input {
 	}
 	
 	/**
-	 * Reads the tree from file (FILENAME given by tree.MAIN
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * Converts a two dimensional ArrayList to a readable HashMap format
+	 * @param list
+	 * 			The two dimensional list to be converted
+	 * @return
+	 * 			The resulting HashMap
 	 */
-	private void readTree() throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(new File(Main.getFileNameTree()));
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		
-		// read object Tree
-		tree = (Tree) ois.readObject();
-		ois.close();
+	public List<HashMap<String, Double>> convertArrayList(List<List<Double>> list) {
+		List<HashMap<String, Double>> result = new ArrayList<HashMap<String, Double>>();
+		for(List<Double> inputRow: list) {
+			// This HashMap will contain this input values
+			HashMap<String, Double> doubleLine = new HashMap<String, Double>();
+			// adds all the column values to the HashMap
+			for(int i = 0; i < inputRow.size()-1; i++) {
+				doubleLine.put("K" + i, inputRow.get(i));
+			}
+			// adds the goal to the HashMap
+			doubleLine.put(StringMaster.getNameOfGoalK(), inputRow.get(inputRow.size()-1));
+			// adds this complete input line to the result
+			result.add(doubleLine);
+		}
+		return result;
+	}
+	
+	/**
+	 * Reads the tree from file (FILENAME given by tree.MAIN
+	 */
+	private void readTree() {
+		ObjectInputStream ois = null;
+		try {
+			InputStream in = getClass().getResourceAsStream("/" + Main.getFileNameTree());
+			//FileInputStream fis = new FileInputStream(new File(Main.getFileNameTree()));
+			ois = new ObjectInputStream(in);//fis);
+			
+			// read object Tree
+			tree = (Tree) ois.readObject();
+		} catch (Exception e){
+			Main.main(null); // Generates the tree
+			e.printStackTrace();
+			//readTree(); // try to read the tree again
+		} finally {
+			try {
+				ois.close();
+			} catch (Exception e) {
+				
+			}
+		}
 	}
 	
 	/**

@@ -2,7 +2,7 @@ package master.test;
 
 import java.util.ArrayList;
 
-import master.Evaluate;
+import master.StringEvaluate;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,7 +16,7 @@ import tree.Tree;
 
 public class EvaluateTest {
 
-	private static Evaluate eval;
+	private static StringEvaluate eval;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -26,7 +26,7 @@ public class EvaluateTest {
 		mainExample.add(1.0);
 		mainExample.add(2.0);
 		Tree tree = new Tree(2, true);
-		eval = new Evaluate(tree,mainExample);
+		eval = new StringEvaluate(tree,mainExample);
 		
 	}
 

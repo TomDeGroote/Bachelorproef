@@ -11,7 +11,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class CopyOfEvaluate {
+public class ObjectEvaluate {
 	
 	/**
 	 * Prune idee:
@@ -23,7 +23,7 @@ public class CopyOfEvaluate {
 	private int levelCount = 0;
 	private int equationCount = 0;
 	
-	private List<Equation> bufferSolutions = new ArrayList<Equation>();
+	public  List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
 	
@@ -32,7 +32,7 @@ public class CopyOfEvaluate {
 	 * @param tree
 	 * 		The tree where evaluate will be working on
 	 */
-	public CopyOfEvaluate(Tree tree) {
+	public ObjectEvaluate(Tree tree) {
 		this.TREE = tree.getTree();
 	}
 	
@@ -58,7 +58,7 @@ public class CopyOfEvaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!CopyOfMaster.timesUp()) {
+				if(!ObjectMaster.timesUp()) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					alreadySolved.put(eq, evaluateEquation(eq));
@@ -85,7 +85,7 @@ public class CopyOfEvaluate {
 		if(eq.getListOfSymbols().size() == 1) {
 			HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();
 			for(String K : examples.get(0).keySet()) {
-				if(K.equals(CopyOfMaster.getNameOfGoalK())) {
+				if(K.equals(ObjectMaster.getNameOfGoalK())) {
 					// do not make an possible equation for this
 				} else {
 					// create the basic structure for later
@@ -177,7 +177,7 @@ public class CopyOfEvaluate {
 	 */
 	public void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
 		// extract the value of the first equation
-		if(examples.get(0).get(CopyOfMaster.getNameOfGoalK()).equals(value)) {
+		if(examples.get(0).get(ObjectMaster.getNameOfGoalK()).equals(value)) {
 			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
 			// for every example test if there is a possible equation
 			for(HashMap<String, Double> Ks : examples) {
@@ -197,7 +197,7 @@ public class CopyOfEvaluate {
 					}
 					// generate the resulting equation for the next example
 					Equation equationToEvaluate = new Equation(toEvaluateList);
-					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(CopyOfMaster.getNameOfGoalK()))) {
+					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(ObjectMaster.getNameOfGoalK()))) {
 						// is possible solution
 						newEquationsToCheck.add(equationToEvaluate);
 					} else {

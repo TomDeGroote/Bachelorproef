@@ -6,16 +6,16 @@ import tree.*;
 
 //TODO Oppassen met de Ks
 
-public class Master {
+public class StringMaster {
 
 	private static final String NAME_GOAL = "Goal";
 
 	private static Timer timer = new Timer(100);	
-	private static Evaluate evaluate;
+	private static StringEvaluate evaluate;
 
 	public static List<String> solutionSpace = new ArrayList<String>();
 
-	public static void main(String[] args) {
+	public static void run() {
 		// read the tree generated earlier
 		Input input = new Input();
 		Tree tree = input.getTree();
@@ -30,10 +30,10 @@ public class Master {
 			for(int i = 0; i < input.getList().get(j).size()-1; i++) {
 				KsList.add(input.getList().get(j).get("K"+(i)));
 			}
-			KsList.add(input.getList().get(j).get(Master.getNameOfGoalK()));
+			KsList.add(input.getList().get(j).get(StringMaster.getNameOfGoalK()));
 			//TODO Solve this shit
 			if(j==0)
-				evaluate = new Evaluate(tree,KsList);
+				evaluate = new StringEvaluate(tree,KsList);
 
 			
 

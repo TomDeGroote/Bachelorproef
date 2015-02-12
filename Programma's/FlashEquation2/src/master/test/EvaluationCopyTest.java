@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import master.CopyOfEvaluate;
-import master.Master;
+import master.ObjectEvaluate;
+import master.StringMaster;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +26,7 @@ import tree.Tree;
 
 public class EvaluationCopyTest {
 
-	private CopyOfEvaluate evaluate;
+	private ObjectEvaluate evaluate;
 	private HashMap<String, Double> KsExample1;
 	private HashMap<String, Double> KsExample2;
 	private Equation eq1;
@@ -40,19 +40,19 @@ public class EvaluationCopyTest {
 	@Before
 	public void initialize() throws ClassNotFoundException, IOException {
 		Tree tree = new Tree(1, true);//readTree();
-		evaluate = new CopyOfEvaluate(tree);
+		evaluate = new ObjectEvaluate(tree);
 		
 		// put K1 = 2, K2 = 3, Goal = 6
 		KsExample1 = new HashMap<String, Double>();
 		KsExample1.put("K1", 2.0);
 		KsExample1.put("K2", 3.0);
-		KsExample1.put(Master.getNameOfGoalK(), 6.0);
+		KsExample1.put(StringMaster.getNameOfGoalK(), 6.0);
 		
 		// put K1 = 3, K2 = 3, Goal = 9
 		KsExample2 = new HashMap<String, Double>();
 		KsExample2.put("K1", 3.0);
 		KsExample2.put("K2", 3.0);
-		KsExample2.put(Master.getNameOfGoalK(), 9.0);
+		KsExample2.put(StringMaster.getNameOfGoalK(), 9.0);
 		
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
@@ -132,7 +132,7 @@ public class EvaluationCopyTest {
 		HashMap<String, Double> Ks = new HashMap<String, Double>();
 		Ks.put("K1", 3.0);
 		Ks.put("K2", 4.0);
-		Ks.put(Master.getNameOfGoalK(), 4.0);
+		Ks.put(StringMaster.getNameOfGoalK(), 4.0);
 		evaluate.examples.add(Ks);
 		HashMap<Double, List<Equation>> allPossibleResults = evaluate.evaluateEquation(eq1);
 		
@@ -193,7 +193,7 @@ public class EvaluationCopyTest {
 		HashMap<String, Double> Ks = new HashMap<String, Double>();
 		Ks.put("K1", 3.0);
 		Ks.put("K2", 4.0);
-		Ks.put(Master.getNameOfGoalK(), 4.0);
+		Ks.put(StringMaster.getNameOfGoalK(), 4.0);
 		evaluate.examples.add(Ks);
 		
 		HashMap<Double, List<Equation>> result = evaluate.concatenateResults(part1, new Operand("+", true, true, 0), part2);
@@ -217,7 +217,7 @@ public class EvaluationCopyTest {
 		HashMap<String, Double> Ks1 = new HashMap<String, Double>();
 		Ks1.put("K1", 3.0);
 		Ks1.put("K2", 2.0);
-		Ks1.put(Master.getNameOfGoalK(), 5.0);
+		Ks1.put(StringMaster.getNameOfGoalK(), 5.0);
 		evaluate.examples.add(Ks1);
 		
 		List<Equation> list = new ArrayList<Equation>();
@@ -228,7 +228,7 @@ public class EvaluationCopyTest {
 		HashMap<String, Double> Ks2 = new HashMap<String, Double>();
 		Ks2.put("K1", 1.0);
 		Ks2.put("K2", 2.0);
-		Ks2.put(Master.getNameOfGoalK(), 3.0);
+		Ks2.put(StringMaster.getNameOfGoalK(), 3.0);
 		evaluate.examples.add(Ks2);
 				
 		evaluate.addPossibelSolutions(5.0, list);
@@ -238,19 +238,19 @@ public class EvaluationCopyTest {
 
 	@Test
 	public void testEvaluateTerminalEquation() {
-		Assert.assertEquals(true, CopyOfEvaluate.evaluateTerminalEquation(eqTerminal2, 13.5));
-		Assert.assertEquals(true, CopyOfEvaluate.evaluateTerminalEquation(eqTerminal1, 15.0));
+		Assert.assertEquals(true, ObjectEvaluate.evaluateTerminalEquation(eqTerminal2, 13.5));
+		Assert.assertEquals(true, ObjectEvaluate.evaluateTerminalEquation(eqTerminal1, 15.0));
 	}
 
 	@Test
 	public void testCalculateTerm() {
 		Double d = 13.5;
-		Assert.assertEquals(d, CopyOfEvaluate.calculateTerm(eqTerminal2.getListOfSymbols()));
+		Assert.assertEquals(d, ObjectEvaluate.calculateTerm(eqTerminal2.getListOfSymbols()));
 	}
 
 	@Test
 	public void testSplitOnEverySplitable() {
-		List<List<Symbol>> split = CopyOfEvaluate.splitOnEverySplitable(eqTerminal1);
+		List<List<Symbol>> split = ObjectEvaluate.splitOnEverySplitable(eqTerminal1);
 		Assert.assertEquals(5, split.size());
 		Assert.assertEquals("T", new Equation(split.get(0)).toString());
 		Assert.assertEquals("+", new Equation(split.get(1)).toString());
