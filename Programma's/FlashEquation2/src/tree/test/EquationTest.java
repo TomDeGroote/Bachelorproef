@@ -28,33 +28,33 @@ public class EquationTest {
 		// generate equation 1 E+E*E+E
 		inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+",true,true));
+		inputEq1.add(new Operand("+",true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("*", false,true));
+		inputEq1.add(new Operand("*", false,true, 1));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
 		eq1 = new Equation(inputEq1);
 		
 		// generate equation 2 E+E+E*E
 		inputEq2 = new ArrayList<Symbol>();
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("+", true,true));
+		inputEq2.add(new Operand("+", true,true, 0));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("+", true,true));
+		inputEq2.add(new Operand("+", true,true, 0));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("*", false,true));
+		inputEq2.add(new Operand("*", false,true, 1));
 		inputEq2.add(new NonTerminal("E"));
 		eq2 = new Equation(inputEq2);
 		
 		// generate equation 3 E+E*E+E
 		inputEq3 = new ArrayList<Symbol>();
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("+", true,true));
+		inputEq3.add(new Operand("+", true,true, 0));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false,true));
+		inputEq3.add(new Operand("*", false,true, 1));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("+", true,true));
+		inputEq3.add(new Operand("+", true,true, 0));
 		inputEq3.add(new NonTerminal("E"));
 		eq3 = new Equation(inputEq1);
 	}

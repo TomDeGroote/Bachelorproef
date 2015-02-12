@@ -20,7 +20,7 @@ public class CopyOfMasterTest {
 	public void checkSolutionSpaceTest() {
 		List<Symbol> symbols = new ArrayList<Symbol>();
 		symbols.add(new Terminal("K0", 1.0));
-		symbols.add(new Operand("+", true, true));
+		symbols.add(new Operand("+", true, true, 0));
 		symbols.add(new Terminal("K1", 2.0));
 		Equation solution = new Equation(symbols);
 		CopyOfMaster.solutionSpace.add(solution);

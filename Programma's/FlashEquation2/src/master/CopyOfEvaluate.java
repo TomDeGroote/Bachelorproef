@@ -13,6 +13,11 @@ import tree.Tree;
 
 public class CopyOfEvaluate {
 	
+	/**
+	 * Prune idee:
+	 * 		Enkel vergelijkingen tegen elkaar vergelijken als ze dezelfde uitkomst genereren
+	 * 		Weer opsplitsen in termen zoals vorige keer en dan weer overlopen zoals vorige keer
+	 */
 	private final List<List<Equation>> TREE;
 
 	private int levelCount = 0;

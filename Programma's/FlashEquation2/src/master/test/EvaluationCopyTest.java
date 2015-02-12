@@ -57,55 +57,55 @@ public class EvaluationCopyTest {
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("*", false,true));
+		inputEq1.add(new Operand("*", false,true, 1));
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
 		eq1 = new Equation(inputEq1);
 		
 		// generate equation 2 E-E+E*E
 		List<Symbol> inputEq2 = new ArrayList<Symbol>();
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("-", true,false));
+		inputEq2.add(new Operand("-", true,false, 0));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("+", true,true));
+		inputEq2.add(new Operand("+", true,true, 0));
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("*", false,true));
+		inputEq2.add(new Operand("*", false,true, 1));
 		inputEq2.add(new NonTerminal("E"));
 		eq2 = new Equation(inputEq2);
 		
 		// generate equation 3 E*E/E*E
 		List<Symbol> inputEq3 = new ArrayList<Symbol>();
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false,true));
+		inputEq3.add(new Operand("*", false,true, 1));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("/", false,false));
+		inputEq3.add(new Operand("/", false,false, 1));
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false,true));
+		inputEq3.add(new Operand("*", false,true, 1));
 		inputEq3.add(new NonTerminal("E"));
 		eq3 = new Equation(inputEq3);
 		
 		// generate equation 1 T+T*T+T = 15
 		List<Symbol> inputEqTerminal = new ArrayList<Symbol>();
 		inputEqTerminal.add(new Terminal("T", 3.0));
-		inputEqTerminal.add(new Operand("+", true,true));
+		inputEqTerminal.add(new Operand("+", true,true, 0));
 		inputEqTerminal.add(new Terminal("T", 3.0));
-		inputEqTerminal.add(new Operand("*", false,true));
+		inputEqTerminal.add(new Operand("*", false,true, 1));
 		inputEqTerminal.add(new Terminal("T", 3.0));
-		inputEqTerminal.add(new Operand("+", true,true));
+		inputEqTerminal.add(new Operand("+", true,true, 0));
 		inputEqTerminal.add(new Terminal("T", 3.0));
 		eqTerminal1 = new Equation(inputEqTerminal);
 		
 		// generate equation 1 T*T*T/T = 3*3*3/2 = 13.5
 		List<Symbol> inputEqTerminal2 = new ArrayList<Symbol>();
 		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("*", false,true));
+		inputEqTerminal2.add(new Operand("*", false,true, 1));
 		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("*", false,false));
+		inputEqTerminal2.add(new Operand("*", false,false, 1));
 		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("/", false,false));
+		inputEqTerminal2.add(new Operand("/", false,false, 1));
 		inputEqTerminal2.add(new Terminal("T", 2.0));
 		eqTerminal2 = new Equation(inputEqTerminal2);
 
@@ -126,7 +126,7 @@ public class EvaluationCopyTest {
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
 		Equation eq1 = new Equation(inputEq1);
 		HashMap<String, Double> Ks = new HashMap<String, Double>();
@@ -148,30 +148,30 @@ public class EvaluationCopyTest {
 		// generate equation 1 E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
 		Equation eq1 = new Equation(inputEq1);
 		
 		// generate equation 2 E-E
 		List<Symbol> inputEq2 = new ArrayList<Symbol>();
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("-", true,false));
+		inputEq2.add(new Operand("-", true,false, 0));
 		inputEq2.add(new NonTerminal("E"));
 		Equation eq2 = new Equation(inputEq2);
 		
 		// generate equation 3 E/E
 		List<Symbol> inputEq3 = new ArrayList<Symbol>();
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("/", false,false));
+		inputEq3.add(new Operand("/", false,false, 1));
 		inputEq3.add(new NonTerminal("E"));
 		Equation eq3 = new Equation(inputEq3);
 		
 		// generate equation 3 E/E*E
 		List<Symbol> inputEq4 = new ArrayList<Symbol>();
 		inputEq4.add(new NonTerminal("E"));
-		inputEq4.add(new Operand("/", false,false));
+		inputEq4.add(new Operand("/", false,false, 1));
 		inputEq4.add(new NonTerminal("E"));
-		inputEq4.add(new Operand("*", false,true));
+		inputEq4.add(new Operand("*", false,true, 1));
 		inputEq4.add(new NonTerminal("E"));
 		Equation eq4 = new Equation(inputEq4);
 		
@@ -196,7 +196,7 @@ public class EvaluationCopyTest {
 		Ks.put(Master.getNameOfGoalK(), 4.0);
 		evaluate.examples.add(Ks);
 		
-		HashMap<Double, List<Equation>> result = evaluate.concatenateResults(part1, new Operand("+", true, true), part2);
+		HashMap<Double, List<Equation>> result = evaluate.concatenateResults(part1, new Operand("+", true, true, 0), part2);
 		Assert.assertEquals(4, result.keySet().size());
 		Assert.assertEquals(true, result.containsKey(12.0));
 		Assert.assertEquals(4, result.get(12.0).size());
@@ -211,7 +211,7 @@ public class EvaluationCopyTest {
 		// generate equation 1 3+2
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new Terminal("K1", 3.0));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new Terminal("K2", 2.0));
 		Equation eq1 = new Equation(inputEq1);
 		HashMap<String, Double> Ks1 = new HashMap<String, Double>();
@@ -265,30 +265,30 @@ public class EvaluationCopyTest {
 		// generate equation 1 E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
 		inputEq1.add(new NonTerminal("E"));
-		inputEq1.add(new Operand("+", true,true));
+		inputEq1.add(new Operand("+", true,true, 0));
 		inputEq1.add(new NonTerminal("E"));
 		Equation eq1 = new Equation(inputEq1);
 		
 		// generate equation 2 E-E
 		List<Symbol> inputEq2 = new ArrayList<Symbol>();
 		inputEq2.add(new NonTerminal("E"));
-		inputEq2.add(new Operand("-", true,false));
+		inputEq2.add(new Operand("-", true,false, 0));
 		inputEq2.add(new NonTerminal("E"));
 		Equation eq2 = new Equation(inputEq2);
 		
 		// generate equation 3 E/E
 		List<Symbol> inputEq3 = new ArrayList<Symbol>();
 		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("/", false,false));
+		inputEq3.add(new Operand("/", false,false, 1));
 		inputEq3.add(new NonTerminal("E"));
 		Equation eq3 = new Equation(inputEq3);
 		
 		// generate equation 3 E/E*E
 		List<Symbol> inputEq4 = new ArrayList<Symbol>();
 		inputEq4.add(new NonTerminal("E"));
-		inputEq4.add(new Operand("/", false,false));
+		inputEq4.add(new Operand("/", false,false, 1));
 		inputEq4.add(new NonTerminal("E"));
-		inputEq4.add(new Operand("*", false,true));
+		inputEq4.add(new Operand("*", false,true, 1));
 		inputEq4.add(new NonTerminal("E"));
 		Equation eq4 = new Equation(inputEq4);
 		
@@ -300,7 +300,7 @@ public class EvaluationCopyTest {
 		list2.add(eq3);
 		list2.add(eq4);
 		
-		List<Equation> result = evaluate.concatenateEquationLists(list1, new Operand("*", false, true), list2);
+		List<Equation> result = evaluate.concatenateEquationLists(list1, new Operand("*", false, true, 1), list2);
 		HashSet<String> resultStrings = new HashSet<String>();
 		for(Equation eq : result) {
 			resultStrings.add(eq.toString());
@@ -315,7 +315,7 @@ public class EvaluationCopyTest {
 
 	@Test
 	public void testConcatenateEquations() {
-		Assert.assertEquals(eq1.toString() + "*" +  eq2.toString(), evaluate.concatenateEquations(eq1, new Operand("*", false, true), eq2).toString());
+		Assert.assertEquals(eq1.toString() + "*" +  eq2.toString(), evaluate.concatenateEquations(eq1, new Operand("*", false, true, 0), eq2).toString());
 	}
 
 	@Test

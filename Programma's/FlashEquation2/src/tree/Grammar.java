@@ -17,10 +17,10 @@ public class Grammar {
 	 */
 	public static void initialize() {
 		// define all the possible operands
-		possibleOperands.add(new Operand("*", false, true));
-		possibleOperands.add(new Operand("/", false, false));
-		possibleOperands.add(new Operand("+", true, true));
-		possibleOperands.add(new Operand("-", true, false));
+		possibleOperands.add(new Operand("*", false, true, 1));
+		possibleOperands.add(new Operand("/", false, false, 1));
+		possibleOperands.add(new Operand("+", true, true, 0));
+		possibleOperands.add(new Operand("-", true, false, 0));
 	}
 
 	/**

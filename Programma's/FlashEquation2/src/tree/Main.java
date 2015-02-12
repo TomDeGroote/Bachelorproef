@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int NROFLEVELS = 7;
+	private static final int NROFLEVELS = 5;
 	private static final String FILENAME = "tree";
 	private static final boolean REMOVEPRUNED = true;
 	private static final boolean EXECUTE_STATISTICS = false;
