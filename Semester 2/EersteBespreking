@@ -24,7 +24,7 @@ Wat moeten we doen
 * Afspraak begeleider								30 min
 * Poster									Nog te schatten
 	- CFG
-	- Onze eige versie van Equation Discovery
+	- Onze eigen versie van Equation Discovery
 	- Resultaten
 	- Brainstorm sessie
 * Boom efficiënter doorlopen
@@ -32,7 +32,7 @@ Wat moeten we doen
 * Onderzoek
 	 -  Strings vs Objecten
 	 -  Voordelen van Prunen
-	 -  Gebruiken van Constantes (welke?)
+	 -  Gebruiken van constanten (welke?)
 	(-) Heuristiek
 	 -  double vs float (float minder precies maar veel sneller)
 * Wat is ons doel?!
@@ -44,12 +44,12 @@ Wat moeten we doen
 Tijdlijn
 --------
 12/02 Planning
-12/02 Tom: Implementeerd neutraal element
+12/02 Tom: Implementatie neutraal element
 13/02 Afspraak Angelica
 13/02 Bespreken efficiënter doorlopen + Master 1 oplossing + Master voorkeur (Tom & Jeroen) (1)
 13/02 Bespreken DOEL
  ..   Programmeren van bespreking (1)
-15/02 Deadline programmerenb (1)
+15/02 Deadline programmeren (1)
 15/02 Mail
 16/02 Bijeenkomen stand van zaken programmeren
 17/02 
