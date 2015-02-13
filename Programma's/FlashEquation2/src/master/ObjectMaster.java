@@ -22,7 +22,7 @@ public class ObjectMaster {
 	
 	public static HashMap<String, Double> example;
 	
-	private static boolean hasDeadLine = false;		// TODO jar
+	private static boolean hasDeadLine = true;		// TODO jar
 	private static boolean stopAfterOne = false;	// TODO jar
 	
 	/**
@@ -95,6 +95,8 @@ public class ObjectMaster {
 	
 				// Print possible solutions
 				printBestSolution(i);
+				System.out.println("All solutions: ");
+				printAll();
 				i++;
 			}
 		}
@@ -170,6 +172,7 @@ public class ObjectMaster {
 				break;
 			}
 		}
+		
 		// print solution space size
 		System.out.println("Current Possible Solutions: " + solutionSpace.size());
 		// print the best solution
@@ -186,6 +189,12 @@ public class ObjectMaster {
 			} else {
 				System.out.println("No solution after " + numberOfExamples + " examples");
 			}
+		}
+	}
+	
+	public static void printAll() {
+		for(Equation eq : solutionSpace) {
+			System.out.println(eq.toString());
 		}
 	}
 	/**
