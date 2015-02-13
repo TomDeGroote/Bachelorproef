@@ -24,8 +24,6 @@ public class StringMaster {
 
 		// generate the evaluate class
 
-		int h = 1; // counter to say how many examples have passed
-
 		for(int j = 0; j < input.getList().size(); j++) {
 			ArrayList<Double> KsList = new ArrayList<Double>();
 
@@ -55,18 +53,6 @@ public class StringMaster {
 
 			// start to evaluate
 			solutionSpace.addAll(evaluate.evaluate(KsList));
-
-			// Print possible solutions
-			System.out.println("Solutions after " + h + " number of examples");
-
-			printBestSolution(solutionSpace);
-			System.out.println("Number of solutions:" + solutionSpace.size());
-			System.out.println("");
-			
-			for(String solution : solutionSpace) {
-				System.out.println(solution);
-			}
-			h++;
 
 		}
 	}
@@ -112,7 +98,12 @@ public class StringMaster {
 	}
 
 
-	public static void printBestSolution(List<String> solutions){
+	/**
+	 * Returns the best solution form a collection from the solution space.
+	 * @param solutions
+	 * @return
+	 */
+	public static String giveBestSolution(List<String> solutions){
 		String bestSolution = "";
 		int nrOfKeys = 0;
 
@@ -127,15 +118,22 @@ public class StringMaster {
 
 			}
 			if(temp == nrOfK){
-				System.out.println("Best Solution:" + eq);
-				return;
+				return eq;
 			}
 			if(temp > nrOfKeys){
 				bestSolution = eq;
 			}
 
 		}
-		System.out.println("Best Solution:" + bestSolution);
+		return bestSolution;
+	}
+	
+	/**
+	 * Returns the solution space
+	 * @return
+	 */
+	public static List<String> giveAllSolution(){
+		return solutionSpace;
 	}
 
 
