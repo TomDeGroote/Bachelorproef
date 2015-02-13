@@ -63,9 +63,9 @@ public class StringMaster {
 			System.out.println("Number of solutions:" + solutionSpace.size());
 			System.out.println("");
 			
-			//for(String solution : solutionSpace) {
-			//	System.out.println(solution);
-			//}
+			for(String solution : solutionSpace) {
+				System.out.println(solution);
+			}
 			h++;
 
 		}
