@@ -15,7 +15,7 @@ public class ObjectMaster {
 	
 	private static final String NAME_GOAL = "Goal";
 	
-	private static Timer timer = new Timer(Integer.MAX_VALUE);	
+	private static Timer timer = new Timer(Long.MAX_VALUE);	
 	private static ObjectEvaluate evaluate;
 	
 	public static List<Equation> solutionSpace = new ArrayList<Equation>();
@@ -92,11 +92,6 @@ public class ObjectMaster {
 			} else {				
 				// start to evaluate
 				solutionSpace.addAll(evaluate.evaluate(Ks));
-	
-				// Print possible solutions
-				printBestSolution(i);
-				System.out.println("All solutions: ");
-				printAll();
 				i++;
 			}
 		}
@@ -140,8 +135,11 @@ public class ObjectMaster {
 	/**
 	 * Prints the solution containing all Ks and is the smallest or
 	 * prints the solution containing the most nr of Ks
+	 * 
+	 * @return
+	 * 		The best solution
 	 */
-	private static void printBestSolution(int numberOfExamples) {
+	public static Equation getBestSolution() {
 		Equation bestSolution = null; // variable to remember best solution
 		int nrOfKeys = 0; // variable to remember nr of Ks in best solution
 		
@@ -173,29 +171,38 @@ public class ObjectMaster {
 			}
 		}
 		
-		// print solution space size
-		System.out.println("Current Possible Solutions: " + solutionSpace.size());
-		// print the best solution
-		if(!(bestSolution == null) && solutionSpace.size() > 0) {
-			if(numberOfExamples == 1) {
-				System.out.println("Best Solution after " + numberOfExamples + " example");
-			} else {
-				System.out.println("Best Solution after " + numberOfExamples + " examples");
-			}
-			System.out.println(bestSolution);
-		} else {
-			if(numberOfExamples == 1) {
-				System.out.println("No solution after " + numberOfExamples + " example");
-			} else {
-				System.out.println("No solution after " + numberOfExamples + " examples");
-			}
-		}
+//		// print solution space size
+//		System.out.println("Current Possible Solutions: " + solutionSpace.size());
+//		// print the best solution
+//		if(!(bestSolution == null) && solutionSpace.size() > 0) {
+//			if(numberOfExamples == 1) {
+//				System.out.println("Best Solution after " + numberOfExamples + " example");
+//			} else {
+//				System.out.println("Best Solution after " + numberOfExamples + " examples");
+//			}
+//			System.out.println(bestSolution);
+//		} else {
+//			if(numberOfExamples == 1) {
+//				System.out.println("No solution after " + numberOfExamples + " example");
+//			} else {
+//				System.out.println("No solution after " + numberOfExamples + " examples");
+//			}
+//		}
+		
+		return bestSolution;
 	}
 	
-	public static void printAll() {
+	/**
+	 * 
+	 * @return
+	 * 		All current solutions
+	 */
+	public static List<Equation> getAllSolutions() {
+		List<Equation> solutions = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
-			System.out.println(eq.toString());
+			solutions.add(eq);
 		}
+		return solutions;
 	}
 	/**
 	 * @return

@@ -44,15 +44,15 @@ public class EvaluationCopyTest {
 		
 		// put K1 = 2, K2 = 3, Goal = 6
 		KsExample1 = new HashMap<String, Double>();
-		KsExample1.put("K1", 2.0);
+		KsExample1.put("K1", 3.0);
 		KsExample1.put("K2", 3.0);
-		KsExample1.put(StringMaster.getNameOfGoalK(), 6.0);
+		KsExample1.put(StringMaster.getNameOfGoalK(), 3.0);
 		
 		// put K1 = 3, K2 = 3, Goal = 9
 		KsExample2 = new HashMap<String, Double>();
-		KsExample2.put("K1", 3.0);
-		KsExample2.put("K2", 3.0);
-		KsExample2.put(StringMaster.getNameOfGoalK(), 9.0);
+		KsExample2.put("K1", 6.0);
+		KsExample2.put("K2", 6.0);
+		KsExample2.put(StringMaster.getNameOfGoalK(), 12.0);
 		
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();

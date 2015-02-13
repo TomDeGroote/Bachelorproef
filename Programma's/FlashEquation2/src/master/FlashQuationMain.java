@@ -3,16 +3,30 @@ package master;
 import java.util.ArrayList;
 import java.util.List;
 
+import tree.Equation;
+
 public class FlashQuationMain {
 
-	private static final String runMethod = "object";
+	private static final String runMethod = "string";
 	private static final int DEADLINE = 1000;
 	
 	public static void main(String[] args) {
 		if(runMethod.equals("string")) {
 			StringMaster.run();
+			System.out.println("All: ");
+			for(String eq : StringMaster.getAllSolutions()) {
+				System.out.println(eq);
+			}
+			System.out.println("Best: ");
+			System.out.println(StringMaster.getBestSolution());
 		} else if(runMethod.equals("object")) {
 			ObjectMaster.run(DEADLINE, false, null);
+			System.out.println("All: ");
+			for(Equation eq : ObjectMaster.getAllSolutions()) {
+				System.out.println(eq);
+			}
+			System.out.println("Best: ");
+			System.out.println(ObjectMaster.getBestSolution());
 		} else {
 			System.out.println(getFormula(getInputList(), -1));
 		}

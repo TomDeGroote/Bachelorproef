@@ -15,11 +15,11 @@ public class Timer {
   private long timeLeftPrevious = 0;
   /**
    * Constructor of the timer
-   * @param lengthTimer
+   * @param maxValue
    * 		Number of milliseconds this timer needs to run
    */
-  public Timer(int lengthTimer) {
-	  this.LENGTH_TIMER = lengthTimer;
+  public Timer(long maxValue) {
+	  this.LENGTH_TIMER = maxValue;
   }
   
   /**

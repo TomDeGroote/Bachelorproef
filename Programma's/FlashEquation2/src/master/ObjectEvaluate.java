@@ -96,8 +96,15 @@ public class ObjectEvaluate {
 					List<Symbol> terminalK = new ArrayList<Symbol>();
 					terminalK.add(new Terminal(K, examples.get(0).get(K)));
 					kEquation.add(new Equation(terminalK));
-					result.put(examples.get(0).get(K), kEquation);
+					if(result.containsKey(examples.get(0).get(K))) {
+						result.get(examples.get(0).get(K)).add(new Equation(terminalK));
+					} else {
+						result.put(examples.get(0).get(K), kEquation);
+					}
 				}
+			}
+			for(Double value : result.keySet()) {
+				addPossibelSolutions(value, result.get(value));
 			}
 			return result;
 		}
