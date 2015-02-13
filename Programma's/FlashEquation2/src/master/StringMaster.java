@@ -12,6 +12,8 @@ public class StringMaster {
 
 	private static Timer timer = new Timer(100);	
 	private static StringEvaluate evaluate;
+	private static int nrOfK;
+
 
 	public static List<String> solutionSpace = new ArrayList<String>();
 
@@ -21,21 +23,22 @@ public class StringMaster {
 		Tree tree = input.getTree();
 
 		// generate the evaluate class
-		
+
 		int h = 1; // counter to say how many examples have passed
-		
+
 		for(int j = 0; j < input.getList().size(); j++) {
 			ArrayList<Double> KsList = new ArrayList<Double>();
 
 			for(int i = 0; i < input.getList().get(j).size()-1; i++) {
 				KsList.add(input.getList().get(j).get("K"+(i)));
 			}
+			nrOfK = KsList.size();
 			KsList.add(input.getList().get(j).get(StringMaster.getNameOfGoalK()));
 			//TODO Solve this shit
 			if(j==0)
 				evaluate = new StringEvaluate(tree,KsList);
 
-			
+
 
 			// start timer
 			timer.start();
@@ -55,9 +58,14 @@ public class StringMaster {
 
 			// Print possible solutions
 			System.out.println("Solutions after " + h + " number of examples");
-			for(String solution : solutionSpace) {
-				System.out.println(solution);
-			}
+
+			printBestSolution(solutionSpace);
+			System.out.println("Number of solutions:" + solutionSpace.size());
+			System.out.println("");
+			
+			//for(String solution : solutionSpace) {
+			//	System.out.println(solution);
+			//}
 			h++;
 
 		}
@@ -76,7 +84,7 @@ public class StringMaster {
 		for(String eq : solutionSpace) {
 			if(evaluate.evalString(Ks, eq)) {
 				newSolutionSpace.add(eq);
-				
+
 			}
 		}	
 		solutionSpace = newSolutionSpace;
@@ -101,6 +109,33 @@ public class StringMaster {
 	 */
 	public static boolean timesUp() {
 		return timer.timesUp();
+	}
+
+
+	public static void printBestSolution(List<String> solutions){
+		String bestSolution = "";
+		int nrOfKeys = 0;
+
+		for(String eq: solutions) {
+			int temp = 0;
+
+			List<String> split = evaluate.splitStringAll(eq);
+			for(int i = 0; i< nrOfK; i++){
+				if(split.contains("K"+(i+1))){
+					temp++;
+				}
+
+			}
+			if(temp == nrOfK){
+				System.out.println("Best Solution:" + eq);
+				return;
+			}
+			if(temp > nrOfKeys){
+				bestSolution = eq;
+			}
+
+		}
+		System.out.println("Best Solution:" + bestSolution);
 	}
 
 

@@ -405,4 +405,30 @@ public class StringEvaluate{
 		return true;
 	}
 
+	/**
+	 * Splits a given string on all possible operands.
+	 * 
+	 * @param str
+	 * 	string to be splitten
+	 * @return
+	 * 	List of strings, which are either an operand or an equation.
+	 */
+	public List<String> splitStringAll(String str) {
+		List<String> split = new ArrayList<String>();
+		String tempStr = "";
+		for(int i = 0; i < str.length(); i++) {
+			String currentSymbol = str.substring(i,i+1);
+
+			if(Grammar.isOperand(currentSymbol)){
+				split.add(tempStr);
+				split.add(currentSymbol);
+				tempStr = "";
+			} else {
+				tempStr += currentSymbol;
+			}
+		}
+		split.add(tempStr);
+		return split;
+	}
+	
 }

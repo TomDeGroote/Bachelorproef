@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "object";
+	private static final String runMethod = "string";
 	private static final int DEADLINE = 1000;
 	
 	public static void main(String[] args) {
