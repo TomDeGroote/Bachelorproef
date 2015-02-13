@@ -103,11 +103,11 @@ public class StringMaster {
 	 * @param solutions
 	 * @return
 	 */
-	public static String giveBestSolution(List<String> solutions){
+	public static String getBestSolution(){
 		String bestSolution = "";
 		int nrOfKeys = 0;
 
-		for(String eq: solutions) {
+		for(String eq: getAllSolutions()) {
 			int temp = 0;
 
 			List<String> split = evaluate.splitStringAll(eq);
@@ -132,7 +132,7 @@ public class StringMaster {
 	 * Returns the solution space
 	 * @return
 	 */
-	public static List<String> giveAllSolution(){
+	public static List<String> getAllSolutions(){
 		return solutionSpace;
 	}
 
