@@ -49,7 +49,6 @@ public class StringEvaluate{
 				nameByValue.get(MAIN_EXAMPLE.get(i)).add("K"+(i+1));
 			}
 		}
-		Grammar.initialize();
 	}
 
 	/**

@@ -20,7 +20,6 @@ public class EvaluateTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		Grammar.initialize();
 		ArrayList<Double> mainExample = new ArrayList<Double>();
 		mainExample.add(1.0);
 		mainExample.add(1.0);

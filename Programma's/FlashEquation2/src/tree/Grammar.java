@@ -15,7 +15,7 @@ public class Grammar {
 	/**
 	 * 	This method will add all possible operands to operandPossiblities
 	 */
-	public static void initialize() {
+	private static void initialize() {
 		// define all the possible operands
 		possibleOperands.add(new Operand("*", false, true, 1));
 		possibleOperands.add(new Operand("/", false, false, 1));
@@ -75,6 +75,9 @@ public class Grammar {
 	 * 		False if s is not an operand
 	 */
 	public static boolean isOperand(String s) {
+		if(possibleOperands.isEmpty()) {
+			initialize();
+		}
 		for(Operand operand : possibleOperands) {
 			if(operand.toString().equals(s)) {
 				return true;
@@ -137,7 +140,9 @@ public class Grammar {
 	 * 		False if s is not a splittable operand
 	 */
 	public static boolean isSplittableOperand(String str) {
-
+		if(possibleOperands.isEmpty()) {
+			initialize();
+		}
 		for(Operand operand : possibleOperands) {
 			if(operand.toString().equals(str) && operand.isSplitable()) {
 				return true;
