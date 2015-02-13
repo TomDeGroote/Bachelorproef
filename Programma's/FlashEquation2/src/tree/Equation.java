@@ -15,7 +15,7 @@ public class Equation implements Serializable {
 	
 	List<Symbol> listOfSymbols;
 	String representation;
-	private boolean prooned = false;
+	private boolean pruned = false;
 	
 	/**
 	 * Constructor when no parameters are given
@@ -96,19 +96,19 @@ public class Equation implements Serializable {
        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
            // if deriving: appendSuper(super.hashCode()).
            append(listOfSymbols).
-           append(prooned).
+           append(pruned).
            append(representation).
            toHashCode();
 	}
 
 
-	public boolean isProoned() {
-		return prooned;
+	public boolean isPruned() {
+		return pruned;
 	}
 
 
-	public void setProoned(boolean prooned) {
-		this.prooned = prooned;
+	public void setPruned(boolean pruned) {
+		this.pruned = pruned;
 	}
 
 	

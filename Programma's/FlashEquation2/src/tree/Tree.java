@@ -86,7 +86,7 @@ public class Tree implements Serializable {
 		String tree = "";
 		for(List<Equation> level : listOfLevels) {
 			for(Equation eq : level) {
-				if(eq.isProoned()) {
+				if(eq.isPruned()) {
 					tree += eq.toString().toLowerCase()  + "  ";
 				} else {
 					tree += eq.toString() + "  ";

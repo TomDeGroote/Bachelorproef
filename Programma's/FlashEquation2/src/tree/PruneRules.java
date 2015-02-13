@@ -71,7 +71,7 @@ public class PruneRules {
 	 */
 	public static void noRemoveEquations(List<Equation> equationsToRemove, List<Equation> listOfEquations) {
 		for(Equation eq : equationsToRemove) {
-			eq.setProoned(true);
+			eq.setPruned(true);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class PruneRules {
 			List<List<String>> bucket = buckets.get(bucketName);
 			
 			// search for equivalent equations in a given bucket (given by bucketName)
-			List<List<String>> equalEquations = getEquivalentEqautions(bucket);
+			List<List<String>> equalEquations = getEquivalentEquations(bucket);
 			
 			// generates a String of all equations (At this time the are represented by a List<String>)
 			// The string will then be added to the equationsToRemove
@@ -147,7 +147,7 @@ public class PruneRules {
 	 * @return
 	 * 			All the equivalent equations in the bucket that can be removed
 	 */
-	public static List<List<String>> getEquivalentEqautions(List<List<String>> bucket) {
+	public static List<List<String>> getEquivalentEquations(List<List<String>> bucket) {
 		List<List<String>> equalEquations = new ArrayList<List<String>>();
 		
 		while(bucket.size() >= 2) {

@@ -258,8 +258,8 @@ public class PruneRulesTest {
 		List<List<String>> possibleRemovals = new ArrayList<List<String>>();
 		possibleRemovals.add(new ArrayList<String>(split2));
 		
-		Assert.assertEquals(possibleRemovals, PruneRules.getEquivalentEqautions(eq1AndEq2Bucket));
-		Assert.assertEquals(new ArrayList<List<String>>(), PruneRules.getEquivalentEqautions(eq3Bucket));
+		Assert.assertEquals(possibleRemovals, PruneRules.getEquivalentEquations(eq1AndEq2Bucket));
+		Assert.assertEquals(new ArrayList<List<String>>(), PruneRules.getEquivalentEquations(eq3Bucket));
 	}
 	
 	@Test
