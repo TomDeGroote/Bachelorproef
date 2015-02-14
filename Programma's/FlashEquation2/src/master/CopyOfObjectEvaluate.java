@@ -2,6 +2,7 @@ package master;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import tree.Equation;
 import tree.Grammar;
@@ -24,6 +25,8 @@ public class CopyOfObjectEvaluate {
 	
 	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<Double[]> examples = new ArrayList<Double[]>();
+
+	private boolean acceptOtherExample = false;
 	
 	/**
 	 * Constructor of Evaluate
@@ -115,7 +118,13 @@ public class CopyOfObjectEvaluate {
 		if(temp.size() == 1) {
 			for(Tuple<Equation, Double> possibleSolution : temp.get(0)) {
 				if(possibleSolution.y.equals(examples.get(e)[examples.get(e).length-1])) {
-					bufferSolutions.add(possibleSolution.x);
+					if(e == 0) {
+						if(checkAgainstOtherExamples(possibleSolution.x)) {
+							bufferSolutions.add(possibleSolution.x);
+						}
+					}
+				} else {
+					acceptOtherExample = false;
 				}
 			}
 			return temp.get(0);
@@ -330,10 +339,24 @@ public class CopyOfObjectEvaluate {
 	 * @return
 	 * 		True if it is a possible solution for all other examples
 	 * 		False if not
+	 * 
+	 * TODO K1, -K1 kunnen nooit een mogelijke oplossing zijn...
 	 */
 	public boolean checkAgainstOtherExamples(Equation eq) {
 		for(int i = 1; i < examples.size(); i++) {
-			if(evaluateEquation(eq, i, false).size() == 0) {
+			List<Symbol> newSymbols = new ArrayList<Symbol>();
+			for(Symbol s : eq.getListOfSymbols()) {
+				if(s.isOperand()) {
+					newSymbols.add(s);
+				} else {
+					Terminal old = (Terminal) s;
+					int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
+					newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
+				}
+			}
+			acceptOtherExample = true;
+			evaluateEquation(new Equation(newSymbols), i, false).size();
+			if(acceptOtherExample == false) {
 				return false;
 			}
 		}
