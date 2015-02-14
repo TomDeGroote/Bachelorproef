@@ -116,7 +116,7 @@ public class ObjectEvaluateAllSolutions {
 
 				// put it in result
 				if(result.containsKey(value)) {
-					result.get(value).add(equationsValue1_2.get(0));
+					result.get(value).addAll(equationsValue1_2);
 				} else {
 					result.put(value, equationsValue1_2);
 				}
