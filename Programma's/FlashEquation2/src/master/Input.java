@@ -50,7 +50,7 @@ public class Input {
 		while ((line = br.readLine()) != null) {
 			String[] splitOnSpace = line.split(" ");
 			doublesLine = new HashMap<String, Double>();
-			Double[] primLine = new Double[splitOnSpace.length-1];
+			Double[] primLine = new Double[splitOnSpace.length];
 			// add all K elements to hashmap
 			for(int i = 0; i < splitOnSpace.length-1; i++) {
 				double value = Double.parseDouble(splitOnSpace[i]);

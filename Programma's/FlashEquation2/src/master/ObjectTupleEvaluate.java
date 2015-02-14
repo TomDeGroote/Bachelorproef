@@ -296,13 +296,13 @@ public class ObjectTupleEvaluate {
 				terminalEq.add(new Terminal("K"+i, example[i]));
 				Equation possibleEq = new Equation(terminalEq);
 				double value = Grammar.evaluateTrivial(possibleEq);
-				result.add(new Tuple<Equation, Double>(possibleEq, value));
+				result.add(new Tuple<Equation, Double>(Grammar.convertTrivialEq(possibleEq), value));
 			}
 			return result;
 		} else {
 			List<Tuple<Equation, Double>> solution = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			Double value = Grammar.evaluateTrivial(eq);
-			solution.add(new Tuple<Equation, Double>(eq, value));
+			solution.add(new Tuple<Equation, Double>(Grammar.convertTrivialEq(eq), value));
 			return solution;
 		}
 	}
@@ -350,8 +350,14 @@ public class ObjectTupleEvaluate {
 					newSymbols.add(s);
 				} else {
 					Terminal old = (Terminal) s;
-					int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
-					newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
+					// TODO hard coded...
+					if(old.toString().substring(0, 1).equals("-")) {
+						int number = (int) Double.parseDouble(old.toString().substring(2)); // TODO only allows terminals of length 1 in name (K, E, ...)
+						newSymbols.add(new Terminal(old.toString(), -examples.get(i)[number])); // TODO hard coded...
+					} else {
+						int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
+						newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
+					}
 				}
 			}
 			acceptOtherExample = true;

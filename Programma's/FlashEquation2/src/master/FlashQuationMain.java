@@ -8,7 +8,7 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "random";
+	private static final String runMethod = "tuple";
 	private static final int DEADLINE = 1000;
 
 	public static void main(String[] args) {
@@ -64,6 +64,14 @@ public class FlashQuationMain {
 //			StringMaster.run(DEADLINE, true, randomGenerated); TODO
 //			System.out.println("Best StringMaster: ");
 //			System.out.println(StringMaster.getBestSolution());
+		} else if(runMethod.equals("tuple")) {
+			ObjectTupleMaster.run(-1, false, null);
+			System.out.println("All: ");
+			for(Equation eq : ObjectTupleMaster.getAllSolutions()) {
+				System.out.println(eq);
+			}
+			System.out.println("Best: ");
+			System.out.println(ObjectTupleMaster.getBestSolution());
 		}
 	}
 

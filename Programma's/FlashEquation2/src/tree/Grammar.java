@@ -190,4 +190,21 @@ public class Grammar {
 		return getValue((double) op.getNeutralElement(), op, y);
 	}
 
+	/**
+	 * TODO comment + oppassen CFG
+	 * @param eq
+	 * @return
+	 */
+	public static Equation convertTrivialEq(Equation eq) {
+		List<Symbol> newSymbols = new ArrayList<Symbol>();
+		if(eq.getListOfSymbols().get(0).toString().equals("-")) {
+			newSymbols.add(0, new Operand("+", true, true, 0));
+			Terminal old = (Terminal) eq.getListOfSymbols().get(1);
+			newSymbols.add(new Terminal("-" + old.toString(), old.getValue()));
+			return new Equation(newSymbols);
+		} else {
+			return eq;
+		}
+	}
+
 }

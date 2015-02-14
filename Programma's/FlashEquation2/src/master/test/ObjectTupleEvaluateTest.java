@@ -16,7 +16,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class ObjectEvaluateRedoTest {
+public class ObjectTupleEvaluateTest {
 
 	@Test
 	public void splitEquationsTest() {
@@ -39,9 +39,9 @@ public class ObjectEvaluateRedoTest {
 	}
 	
 	@Test
-	public void evaluateTrivalTwoTest() {
+	public void evaluateTrivialTwoTest() {
 		List<Symbol> symbols = new ArrayList<Symbol>();
-		symbols.add(new Operand("+", true, true, 0));
+		symbols.add(new Operand("-", true, false, 0));
 		symbols.add(new NonTerminal("E"));
 
 		Tree tree = new Tree(1, true);//readTree();
@@ -51,6 +51,7 @@ public class ObjectEvaluateRedoTest {
 		d[1] = 3.0;
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
+		System.out.println(object.evaluateTrivalTwo(new Equation(symbols), 0, true));
 		Assert.assertEquals(2, object.evaluateTrivalTwo(new Equation(symbols), 0, true).size());
 	}
 	
