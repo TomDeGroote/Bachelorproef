@@ -123,7 +123,7 @@ public class ObjectMasterAllSolutions {
 					symbols.add(s);
 				}
 			}
-			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols), Ks.get(StringMaster.getNameOfGoalK()))) {
+			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
 				newSolutionSpace.add(eq);
 			}
 		}	

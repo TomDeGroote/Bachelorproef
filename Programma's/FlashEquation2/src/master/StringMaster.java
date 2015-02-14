@@ -10,7 +10,7 @@ public class StringMaster {
 
 	private static final String NAME_GOAL = "Goal";
 
-	private static Timer timer = new Timer(1000);	
+	private static Timer timer = new Timer(Integer.MAX_VALUE);	
 	private static StringEvaluate evaluate;
 	private static int nrOfK;
 

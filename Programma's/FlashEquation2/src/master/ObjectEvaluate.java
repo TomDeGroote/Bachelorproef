@@ -365,25 +365,26 @@ public class ObjectEvaluate {
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	public List<Equation> splitNonSplitableInThreeParts(Equation eq) {
+	public List<Equation> splitNonSplitableTwoParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
-		List<Symbol> operandPart = new ArrayList<Symbol>();
+//		List<Symbol> operandPart = new ArrayList<Symbol>();
 		List<Symbol> seconPart = new ArrayList<Symbol>();
 		
 		List<Symbol> eqSymbols = eq.getListOfSymbols();
 		// first part, will be E
 		firstPart.add(eqSymbols.get(0));
 		// operandPart will be an Operand (non splitable)
-		operandPart.add(eqSymbols.get(1));
+//		operandPart.add(eqSymbols.get(1));
 		// second part will be the rest of the symbols of the equation
-		for(int i = 2; i < eqSymbols.size(); i++) {
+		// The operand will be the beginning of this part
+		for(int i = 1; i < eqSymbols.size(); i++) {
 			seconPart.add(eqSymbols.get(i));
 		}
 		
 		split.add(new Equation(firstPart));
-		split.add(new Equation(operandPart));
+//		split.add(new Equation(operandPart));
 		split.add(new Equation(seconPart));
 		
 		return split;
@@ -408,11 +409,11 @@ public class ObjectEvaluate {
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	public List<Equation> splitSplitableInThreeParts(Equation eq) {
+	public List<Equation> splitSplitableTwoParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
-		List<Symbol> operandPart = new ArrayList<Symbol>();
+		//List<Symbol> operandPart = new ArrayList<Symbol>();
 		List<Symbol> seconPart = new ArrayList<Symbol>();
 		
 		int i = 0;
@@ -421,11 +422,12 @@ public class ObjectEvaluate {
 			Symbol symbol = eqSymbols.get(i);
 			if(symbol.isOperand()) {
 				if(((Operand) symbol).isSplitable()) {
+					// the operand will be concatenated on the next part				
 					// add first part equation to split
 					split.add(new Equation(firstPart));
 					// add symbol part to split
-					operandPart.add(symbol);
-					split.add(new Equation(operandPart));		
+//					operandPart.add(symbol);
+//					split.add(new Equation(operandPart));		
 					// stop working on the first part
 					break;
 				} else {
@@ -437,7 +439,8 @@ public class ObjectEvaluate {
 		}
 		
 		// start copying to second part
-		for(i++; i < eqSymbols.size(); i++) {
+		// the operand where the first could be split is gonna be added here
+		for(; i < eqSymbols.size(); i++) {
 			seconPart.add(eqSymbols.get(i));
 		}
 		
