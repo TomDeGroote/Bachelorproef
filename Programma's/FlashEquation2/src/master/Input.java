@@ -3,6 +3,8 @@ package master;
 import java.io.*;
 import java.util.*;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+
 import tree.Main;
 import tree.Tree;
 
@@ -11,6 +13,7 @@ public class Input {
 	private File text;
 	private Tree tree;
 	private List<HashMap<String, Double>> inputList;
+	private List<Double[]> primitiveInput;
 	
 	/**
 	 * Constructor of class input
@@ -18,6 +21,7 @@ public class Input {
 	 */
 	public Input() {
 		inputList = new ArrayList<HashMap<String, Double>>();
+		primitiveInput = new ArrayList<Double[]>();
 		try {
 			text = new File("inputExample.txt");
 			readTree();
@@ -46,14 +50,20 @@ public class Input {
 		while ((line = br.readLine()) != null) {
 			String[] splitOnSpace = line.split(" ");
 			doublesLine = new HashMap<String, Double>();
-			
+			Double[] primLine = new Double[splitOnSpace.length-1];
 			// add all K elements to hashmap
 			for(int i = 0; i < splitOnSpace.length-1; i++) {
-				doublesLine.put("K" + i, Double.parseDouble(splitOnSpace[i]));
+				double value = Double.parseDouble(splitOnSpace[i]);
+				doublesLine.put("K" + i, value);
+				primLine[i] = value;
 			}
 			// add last element, the goal to hashmap
-			doublesLine.put(StringMaster.getNameOfGoalK(), Double.parseDouble(splitOnSpace[splitOnSpace.length-1]));
+			double value = Double.parseDouble(splitOnSpace[splitOnSpace.length-1]);
+			doublesLine.put(StringMaster.getNameOfGoalK(), value);
 			inputList.add(doublesLine);
+			
+			primLine[primLine.length-1] = value;
+			primitiveInput.add(primLine);
 		}
 		
 		br.close();
@@ -79,6 +89,27 @@ public class Input {
 			doubleLine.put(StringMaster.getNameOfGoalK(), inputRow.get(inputRow.size()-1));
 			// adds this complete input line to the result
 			result.add(doubleLine);
+		}
+		return result;
+	}
+	
+	/**
+	 * Converts a two dimensional ArrayList to a readable primitive Doulbe[] format
+	 * @param list
+	 * 			The two dimensional list to be converted
+	 * @return
+	 * 			The resulting Double []
+	 */
+	public List<Double[]> convertArrayListToPrim(List<List<Double>> list) {
+		List<Double[]> result = new ArrayList<Double[]>();
+		for(List<Double> inputRow: list) {
+			// This will contain this input values
+			Double[] row = new Double[inputRow.size()];
+			// adds all the column values to the HashMap
+			for(int i = 0; i < inputRow.size(); i++) {
+				row[i] = inputRow.get(i);
+			}
+			result.add(row);
 		}
 		return result;
 	}
@@ -115,6 +146,15 @@ public class Input {
 	 */
 	public List<HashMap<String, Double>> getList() {
 		return inputList;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * 		A list containing all input lines
+	 */
+	public List<Double[]> getPrimitiveList() {
+		return primitiveInput;
 	}
 
 	/**
