@@ -58,7 +58,7 @@ public class ObjectTupleMaster {
 		if(numbers ==  null) {
 			return run(input.getPrimitiveList());
 		} else {
-			return run(input.convertArrayList(numbers)); // TODO
+			return run(input.convertArrayListToPrim(numbers)); // TODO
 		}
 	}
 	
