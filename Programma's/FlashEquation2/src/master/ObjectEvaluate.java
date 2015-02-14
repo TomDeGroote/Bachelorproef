@@ -84,7 +84,7 @@ public class ObjectEvaluate {
 		// Here the size will be 1, Thus the equation will just be E
 		if(eq.getListOfSymbols().size() == 1) {
 			HashMap<Double, List<Equation>> result = new HashMap<Double, List<Equation>>();
-			for(String K : examples.get(0).keySet()) {
+			for(String K : examples.get(examples.size()-1).keySet()) {
 				if(K.equals(ObjectMaster.getNameOfGoalK())) {
 					// do not make an possible equation for this
 				} else {
@@ -94,12 +94,12 @@ public class ObjectEvaluate {
 					// and put that list with the value of the equation in the result
 					List<Equation> kEquation = new ArrayList<Equation>();
 					List<Symbol> terminalK = new ArrayList<Symbol>();
-					terminalK.add(new Terminal(K, examples.get(0).get(K)));
+					terminalK.add(new Terminal(K, examples.get(examples.size()-1).get(K)));
 					kEquation.add(new Equation(terminalK));
-					if(result.containsKey(examples.get(0).get(K))) {
-						result.get(examples.get(0).get(K)).add(new Equation(terminalK));
+					if(result.containsKey(examples.get(examples.size()-1).get(K))) {
+						result.get(examples.get(examples.size()-1).get(K)).add(new Equation(terminalK));
 					} else {
-						result.put(examples.get(0).get(K), kEquation);
+						result.put(examples.get(examples.size()-1).get(K), kEquation);
 					}
 				}
 			}
@@ -109,13 +109,13 @@ public class ObjectEvaluate {
 			return result;
 		}
 		
-		// split in two parts on splitable operand
+		// split in three parts on splitable operand
 		List<Equation> splitEquations = splitSplitableInThreeParts(eq);
 		HashMap<Double, List<Equation>> solutionPart1;
 		HashMap<Double, List<Equation>> solutionPart2;
 
 		if(splitEquations.size() == 1) {
-			// size will be 1, can happen when there was no splitable equation f.e. E*E*E
+			// size will be 1, can happen when there was no splitable equation e.g. E*E*E
 			splitEquations = splitNonSplitableInThreeParts(eq);
 		} 
 		
@@ -167,8 +167,16 @@ public class ObjectEvaluate {
 				// if the value is the value we are looking for, add it to possible solutions
 				addPossibelSolutions(value, equationsValue1_2);
 				
-				// put it in result
-				result.put(value, equationsValue1_2);
+				
+				if(result.containsKey(value)) { 
+					for(int i = 0; i < equationsValue1_2.size(); i++) {
+						result.get(value).add(equationsValue1_2.get(i));
+					}
+				} else { 
+					result.put(value, equationsValue1_2);
+				}
+//				// put it in result
+//				result.put(value, equationsValue1_2);
 			}
 		}	
 		return result;
@@ -184,7 +192,7 @@ public class ObjectEvaluate {
 	 */
 	public void addPossibelSolutions(Double value, List<Equation> equationsValue1_2) {
 		// extract the value of the first equation
-		if(examples.get(0).get(ObjectMaster.getNameOfGoalK()).equals(value)) {
+		if(examples.get(examples.size()-1).get(ObjectMaster.getNameOfGoalK()).equals(value)) {
 			List<Equation> equationsToCheck = new ArrayList<Equation>(equationsValue1_2);
 			// for every example test if there is a possible equation
 			for(HashMap<String, Double> Ks : examples) {
@@ -204,7 +212,8 @@ public class ObjectEvaluate {
 					}
 					// generate the resulting equation for the next example
 					Equation equationToEvaluate = new Equation(toEvaluateList);
-					if(evaluateTerminalEquation(equationToEvaluate, Ks.get(ObjectMaster.getNameOfGoalK()))) {
+					double goal = Ks.get(ObjectMaster.getNameOfGoalK());
+					if(evaluateTerminalEquation(equationToEvaluate)==goal) {
 						// is possible solution
 						newEquationsToCheck.add(equationToEvaluate);
 					} else {
@@ -230,7 +239,7 @@ public class ObjectEvaluate {
 	 * 			True if the goal is met
 	 * 			False if the goal is not met
 	 */
-	public static boolean evaluateTerminalEquation(Equation equationToEvaluate, double goal) {
+	public static double evaluateTerminalEquation(Equation equationToEvaluate) {
 		// first split on every equation
 		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
 		
@@ -255,7 +264,7 @@ public class ObjectEvaluate {
 		for(int i = 0; i < operands.size(); i++) {
 			result = Grammar.getValue(result, operands.get(i), valueTerms.get(i+1));
 		}
-		return result == goal;
+		return result;
 	}
 	
 	/**

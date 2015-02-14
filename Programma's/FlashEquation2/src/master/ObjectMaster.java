@@ -91,7 +91,8 @@ public class ObjectMaster {
 				}
 			} else {				
 				// start to evaluate
-				solutionSpace.addAll(evaluate.evaluate(Ks));
+				List<Equation> solutions = evaluate.evaluate(Ks);
+				solutionSpace.addAll(solutions);
 				i++;
 			}
 		}
@@ -123,7 +124,7 @@ public class ObjectMaster {
 					symbols.add(s);
 				}
 			}
-			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols), Ks.get(StringMaster.getNameOfGoalK()))) {
+			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
 				newSolutionSpace.add(eq);
 			}
 		}	

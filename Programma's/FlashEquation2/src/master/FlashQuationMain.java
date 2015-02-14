@@ -3,11 +3,12 @@ package master;
 import java.util.ArrayList;
 import java.util.List;
 
+import research.RandomGenerator;
 import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "string";
+	private static final String runMethod = "object";
 	private static final int DEADLINE = 1000;
 	
 	public static void main(String[] args) {
@@ -20,15 +21,34 @@ public class FlashQuationMain {
 			System.out.println("Best: ");
 			System.out.println(StringMaster.getBestSolution());
 		} else if(runMethod.equals("object")) {
-			ObjectMaster.run(DEADLINE, false, null);
+			ObjectMaster.run(-1, false, null);
 			System.out.println("All: ");
 			for(Equation eq : ObjectMaster.getAllSolutions()) {
 				System.out.println(eq);
 			}
 			System.out.println("Best: ");
 			System.out.println(ObjectMaster.getBestSolution());
-		} else {
+		} else if(runMethod.equals("jar")){
 			System.out.println(getFormula(getInputList(), -1));
+		} else if(runMethod.equals("random")) {	
+			List<List<Double>> randomGenerated = RandomGenerator.generate(5, 3, 0, 20);
+			System.out.println(RandomGenerator.getLastGeneratedEquation());
+			ObjectMaster.run(DEADLINE, true, randomGenerated);
+			System.out.print("Best ObjectMaster: ");
+			System.out.println(ObjectMaster.getBestSolution());
+//			System.out.println("All: ");
+//			for(Equation eq : ObjectMaster.getAllSolutions()) {
+//				System.out.println(eq);
+//			}
+			for(List<Double> row : randomGenerated) {
+				for(double number : row) {
+					System.out.print(number + " ");
+				}
+				System.out.println("");
+			}
+//			StringMaster.run(DEADLINE, true, randomGenerated); TODO
+//			System.out.println("Best StringMaster: ");
+//			System.out.println(StringMaster.getBestSolution());
 		}
 	}
 
