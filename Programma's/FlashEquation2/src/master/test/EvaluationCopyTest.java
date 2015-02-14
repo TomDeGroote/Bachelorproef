@@ -253,12 +253,14 @@ public class EvaluationCopyTest {
 		Equation eq2 = new Equation(inputEq2);
 		// generate equation 3 E/E
 		List<Symbol> inputEq3 = new ArrayList<Symbol>();
+		inputEq3.add(new Operand("*", false, false, 1));
 		inputEq3.add(new NonTerminal("E"));
 		inputEq3.add(new Operand("/", false, false, 1));
 		inputEq3.add(new NonTerminal("E"));
 		Equation eq3 = new Equation(inputEq3);
 		// generate equation 3 E/E*E
 		List<Symbol> inputEq4 = new ArrayList<Symbol>();
+		inputEq4.add(new Operand("*", false, false, 1));
 		inputEq4.add(new NonTerminal("E"));
 		inputEq4.add(new Operand("/", false, false, 1));
 		inputEq4.add(new NonTerminal("E"));
@@ -271,8 +273,7 @@ public class EvaluationCopyTest {
 		List<Equation> list2 = new ArrayList<Equation>();
 		list2.add(eq3);
 		list2.add(eq4);
-		List<Equation> result = evaluate.concatenateEquationLists(list1,
-				new Operand("*", false, true, 1), list2);
+		List<Equation> result = evaluate.concatenateEquationLists(list1, list2);
 		HashSet<String> resultStrings = new HashSet<String>();
 		for (Equation eq : result) {
 			resultStrings.add(eq.toString());
@@ -286,18 +287,21 @@ public class EvaluationCopyTest {
 
 	@Test
 	public void testConcatenateEquations() {
+		List<Symbol> s = new ArrayList<Symbol>();
+		s.add(new Operand("*", false, true, 0));
+		s.addAll(eq2.getListOfSymbols());
 		Assert.assertEquals(
 				eq1.toString() + "*" + eq2.toString(),
-				evaluate.concatenateEquations(eq1,
-						new Operand("*", false, true, 0), eq2).toString());
+				evaluate.concatenateEquations(eq1, new Equation(s)).toString());
 	}
 
 	@Test
 	public void testSplitNonSplitableInThreeParts() {
-		List<Equation> split = evaluate.splitNonSplitableTwoParts(eq3);
-		Assert.assertEquals(2, split.size());
+		List<Equation> split = evaluate.splitNonSplitableInThreeParts(eq3);
+		Assert.assertEquals(3, split.size());
 		Assert.assertEquals("E", split.get(0).toString());
-		Assert.assertEquals("*E/E*E", split.get(1).toString());
+		Assert.assertEquals("*", split.get(1).toString());
+		Assert.assertEquals("E/E*E", split.get(2).toString());
 	}
 
 	@Test

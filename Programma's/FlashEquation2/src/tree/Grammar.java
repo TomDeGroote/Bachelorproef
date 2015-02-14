@@ -108,6 +108,18 @@ public class Grammar {
 		} else 
 			return 0.0;
 	}
+	
+	/**
+	 * @param valueSolution1
+	 * 		A double
+	 * @param valueSolution2
+	 * 		A double
+	 * @return
+	 * 		result of value1 operand value2
+	 */
+	public static Double getValueConcatenate(Double value1, Double value2) {
+		return value1 + value2;
+	}
 
 	/**
 	 * @param valueSolution1
@@ -150,6 +162,19 @@ public class Grammar {
 		} 
 		return false;
 
+	}
+
+	/**
+	 * Evaluates +E or -E
+	 * @param terminalEq
+	 * 		The trivial terminal equation
+	 * @return
+	 * 		The value of the trivial terminal Equation
+	 */
+	public static Double evaluateTrivial(Equation terminalEq) {
+		Operand op = (Operand) terminalEq.getListOfSymbols().get(0);
+		Double value = ((Terminal) terminalEq.listOfSymbols.get(1)).getValue();
+		return getValue((double) op.getNeutralElement(), op, value);
 	}
 
 }

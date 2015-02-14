@@ -109,14 +109,14 @@ public class ObjectEvaluate {
 			return result;
 		}
 		
-		// split in three parts on splitable operand
-		List<Equation> splitEquations = splitSplitableInThreeParts(eq);
+		// split in two parts on splitable operand E+E+E -> {E, null, +E+E}
+		List<Equation> splitEquations = splitSplitableTwoParts(eq);
 		HashMap<Double, List<Equation>> solutionPart1;
 		HashMap<Double, List<Equation>> solutionPart2;
 
 		if(splitEquations.size() == 1) {
-			// size will be 1, can happen when there was no splitable equation e.g. E*E*E
-			splitEquations = splitNonSplitableInThreeParts(eq);
+			// size will be 1, can happen when there was no splitable equation e.g. +E*E*E
+			splitEquations = splitNonSplitableInThreeParts(eq); // TODO get result don't split			
 		} 
 		
 		// evaluate first part, index = 0 in splitEquations
@@ -138,13 +138,12 @@ public class ObjectEvaluate {
 		}
 		
 		// bring results together and return
-		Operand operand = (Operand) splitEquations.get(1).getListOfSymbols().get(0); 
-		return concatenateResults(solutionPart1, operand, solutionPart2);
+		return concatenateResults(solutionPart1, (Operand) splitEquations.get(1).getListOfSymbols().get(0), solutionPart2);
 	}	
 	
 	/**
 	 * Concatenates all possible combinations of the solution for a first equation and a second
-	 * with in between the operand
+	 * the operand is found on the beginning of the second equation
 	 * @return
 	 * 		The resulting combination
 	 */
@@ -159,10 +158,24 @@ public class ObjectEvaluate {
 				List<Equation> equationsValue2 = solutionPart2.get(valueSolution2);
 				
 				// All the possible equations when combining part1 and part2
-				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, operand, equationsValue2);
+				List<Equation> equationsValue1_2 = null;
 				
+				Double value = 0.0;
 				// the resulting value
-				Double value = Grammar.getValue(valueSolution1, operand, valueSolution2);
+				if(operand == null) {
+					equationsValue1_2 = concatenateEquationLists(equationsValue1, equationsValue2);
+					value = Grammar.getValueConcatenate(valueSolution1, valueSolution2);
+				} else {
+					List<Equation> eqWithOperand = new ArrayList<Equation>();
+					for(Equation eq : equationsValue2) {
+						List<Symbol> s = new ArrayList<Symbol>();
+						s.add(operand);
+						s.addAll(eq.getListOfSymbols());
+						eqWithOperand.add(new Equation(s));
+					}
+					equationsValue1_2 = concatenateEquationLists(equationsValue1, equationsValue2);
+					value = Grammar.getValue(valueSolution1, operand, valueSolution2);
+				}
 				
 				// if the value is the value we are looking for, add it to possible solutions
 				addPossibelSolutions(value, equationsValue1_2);
@@ -325,11 +338,11 @@ public class ObjectEvaluate {
 	 * 			list with all possible combinations of the two list with in between the operand
 	 * 
 	 */
-	public List<Equation> concatenateEquationLists(List<Equation> equationsValue1, Operand operand, List<Equation> equationsValue2) {
+	public List<Equation> concatenateEquationLists(List<Equation> equationsValue1, List<Equation> equationsValue2) {
 		List<Equation> result = new ArrayList<Equation>();
 		for(Equation eq1 : equationsValue1) {
 			for(Equation eq2 : equationsValue2) {
-				result.add(concatenateEquations(eq1, operand, eq2));
+				result.add(concatenateEquations(eq1, eq2));
 			}
 		}
 		return result;
@@ -341,10 +354,9 @@ public class ObjectEvaluate {
 	 * @return
 	 * 		{eq1.getListOfSymbols, operand, eq2.getListOfSymbols}
 	 */
-	public Equation concatenateEquations(Equation eq1, Operand operand, Equation eq2) {
+	public Equation concatenateEquations(Equation eq1, Equation eq2) {
 		List<Symbol> symbolsResult = new ArrayList<Symbol>();
 		symbolsResult.addAll(eq1.getListOfSymbols());
-		symbolsResult.add(operand);
 		symbolsResult.addAll(eq2.getListOfSymbols());
 		return new Equation(symbolsResult);
 	}
@@ -365,26 +377,33 @@ public class ObjectEvaluate {
 	 * 		f.e. equation = E+E*E
 	 * 		return = {E, +, E*E} (all elements are equations)
 	 */
-	public List<Equation> splitNonSplitableTwoParts(Equation eq) {
+	public List<Equation> splitNonSplitableInThreeParts(Equation eq) {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
-//		List<Symbol> operandPart = new ArrayList<Symbol>();
+		List<Symbol> operandPart = new ArrayList<Symbol>();
 		List<Symbol> seconPart = new ArrayList<Symbol>();
 		
 		List<Symbol> eqSymbols = eq.getListOfSymbols();
-		// first part, will be E
-		firstPart.add(eqSymbols.get(0));
+		int i = 0;
+		while(!eqSymbols.get(i).isNonTerminal()) {
+			// first part, will be E or +E or -E
+			firstPart.add(eqSymbols.get(i));
+			i++;
+		}
+		// Now the E will be added
+		firstPart.add(eqSymbols.get(i));
+		i++;
 		// operandPart will be an Operand (non splitable)
-//		operandPart.add(eqSymbols.get(1));
+		operandPart.add(eqSymbols.get(i));
+		i++;
 		// second part will be the rest of the symbols of the equation
-		// The operand will be the beginning of this part
-		for(int i = 1; i < eqSymbols.size(); i++) {
-			seconPart.add(eqSymbols.get(i));
+		for(int j = i; j < eqSymbols.size(); j++) {
+			seconPart.add(eqSymbols.get(j));
 		}
 		
 		split.add(new Equation(firstPart));
-//		split.add(new Equation(operandPart));
+		split.add(new Equation(operandPart));
 		split.add(new Equation(seconPart));
 		
 		return split;
@@ -413,7 +432,7 @@ public class ObjectEvaluate {
 		List<Equation> split = new ArrayList<Equation>();
 		
 		List<Symbol> firstPart = new ArrayList<Symbol>();
-		//List<Symbol> operandPart = new ArrayList<Symbol>();
+		List<Symbol> operandPart = new ArrayList<Symbol>();
 		List<Symbol> seconPart = new ArrayList<Symbol>();
 		
 		int i = 0;
@@ -426,8 +445,8 @@ public class ObjectEvaluate {
 					// add first part equation to split
 					split.add(new Equation(firstPart));
 					// add symbol part to split
-//					operandPart.add(symbol);
-//					split.add(new Equation(operandPart));		
+					operandPart.add(null);
+					split.add(new Equation(operandPart));		
 					// stop working on the first part
 					break;
 				} else {
