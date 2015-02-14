@@ -14,7 +14,7 @@ import tree.Tree;
 public class ObjectEvaluate {
 	
 	/**
-	 * Prune idee:
+	 * Prune idee: TODO Broken..
 	 * 		Enkel vergelijkingen tegen elkaar vergelijken als ze dezelfde uitkomst genereren
 	 * 		Weer opsplitsen in termen zoals vorige keer en dan weer overlopen zoals vorige keer
 	 */

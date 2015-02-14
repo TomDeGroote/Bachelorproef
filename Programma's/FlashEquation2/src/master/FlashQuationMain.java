@@ -8,7 +8,7 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "tuple";
+	private static final String runMethod = "random";
 	private static final int DEADLINE = 1000;
 
 	public static void main(String[] args) {
@@ -43,18 +43,30 @@ public class FlashQuationMain {
 			List<List<Double>> randomGenerated = RandomGenerator.generate(6, 3, 0, 20);
 			System.out.println(RandomGenerator.getLastGeneratedEquation());
 			// best objectmaster
-//			ObjectMaster.run(-1, true, randomGenerated);
-//			System.out.print("Best ObjectMaster: ");
-//			System.out.println(ObjectMaster.getBestSolution());
+			long time = System.currentTimeMillis();
+			ObjectMaster.run(-1, true, randomGenerated);
+			System.out.print("Best ObjectMaster: ");
+			System.out.println(ObjectMaster.getBestSolution());
+			System.out.println("time: " + (System.currentTimeMillis() - time));
 //			System.out.println("All: ");
 //			for(Equation eq : ObjectMaster.getAllSolutions()) {
 //				System.out.println(eq);
 //			}
+			
+			time = System.currentTimeMillis();
 			// best all solution
 			ObjectMasterAllSolutions.run(-1, true, randomGenerated);
 			System.out.print("Best ObjectMasterAllSolutions: ");
 			System.out.println(ObjectMasterAllSolutions.getBestSolution());
+			System.out.println("time: " + (System.currentTimeMillis() - time));
 			
+			// best tuple solution
+			time = System.currentTimeMillis();
+			ObjectTupleMaster.run(-1, true, randomGenerated);
+			System.out.print("Best ObjectTupleMaster: ");
+			System.out.println(ObjectTupleMaster.getBestSolution());
+			System.out.println("time: " + (System.currentTimeMillis() - time));
+
 			for(List<Double> row : randomGenerated) {
 				for(double number : row) {
 					System.out.print(number + " ");

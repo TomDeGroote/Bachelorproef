@@ -206,5 +206,44 @@ public class Grammar {
 			return eq;
 		}
 	}
+	
+	/**
+	 * TODO comment + oppassen CFG
+	 * @param eq
+	 * @return
+	 */
+	public static Equation convertEq(Equation eq) {
+		List<Symbol> newSymbols = new ArrayList<Symbol>();
+		if(eq.getListOfSymbols().get(0).toString().equals("-")) {
+			newSymbols.add(0, new Operand("+", true, true, 0));
+			Terminal old = (Terminal) eq.getListOfSymbols().get(1);
+			newSymbols.add(new Terminal("-" + old.toString(), old.getValue()));
+			eq.getListOfSymbols().remove(0);
+			eq.getListOfSymbols().remove(0);
+			if(!eq.getListOfSymbols().isEmpty()) {
+				newSymbols.addAll(eq.getListOfSymbols());
+			}
+			return new Equation(newSymbols);
+		} else {
+			return eq;
+		}
+	}
+	
+	/**
+	 * TODO comments
+	 * @param s
+	 * @return
+	 */
+	public static Operand getCorrespondingOperand(String s) {
+		if(possibleOperands.isEmpty()) {
+			initialize();
+		}
+		for(Operand operand : possibleOperands) {
+			if(operand.toString().equals(s) && operand.isSplitable()) {
+				return operand;
+			}
+		} 
+		return null;
+	}
 
 }

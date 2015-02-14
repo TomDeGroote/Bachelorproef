@@ -236,7 +236,7 @@ public class ObjectTupleEvaluate {
 				// get the real value of the equation
 				Double realValue = Grammar.evaluateTrivialValue(starter, tuple.y);
 				
-				realResult.add(new Tuple<Equation, Double>(realEquation, realValue));
+				realResult.add(new Tuple<Equation, Double>(Grammar.convertEq(realEquation), realValue));
 			}
 			return realResult;
 		}
@@ -351,9 +351,10 @@ public class ObjectTupleEvaluate {
 				} else {
 					Terminal old = (Terminal) s;
 					// TODO hard coded...
-					if(old.toString().substring(0, 1).equals("-")) {
-						int number = (int) Double.parseDouble(old.toString().substring(2)); // TODO only allows terminals of length 1 in name (K, E, ...)
-						newSymbols.add(new Terminal(old.toString(), -examples.get(i)[number])); // TODO hard coded...
+					String firstS = old.toString().substring(0, 1);
+					if(Grammar.isOperand(firstS)) {
+						int number = (int) Double.parseDouble(old.toString().substring(2));
+						newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), examples.get(i)[number]))); // TODO hard coded...
 					} else {
 						int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
 						newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
