@@ -24,8 +24,7 @@ public class ObjectEvaluateAllSolutions {
 
 	// Initiele grootte is gekend dus gebruiken om tijd te besparen.
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
-	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double,List<Equation>>>();
-
+	
 	/**
 	 * Constructor of ObjectEvaluateAllSolutions
 	 * @param tree
@@ -83,7 +82,8 @@ public class ObjectEvaluateAllSolutions {
 
 		// split in two parts on splitable operand
 		List<List<Symbol>> splitEquations = splitOnEverySplitable(eq);
-		HashMap<Double,List<Equation>> temp = solvingEquation(splitEquations);
+		//HashMap<Double,List<Equation>> temp = solvingEquation(splitEquations);
+		HashMap<Double,List<Equation>> temp = solvingEquation2(splitEquations);
 		for(Entry<Double,List<Equation>> entry : temp.entrySet()){
 			if(entry.getKey().equals(examples.get(0).get(ObjectMaster.getNameOfGoalK())))
 				bufferSolutions.addAll(entry.getValue());
@@ -307,4 +307,51 @@ public class ObjectEvaluateAllSolutions {
 		
 		return currentSol;
 	}
+	
+	
+	public HashMap<Double,List<Equation>> solvingEquation2(List<List<Symbol>> splittedEquation) {
+
+		List<Symbol> temp = splittedEquation.get(splittedEquation.size()-1);
+		HashMap<Double,List<Equation>> current = new HashMap<Double,List<Equation>>();
+		if(temp.size() > 1) {
+			List<List<Symbol>> tempList = new ArrayList<List<Symbol>>();
+			List<Symbol> test = new ArrayList<Symbol>();
+			for(Symbol sym: temp){
+				test = new ArrayList<Symbol>();
+				test.add(sym);
+				tempList.add(test);
+			}
+			current = solvingEquation2(tempList);
+
+		} else {
+			for(String K : examples.get(0).keySet()) {
+				if(K.equals(ObjectMaster.getNameOfGoalK())) {
+					// do not make an possible equation for this
+				} else {
+					List<Equation> kEquation = new LinkedList<Equation>();
+					List<Symbol> terminalK = new LinkedList<Symbol>();
+					terminalK.add(new Terminal(K, examples.get(0).get(K)));
+					kEquation.add(new Equation(terminalK));
+					if(current.containsKey(examples.get(0).get(K))) {
+						current.get(examples.get(0).get(K)).add(new Equation(terminalK));
+					} else {
+						current.put(examples.get(0).get(K), kEquation);
+					}
+
+				}
+			}
+		}
+		if(splittedEquation.size() == 1)
+			return current;
+
+		HashMap<Double,List<Equation>> remainder = solvingEquation2(splittedEquation.subList(0, splittedEquation.size()-2));
+		HashMap<Double,List<Equation>> currentSol = new HashMap<Double,List<Equation>>();
+		if(splittedEquation.get(splittedEquation.size()-2).get(0).isOperand())
+			currentSol = concatenateResults(remainder, (Operand) splittedEquation.get(splittedEquation.size()-2).get(0), current);
+		else
+			System.out.println("Something went wrong");
+		
+		return currentSol;
+	}
+	
 }

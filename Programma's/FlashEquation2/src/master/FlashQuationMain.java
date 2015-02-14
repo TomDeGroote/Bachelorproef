@@ -8,7 +8,7 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "object";
+	private static final String runMethod = "objectAll";
 	private static final int DEADLINE = 1000;
 
 	public static void main(String[] args) {
@@ -21,7 +21,7 @@ public class FlashQuationMain {
 			System.out.println("Best: ");
 			System.out.println(StringMaster.getBestSolution());
 		} else if(runMethod.equals("object")) {
-			ObjectMaster.run(-1, false, null);
+			ObjectMaster.run(DEADLINE, false, null);
 			System.out.println("All: ");
 			for(Equation eq : ObjectMaster.getAllSolutions()) {
 				System.out.println(eq);

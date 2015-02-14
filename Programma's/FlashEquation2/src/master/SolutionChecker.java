@@ -15,8 +15,8 @@ public class SolutionChecker {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			ObjectMasterAllSolutions.run(-1, false, null);
-			ObjectMaster.run(-1, false, null);
+			ObjectMasterAllSolutions.run(DEADLINE, false, null);
+			ObjectMaster.run(DEADLINE, false, null);
 			
 			System.out.println("Exacte match: " + compareLists(ObjectMaster.getAllSolutions(),ObjectMasterAllSolutions.getAllSolutions()));
 			System.out.println("All solutions:");

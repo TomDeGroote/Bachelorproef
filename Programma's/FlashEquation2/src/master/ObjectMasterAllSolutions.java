@@ -94,9 +94,6 @@ public class ObjectMasterAllSolutions {
 				solutionSpace.addAll(evaluate.evaluate(Ks));
 				
 				i++;
-				System.out.println("Level: "+(i-1));
-				for(Equation cur : solutionSpace)
-					System.out.println(cur);
 			}
 		}
 		
