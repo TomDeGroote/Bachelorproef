@@ -3,8 +3,8 @@ package master.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import master.CopyOfObjectEvaluate;
-import master.CopyOfObjectEvaluate.Tuple;
+import master.ObjectTupleEvaluate;
+import master.ObjectTupleEvaluate.Tuple;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class ObjectEvaluateRedoTest {
 
 		Tree tree = new Tree(1, true);//readTree();
 
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Assert.assertEquals(3, object.splitEquations(new Equation(symbols)).size());
 	}
 	
@@ -45,7 +45,7 @@ public class ObjectEvaluateRedoTest {
 		symbols.add(new NonTerminal("E"));
 
 		Tree tree = new Tree(1, true);//readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -61,7 +61,7 @@ public class ObjectEvaluateRedoTest {
 		symbols.add(new Terminal("K1", 3.0));
 
 		Tree tree = new Tree(1, true);//readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -87,7 +87,7 @@ public class ObjectEvaluateRedoTest {
 		Equation eq = new Equation(symbols);
 		
 		Tree tree = new Tree(1, true); //readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -118,7 +118,7 @@ public class ObjectEvaluateRedoTest {
 		Equation eq = new Equation(symbols);
 		
 		Tree tree = new Tree(1, true); //readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -134,7 +134,7 @@ public class ObjectEvaluateRedoTest {
 	@Test
 	public void evaluateTrivialOneTest() {
 		Tree tree = new Tree(1, true);//readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -152,7 +152,7 @@ public class ObjectEvaluateRedoTest {
 
 
 		Tree tree = new Tree(1, true);//readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;
@@ -180,7 +180,7 @@ public class ObjectEvaluateRedoTest {
 		Equation eq = new Equation(symbols);
 		
 		Tree tree = new Tree(1, true);//readTree();
-		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		ObjectTupleEvaluate object = new ObjectTupleEvaluate(tree);
 		Double[] d = new Double[3];
 		d[0] = 1.0;
 		d[1] = 3.0;

@@ -8,7 +8,7 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "objectAll";
+	private static final String runMethod = "random";
 	private static final int DEADLINE = 1000;
 
 	public static void main(String[] args) {
@@ -40,20 +40,20 @@ public class FlashQuationMain {
 			System.out.println("Best: ");
 			System.out.println(ObjectMasterAllSolutions.getBestSolution());
 		} else if(runMethod.equals("random")) {	
-			List<List<Double>> randomGenerated = RandomGenerator.generate(4, 3, 0, 20);
+			List<List<Double>> randomGenerated = RandomGenerator.generate(6, 3, 0, 20);
 			System.out.println(RandomGenerator.getLastGeneratedEquation());
 			// best objectmaster
-			ObjectMaster.run(-1, true, randomGenerated);
-			System.out.print("Best ObjectMaster: ");
-			System.out.println(ObjectMaster.getBestSolution());
+//			ObjectMaster.run(-1, true, randomGenerated);
+//			System.out.print("Best ObjectMaster: ");
+//			System.out.println(ObjectMaster.getBestSolution());
 //			System.out.println("All: ");
 //			for(Equation eq : ObjectMaster.getAllSolutions()) {
 //				System.out.println(eq);
 //			}
 			// best all solution
-//			ObjectMasterAllSolutions.run(-1, true, randomGenerated);
-//			System.out.print("Best ObjectMasterAllSolutions: ");
-//			System.out.println(ObjectMasterAllSolutions.getBestSolution());
+			ObjectMasterAllSolutions.run(-1, true, randomGenerated);
+			System.out.print("Best ObjectMasterAllSolutions: ");
+			System.out.println(ObjectMasterAllSolutions.getBestSolution());
 			
 			for(List<Double> row : randomGenerated) {
 				for(double number : row) {

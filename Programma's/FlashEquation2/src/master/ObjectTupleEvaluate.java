@@ -11,7 +11,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class CopyOfObjectEvaluate {
+public class ObjectTupleEvaluate {
 	
 	/**
 	 * Prune idee:
@@ -33,7 +33,7 @@ public class CopyOfObjectEvaluate {
 	 * @param tree
 	 * 		The tree where evaluate will be working on
 	 */
-	public CopyOfObjectEvaluate(Tree tree) {
+	public ObjectTupleEvaluate(Tree tree) {
 		this.TREE = tree.getTree();
 	}
 	
@@ -91,14 +91,14 @@ public class CopyOfObjectEvaluate {
 			if(eq.getListOfSymbols().get(1).isNonTerminal()) {
 				return evaluateTrivalTwo(eq, example, nonTerminal);
 			} else {
-				List<Tuple<Equation, Double>> solution = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+				List<Tuple<Equation, Double>> solution = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 				Double value = Grammar.evaluateTrivial(eq);
 				solution.add(new Tuple<Equation, Double>(eq, value));
 				return solution;
 			}
 		} else { // E*E...
 			// calculate the value of every nonsplitable part of the equation
-			List<List<Tuple<Equation, Double>>> temp = new ArrayList<List<CopyOfObjectEvaluate.Tuple<Equation,Double>>>();
+			List<List<Tuple<Equation, Double>>> temp = new ArrayList<List<ObjectTupleEvaluate.Tuple<Equation,Double>>>();
 			for(Equation splitEq : splitEquations(eq)) {
 				temp.add(getValueNonSplitableEquation(splitEq, example, nonTerminal));
 			}
@@ -130,7 +130,7 @@ public class CopyOfObjectEvaluate {
 			return temp.get(0);
 		}
 		
-		List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+		List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 		
 		for(Tuple<Equation, Double> first : temp.get(0)) {	// first tuple list
 			for(Tuple<Equation, Double> snd : temp.get(1)) { // second tuple list
@@ -176,7 +176,7 @@ public class CopyOfObjectEvaluate {
 			return evaluateTrivalTwo(eq, e, nonTerminal);
 		} 
 		
-		List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+		List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 		
 		List<Symbol> symbols = eq.getListOfSymbols();
 		
@@ -226,7 +226,7 @@ public class CopyOfObjectEvaluate {
 		
 		// Add the operand to the equation that was at the start
 		if(firstWasOperand) {
-			List<Tuple<Equation, Double>> realResult = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> realResult = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			for(Tuple<Equation, Double> tuple : result) {
 				// create how the real equation looked
 				List<Symbol> realSymbols = new ArrayList<Symbol>();
@@ -288,7 +288,7 @@ public class CopyOfObjectEvaluate {
 	 */
 	public List<Tuple<Equation, Double>> evaluateTrivalTwo(Equation eq, int e, boolean nonTerminal) {
 		if(nonTerminal) {
-			List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			Double[] example = examples.get(e);
 			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
 				List<Symbol> terminalEq = new ArrayList<Symbol>();
@@ -300,7 +300,7 @@ public class CopyOfObjectEvaluate {
 			}
 			return result;
 		} else {
-			List<Tuple<Equation, Double>> solution = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> solution = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			Double value = Grammar.evaluateTrivial(eq);
 			solution.add(new Tuple<Equation, Double>(eq, value));
 			return solution;
@@ -315,7 +315,7 @@ public class CopyOfObjectEvaluate {
 	 */
 	public List<Tuple<Equation, Double>> evaluateTrivialOne(int e, boolean nonTerminal, Equation equation) {
 		if(nonTerminal) {
-			List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			Double[] example = examples.get(e);
 			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
 				List<Symbol> eqSymbols = new ArrayList<Symbol>();
@@ -325,7 +325,7 @@ public class CopyOfObjectEvaluate {
 			}
 			return result;
 		} else {
-			List<Tuple<Equation, Double>> list = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> list = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 			list.add(new Tuple<Equation, Double>(equation, ((Terminal) equation.getListOfSymbols().get(0)).getValue()));
 			return list;
 		}
