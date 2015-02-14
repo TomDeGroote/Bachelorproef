@@ -13,6 +13,7 @@ import tree.Equation;
 import tree.NonTerminal;
 import tree.Operand;
 import tree.Symbol;
+import tree.Terminal;
 import tree.Tree;
 
 public class ObjectEvaluateRedoTest {
@@ -50,11 +51,28 @@ public class ObjectEvaluateRedoTest {
 		d[1] = 3.0;
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
-		Assert.assertEquals(2, object.evaluateTrivalTwo(new Equation(symbols)).size());
+		Assert.assertEquals(2, object.evaluateTrivalTwo(new Equation(symbols), 0, true).size());
+	}
+	
+	@Test
+	public void evaluateTrivalTwoTerminalTest() {
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(new Operand("+", true, true, 0));
+		symbols.add(new Terminal("K1", 3.0));
+
+		Tree tree = new Tree(1, true);//readTree();
+		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		Double[] d = new Double[3];
+		d[0] = 1.0;
+		d[1] = 3.0;
+		d[2] = 3.0; // the goal
+		object.examples.add(d);
+		Assert.assertEquals(1, object.evaluateTrivalTwo(new Equation(symbols), 0, false).size());
 	}
 	
 	@Test
 	public void evaluateEquationTest() {
+		System.out.println("evaluateEquationTest");
 		// the equation
 		List<Symbol> symbols = new ArrayList<Symbol>();
 		symbols.add(new NonTerminal("E"));
@@ -76,10 +94,40 @@ public class ObjectEvaluateRedoTest {
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
 		
-		for(Tuple<Equation, Double> res :  object.evaluateEquation(eq)) {
+		for(Tuple<Equation, Double> res :  object.evaluateEquation(eq, 0, true)) {
 			System.out.println(res.y + "   " + res.x.toString());
 		}
 		Assert.assertEquals(2, object.bufferSolutions.size());
+
+	}
+	
+	@Test
+	public void evaluateEquationTerminalTest() {
+		System.out.println("evaluateEquationTerminalTest");
+		// the equation
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(new Terminal("K1", 1.0));
+		symbols.add(new Operand("*", false, true, 1));
+		symbols.add(new Terminal("K2", 3.0));
+		symbols.add(new Operand("+", true, true, 0));
+		symbols.add(new Terminal("K4", 3.0));
+		symbols.add(new Operand("-", true, false, 0));
+		symbols.add(new Terminal("K0", 2.0));
+		symbols.add(new Operand("/", false, false, 1));
+		symbols.add(new Terminal("K1", 3.0));
+		Equation eq = new Equation(symbols);
+		
+		Tree tree = new Tree(1, true); //readTree();
+		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		Double[] d = new Double[3];
+		d[0] = 1.0;
+		d[1] = 3.0;
+		d[2] = 3.0; // the goal
+		object.examples.add(d);
+		
+		for(Tuple<Equation, Double> res :  object.evaluateEquation(eq, 0, false)) {
+			System.out.println(res.y + "   " + res.x.toString());
+		}
 
 	}
 	
@@ -92,6 +140,22 @@ public class ObjectEvaluateRedoTest {
 		d[1] = 3.0;
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
-		Assert.assertEquals(2, object.evaluateTrivialOne().size());
+		Assert.assertEquals(2, object.evaluateTrivialOne(0, true, null).size());
+	}
+	
+	@Test
+	public void evaluateTrivialOneTerminalTest() {
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(new Terminal("K1", 3.0));
+		Equation eq = new Equation(symbols);
+		
+		Tree tree = new Tree(1, true);//readTree();
+		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		Double[] d = new Double[3];
+		d[0] = 1.0;
+		d[1] = 3.0;
+		d[2] = 3.0; // the goal
+		object.examples.add(d);
+		Assert.assertEquals(1, object.evaluateTrivialOne(0, false, eq).size());
 	}
 }

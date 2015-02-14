@@ -1,7 +1,6 @@
 package master;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import tree.Equation;
@@ -60,7 +59,7 @@ public class CopyOfObjectEvaluate {
 				if(!ObjectMaster.timesUp()) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
-					evaluateEquation(eq);
+					evaluateEquation(eq, 0, true); // check for first example
 				} else {
 					// return the buffer when terminated
 					return bufferSolutions;
@@ -79,22 +78,29 @@ public class CopyOfObjectEvaluate {
 	 * @return
 	 * 		all possible solutions of this equation
 	 */
-	public List<Tuple<Equation, Double>> evaluateEquation(Equation eq) {
+	public List<Tuple<Equation, Double>> evaluateEquation(Equation eq, int example, boolean nonTerminal) {
 		int size = eq.getListOfSymbols().size(); // get the length of this equation
 		
 		// size 1 -> E
 		if(size == 1) {
-			return evaluateTrivialOne();
+			return evaluateTrivialOne(example, nonTerminal, eq);
 		} else if(size == 2) { // size 2 -> +E or -E
-			return evaluateTrivalTwo(eq);
+			if(eq.getListOfSymbols().get(1).isNonTerminal()) {
+				return evaluateTrivalTwo(eq, example, nonTerminal);
+			} else {
+				List<Tuple<Equation, Double>> solution = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+				Double value = Grammar.evaluateTrivial(eq);
+				solution.add(new Tuple<Equation, Double>(eq, value));
+				return solution;
+			}
 		} else { // E*E...
 			// calculate the value of every nonsplitable part of the equation
 			List<List<Tuple<Equation, Double>>> temp = new ArrayList<List<CopyOfObjectEvaluate.Tuple<Equation,Double>>>();
 			for(Equation splitEq : splitEquations(eq)) {
-				temp.add(getValueNonSplitableEquation(splitEq));
+				temp.add(getValueNonSplitableEquation(splitEq, example, nonTerminal));
 			}
 			// concatenate all possible solutions
-			return concatenateAll(temp);
+			return concatenateAll(temp, example);
 		}
 	}
 	
@@ -105,10 +111,10 @@ public class CopyOfObjectEvaluate {
 	 * @return
 	 * 			The concatenated lists and their values
 	 */
-	private List<Tuple<Equation, Double>> concatenateAll(List<List<Tuple<Equation, Double>>> temp) {
+	private List<Tuple<Equation, Double>> concatenateAll(List<List<Tuple<Equation, Double>>> temp, int e) {
 		if(temp.size() == 1) {
 			for(Tuple<Equation, Double> possibleSolution : temp.get(0)) {
-				if(possibleSolution.y.equals(examples.get(0)[examples.get(0).length-1])) {
+				if(possibleSolution.y.equals(examples.get(e)[examples.get(e).length-1])) {
 					bufferSolutions.add(possibleSolution.x);
 				}
 			}
@@ -126,7 +132,7 @@ public class CopyOfObjectEvaluate {
 		temp.remove(0);
 		temp.remove(0);
 		temp.add(0, result);
-		return concatenateAll(temp);
+		return concatenateAll(temp, e);
 	}
 
 	/**
@@ -153,12 +159,12 @@ public class CopyOfObjectEvaluate {
 	 * @return
 	 * 			A list of Terminal equations and values
 	 */
-	public List<Tuple<Equation, Double>> getValueNonSplitableEquation(Equation eq) {
+	public List<Tuple<Equation, Double>> getValueNonSplitableEquation(Equation eq, int e, boolean nonTerminal) {
 		// trivial solutions
 		if(eq.getListOfSymbols().size() == 1) {
-			return evaluateTrivialOne();
+			return evaluateTrivialOne(e, nonTerminal, eq);
 		} else if(eq.getListOfSymbols().size() == 2) {
-			return evaluateTrivalTwo(eq);
+			return evaluateTrivalTwo(eq, e, nonTerminal);
 		} 
 		
 		List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
@@ -172,20 +178,32 @@ public class CopyOfObjectEvaluate {
 		if(symbols.get(start).isOperand()) {
 			firstWasOperand = true;
 			starter = (Operand) symbols.get(0);
-			start++;
 			symbols.remove(0);
 		}
 		
 		// calculate equation that doesn't start with operand
-		// starts with E -> we will replace this by possible K's
+		// if starts with E -> we will replace this by possible K's
+		// if starts with K don't replace, just splits
 		for(; start < symbols.size(); start += 2) {
+			Symbol K = symbols.get(start);
 			symbols.remove(0); // Here comes the K
 			Operand op = (Operand) symbols.get(0);
 			symbols.remove(0); // This is the operand
-			List<Tuple<Equation, Double>> tuples = getValueNonSplitableEquation(new Equation(symbols));
-			for(int i = 0; i < examples.get(0).length-1; i++) {
-				Symbol K = new Terminal("K" + i, examples.get(0)[i]);
-				// we now have E (we get value here) O (the operand) Rest (the value of all the possibilities)
+			List<Tuple<Equation, Double>> tuples = getValueNonSplitableEquation(new Equation(symbols), e, nonTerminal);
+			if(nonTerminal) {
+				for(int i = 0; i < examples.get(e).length-1; i++) {
+					K = new Terminal("K" + i, examples.get(e)[i]);
+					// we now have E (we get value here) O (the operand) Rest (the value of all the possibilities)
+					for(Tuple<Equation, Double> t : tuples) {
+						List<Symbol> newSymbols = new ArrayList<Symbol>();
+						newSymbols.add(K);
+						newSymbols.add(op);
+						newSymbols.addAll(t.x.getListOfSymbols());
+						Double value = Grammar.getValue(((Terminal) K).getValue(), op, t.y);
+						result.add(new Tuple<Equation, Double>(new Equation(newSymbols), value));
+					}
+				}
+			} else {
 				for(Tuple<Equation, Double> t : tuples) {
 					List<Symbol> newSymbols = new ArrayList<Symbol>();
 					newSymbols.add(K);
@@ -251,7 +269,7 @@ public class CopyOfObjectEvaluate {
 	}
 
 	/**
-	 * Evaluates the trivial nonTerminal equation OE or OE
+	 * Evaluates the trivial (non)Terminal equation OE or OE
 	 * But because O are operands some special needs are required
 	 * Possible solutions will be added to bufferSolutions
 	 * @param eq
@@ -259,45 +277,68 @@ public class CopyOfObjectEvaluate {
 	 * @return
 	 * 		A list with terminal equations and corresponding values
 	 */
-	public List<Tuple<Equation, Double>> evaluateTrivalTwo(Equation eq) {
-		List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
-		Double[] example = examples.get(0);
-		double goal = example[example.length-1];
-		for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
-			List<Symbol> terminalEq = new ArrayList<Symbol>();
-			terminalEq.add(eq.getListOfSymbols().get(0));
-			terminalEq.add(new Terminal("K"+i, example[i]));
-			Equation possibleEq = new Equation(terminalEq);
-			double value = Grammar.evaluateTrivial(possibleEq);
-//			if(value == goal) {
-//				bufferSolutions.add(possibleEq);
-//			}
-			result.add(new Tuple<Equation, Double>(possibleEq, value));
+	public List<Tuple<Equation, Double>> evaluateTrivalTwo(Equation eq, int e, boolean nonTerminal) {
+		if(nonTerminal) {
+			List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			Double[] example = examples.get(e);
+			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
+				List<Symbol> terminalEq = new ArrayList<Symbol>();
+				terminalEq.add(eq.getListOfSymbols().get(0));
+				terminalEq.add(new Terminal("K"+i, example[i]));
+				Equation possibleEq = new Equation(terminalEq);
+				double value = Grammar.evaluateTrivial(possibleEq);
+				result.add(new Tuple<Equation, Double>(possibleEq, value));
+			}
+			return result;
+		} else {
+			List<Tuple<Equation, Double>> solution = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			Double value = Grammar.evaluateTrivial(eq);
+			solution.add(new Tuple<Equation, Double>(eq, value));
+			return solution;
 		}
-		return result;
 	}
 
 	/**
-	 * Evaluates the trivial nonTerminal equation E
+	 * Evaluates the trivial equation (Terminal or nonTerminal)
 	 * Possible solutions will be added to bufferSolutions
 	 * @return
 	 * 		A list with terminal equations and corresponding values
 	 */
-	public List<Tuple<Equation, Double>> evaluateTrivialOne() {
-		List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
-		Double[] example = examples.get(0);
-		double goal = example[example.length-1];
-		for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
-			List<Symbol> eqSymbols = new ArrayList<Symbol>();
-			eqSymbols.add(new Terminal("K"+i, example[i]));
-			Equation eq = new Equation(eqSymbols);
-//			if(example[i] == goal) {
-//				bufferSolutions.add(eq);
-//			}
-			result.add(new Tuple<Equation, Double>(eq, example[i]));
+	public List<Tuple<Equation, Double>> evaluateTrivialOne(int e, boolean nonTerminal, Equation equation) {
+		if(nonTerminal) {
+			List<Tuple<Equation, Double>> result = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			Double[] example = examples.get(e);
+			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
+				List<Symbol> eqSymbols = new ArrayList<Symbol>();
+				eqSymbols.add(new Terminal("K"+i, example[i]));
+				Equation eq = new Equation(eqSymbols);
+				result.add(new Tuple<Equation, Double>(eq, example[i]));
+			}
+			return result;
+		} else {
+			List<Tuple<Equation, Double>> list = new ArrayList<CopyOfObjectEvaluate.Tuple<Equation,Double>>();
+			list.add(new Tuple<Equation, Double>(equation, ((Terminal) equation.getListOfSymbols().get(0)).getValue()));
+			return list;
 		}
-		return result;
 	}	
+	
+	
+	/**
+	 * Checks for all other examples if this equation is a possible solution
+	 * @param eq
+	 * 		The equation to be checked
+	 * @return
+	 * 		True if it is a possible solution for all other examples
+	 * 		False if not
+	 */
+	public boolean checkAgainstOtherExamples(Equation eq) {
+		for(int i = 1; i < examples.size(); i++) {
+			if(evaluateEquation(eq, i, false).size() == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * To Support multiple type returns
@@ -318,5 +359,7 @@ public class CopyOfObjectEvaluate {
 		return x.toString() + " = " + y;
 	  }
 	} 
+	
+	
 	
 }
