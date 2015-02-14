@@ -7,9 +7,9 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "string";
+	private static final String runMethod = "objectAll";
 	private static final int DEADLINE = 1000;
-	
+
 	public static void main(String[] args) {
 		if(runMethod.equals("string")) {
 			StringMaster.run();
@@ -27,6 +27,15 @@ public class FlashQuationMain {
 			}
 			System.out.println("Best: ");
 			System.out.println(ObjectMaster.getBestSolution());
+		}
+		else if(runMethod.equals("objectAll")) {
+			ObjectMasterAllSolutions.run(DEADLINE, false, null);
+			System.out.println("All: ");
+			for(Equation eq : ObjectMasterAllSolutions.getAllSolutions()) {
+				System.out.println(eq);
+			}
+			System.out.println("Best: ");
+			System.out.println(ObjectMasterAllSolutions.getBestSolution());
 		} else {
 			System.out.println(getFormula(getInputList(), -1));
 		}
@@ -56,7 +65,7 @@ public class FlashQuationMain {
 	public static String getFormula(List<List<Double>> inputList, int deadline) {
 		return ObjectMaster.run(deadline, true, inputList);
 	}
-	
+
 	/**
 	 * @return
 	 * 			A manually generated InputList
@@ -64,14 +73,14 @@ public class FlashQuationMain {
 	private static List<List<Double>> getInputList() {
 		// the result
 		List<List<Double>> inputList = new ArrayList<List<Double>>();
-		
+
 		// input 1
 		List<Double> input1 = new ArrayList<Double>();
 		input1.add(4.0);
 		input1.add(2.0);
 		input1.add(8.0);
 		inputList.add(input1);
-		
+
 		// input 2
 		List<Double> input2 = new ArrayList<Double>();
 		input2.add(3.0);
@@ -89,6 +98,6 @@ public class FlashQuationMain {
 
 		return inputList;
 	}
-	
+
 
 }
