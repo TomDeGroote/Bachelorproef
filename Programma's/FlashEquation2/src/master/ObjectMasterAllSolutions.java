@@ -92,7 +92,11 @@ public class ObjectMasterAllSolutions {
 			} else {				
 				// start to evaluate
 				solutionSpace.addAll(evaluate.evaluate(Ks));
+				
 				i++;
+				System.out.println("Level: "+(i-1));
+				for(Equation cur : solutionSpace)
+					System.out.println(cur);
 			}
 		}
 		
@@ -123,7 +127,7 @@ public class ObjectMasterAllSolutions {
 					symbols.add(s);
 				}
 			}
-			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols), Ks.get(StringMaster.getNameOfGoalK()))) {
+			if(ObjectEvaluateAllSolutions.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
 				newSolutionSpace.add(eq);
 			}
 		}	
@@ -131,6 +135,7 @@ public class ObjectMasterAllSolutions {
 	}
 
 
+	
 
 	/**
 	 * Prints the solution containing all Ks and is the smallest or

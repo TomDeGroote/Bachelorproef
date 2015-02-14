@@ -127,6 +127,61 @@ public class ObjectEvaluateAllSolutions {
 	}
 	
 	/**
+	 * Evaluates if a equation containing only terminals equals the goal
+	 * @param equationToEvaluate
+	 * 			The equation to evaluate
+	 * @param goal
+	 * 			The goal that should be met
+	 * @return
+	 * 			True if the goal is met
+	 * 			False if the goal is not met
+	 */
+	public static double evaluateTerminalEquation(Equation equationToEvaluate) {
+		// first split on every equation
+		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
+		
+		// second evaluate every term
+		// the values of the terms and operands need to be read in the same order
+		List<Double> valueTerms = new ArrayList<Double>();
+		List<Operand> operands = new ArrayList<Operand>();
+		for(List<Symbol> term : terms) {
+			if(term.size() == 1) { // or operand or T
+				if(term.get(0).isOperand()) {
+					operands.add((Operand) term.get(0)); // in case of operand, save operand
+				} else {
+					valueTerms.add(((Terminal) term.get(0)).getValue()); // in case of T, save value of terminal
+				}
+			} else {
+				valueTerms.add(calculateTerm(term));
+			}
+		}
+		
+		// calculate the concatenation of the terms
+		double result = valueTerms.get(0);
+		for(int i = 0; i < operands.size(); i++) {
+			result = Grammar.getValue(result, operands.get(i), valueTerms.get(i+1));
+		}
+		return result;
+	}
+	
+	/**
+	 * Calculates the value of a term (thus containing only nonSplitable parts
+	 * @param term
+	 * 		The term to be evaluated
+	 * 		Contains only non splitable operands
+	 * 		Starts with an Terminal then a Operand then a Terminal and so on...
+	 * @return
+	 * 		The value of the term
+	 */
+	public static Double calculateTerm(List<Symbol> term) {
+		Double result = ((Terminal) term.get(0)).getValue();
+		for(int i = 1; i < term.size(); i = i+2) {
+			result = Grammar.getValue(result, (Operand) term.get(i), ((Terminal) term.get(i+1)).getValue());
+		}
+		return result;
+	}
+	
+	/**
 	 * E+E*E
 	 * -> {E, +, E*E}
 	 * @param equation
