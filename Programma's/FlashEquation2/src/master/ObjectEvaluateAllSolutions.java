@@ -116,7 +116,7 @@ public class ObjectEvaluateAllSolutions {
 
 				// put it in result
 				if(result.containsKey(value)) {
-					result.get(value).add(equationsValue1_2.get(0));
+					result.get(value).addAll(equationsValue1_2);
 				} else {
 					result.put(value, equationsValue1_2);
 				}
@@ -258,6 +258,7 @@ public class ObjectEvaluateAllSolutions {
 
 	/**
 	 * Recursive function to solve an equation.
+	 * Right to left
 	 * @param splittedEquation
 	 * 			The equation to be solved.
 	 * @return
@@ -308,7 +309,20 @@ public class ObjectEvaluateAllSolutions {
 		return currentSol;
 	}
 	
-	
+	/**
+	 * It takes the last two list of symbols in the list and solves that part. The remainder of
+	 * the equation is solved by recursively calling this function on the rest of the list. And then
+	 * combining the remainder and the current calculated part. 
+	 * 
+	 * Recursion happens until there is only one element in the list of lists.
+	 * 
+	 * Left to right
+	 * 
+	 * @param splittedEquation
+	 * 			The equation that has to be solved seperated into splittable parts
+	 * @return
+	 * 			A HashMap containing the value/equation combination of all possiblities.
+	 */
 	public HashMap<Double,List<Equation>> solvingEquation2(List<List<Symbol>> splittedEquation) {
 
 		List<Symbol> temp = splittedEquation.get(splittedEquation.size()-1);
