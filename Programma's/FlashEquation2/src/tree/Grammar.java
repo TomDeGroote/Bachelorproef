@@ -177,4 +177,17 @@ public class Grammar {
 		return getValue((double) op.getNeutralElement(), op, value);
 	}
 
+	/**
+	 * 
+	 * @param op
+	 * 			The operand
+	 * @param y
+	 * 			The value
+	 * @return
+	 * 			The real value
+	 */
+	public static Double evaluateTrivialValue(Operand op, Double y) {
+		return getValue((double) op.getNeutralElement(), op, y);
+	}
+
 }

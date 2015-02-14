@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import master.CopyOfObjectEvaluate;
+import master.CopyOfObjectEvaluate.Tuple;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,8 +51,35 @@ public class ObjectEvaluateRedoTest {
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
 		Assert.assertEquals(2, object.evaluateTrivalTwo(new Equation(symbols)).size());
-		Assert.assertEquals(1, object.bufferSolutions.size());
-		Assert.assertEquals("K1", object.bufferSolutions.get(0).getListOfSymbols().get(1).toString());
+	}
+	
+	@Test
+	public void evaluateEquationTest() {
+		// the equation
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(new NonTerminal("E"));
+		symbols.add(new Operand("*", false, true, 1));
+		symbols.add(new NonTerminal("E"));
+		symbols.add(new Operand("+", true, true, 0));
+		symbols.add(new NonTerminal("E"));
+		symbols.add(new Operand("-", true, false, 0));
+		symbols.add(new NonTerminal("E"));
+		symbols.add(new Operand("/", false, false, 1));
+		symbols.add(new NonTerminal("E"));
+		Equation eq = new Equation(symbols);
+		
+		Tree tree = new Tree(1, true); //readTree();
+		CopyOfObjectEvaluate object = new CopyOfObjectEvaluate(tree);
+		Double[] d = new Double[3];
+		d[0] = 1.0;
+		d[1] = 3.0;
+		d[2] = 3.0; // the goal
+		object.examples.add(d);
+		
+		for(Tuple<Equation, Double> res :  object.evaluateEquation(eq)) {
+			System.out.println(res.y + "   " + res.x.toString());
+		}
+		Assert.assertEquals(2, object.bufferSolutions.size());
 
 	}
 	
@@ -65,8 +93,5 @@ public class ObjectEvaluateRedoTest {
 		d[2] = 3.0; // the goal
 		object.examples.add(d);
 		Assert.assertEquals(2, object.evaluateTrivialOne().size());
-		Assert.assertEquals(1, object.bufferSolutions.size());
-		Assert.assertEquals("K1", object.bufferSolutions.get(0).getListOfSymbols().get(0).toString());
-
 	}
 }
