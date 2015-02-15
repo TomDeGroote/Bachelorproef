@@ -148,4 +148,12 @@ public class StringMaster extends Master {
 	}
 
 
+	@Override
+	public String run(int deadline, boolean stopAfterOne,
+			List<List<Double>> numbers) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

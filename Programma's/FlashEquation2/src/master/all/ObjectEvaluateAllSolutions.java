@@ -113,8 +113,10 @@ public class ObjectEvaluateAllSolutions {
 				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, operand, equationsValue2);
 
 				// the resulting value
+				if(operand.toString().equals("/") && valueSolution2.equals(0.0))
+					continue;
 				Double value = Grammar.getValue(valueSolution1, operand, valueSolution2);
-
+				
 				// put it in result
 				if(result.containsKey(value)) {
 					result.get(value).addAll(equationsValue1_2);
