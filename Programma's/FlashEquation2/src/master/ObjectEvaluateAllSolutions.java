@@ -56,7 +56,7 @@ public class ObjectEvaluateAllSolutions {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!ObjectMaster.timesUp()) {
+				if(!ObjectMasterAllSolutions.timesUp()) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					evaluateEquation(eq);

@@ -1,7 +1,5 @@
 package master.test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,11 +12,8 @@ import java.util.List;
 import master.ObjectEvaluateAllSolutions;
 import master.StringMaster;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import tree.Equation;
@@ -36,9 +31,7 @@ public class ObjectEvaluateAllSolutionsTest {
 	private HashMap<String, Double> KsExample2;
 	private Equation eq1;
 	private Equation eq2;
-	private Equation eq3;
 	private Equation eqTerminal1;
-	private Equation eqTerminal2;
 
 
 	
@@ -81,17 +74,6 @@ public class ObjectEvaluateAllSolutionsTest {
 		inputEq2.add(new NonTerminal("E"));
 		eq2 = new Equation(inputEq2);
 		
-		// generate equation 3 E*E/E*E
-		List<Symbol> inputEq3 = new ArrayList<Symbol>();
-		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false,true, 1));
-		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("/", false,false, 1));
-		inputEq3.add(new NonTerminal("E"));
-		inputEq3.add(new Operand("*", false,true, 1));
-		inputEq3.add(new NonTerminal("E"));
-		eq3 = new Equation(inputEq3);
-		
 		// generate equation 1 T+T*T+T = 15
 		List<Symbol> inputEqTerminal = new ArrayList<Symbol>();
 		inputEqTerminal.add(new Terminal("T", 3.0));
@@ -102,17 +84,6 @@ public class ObjectEvaluateAllSolutionsTest {
 		inputEqTerminal.add(new Operand("+", true,true, 0));
 		inputEqTerminal.add(new Terminal("T", 3.0));
 		eqTerminal1 = new Equation(inputEqTerminal);
-		
-		// generate equation 1 T*T*T/T = 3*3*3/2 = 13.5
-		List<Symbol> inputEqTerminal2 = new ArrayList<Symbol>();
-		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("*", false,true, 1));
-		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("*", false,false, 1));
-		inputEqTerminal2.add(new Terminal("T", 3.0));
-		inputEqTerminal2.add(new Operand("/", false,false, 1));
-		inputEqTerminal2.add(new Terminal("T", 2.0));
-		eqTerminal2 = new Equation(inputEqTerminal2);
 
 	}
 	

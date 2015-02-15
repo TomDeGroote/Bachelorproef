@@ -2,7 +2,8 @@ package master;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import tree.Equation;
 import tree.Grammar;
@@ -25,6 +26,7 @@ public class ObjectTupleEvaluate {
 	
 	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<Double[]> examples = new ArrayList<Double[]>();
+	public List<Terminal> terminalList = new ArrayList<Terminal>();
 
 	private boolean acceptOtherExample = false;
 	
@@ -48,9 +50,6 @@ public class ObjectTupleEvaluate {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		
-		// add current example to examples list
-		examples.add(Ks);
-		
 		// before first ; no variable is needed because levelCount is already initialized
 		// for each over every level in TREE
 		for(; levelCount < TREE.size(); levelCount++) {
@@ -59,7 +58,7 @@ public class ObjectTupleEvaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!ObjectMaster.timesUp()) {
+				if(!ObjectTupleMaster.timesUp()) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					evaluateEquation(eq, 0, true); // check for first example
@@ -72,6 +71,21 @@ public class ObjectTupleEvaluate {
 			equationCount = 0;
 		}
 		return bufferSolutions; // return buffered solutions when we are at the end of the tree
+	}
+	
+	/**
+	 * Adds an example to the current example list
+	 * @param Ks
+	 * 		The example to be added
+	 */
+	public void addExample(Double[] Ks) {
+		if(terminalList.isEmpty()) {
+			for(int i = 0; i < Ks.length-1; i++) {
+				terminalList.add(new Terminal("K"+i, Ks[i]));
+			}
+		}
+		// add current example to examples list
+		examples.add(Ks);
 	}
 
 	/**
@@ -162,9 +176,9 @@ public class ObjectTupleEvaluate {
 	}
 
 	/**
-	 * Calculates all possible values of the nonTerminal equation
+	 * Calculates all possible values of the (non)Terminal equation
 	 * @param splitEq
-	 * 			The nonTerminal equation
+	 * 			The (non)Terminal equation
 	 * @return
 	 * 			A list of Terminal equations and values
 	 */
@@ -175,7 +189,7 @@ public class ObjectTupleEvaluate {
 		} else if(eq.getListOfSymbols().size() == 2) {
 			return evaluateTrivalTwo(eq, e, nonTerminal);
 		} 
-		
+				
 		List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
 		
 		List<Symbol> symbols = eq.getListOfSymbols();
@@ -190,38 +204,41 @@ public class ObjectTupleEvaluate {
 			symbols.remove(0);
 		}
 		
-		// calculate equation that doesn't start with operand
-		// if starts with E -> we will replace this by possible K's
-		// if starts with K don't replace, just splits
-		for(; start < symbols.size(); start += 2) {
-			Symbol K = symbols.get(start);
-			symbols.remove(0); // Here comes the K
-			Operand op = (Operand) symbols.get(0);
-			symbols.remove(0); // This is the operand
-			List<Tuple<Equation, Double>> tuples = getValueNonSplitableEquation(new Equation(symbols), e, nonTerminal);
-			if(nonTerminal) {
-				for(int i = 0; i < examples.get(e).length-1; i++) {
-					K = new Terminal("K" + i, examples.get(e)[i]);
-					// we now have E (we get value here) O (the operand) Rest (the value of all the possibilities)
-					for(Tuple<Equation, Double> t : tuples) {
-						List<Symbol> newSymbols = new ArrayList<Symbol>();
-						newSymbols.add(K);
-						newSymbols.add(op);
-						newSymbols.addAll(t.x.getListOfSymbols());
-						Double value = Grammar.getValue(((Terminal) K).getValue(), op, t.y);
-						result.add(new Tuple<Equation, Double>(new Equation(newSymbols), value));
+		List<List<Symbol>> newEqs = new ArrayList<List<Symbol>>();
+
+		// nonTrivial solutions
+		// generate all possible Terminal equations
+		if(nonTerminal) {
+			// first equations -> {K0, K1, K2, ...}
+			for(Terminal K : terminalList) {
+				List<Symbol> newEqStart = new ArrayList<Symbol>();
+				newEqStart.add(K);
+				newEqs.add(newEqStart);
+			}
+			for(int i = 1; i < symbols.size(); i++) {
+				if(symbols.get(i).isNonTerminal()) { // for every E
+					List<List<Symbol>> nextEqs = new ArrayList<List<Symbol>>();
+					for(List<Symbol> sym : newEqs) { // for every already made terminal equation (K0+, K1+, ...)
+						for(Terminal K : terminalList) { // add every possibility (K0+K0, K0+K1, K1+K0, ...)
+							List<Symbol> newEqContinue = new ArrayList<Symbol>(sym);
+							newEqContinue.add(K);
+							nextEqs.add(newEqContinue);
+						}
+					}
+					newEqs = nextEqs;
+				} else if(symbols.get(i).isTerminal() || symbols.get(i).isOperand()) { // if already K or O just add it to all possiblities
+					for(List<Symbol> sym : newEqs) {
+						sym.add(symbols.get(i));
 					}
 				}
-			} else {
-				for(Tuple<Equation, Double> t : tuples) {
-					List<Symbol> newSymbols = new ArrayList<Symbol>();
-					newSymbols.add(K);
-					newSymbols.add(op);
-					newSymbols.addAll(t.x.getListOfSymbols());
-					Double value = Grammar.getValue(((Terminal) K).getValue(), op, t.y);
-					result.add(new Tuple<Equation, Double>(new Equation(newSymbols), value));
-				}
 			}
+		} else {
+			newEqs.add(eq.getListOfSymbols());
+		}
+		
+		// Calculate the value of every terminal equation
+		for(List<Symbol> terminalEq : newEqs) {
+			result.add(new Tuple<Equation, Double>(new Equation(terminalEq), evaluateTerminalEquation(terminalEq)));			
 		}
 		
 		// Add the operand to the equation that was at the start
@@ -242,6 +259,19 @@ public class ObjectTupleEvaluate {
 		}
 
 		// if no operand had to be added just return the result
+		return result;
+	}
+
+	/**
+	 * TODO
+	 * @param terminalEq
+	 * @return
+	 */
+	private Double evaluateTerminalEquation(List<Symbol> terminalEq) {
+		Double result = Grammar.getValue(((Terminal) terminalEq.get(0)).getValue(), ((Operand) terminalEq.get(1)), ((Terminal) terminalEq.get(2)).getValue());
+		for(int i = 3; i < terminalEq.size(); i=i+2) {
+			result = Grammar.getValue(result, (Operand) terminalEq.get(i), ((Terminal) terminalEq.get(i+1)).getValue());
+		}
 		return result;
 	}
 

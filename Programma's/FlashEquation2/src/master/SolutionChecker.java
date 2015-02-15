@@ -1,12 +1,8 @@
 package master;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import javax.swing.event.ListSelectionEvent;
-
-import research.RandomGenerator;
 import tree.Equation;
 
 public class SolutionChecker {

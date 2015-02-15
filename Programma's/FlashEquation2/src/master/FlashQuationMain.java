@@ -40,14 +40,14 @@ public class FlashQuationMain {
 			System.out.println("Best: ");
 			System.out.println(ObjectMasterAllSolutions.getBestSolution());
 		} else if(runMethod.equals("random")) {	
-			List<List<Double>> randomGenerated = RandomGenerator.generate(6, 3, 0, 20);
+			List<List<Double>> randomGenerated = RandomGenerator.generate(4, 4, 0, 30);
 			System.out.println(RandomGenerator.getLastGeneratedEquation());
 			// best objectmaster
 			long time = System.currentTimeMillis();
-			ObjectMaster.run(-1, true, randomGenerated);
-			System.out.print("Best ObjectMaster: ");
-			System.out.println(ObjectMaster.getBestSolution());
-			System.out.println("time: " + (System.currentTimeMillis() - time));
+//			ObjectMaster.run(-1, true, randomGenerated);
+//			System.out.print("Best ObjectMaster: ");
+//			System.out.println(ObjectMaster.getBestSolution());
+//			System.out.println("time: " + (System.currentTimeMillis() - time));
 //			System.out.println("All: ");
 //			for(Equation eq : ObjectMaster.getAllSolutions()) {
 //				System.out.println(eq);
@@ -55,14 +55,14 @@ public class FlashQuationMain {
 			
 			time = System.currentTimeMillis();
 			// best all solution
-			ObjectMasterAllSolutions.run(-1, true, randomGenerated);
+			ObjectMasterAllSolutions.run(-1, false, randomGenerated);
 			System.out.print("Best ObjectMasterAllSolutions: ");
 			System.out.println(ObjectMasterAllSolutions.getBestSolution());
 			System.out.println("time: " + (System.currentTimeMillis() - time));
 			
 			// best tuple solution
 			time = System.currentTimeMillis();
-			ObjectTupleMaster.run(-1, true, randomGenerated);
+			ObjectTupleMaster.run(-1, false, randomGenerated);
 			System.out.print("Best ObjectTupleMaster: ");
 			System.out.println(ObjectTupleMaster.getBestSolution());
 			System.out.println("time: " + (System.currentTimeMillis() - time));
@@ -73,11 +73,12 @@ public class FlashQuationMain {
 				}
 				System.out.println("");
 			}
+			
 //			StringMaster.run(DEADLINE, true, randomGenerated); TODO
 //			System.out.println("Best StringMaster: ");
 //			System.out.println(StringMaster.getBestSolution());
 		} else if(runMethod.equals("tuple")) {
-			ObjectTupleMaster.run(-1, false, null);
+			ObjectTupleMaster.run(-1, true, null);
 			System.out.println("All: ");
 			for(Equation eq : ObjectTupleMaster.getAllSolutions()) {
 				System.out.println(eq);

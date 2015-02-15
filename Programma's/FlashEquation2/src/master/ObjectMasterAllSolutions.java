@@ -22,7 +22,7 @@ public class ObjectMasterAllSolutions {
 	
 	public static HashMap<String, Double> example;
 	
-	private static boolean hasDeadLine = true;		// TODO jar
+	private static boolean hasDeadLine = false;		// TODO jar
 	private static boolean stopAfterOne = false;	// TODO jar
 	
 	/**
@@ -44,9 +44,7 @@ public class ObjectMasterAllSolutions {
 			ObjectMasterAllSolutions.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
-		
-		// this is not a jar run
-		hasDeadLine = true;
+
 		// read the tree generated earlier
 		Input input = new Input();
 		Tree tree = input.getTree();
@@ -70,7 +68,7 @@ public class ObjectMasterAllSolutions {
 	 * 		TODO aangepast voor jar
 	 */
 	private static String run(List<HashMap<String, Double>> numbers) {
-		int i = 1; // counter to say how many examples have passed
+//		int i = 1; // counter to say how many examples have passed
 		for(HashMap<String, Double> Ks : numbers) {
 			// remember the example
 			example = Ks;
@@ -93,7 +91,7 @@ public class ObjectMasterAllSolutions {
 				// start to evaluate
 				solutionSpace.addAll(evaluate.evaluate(Ks));
 				
-				i++;
+//				i++;
 			}
 		}
 		

@@ -70,7 +70,7 @@ public class ObjectMaster {
 	 * 		TODO aangepast voor jar
 	 */
 	private static String run(List<HashMap<String, Double>> numbers) {
-		int i = 1; // counter to say how many examples have passed
+//		int i = 1; // counter to say how many examples have passed
 		for(HashMap<String, Double> Ks : numbers) {
 			// remember the example
 			example = Ks;
@@ -93,7 +93,7 @@ public class ObjectMaster {
 				// start to evaluate
 				List<Equation> solutions = evaluate.evaluate(Ks);
 				solutionSpace.addAll(solutions);
-				i++;
+//				i++;
 			}
 		}
 		

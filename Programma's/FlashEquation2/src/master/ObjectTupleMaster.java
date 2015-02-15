@@ -1,12 +1,9 @@
 package master;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import tree.Equation;
-import tree.Symbol;
-import tree.Terminal;
 import tree.Tree;
 
 
@@ -22,7 +19,7 @@ public class ObjectTupleMaster {
 	
 	public static Double[] example;
 	
-	private static boolean hasDeadLine = true;		// TODO jar
+	private static boolean hasDeadLine = false;		// TODO jar
 	private static boolean stopAfterOne = false;	// TODO jar
 	
 	/**
@@ -45,8 +42,6 @@ public class ObjectTupleMaster {
 			timer = new Timer(deadline);
 		}
 		
-		// this is not a jar run
-		hasDeadLine = true;
 		// read the tree generated earlier
 		Input input = new Input();
 		Tree tree = input.getTree();
@@ -55,6 +50,7 @@ public class ObjectTupleMaster {
 		evaluate = new ObjectTupleEvaluate(tree);
 		
 		ObjectTupleMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		
 		if(numbers ==  null) {
 			return run(input.getPrimitiveList());
 		} else {
@@ -68,10 +64,13 @@ public class ObjectTupleMaster {
 	 * 		Or "Empty" if there is no solution yet
 	 */
 	private static String run(List<Double[]> list) {
-		int i = 1; // counter to say how many examples have passed
+//		int i = 1; // counter to say how many examples have passed
 		for(Double[] Ks : list) {
 			// remember the example
 			example = Ks;
+			
+			// add the example to tupleEvaluate
+			evaluate.addExample(example);
 			
 			// start timer
 			timer.start();
@@ -91,7 +90,7 @@ public class ObjectTupleMaster {
 				// start to evaluate
 				List<Equation> solutions = evaluate.evaluate(Ks);
 				solutionSpace.addAll(solutions);
-				i++;
+//				i++;
 			}
 		}
 		
