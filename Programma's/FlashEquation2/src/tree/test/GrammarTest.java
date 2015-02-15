@@ -6,13 +6,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.fathzer.soft.javaluator.DoubleEvaluator;
-
 import tree.Equation;
 import tree.Grammar;
 import tree.NonTerminal;
 import tree.Operand;
 import tree.Symbol;
+
+import com.fathzer.soft.javaluator.DoubleEvaluator;
 
 public class GrammarTest {
 

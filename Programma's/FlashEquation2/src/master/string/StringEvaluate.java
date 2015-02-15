@@ -1,7 +1,13 @@
 package master.string;
 
-import java.util.*;
-import tree.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import tree.Equation;
+import tree.Grammar;
+import tree.Tree;
 
 /**
  * The evaluate class

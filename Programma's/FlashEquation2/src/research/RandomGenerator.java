@@ -7,6 +7,7 @@ import java.util.Random;
 import master.normal.ObjectEvaluate;
 import tree.Equation;
 import tree.Grammar;
+import tree.NonTerminal;
 import tree.Operand;
 import tree.Symbol;
 import tree.Terminal;
@@ -35,7 +36,7 @@ public class RandomGenerator {
 	 * @return
 	 * 			A two dimensional list containing numbers, the columns represent KN and the Goal
 	 */
-	public static List<List<Double>> generate(int length, int nrOfExamples, int minimum, int maximum) {
+	public static List<List<Double>> generateCertainAllK(int length, int nrOfExamples, int minimum, int maximum) {
 		List<List<Double>> result = new ArrayList<List<Double>>();
 		List<Operand> possibleOperands = Grammar.getPossibleOperands(); // possible operands
 		List<Double> numbers = new ArrayList<Double>(); // the numbers of a row
@@ -100,6 +101,45 @@ public class RandomGenerator {
 			// add first row to result
 			result.add(nextNumbers);
 		}
+		
+		// return the result
+		return result;
+	}
+	
+	/**
+	 * Generates list of random numbers between startRange and endRange
+	 * Every row represents column values with the last value of the row the goal value
+	 * @param length
+	 * 			The number of column values (inclusive goal value)
+	 * 			Has to be > 1
+	 * @param nrOfExamples 
+	 * 			The number of rows
+	 * 			Has to be > 0
+	 * @param minimum
+	 * 			The start of the range for the random numbers
+	 * 			Has to be >= 0
+	 * 			(Does not include the goal range)
+	 * @param maximum 
+	 * 			The end of the range for the random numbers
+	 * 			(Does not include the goal range)
+	 * @return
+	 * 			A two dimensional list containing numbers, the columns represent KN and the Goal
+	 */
+	public static List<List<Double>> generateRealRandom(int length, int nrOfExamples, int minimum, int maximum) {
+		List<List<Double>> result = new ArrayList<List<Double>>();
+		Random rn = new Random();
+
+		for(int i = 0; i < nrOfExamples; i++) {
+			List<Double> row = new ArrayList<Double>();
+			for(int j = 0; j < length; j++) {
+				row.add((double) (rn.nextInt((maximum - minimum) + 1) + minimum));
+			}
+			result.add(row);
+		}
+		
+		List<Symbol> s = new ArrayList<Symbol>();
+		s.add(new NonTerminal("Unknown"));
+		lastGeneratedEquation = new Equation(s);
 		
 		// return the result
 		return result;

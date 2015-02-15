@@ -3,8 +3,6 @@ package master;
 import java.util.ArrayList;
 import java.util.List;
 
-import master.all.ObjectMasterAllSolutions;
-import master.normal.ObjectMaster;
 import tree.Equation;
 
 public class SolutionChecker {

@@ -3,6 +3,7 @@ package master.normal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;

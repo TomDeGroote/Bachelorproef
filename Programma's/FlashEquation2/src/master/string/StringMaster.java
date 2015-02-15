@@ -1,11 +1,13 @@
 package master.string;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import master.Input;
 import master.Master;
 import master.Timer;
-import tree.*;
+import tree.Tree;
 
 //TODO Oppassen met de Ks
 

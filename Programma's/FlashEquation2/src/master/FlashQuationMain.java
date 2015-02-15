@@ -14,29 +14,29 @@ import tree.Equation;
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 100;
+	private static final int DEADLINE = 3000;
 	private static final boolean stopAfterOne = false;
 	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
-	private static final boolean printAll = true;
+	private static final boolean printAll = false;
 	private static final boolean printBest = true;
 	private static final boolean printTime = true;
 	private static final boolean printRandom = true;
 	
 	// RandomGenerator parameters
-	private static final boolean useRandom = false;
-	private static final int length = 4; // inclusive solution
-	private static final int nrOfExamples = 5;
+	private static final boolean useRandom = true;
+	private static final int length = 3; // inclusive solution
+	private static final int nrOfExamples = 2;
 	private static final int minimum = 0;
-	private static final int maximum = 100;
+	private static final int maximum = 20;
 
 
 
 	public static void main(String[] args) {
 		List<String> toRun = new ArrayList<String>();
-//		toRun.add("all");
+		toRun.add("all");
 //		toRun.add("string");
 //		toRun.add("normal");
 		toRun.add("tuple");
@@ -52,7 +52,7 @@ public class FlashQuationMain {
 	public static void runListOfStrings(List<String> strings) {
 		List<List<Double>> numbers = null;
 		if(useRandom) {
-			numbers = RandomGenerator.generate(length, nrOfExamples, minimum, maximum);
+			numbers = RandomGenerator.generateRealRandom(length, nrOfExamples, minimum, maximum); // Real Random
 			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {
@@ -128,7 +128,11 @@ public class FlashQuationMain {
 			System.out.println("  -     Size: " + master.getAllSolutions().size());
 		}
 		if(printBest) {
-			System.out.println("  -     Best: " + master.getBestSolution().toString());
+			try {
+				System.out.println("  -     Best: " + master.getBestSolution().toString());
+			} catch (NullPointerException e) {
+				System.out.println("  -     Best: Empty");
+			}
 		}
 		if(printAll) {
 			System.out.println("  -     All:");
