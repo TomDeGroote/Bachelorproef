@@ -25,6 +25,7 @@ public class TupleWeightsEvaluate {
 	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<Double[]> examples = new ArrayList<Double[]>();
 	public List<Terminal> terminalList = new ArrayList<Terminal>();
+	private List<Terminal> weights = new ArrayList<Terminal>();
 
 	private boolean acceptOtherExample = false;
 	
@@ -35,6 +36,7 @@ public class TupleWeightsEvaluate {
 	 */
 	public TupleWeightsEvaluate(Tree tree) {
 		this.TREE = tree.getTree();
+		this.weights = Grammar.getWeights();
 	}
 	
 	/**

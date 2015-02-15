@@ -27,10 +27,10 @@ public class Grammar {
 	 * @return
 	 * 		The weights to be used (currently 1 tem 9)
 	 */
-	public static Double[] getWeights() {
-		Double[] weights = new Double[9];
-		for(int i = 0; i < weights.length; i++) {
-			weights[i] = (double) (i+1);
+	public static List<Terminal> getWeights() {
+		List<Terminal> weights = new ArrayList<Terminal>();
+		for(int i = 0; i < 9; i++) {
+			weights.add(new Terminal(""+(i+1), (double) i+1)); 
 		}
 		return weights;
 	}
