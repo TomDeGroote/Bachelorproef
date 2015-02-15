@@ -214,10 +214,14 @@ public class TupleWeightsMaster extends Master {
 		if(hasDeadLine) {
 			return timer.timesUp();			
 		} else {
-			if(evaluate.bufferSolutions.isEmpty()) {
-				return false;
+			if(stopAfterOne) {
+				if(evaluate.bufferSolutions.isEmpty()) {
+					return false;
+				} else {
+					return true;
+				}
 			} else {
-				return true;
+				return false;
 			}
 		}
 	}

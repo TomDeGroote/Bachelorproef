@@ -30,9 +30,25 @@ public class Grammar {
 	public static List<Terminal> getWeights() {
 		List<Terminal> weights = new ArrayList<Terminal>();
 		for(int i = 0; i < 9; i++) {
-			weights.add(new Terminal(""+(i+1), (double) i+1)); 
+			weights.add(new Terminal("W"+(i+1), (double) i+1)); 
 		}
 		return weights;
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 * 		The string to be checked
+	 * @return
+	 * 		If the string is a weight or not
+	 */
+	public static boolean isWeight(String s) {
+		for(Terminal w : getWeights()) {
+			if(w.toString().equals(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

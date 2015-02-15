@@ -215,6 +215,11 @@ public class TupleWeightsEvaluate {
 				newEqStart.add(K);
 				newEqs.add(newEqStart);
 			}
+			for(Terminal W : weights) {
+				List<Symbol> newEqStart = new ArrayList<Symbol>();
+				newEqStart.add(W);
+				newEqs.add(newEqStart);
+			}
 			for(int i = 1; i < symbols.size(); i++) {
 				if(symbols.get(i).isNonTerminal()) { // for every E
 					List<List<Symbol>> nextEqs = new ArrayList<List<Symbol>>();
@@ -222,6 +227,11 @@ public class TupleWeightsEvaluate {
 						for(Terminal K : terminalList) { // add every possibility (K0+K0, K0+K1, K1+K0, ...)
 							List<Symbol> newEqContinue = new ArrayList<Symbol>(sym);
 							newEqContinue.add(K);
+							nextEqs.add(newEqContinue);
+						}
+						for(Terminal W : weights) { // add every possibility (K0+K0, K0+K1, K1+K0, ...)
+							List<Symbol> newEqContinue = new ArrayList<Symbol>(sym);
+							newEqContinue.add(W);
 							nextEqs.add(newEqContinue);
 						}
 					}
@@ -330,6 +340,14 @@ public class TupleWeightsEvaluate {
 				double value = Grammar.evaluateTrivial(possibleEq);
 				result.add(new Tuple<Equation, Double>(Grammar.convertTrivialEq(possibleEq), value));
 			}
+			for(Terminal weight : weights) { // -1 because last value is goal
+				List<Symbol> terminalEq = new ArrayList<Symbol>();
+				terminalEq.add(eq.getListOfSymbols().get(0));
+				terminalEq.add(weight);
+				Equation possibleEq = new Equation(terminalEq);
+				double value = Grammar.evaluateTrivial(possibleEq);
+				result.add(new Tuple<Equation, Double>(Grammar.convertTrivialEq(possibleEq), value));
+			}
 			return result;
 		} else {
 			List<Tuple<Equation, Double>> solution = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
@@ -354,6 +372,12 @@ public class TupleWeightsEvaluate {
 				eqSymbols.add(new Terminal("K"+i, example[i]));
 				Equation eq = new Equation(eqSymbols);
 				result.add(new Tuple<Equation, Double>(eq, example[i]));
+			}
+			for(Terminal weight : weights) { // -1 because last value is goal
+				List<Symbol> eqSymbols = new ArrayList<Symbol>();
+				eqSymbols.add(weight);
+				Equation eq = new Equation(eqSymbols);
+				result.add(new Tuple<Equation, Double>(eq, weight.getValue()));
 			}
 			return result;
 		} else {
@@ -383,11 +407,19 @@ public class TupleWeightsEvaluate {
 					Terminal old = (Terminal) s;
 					String firstS = old.toString().substring(0, 1);
 					if(Grammar.isOperand(firstS)) {
-						int number = (int) Double.parseDouble(old.toString().substring(2));
-						newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), examples.get(i)[number])));
+						if(Grammar.isWeight(old.toString().substring(1))) {
+							newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), old.getValue())));
+						} else {
+							int number = (int) Double.parseDouble(old.toString().substring(2));
+							newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), examples.get(i)[number])));
+						}
 					} else {
-						int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
-						newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
+						if(Grammar.isWeight(old.toString().substring(0))) {
+							newSymbols.add(old);
+						} else {
+							int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
+							newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
+						}
 					}
 				}
 			}
