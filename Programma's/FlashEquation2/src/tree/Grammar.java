@@ -22,6 +22,18 @@ public class Grammar {
 		possibleOperands.add(new Operand("+", true, true, 0));
 		possibleOperands.add(new Operand("-", true, false, 0));
 	}
+	
+	/**
+	 * @return
+	 * 		The weights to be used (currently 1 tem 9)
+	 */
+	public static Double[] getWeights() {
+		Double[] weights = new Double[9];
+		for(int i = 0; i < weights.length; i++) {
+			weights[i] = (double) (i+1);
+		}
+		return weights;
+	}
 
 	/**
 	 * This method expands a given equation

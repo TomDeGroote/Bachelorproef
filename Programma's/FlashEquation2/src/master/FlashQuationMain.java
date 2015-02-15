@@ -7,14 +7,15 @@ import master.all.ObjectMasterAllSolutions;
 import master.normal.ObjectMaster;
 import master.string.StringMaster;
 import master.tuple.ObjectTupleMaster;
+import master.tuple.TupleWeightsMaster;
 import research.RandomGenerator;
 import tree.Equation;
 
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 100;
-	private static final boolean stopAfterOne = true;
+	private static final int DEADLINE = -1;
+	private static final boolean stopAfterOne = false;
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
@@ -33,10 +34,11 @@ public class FlashQuationMain {
 
 	public static void main(String[] args) {
 		List<String> toRun = new ArrayList<String>();
-		toRun.add("all");
+//		toRun.add("all");
 //		toRun.add("string");
 //		toRun.add("normal");
 		toRun.add("tuple");
+		toRun.add("tupleWeight");
 		runListOfStrings(toRun);
 	}
 	
@@ -63,6 +65,9 @@ public class FlashQuationMain {
 				break;
 			case "all":
 				master = new ObjectMasterAllSolutions();
+				break;
+			case "tupleWeight":
+				master = new TupleWeightsMaster();
 				break;
 			default:
 				System.out.println("Default not running");

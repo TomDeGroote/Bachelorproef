@@ -10,7 +10,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class ObjectTupleEvaluate {
+public class TupleWeightsEvaluate {
 	
 	/**
 	 * Prune idee:
@@ -33,7 +33,7 @@ public class ObjectTupleEvaluate {
 	 * @param tree
 	 * 		The tree where evaluate will be working on
 	 */
-	public ObjectTupleEvaluate(Tree tree) {
+	public TupleWeightsEvaluate(Tree tree) {
 		this.TREE = tree.getTree();
 	}
 	
@@ -56,7 +56,7 @@ public class ObjectTupleEvaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!ObjectTupleMaster.timesUp()) {
+				if(!TupleWeightsMaster.timesUp()) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					evaluateEquation(eq, 0, true); // check for first example
@@ -103,14 +103,14 @@ public class ObjectTupleEvaluate {
 			if(eq.getListOfSymbols().get(1).isNonTerminal()) {
 				return evaluateTrivalTwo(eq, example, nonTerminal);
 			} else {
-				List<Tuple<Equation, Double>> solution = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+				List<Tuple<Equation, Double>> solution = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 				Double value = Grammar.evaluateTrivial(eq);
 				solution.add(new Tuple<Equation, Double>(eq, value));
 				return solution;
 			}
 		} else { // E*E...
 			// calculate the value of every nonsplitable part of the equation
-			List<List<Tuple<Equation, Double>>> temp = new ArrayList<List<ObjectTupleEvaluate.Tuple<Equation,Double>>>();
+			List<List<Tuple<Equation, Double>>> temp = new ArrayList<List<TupleWeightsEvaluate.Tuple<Equation,Double>>>();
 			for(Equation splitEq : splitEquations(eq)) {
 				temp.add(getValueNonSplitableEquation(splitEq, example, nonTerminal));
 			}
@@ -142,7 +142,7 @@ public class ObjectTupleEvaluate {
 			return temp.get(0);
 		}
 		
-		List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+		List<Tuple<Equation, Double>> result = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 		
 		for(Tuple<Equation, Double> first : temp.get(0)) {	// first tuple list
 			for(Tuple<Equation, Double> snd : temp.get(1)) { // second tuple list
@@ -188,7 +188,7 @@ public class ObjectTupleEvaluate {
 			return evaluateTrivalTwo(eq, e, nonTerminal);
 		} 
 				
-		List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+		List<Tuple<Equation, Double>> result = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 		
 		List<Symbol> symbols = eq.getListOfSymbols();
 		
@@ -241,7 +241,7 @@ public class ObjectTupleEvaluate {
 		
 		// Add the operand to the equation that was at the start
 		if(firstWasOperand) {
-			List<Tuple<Equation, Double>> realResult = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> realResult = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 			for(Tuple<Equation, Double> tuple : result) {
 				// create how the real equation looked
 				List<Symbol> realSymbols = new ArrayList<Symbol>();
@@ -318,7 +318,7 @@ public class ObjectTupleEvaluate {
 	 */
 	public List<Tuple<Equation, Double>> evaluateTrivalTwo(Equation eq, int e, boolean nonTerminal) {
 		if(nonTerminal) {
-			List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> result = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 			Double[] example = examples.get(e);
 			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
 				List<Symbol> terminalEq = new ArrayList<Symbol>();
@@ -330,7 +330,7 @@ public class ObjectTupleEvaluate {
 			}
 			return result;
 		} else {
-			List<Tuple<Equation, Double>> solution = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> solution = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 			Double value = Grammar.evaluateTrivial(eq);
 			solution.add(new Tuple<Equation, Double>(Grammar.convertTrivialEq(eq), value));
 			return solution;
@@ -345,7 +345,7 @@ public class ObjectTupleEvaluate {
 	 */
 	public List<Tuple<Equation, Double>> evaluateTrivialOne(int e, boolean nonTerminal, Equation equation) {
 		if(nonTerminal) {
-			List<Tuple<Equation, Double>> result = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> result = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 			Double[] example = examples.get(e);
 			for(int i = 0; i < example.length-1; i++) { // -1 because last value is goal
 				List<Symbol> eqSymbols = new ArrayList<Symbol>();
@@ -355,7 +355,7 @@ public class ObjectTupleEvaluate {
 			}
 			return result;
 		} else {
-			List<Tuple<Equation, Double>> list = new ArrayList<ObjectTupleEvaluate.Tuple<Equation,Double>>();
+			List<Tuple<Equation, Double>> list = new ArrayList<TupleWeightsEvaluate.Tuple<Equation,Double>>();
 			list.add(new Tuple<Equation, Double>(equation, ((Terminal) equation.getListOfSymbols().get(0)).getValue()));
 			return list;
 		}
