@@ -19,8 +19,8 @@ public class ObjectTupleMaster extends Master {
 	
 	public static Double[] example;
 	
-	private static boolean hasDeadLine = false;		// TODO jar
-	private static boolean stopAfterOne = false;	// TODO jar
+	private static boolean hasDeadLine = false;		
+	private static boolean stopAfterOne = false;	
 	
 	/**
 	 * @param deadline
@@ -32,8 +32,6 @@ public class ObjectTupleMaster extends Master {
 	 * @return
 	 * 			"Empty" if no formula was found
 	 * 			The formula in string form if a formula was found
-	 * 
-	 * 			TODO aangepast voor jar
 	 */
 	@Override
 	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
@@ -55,7 +53,7 @@ public class ObjectTupleMaster extends Master {
 		if(numbers ==  null) {
 			return run(input.getPrimitiveList());
 		} else {
-			return run(input.convertArrayListToPrim(numbers)); // TODO
+			return run(input.convertArrayListToPrim(numbers));
 		}
 	}
 	
@@ -208,8 +206,6 @@ public class ObjectTupleMaster extends Master {
 	 * @return
 	 * 		True if the there is no more time left
 	 * 		False if there is time left
-	 * 
-	 * 		TODO aangepast voor jar support
 	 */
 	public static boolean timesUp() {
 		if(hasDeadLine) {

@@ -8,13 +8,18 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
+	// Deadline parameters
 	private static final int DEADLINE = 100;
 	private static final boolean stopAfterOne = true;
+	
+	// Print Parameters
 	private static final boolean printSizeAll = true;
 	private static final boolean printAll = false;
 	private static final boolean printBest = true;
 	private static final boolean printTime = true;
 	private static final boolean printRandom = true;
+	
+	// RandomGenerator parameters
 	private static final int length = 4; // inclusive solution
 	private static final int nrOfExamples = 5;
 	private static final int minimum = 0;
@@ -31,6 +36,11 @@ public class FlashQuationMain {
 		runListOfStrings(toRun);
 	}
 	
+	/**
+	 * Runs every Master whose name is in the parameter strings
+	 * @param strings
+	 * 			List containing the names of the to run Masters
+	 */
 	public static void runListOfStrings(List<String> strings) {
 		List<List<Double>> numbers = RandomGenerator.generate(length, nrOfExamples, minimum, maximum);
 		System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
@@ -134,39 +144,4 @@ public class FlashQuationMain {
 		ObjectMaster master = new ObjectMaster();
 		return master.run(deadline, true, inputList);
 	}
-
-	/**
-	 * @return
-	 * 			A manually generated InputList
-	 */
-	private static List<List<Double>> getInputList() {
-		// the result
-		List<List<Double>> inputList = new ArrayList<List<Double>>();
-
-		// input 1
-		List<Double> input1 = new ArrayList<Double>();
-		input1.add(4.0);
-		input1.add(2.0);
-		input1.add(8.0);
-		inputList.add(input1);
-
-		// input 2
-		List<Double> input2 = new ArrayList<Double>();
-		input2.add(3.0);
-		input2.add(3.0);
-		input2.add(9.0);
-		inputList.add(input2);
-
-		// input 3
-		List<Double> input3 = new ArrayList<Double>();
-		input3.add(9.0);
-		input3.add(5.0);
-		input3.add(19.0);
-		inputList.add(input3);
-
-
-		return inputList;
-	}
-
-
 }

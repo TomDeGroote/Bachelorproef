@@ -263,9 +263,11 @@ public class ObjectTupleEvaluate {
 	}
 
 	/**
-	 * TODO
+	 * Evaluates a equation only containing terminals (for the first example given)
 	 * @param terminalEq
+	 * 		The terminal equation to be evaluated
 	 * @return
+	 * 		The value of the terminal equation
 	 */
 	private Double evaluateTerminalEquation(List<Symbol> terminalEq) {
 		Double result = Grammar.getValue(((Terminal) terminalEq.get(0)).getValue(), ((Operand) terminalEq.get(1)), ((Terminal) terminalEq.get(2)).getValue());
@@ -370,7 +372,6 @@ public class ObjectTupleEvaluate {
 	 * 		True if it is a possible solution for all other examples
 	 * 		False if not
 	 * 
-	 * TODO K1, -K1 kunnen nooit een mogelijke oplossing zijn...
 	 */
 	public boolean checkAgainstOtherExamples(Equation eq) {
 		for(int i = 1; i < examples.size(); i++) {
@@ -380,11 +381,10 @@ public class ObjectTupleEvaluate {
 					newSymbols.add(s);
 				} else {
 					Terminal old = (Terminal) s;
-					// TODO hard coded...
 					String firstS = old.toString().substring(0, 1);
 					if(Grammar.isOperand(firstS)) {
 						int number = (int) Double.parseDouble(old.toString().substring(2));
-						newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), examples.get(i)[number]))); // TODO hard coded...
+						newSymbols.add(new Terminal(old.toString(), Grammar.evaluateTrivialValue(Grammar.getCorrespondingOperand(firstS), examples.get(i)[number])));
 					} else {
 						int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of length 1 in name (K, E, ...)
 						newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
