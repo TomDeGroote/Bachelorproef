@@ -1,4 +1,4 @@
-package master;
+package master.all;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import master.normal.ObjectMaster;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;

@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import master.ObjectEvaluate;
-import master.StringMaster;
+
+import master.normal.ObjectEvaluate;
+import master.string.StringMaster;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import tree.Equation;
 import tree.Main;
 import tree.NonTerminal;

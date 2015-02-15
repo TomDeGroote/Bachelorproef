@@ -3,6 +3,10 @@ package master;
 import java.util.ArrayList;
 import java.util.List;
 
+import master.all.ObjectMasterAllSolutions;
+import master.normal.ObjectMaster;
+import master.string.StringMaster;
+import master.tuple.ObjectTupleMaster;
 import research.RandomGenerator;
 import tree.Equation;
 

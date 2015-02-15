@@ -2,7 +2,7 @@ package master.test;
 
 import java.util.ArrayList;
 
-import master.StringEvaluate;
+import master.string.StringEvaluate;
 
 import org.junit.After;
 import org.junit.AfterClass;

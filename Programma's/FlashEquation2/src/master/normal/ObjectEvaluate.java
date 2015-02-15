@@ -1,4 +1,4 @@
-package master;
+package master.normal;
 
 import java.util.ArrayList;
 import java.util.HashMap;

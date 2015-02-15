@@ -1,4 +1,4 @@
-package master;
+package master.string;
 
 import java.util.*;
 import tree.*;

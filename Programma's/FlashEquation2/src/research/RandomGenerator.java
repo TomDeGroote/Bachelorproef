@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import master.ObjectEvaluate;
+import master.normal.ObjectEvaluate;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;

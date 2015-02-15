@@ -1,8 +1,11 @@
-package master;
+package master.tuple;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import master.Input;
+import master.Master;
+import master.Timer;
 import tree.Equation;
 import tree.Tree;
 

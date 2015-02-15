@@ -1,4 +1,4 @@
-package master;
+package master.tuple;
 
 import java.util.ArrayList;
 import java.util.List;

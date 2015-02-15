@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import master.ObjectMaster;
+import master.normal.ObjectMaster;
 
 import org.junit.Assert;
 import org.junit.Test;

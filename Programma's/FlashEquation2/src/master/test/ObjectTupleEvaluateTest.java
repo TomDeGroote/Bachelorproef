@@ -3,8 +3,8 @@ package master.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import master.ObjectTupleEvaluate;
-import master.ObjectTupleEvaluate.Tuple;
+import master.tuple.ObjectTupleEvaluate;
+import master.tuple.ObjectTupleEvaluate.Tuple;
 
 import org.junit.Assert;
 import org.junit.Test;

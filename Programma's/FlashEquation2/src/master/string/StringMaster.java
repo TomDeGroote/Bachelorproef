@@ -1,7 +1,10 @@
-package master;
+package master.string;
 
 import java.util.*;
 
+import master.Input;
+import master.Master;
+import master.Timer;
 import tree.*;
 
 //TODO Oppassen met de Ks

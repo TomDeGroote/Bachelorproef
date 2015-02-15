@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import master.ObjectEvaluateAllSolutions;
-import master.StringMaster;
+import master.all.ObjectEvaluateAllSolutions;
+import master.string.StringMaster;
 
 import org.junit.Assert;
 import org.junit.Before;

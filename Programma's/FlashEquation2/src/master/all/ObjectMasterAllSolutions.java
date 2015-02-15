@@ -1,9 +1,13 @@
-package master;
+package master.all;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import master.Input;
+import master.Master;
+import master.Timer;
+import master.string.StringMaster;
 import tree.Equation;
 import tree.Symbol;
 import tree.Terminal;
@@ -11,18 +15,18 @@ import tree.Tree;
 
 
 
-public class ObjectMaster extends Master{
+public class ObjectMasterAllSolutions extends Master {
 	
 	private static final String NAME_GOAL = "Goal";
 	
 	private static Timer timer = new Timer(Long.MAX_VALUE);	
-	private static ObjectEvaluate evaluate;
+	private static ObjectEvaluateAllSolutions evaluate;
 	
 	public static List<Equation> solutionSpace = new ArrayList<Equation>();
 	
 	public static HashMap<String, Double> example;
 	
-	private static boolean hasDeadLine = true;		// TODO jar
+	private static boolean hasDeadLine = false;		// TODO jar
 	private static boolean stopAfterOne = false;	// TODO jar
 	
 	/**
@@ -42,20 +46,18 @@ public class ObjectMaster extends Master{
 	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
 		// set a possible deadline
 		if(deadline > 0) {
-			ObjectMaster.hasDeadLine = true;
+			ObjectMasterAllSolutions.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
-		
-		// this is not a jar run
-		hasDeadLine = true;
+
 		// read the tree generated earlier
 		Input input = new Input();
 		Tree tree = input.getTree();
 		
 		// generate the evaluate class
-		evaluate = new ObjectEvaluate(tree);
+		evaluate = new ObjectEvaluateAllSolutions(tree);
 		
-		ObjectMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		ObjectMasterAllSolutions.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		if(numbers ==  null) {
 			return run(input.getList());
 		} else {
@@ -92,8 +94,8 @@ public class ObjectMaster extends Master{
 				}
 			} else {				
 				// start to evaluate
-				List<Equation> solutions = evaluate.evaluate(Ks);
-				solutionSpace.addAll(solutions);
+				solutionSpace.addAll(evaluate.evaluate(Ks));
+				
 //				i++;
 			}
 		}
@@ -125,7 +127,7 @@ public class ObjectMaster extends Master{
 					symbols.add(s);
 				}
 			}
-			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
+			if(ObjectEvaluateAllSolutions.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
 				newSolutionSpace.add(eq);
 			}
 		}	
@@ -133,6 +135,7 @@ public class ObjectMaster extends Master{
 	}
 
 
+	
 
 	/**
 	 * Prints the solution containing all Ks and is the smallest or
@@ -239,7 +242,7 @@ public class ObjectMaster extends Master{
 
 	@Override
 	public String getNameOfMaster() {
-		return "ObjectNormal";
+		return "ObjectAll";
 	}
 	
 	
