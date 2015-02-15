@@ -8,7 +8,7 @@ import tree.Tree;
 
 
 
-public class ObjectTupleMaster {
+public class ObjectTupleMaster extends Master {
 	
 	private static final String NAME_GOAL = "Goal";
 	
@@ -35,7 +35,8 @@ public class ObjectTupleMaster {
 	 * 
 	 * 			TODO aangepast voor jar
 	 */
-	public static String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
+	@Override
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
 		// set a possible deadline
 		if(deadline > 0) {
 			ObjectTupleMaster.hasDeadLine = true;
@@ -128,7 +129,8 @@ public class ObjectTupleMaster {
 	 * @return
 	 * 		The best solution
 	 */
-	public static Equation getBestSolution() {
+	@Override
+	public Equation getBestSolution() {
 		Equation bestSolution = null; // variable to remember best solution
 		int nrOfKeys = 0; // variable to remember nr of Ks in best solution
 		
@@ -184,7 +186,8 @@ public class ObjectTupleMaster {
 	 * @return
 	 * 		All current solutions
 	 */
-	public static List<Equation> getAllSolutions() {
+	@Override
+	public List<Equation> getAllSolutions() {
 		List<Equation> solutions = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
 			solutions.add(eq);
@@ -218,6 +221,11 @@ public class ObjectTupleMaster {
 				return true;
 			}
 		}
+	}
+
+	@Override
+	public String getNameOfMaster() {
+		return "ObjectTupleMaster";
 	}
 	
 	

@@ -11,7 +11,7 @@ import tree.Tree;
 
 
 
-public class ObjectMasterAllSolutions {
+public class ObjectMasterAllSolutions extends Master {
 	
 	private static final String NAME_GOAL = "Goal";
 	
@@ -38,7 +38,8 @@ public class ObjectMasterAllSolutions {
 	 * 
 	 * 			TODO aangepast voor jar
 	 */
-	public static String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
+	@Override
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
 		// set a possible deadline
 		if(deadline > 0) {
 			ObjectMasterAllSolutions.hasDeadLine = true;
@@ -139,7 +140,8 @@ public class ObjectMasterAllSolutions {
 	 * @return
 	 * 		The best solution
 	 */
-	public static Equation getBestSolution() {
+	@Override
+	public Equation getBestSolution() {
 		Equation bestSolution = null; // variable to remember best solution
 		int nrOfKeys = 0; // variable to remember nr of Ks in best solution
 		
@@ -197,7 +199,8 @@ public class ObjectMasterAllSolutions {
 	 * @return
 	 * 		All current solutions
 	 */
-	public static List<Equation> getAllSolutions() {
+	@Override
+	public List<Equation> getAllSolutions() {
 		List<Equation> solutions = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
 			solutions.add(eq);
@@ -231,6 +234,11 @@ public class ObjectMasterAllSolutions {
 				return true;
 			}
 		}
+	}
+
+	@Override
+	public String getNameOfMaster() {
+		return "ObjectAll";
 	}
 	
 	

@@ -6,7 +6,7 @@ import tree.*;
 
 //TODO Oppassen met de Ks
 
-public class StringMaster {
+public class StringMaster extends Master {
 
 	private static final String NAME_GOAL = "Goal";
 
@@ -103,7 +103,7 @@ public class StringMaster {
 	 * @param solutions
 	 * @return
 	 */
-	public static String getBestSolution(){
+	public String getBestSolution(){
 		String bestSolution = "";
 		int nrOfKeys = 0;
 
@@ -132,8 +132,16 @@ public class StringMaster {
 	 * Returns the solution space
 	 * @return
 	 */
-	public static List<String> getAllSolutions(){
+	public List<String> getAllSolutions(){
 		return solutionSpace;
+	}
+	
+	/**
+	 * @return
+	 * 		The name of this master
+	 */
+	public String getNameOfMaster() {
+		return "StringMaster";
 	}
 
 

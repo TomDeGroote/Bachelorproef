@@ -8,83 +8,104 @@ import tree.Equation;
 
 public class FlashQuationMain {
 
-	private static final String runMethod = "random";
-	private static final int DEADLINE = 1000;
+	private static final int DEADLINE = 100;
+	private static final boolean stopAfterOne = true;
+	private static final boolean printSizeAll = true;
+	private static final boolean printAll = false;
+	private static final boolean printBest = true;
+	private static final boolean printTime = true;
+	private static final boolean printRandom = true;
+	private static final int length = 4; // inclusive solution
+	private static final int nrOfExamples = 5;
+	private static final int minimum = 0;
+	private static final int maximum = 100;
+
+
 
 	public static void main(String[] args) {
-		if(runMethod.equals("string")) {
-			StringMaster.run();
-			System.out.println("All: ");
-			for(String eq : StringMaster.getAllSolutions()) {
-				System.out.println(eq);
-			}
-			System.out.println("Best: ");
-			System.out.println(StringMaster.getBestSolution());
-		} else if(runMethod.equals("object")) {
-			ObjectMaster.run(DEADLINE, false, null);
-			System.out.println("All: ");
-			for(Equation eq : ObjectMaster.getAllSolutions()) {
-				System.out.println(eq);
-			}
-			System.out.println("Best: ");
-			System.out.println(ObjectMaster.getBestSolution());
-		} else if(runMethod.equals("jar")){
-			System.out.println(getFormula(getInputList(), -1));
+		List<String> toRun = new ArrayList<String>();
+		toRun.add("all");
+//		toRun.add("string");
+//		toRun.add("normal");
+		toRun.add("tuple");
+		runListOfStrings(toRun);
+	}
+	
+	public static void runListOfStrings(List<String> strings) {
+		List<List<Double>> numbers = RandomGenerator.generate(length, nrOfExamples, minimum, maximum);
+		System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
+		System.out.println();
+		for(String s : strings) {
+			Master master = null;
+			switch (s) {
+			case "tuple":
+				master = new ObjectTupleMaster();
+				break;
+			case "string":
+				master = new StringMaster();
+				break;
+			case "normal":
+				master = new ObjectMaster();
+				break;
+			case "all":
+				master = new ObjectMasterAllSolutions();
+				break;
+			default:
+				System.out.println("Default not running");
+				break;
+			}	
+			// run the master
+			runMaster(master, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom);
+			System.out.println("");
 		}
-		else if(runMethod.equals("objectAll")) {
-			ObjectMasterAllSolutions.run(-1, false, null);
-			System.out.println("All: ");
-			for(Equation eq : ObjectMasterAllSolutions.getAllSolutions()) {
-				System.out.println(eq);
-			}
-			System.out.println("Best: ");
-			System.out.println(ObjectMasterAllSolutions.getBestSolution());
-		} else if(runMethod.equals("random")) {	
-			List<List<Double>> randomGenerated = RandomGenerator.generate(4, 4, 0, 30);
-			System.out.println(RandomGenerator.getLastGeneratedEquation());
-			// best objectmaster
-			long time = System.currentTimeMillis();
-//			ObjectMaster.run(-1, true, randomGenerated);
-//			System.out.print("Best ObjectMaster: ");
-//			System.out.println(ObjectMaster.getBestSolution());
-//			System.out.println("time: " + (System.currentTimeMillis() - time));
-//			System.out.println("All: ");
-//			for(Equation eq : ObjectMaster.getAllSolutions()) {
-//				System.out.println(eq);
-//			}
-			
-			time = System.currentTimeMillis();
-			// best all solution
-			ObjectMasterAllSolutions.run(-1, false, randomGenerated);
-			System.out.print("Best ObjectMasterAllSolutions: ");
-			System.out.println(ObjectMasterAllSolutions.getBestSolution());
-			System.out.println("time: " + (System.currentTimeMillis() - time));
-			
-			// best tuple solution
-			time = System.currentTimeMillis();
-			ObjectTupleMaster.run(-1, false, randomGenerated);
-			System.out.print("Best ObjectTupleMaster: ");
-			System.out.println(ObjectTupleMaster.getBestSolution());
-			System.out.println("time: " + (System.currentTimeMillis() - time));
-
-			for(List<Double> row : randomGenerated) {
-				for(double number : row) {
-					System.out.print(number + " ");
+		if(printRandom) {
+			System.out.println("***     Random    ");
+			for(List<Double> ds : numbers) {
+				for(double d : ds) {
+					System.out.print(d + "");
+					for(int i = (d + "").length(); i < 7; i++) {
+						System.out.print(" ");
+					}
 				}
-				System.out.println("");
+				System.out.println();
 			}
-			
-//			StringMaster.run(DEADLINE, true, randomGenerated); TODO
-//			System.out.println("Best StringMaster: ");
-//			System.out.println(StringMaster.getBestSolution());
-		} else if(runMethod.equals("tuple")) {
-			ObjectTupleMaster.run(-1, true, null);
-			System.out.println("All: ");
-			for(Equation eq : ObjectTupleMaster.getAllSolutions()) {
-				System.out.println(eq);
+		}
+	}
+	
+
+	/**
+	 * Logical parameters, will run logically
+	 * @param master
+	 * 			The Master which should be run (Object)
+	 * @param deadline
+	 * @param stopAfterOne
+	 * @param numbers
+	 * @param printSizeAll
+	 * @param printAll
+	 * @param printBest
+	 * @param printTime
+	 */
+	private static void runMaster(Master master, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom) {
+		System.out.println(   "***   Executing " + master.getNameOfMaster());
+		// run master
+		long time = System.currentTimeMillis();
+		master.run(deadline, stopAfterOne, numbers);
+		time = System.currentTimeMillis() - time;
+		
+		if(printTime) {
+			System.out.println("  -     Time: " + time);
+		}
+		if(printSizeAll) {
+			System.out.println("  -     Size: " + master.getAllSolutions().size());
+		}
+		if(printBest) {
+			System.out.println("  -     Best: " + master.getBestSolution().toString());
+		}
+		if(printAll) {
+			System.out.println("  -     All      ---");
+			for(Equation eq : master.getAllSolutions()) {
+				System.out.println(eq.toString());
 			}
-			System.out.println("Best: ");
-			System.out.println(ObjectTupleMaster.getBestSolution());
 		}
 	}
 
@@ -110,7 +131,8 @@ public class FlashQuationMain {
 	 * 			Or "Empty" if no formula was found
 	 */
 	public static String getFormula(List<List<Double>> inputList, int deadline) {
-		return ObjectMaster.run(deadline, true, inputList);
+		ObjectMaster master = new ObjectMaster();
+		return master.run(deadline, true, inputList);
 	}
 
 	/**
