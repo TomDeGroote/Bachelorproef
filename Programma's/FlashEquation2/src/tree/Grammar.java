@@ -23,6 +23,8 @@ public class Grammar {
 		possibleOperands.add(new Operand("/", false, false, 1));
 		possibleOperands.add(new Operand("+", true, true, 0));
 		possibleOperands.add(new Operand("-", true, false, 0));
+		possibleOperands.add(new Operand("Max", false, true, Integer.MAX_VALUE));
+		possibleOperands.add(new Operand("Min", false, true, Integer.MIN_VALUE));
 	}
 
 	/**
@@ -131,6 +133,10 @@ public class Grammar {
 			return value1 * value2;
 		} else if (operand.toString().equals("/")) {
 			return value1 / value2;
+		} else if (operand.toString().equals("Max")) {
+			return Math.max(value1, value2);
+		} else if (operand.toString().equals("Min")) {
+			return Math.min(value1, value2);
 		} else
 			return 0.0;
 	}
@@ -164,6 +170,10 @@ public class Grammar {
 			return value1 * value2;
 		} else if (operand.equals("/")) {
 			return value1 / value2;
+		}  else if (operand.equals("Max")) {
+			return Math.max(value1, value2);
+		} else if (operand.equals("Min")) {
+			return Math.min(value1, value2);
 		} else
 			return 0.0;
 	}

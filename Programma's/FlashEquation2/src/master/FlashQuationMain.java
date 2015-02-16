@@ -13,7 +13,7 @@ import tree.Equation;
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 100;
+	private static final int DEADLINE = -1;
 	private static final boolean stopAfterOne = false;
 	
 	
@@ -25,8 +25,8 @@ public class FlashQuationMain {
 	private static final boolean printRandom = true;
 	
 	// RandomGenerator parameters
-	private static final boolean useRandom = true;
-	private static final int length = 3; // inclusive solution
+	private static final boolean useRandom = false;
+	private static final int length = 5; // inclusive solution
 	private static final int nrOfExamples = 5;
 	private static final int minimum = -100;
 	private static final int maximum = 100;
