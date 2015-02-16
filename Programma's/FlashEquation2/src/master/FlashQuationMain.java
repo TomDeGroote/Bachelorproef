@@ -13,7 +13,7 @@ import tree.Equation;
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 1000;
+	private static final int DEADLINE = 100;
 	private static final boolean stopAfterOne = false;
 	
 	
@@ -25,17 +25,17 @@ public class FlashQuationMain {
 	private static final boolean printRandom = true;
 	
 	// RandomGenerator parameters
-	private static final boolean useRandom = false;
-	private static final int length = 3; // inclusive solution
-	private static final int nrOfExamples = 2;
+	private static final boolean useRandom = true;
+	private static final int length = 5; // inclusive solution
+	private static final int nrOfExamples = 5;
 	private static final int minimum = 0;
-	private static final int maximum = 20;
+	private static final int maximum = 100;
 
 
 
 	public static void main(String[] args) {
 		List<String> toRun = new ArrayList<String>();
-		toRun.add("all");
+//		toRun.add("all");
 //		toRun.add("string");
 //		toRun.add("normal");
 		toRun.add("tuple");
@@ -111,10 +111,11 @@ public class FlashQuationMain {
 	 * @param printTime
 	 */
 	private static void runMaster(Master master, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom) {
+		Input input = new Input();
 		System.out.println(   "***   Executing " + master.getNameOfMaster());
 		// run master
 		long time = System.currentTimeMillis();
-		master.run(deadline, stopAfterOne, numbers);
+		master.run(deadline, stopAfterOne, numbers, input);
 		time = System.currentTimeMillis() - time;
 		
 		if(printTime) {
@@ -158,9 +159,12 @@ public class FlashQuationMain {
 	 * 				Possible operators: +, -, *, /
 	 * 				A number is a given constant (not supported yet) TODO
 	 * 			Or "Empty" if no formula was found
+	 * 
+	 * Currently using a 9 level tree, takes +- 800ms extra above deadline
 	 */
 	public static String getFormula(List<List<Double>> inputList, int deadline) {
+		Input input = new Input();
 		ObjectMaster master = new ObjectMaster();
-		return master.run(deadline, true, inputList);
+		return master.run(deadline, true, inputList, input);
 	}
 }

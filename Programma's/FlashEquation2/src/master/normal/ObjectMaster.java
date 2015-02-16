@@ -42,7 +42,7 @@ public class ObjectMaster extends Master{
 	 * 			TODO aangepast voor jar
 	 */
 	@Override
-	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input) {		
 		// set a possible deadline
 		if(deadline > 0) {
 			ObjectMaster.hasDeadLine = true;
@@ -52,7 +52,6 @@ public class ObjectMaster extends Master{
 		// this is not a jar run
 		hasDeadLine = true;
 		// read the tree generated earlier
-		Input input = new Input();
 		Tree tree = input.getTree();
 		
 		// generate the evaluate class

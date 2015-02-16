@@ -37,7 +37,7 @@ public class TupleWeightsMaster extends Master {
 	 * 			The formula in string form if a formula was found
 	 */
 	@Override
-	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input) {		
 		// set a possible deadline
 		if(deadline > 0) {
 			TupleWeightsMaster.hasDeadLine = true;
@@ -45,7 +45,6 @@ public class TupleWeightsMaster extends Master {
 		}
 		
 		// read the tree generated earlier
-		Input input = new Input();
 		Tree tree = input.getTree();
 		
 		// generate the evaluate class

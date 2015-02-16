@@ -17,7 +17,7 @@ public abstract class Master {
 	 * 			"Empty" if no formula was found
 	 * 			The formula in string form if a formula was found
 	 */
-	public abstract String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers);
+	public abstract String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input);
 	
 	/**
 	 * Prints the solution containing all Ks and is the smallest or
