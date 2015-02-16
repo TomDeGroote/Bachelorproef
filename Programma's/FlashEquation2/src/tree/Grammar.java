@@ -68,8 +68,8 @@ public class Grammar {
 		List<Equation> expandedEquations = new ArrayList<Equation>();
 		// we replace the first nonTerminal in the equation
 		Symbol firstSymbol = equation.getListOfSymbols().get(0); // get the
-																	// first
-																	// symbol
+		// first
+		// symbol
 		if (firstSymbol.isNonTerminal()) {
 			for (Operand operand : possibleOperands) {
 				// for every possible operand generate the expansion
@@ -278,5 +278,30 @@ public class Grammar {
 			}
 		}
 		return null;
+	}
+
+
+	public static Equation convertEquation(Equation eq) {
+		List<Symbol> newSymList = new ArrayList<Symbol>(eq.getListOfSymbols().size());
+		for(int i = 0; i < eq.getListOfSymbols().size(); i++){
+			Symbol sym = eq.getListOfSymbols().get(i);
+			Terminal notNeg;
+			if(sym.isTerminal()) {
+				if(((Terminal) sym).toString().startsWith("-")) {
+					notNeg = new Terminal(sym.toString().substring(1, sym.toString().length()), -((Terminal) sym).getValue());
+					if(i > 1)
+						newSymList.set(i-1, new Operand("-", true, false, 0));
+				} else {
+					notNeg = (Terminal) sym;
+				}	
+				newSymList.add(notNeg);
+
+			} else {
+				newSymList.add(sym);
+			}
+
+
+		}
+		return new Equation(newSymList);
 	}
 }
