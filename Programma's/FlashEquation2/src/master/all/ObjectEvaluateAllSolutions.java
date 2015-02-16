@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import master.Evaluate;
+import master.Input;
+import master.Master;
 import master.normal.ObjectMaster;
 import tree.Equation;
 import tree.Grammar;
@@ -14,7 +17,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class ObjectEvaluateAllSolutions {
+public class ObjectEvaluateAllSolutions extends Evaluate {
 
 
 	private final List<List<Equation>> TREE;
@@ -42,12 +45,11 @@ public class ObjectEvaluateAllSolutions {
 	 * @return
 	 * 		The buffer with solutions
 	 */
-	public List<Equation> evaluate(HashMap<String, Double> Ks) {
+	@SuppressWarnings("unchecked")
+	public List<Equation> evaluate() {
+		
 		// empty the buffer containing solutions
 		bufferSolutions = new LinkedList<Equation>();
-
-		// add current example to examples list
-		examples.add(Ks);
 
 		// before first ; no variable is needed because levelCount is already initialized
 		// for each over every level in TREE
@@ -70,6 +72,22 @@ public class ObjectEvaluateAllSolutions {
 			equationCount = 0;
 		}
 		return bufferSolutions; // return buffered solutions when we are at the end of the tree
+	}
+	
+	/**
+	 * Adds an example to the current example list
+	 * @param Ks
+	 * 		The example to be added
+	 */
+	public void addExample(Double[] Ks) {		
+		HashMap<String, Double> newKs = new HashMap<String, Double>();
+		
+		// add current example to examples list
+		for(int i = 0; i < Ks.length - 1; i++) {
+			newKs.put("K"+i, Ks[i]);
+		}
+		newKs.put(Master.getNameOfGoalK(), Ks[Ks.length-1]);
+		examples.add(newKs);
 	}
 
 	/**

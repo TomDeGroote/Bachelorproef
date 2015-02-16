@@ -26,9 +26,9 @@ public class FlashQuationMain {
 	
 	// RandomGenerator parameters
 	private static final boolean useRandom = true;
-	private static final int length = 5; // inclusive solution
+	private static final int length = 3; // inclusive solution
 	private static final int nrOfExamples = 5;
-	private static final int minimum = 0;
+	private static final int minimum = -100;
 	private static final int maximum = 100;
 
 
@@ -51,7 +51,7 @@ public class FlashQuationMain {
 	public static void runListOfStrings(List<String> strings) {
 		List<List<Double>> numbers = null;
 		if(useRandom) {
-			numbers = RandomGenerator.generateRealRandom(length, nrOfExamples, minimum, maximum); // Real Random
+			numbers = RandomGenerator.generateCertainAllK(length, nrOfExamples, minimum, maximum); // Real Random
 			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {

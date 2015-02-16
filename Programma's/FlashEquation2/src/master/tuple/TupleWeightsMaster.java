@@ -13,17 +13,9 @@ import tree.Tree;
 
 public class TupleWeightsMaster extends Master {
 	
-	private static final String NAME_GOAL = "Goal";
-	
-	private static Timer timer = new Timer(Long.MAX_VALUE);	
 	private static TupleWeightsEvaluate evaluate;
-	
-	public static List<Equation> solutionSpace = new ArrayList<Equation>();
-	
 	public static Double[] example;
-	
-	private static boolean hasDeadLine = false;		
-	private static boolean stopAfterOne = false;	
+
 	
 	/**
 	 * @param deadline
@@ -85,11 +77,11 @@ public class TupleWeightsMaster extends Master {
 				// If the solution space is empty start searching for a new equation
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
-					solutionSpace.addAll(evaluate.evaluate(Ks));
+					solutionSpace.addAll(evaluate.evaluate());
 				}
 			} else {				
 				// start to evaluate
-				List<Equation> solutions = evaluate.evaluate(Ks);
+				List<Equation> solutions = evaluate.evaluate();
 				solutionSpace.addAll(solutions);
 //				i++;
 			}

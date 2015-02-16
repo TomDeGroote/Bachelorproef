@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import master.Evaluate;
+import master.Master;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;
@@ -11,7 +13,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class ObjectEvaluate {
+public class ObjectEvaluate extends Evaluate {
 	/**
 	 * Prune idee: TODO Broken.. Enkel vergelijkingen tegen elkaar vergelijken
 	 * als ze dezelfde uitkomst genereren Weer opsplitsen in termen zoals vorige
@@ -20,9 +22,9 @@ public class ObjectEvaluate {
 	private final List<List<Equation>> TREE;
 	private int levelCount = 0;
 	private int equationCount = 0;
-	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
 	private HashMap<Equation, HashMap<Double, List<Equation>>> alreadySolved = new HashMap<Equation, HashMap<Double, List<Equation>>>();
+
 
 	/**
 	 * Constructor of Evaluate
@@ -42,11 +44,9 @@ public class ObjectEvaluate {
 	 *            List of K's, last element in the list is the desired solution
 	 * @return The buffer with solutions
 	 */
-	public List<Equation> evaluate(HashMap<String, Double> Ks) {
+	public List<Equation> evaluate() {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
-		// add current example to examples list
-		examples.add(Ks);
 		// before first ; no variable is needed because levelCount is already
 		// initialized
 		// for each over every level in TREE
@@ -71,6 +71,23 @@ public class ObjectEvaluate {
 		}
 		return bufferSolutions; // return buffered solutions when we are at the
 								// end of the tree
+	}
+	
+
+	/**
+	 * Adds an example to the current example list
+	 * @param Ks
+	 * 		The example to be added
+	 */
+	public void addExample(Double[] Ks) {		
+		HashMap<String, Double> newKs = new HashMap<String, Double>();
+		
+		// add current example to examples list
+		for(int i = 0; i < Ks.length - 1; i++) {
+			newKs.put("K"+i, Ks[i]);
+		}
+		newKs.put(Master.getNameOfGoalK(), Ks[Ks.length-1]);
+		examples.add(newKs);
 	}
 
 	/**

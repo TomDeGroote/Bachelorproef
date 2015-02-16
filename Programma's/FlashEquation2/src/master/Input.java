@@ -38,6 +38,25 @@ public class Input {
 	}
 	
 	/**
+	 * Convert a HashMap to Double[]
+	 * @param input
+	 * 		The hashMap
+	 * @return
+	 * 		The Double
+	 */
+	public static Double[] covertToHashMap(HashMap<String, Double> input) {
+		Double[] result = new Double[input.size()];
+		for(String K : input.keySet()) {
+			if(K.equals(Master.getNameOfGoalK())) {
+				result[result.length-1] = input.get(K);
+			} else {
+				result[(int) Double.parseDouble(K.substring(1))] = input.get(K);
+			}
+		}
+		return result;
+	}
+	
+	/**
 	 * Reads a file. This will convert a text file with column values to a list of HashMap<String, Double>
 	 * e.g. text file: 3 6 8 -> {(K0, 3), (K1, 6), (Goal, 8)}
 	 * @param

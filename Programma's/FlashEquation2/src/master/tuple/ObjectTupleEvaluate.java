@@ -2,6 +2,8 @@ package master.tuple;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import master.Evaluate;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;
@@ -9,7 +11,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class ObjectTupleEvaluate {
+public class ObjectTupleEvaluate extends Evaluate {
 	/**
 	 * Prune idee: Enkel vergelijkingen tegen elkaar vergelijken als ze dezelfde
 	 * uitkomst genereren Weer opsplitsen in termen zoals vorige keer en dan
@@ -41,7 +43,7 @@ public class ObjectTupleEvaluate {
 	 *            List of K's, last element in the list is the desired solution
 	 * @return The buffer with solutions
 	 */
-	public List<Equation> evaluate(Double[] Ks) {
+	public List<Equation> evaluate() {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		// before first ; no variable is needed because levelCount is already

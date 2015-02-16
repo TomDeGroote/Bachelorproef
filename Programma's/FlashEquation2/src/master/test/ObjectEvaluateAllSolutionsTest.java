@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import master.Input;
 import master.all.ObjectEvaluateAllSolutions;
 import master.normal.ObjectMaster;
 
@@ -91,7 +92,8 @@ public class ObjectEvaluateAllSolutionsTest {
 	@Test
 	public void testEvaluate() {
 		System.out.println("Giving example 1");
-		evaluate.evaluate(KsExample1);
+		evaluate.addExample(Input.covertToHashMap(KsExample1));
+		evaluate.evaluate();
 		for(Equation eq : evaluate.getBufferSolutions()) {
 			System.out.println(eq.toString());
 		}

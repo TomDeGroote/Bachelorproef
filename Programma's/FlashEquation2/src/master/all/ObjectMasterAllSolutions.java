@@ -17,17 +17,7 @@ import tree.Tree;
 
 public class ObjectMasterAllSolutions extends Master {
 
-	private static final String NAME_GOAL = "Goal";
-
-	private static Timer timer = new Timer(Long.MAX_VALUE);	
-	private static ObjectEvaluateAllSolutions evaluate;
-
-	public static List<Equation> solutionSpace = new ArrayList<Equation>();
-
 	public static HashMap<String, Double> example;
-
-	private static boolean hasDeadLine = false;		// TODO jar
-	private static boolean stopAfterOne = false;	// TODO jar
 
 	/**
 	 * @param deadline
@@ -91,11 +81,13 @@ public class ObjectMasterAllSolutions extends Master {
 				// If the solution space is empty start searching for a new equation
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
-					solutionSpace.addAll(evaluate.evaluate(Ks));
+					evaluate.addExample(Input.covertToHashMap(Ks));
+					solutionSpace.addAll(evaluate.evaluate());
 				}
 			} else {				
 				// start to evaluate
-				solutionSpace.addAll(evaluate.evaluate(Ks));
+				evaluate.addExample(Input.covertToHashMap(Ks));
+				solutionSpace.addAll(evaluate.evaluate());
 
 				//				i++;
 			}
@@ -185,25 +177,6 @@ public class ObjectMasterAllSolutions extends Master {
 				break;
 			}
 		}
-
-		//		// print solution space size
-		//		System.out.println("Current Possible Solutions: " + solutionSpace.size());
-		//		// print the best solution
-		//		if(!(bestSolution == null) && solutionSpace.size() > 0) {
-		//			if(numberOfExamples == 1) {
-		//				System.out.println("Best Solution after " + numberOfExamples + " example");
-		//			} else {
-		//				System.out.println("Best Solution after " + numberOfExamples + " examples");
-		//			}
-		//			System.out.println(bestSolution);
-		//		} else {
-		//			if(numberOfExamples == 1) {
-		//				System.out.println("No solution after " + numberOfExamples + " example");
-		//			} else {
-		//				System.out.println("No solution after " + numberOfExamples + " examples");
-		//			}
-		//		}
-
 		return bestSolution;
 	}
 
@@ -220,34 +193,9 @@ public class ObjectMasterAllSolutions extends Master {
 		}
 		return solutions;
 	}
-	/**
-	 * @return
-	 * 		The name of the goal column value
-	 */
-	public static String getNameOfGoalK() {
-		return NAME_GOAL;
-	}
 
-	/**
-	 * Method used to check if there is still time on the clock
-	 * 
-	 * @return
-	 * 		True if the there is no more time left
-	 * 		False if there is time left
-	 * 
-	 * 		TODO aangepast voor jar support
-	 */
-	public static boolean timesUp() {
-		if(hasDeadLine) {
-			return timer.timesUp();			
-		} else {
-			if(evaluate.bufferSolutions.isEmpty()) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
+
+
 
 	@Override
 	public String getNameOfMaster() {

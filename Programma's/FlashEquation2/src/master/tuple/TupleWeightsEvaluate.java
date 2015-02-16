@@ -3,6 +3,7 @@ package master.tuple;
 import java.util.ArrayList;
 import java.util.List;
 
+import master.Evaluate;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;
@@ -10,7 +11,7 @@ import tree.Symbol;
 import tree.Terminal;
 import tree.Tree;
 
-public class TupleWeightsEvaluate {
+public class TupleWeightsEvaluate extends Evaluate {
 	
 	/**
 	 * Prune idee:
@@ -46,7 +47,7 @@ public class TupleWeightsEvaluate {
 	 * @return
 	 * 		The buffer with solutions
 	 */
-	public List<Equation> evaluate(Double[] Ks) {
+	public List<Equation> evaluate() {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		

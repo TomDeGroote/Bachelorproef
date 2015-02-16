@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import master.Evaluate;
 import master.Input;
 import master.Master;
 import master.Timer;
@@ -90,11 +91,13 @@ public class ObjectMaster extends Master{
 				// If the solution space is empty start searching for a new equation
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
-					solutionSpace.addAll(evaluate.evaluate(Ks));
+					evaluate.addExample(Input.covertToHashMap(Ks));
+					solutionSpace.addAll(evaluate.evaluate());
 				}
 			} else {				
 				// start to evaluate
-				List<Equation> solutions = evaluate.evaluate(Ks);
+				evaluate.addExample(Input.covertToHashMap(Ks));
+				List<Equation> solutions = evaluate.evaluate();
 				solutionSpace.addAll(solutions);
 //				i++;
 			}

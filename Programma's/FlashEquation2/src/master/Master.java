@@ -1,10 +1,25 @@
 package master;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import master.all.ObjectEvaluateAllSolutions;
+import master.tuple.ObjectTupleEvaluate;
 import tree.Equation;
 
 public abstract class Master {
+
+	
+	protected static Timer timer = new Timer(Long.MAX_VALUE);	
+	
+	protected static final String NAME_GOAL = "Goal";
+	
+	protected static Evaluate evaluate;
+	
+	public static List<Equation> solutionSpace = new ArrayList<Equation>();
+	
+	protected static boolean hasDeadLine = false;		
+	protected static boolean stopAfterOne = false;	
 
 	/**
 	 * @param deadline
@@ -41,5 +56,33 @@ public abstract class Master {
 	 */
 	public abstract String getNameOfMaster();
 
+	/**
+	 * Method used to check if there is still time on the clock
+	 * 
+	 * @return
+	 * 		True if the there is no more time left
+	 * 		False if there is time left
+	 * 
+	 * 		TODO aangepast voor jar support
+	 */
+	public static boolean timesUp() {
+		if(hasDeadLine) {
+			return timer.timesUp();			
+		} else {
+			if(evaluate.bufferSolutions.isEmpty()) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+	
+	/**
+	 * @return
+	 * 		The name of the goal column value
+	 */
+	public static String getNameOfGoalK() {
+		return NAME_GOAL;
+	}
 	
 }
