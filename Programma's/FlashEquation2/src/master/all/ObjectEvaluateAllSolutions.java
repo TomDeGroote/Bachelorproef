@@ -123,7 +123,6 @@ public class ObjectEvaluateAllSolutions {
 				} else {
 					result.put(value, equationsValue1_2);
 				}
-				//result.put(value, equationsValue1_2);
 			}
 		}	
 		return result;

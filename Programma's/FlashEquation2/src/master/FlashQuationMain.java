@@ -26,7 +26,7 @@ public class FlashQuationMain {
 	private static final boolean printRandom = true;
 	
 	// RandomGenerator parameters
-	private static final boolean useRandom = true;
+	private static final boolean useRandom = false;
 	private static final int length = 3; // inclusive solution
 	private static final int nrOfExamples = 2;
 	private static final int minimum = 0;
