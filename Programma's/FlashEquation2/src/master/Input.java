@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import master.string.StringMaster;
+import master.normal.ObjectMaster;
 import tree.Main;
 import tree.Tree;
 
@@ -65,7 +65,7 @@ public class Input {
 			}
 			// add last element, the goal to hashmap
 			double value = Double.parseDouble(splitOnSpace[splitOnSpace.length-1]);
-			doublesLine.put(StringMaster.getNameOfGoalK(), value);
+			doublesLine.put(ObjectMaster.getNameOfGoalK(), value);
 			inputList.add(doublesLine);
 			
 			primLine[primLine.length-1] = value;
@@ -92,7 +92,7 @@ public class Input {
 				doubleLine.put("K" + i, inputRow.get(i));
 			}
 			// adds the goal to the HashMap
-			doubleLine.put(StringMaster.getNameOfGoalK(), inputRow.get(inputRow.size()-1));
+			doubleLine.put(ObjectMaster.getNameOfGoalK(), inputRow.get(inputRow.size()-1));
 			// adds this complete input line to the result
 			result.add(doubleLine);
 		}

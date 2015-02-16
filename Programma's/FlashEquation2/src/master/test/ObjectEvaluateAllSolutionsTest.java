@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import master.all.ObjectEvaluateAllSolutions;
-import master.string.StringMaster;
+import master.normal.ObjectMaster;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,13 +44,13 @@ public class ObjectEvaluateAllSolutionsTest {
 		KsExample1 = new HashMap<String, Double>();
 		KsExample1.put("K1", 3.0);
 		KsExample1.put("K2", 3.0);
-		KsExample1.put(StringMaster.getNameOfGoalK(), 3.0);
+		KsExample1.put(ObjectMaster.getNameOfGoalK(), 3.0);
 		
 		// put K1 = 3, K2 = 3, Goal = 9
 		KsExample2 = new HashMap<String, Double>();
 		KsExample2.put("K1", 6.0);
 		KsExample2.put("K2", 6.0);
-		KsExample2.put(StringMaster.getNameOfGoalK(), 12.0);
+		KsExample2.put(ObjectMaster.getNameOfGoalK(), 12.0);
 		
 		// generate equation 1 E+E*E+E
 		List<Symbol> inputEq1 = new ArrayList<Symbol>();
@@ -108,7 +108,7 @@ public class ObjectEvaluateAllSolutionsTest {
 		HashMap<String, Double> Ks = new HashMap<String, Double>();
 		Ks.put("K1", 3.0);
 		Ks.put("K2", 4.0);
-		Ks.put(StringMaster.getNameOfGoalK(), 4.0);
+		Ks.put(ObjectMaster.getNameOfGoalK(), 4.0);
 		evaluate.examples.add(Ks);
 		HashMap<Double, List<Equation>> allPossibleResults = evaluate.evaluateEquation(eq1);
 		
@@ -169,7 +169,7 @@ public class ObjectEvaluateAllSolutionsTest {
 		HashMap<String, Double> Ks = new HashMap<String, Double>();
 		Ks.put("K1", 3.0);
 		Ks.put("K2", 4.0);
-		Ks.put(StringMaster.getNameOfGoalK(), 4.0);
+		Ks.put(ObjectMaster.getNameOfGoalK(), 4.0);
 		evaluate.examples.add(Ks);
 		
 		HashMap<Double, List<Equation>> result = evaluate.concatenateResults(part1, new Operand("+", true, true, 0), part2);

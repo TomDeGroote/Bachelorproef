@@ -7,7 +7,6 @@ import java.util.List;
 import master.Input;
 import master.Master;
 import master.Timer;
-import master.string.StringMaster;
 import tree.Equation;
 import tree.Symbol;
 import tree.Terminal;
@@ -129,7 +128,7 @@ public class ObjectMaster extends Master{
 					symbols.add(s);
 				}
 			}
-			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols))==Ks.get(StringMaster.getNameOfGoalK())) {
+			if(ObjectEvaluate.evaluateTerminalEquation(new Equation(symbols))==Ks.get(ObjectMaster.getNameOfGoalK())) {
 				newSolutionSpace.add(eq);
 			}
 		}	
@@ -157,7 +156,7 @@ public class ObjectMaster extends Master{
 			
 			// check how many Ks this solution contains
 			for(String K : example.keySet()) {
-				if(!K.equals(StringMaster.getNameOfGoalK())) {
+				if(!K.equals(ObjectMaster.getNameOfGoalK())) {
 					if(!eq.toString().contains(K)) {
 						temp++;
 						containsAll = false;

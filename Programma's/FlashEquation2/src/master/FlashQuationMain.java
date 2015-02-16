@@ -5,7 +5,6 @@ import java.util.List;
 
 import master.all.ObjectMasterAllSolutions;
 import master.normal.ObjectMaster;
-import master.string.StringMaster;
 import master.tuple.ObjectTupleMaster;
 import master.tuple.TupleWeightsMaster;
 import research.RandomGenerator;
@@ -14,7 +13,7 @@ import tree.Equation;
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 3000;
+	private static final int DEADLINE = 1000;
 	private static final boolean stopAfterOne = false;
 	
 	
@@ -64,9 +63,6 @@ public class FlashQuationMain {
 			switch (s) {
 			case "tuple":
 				master = new ObjectTupleMaster();
-				break;
-			case "string":
-				master = new StringMaster();
 				break;
 			case "normal":
 				master = new ObjectMaster();
