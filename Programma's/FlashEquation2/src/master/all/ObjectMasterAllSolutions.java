@@ -43,7 +43,9 @@ public class ObjectMasterAllSolutions extends Master {
 	 * 			TODO aangepast voor jar
 	 */
 	@Override
-	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {		
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers) {	
+		
+		solutionSpace = new ArrayList<Equation>();
 		// set a possible deadline
 		if(deadline > 0) {
 			ObjectMasterAllSolutions.hasDeadLine = true;
@@ -81,9 +83,6 @@ public class ObjectMasterAllSolutions extends Master {
 			// start timer
 			timer.start();
 			
-			// Check solution space for possible solution
-			checkSolutionSpace(Ks);
-			
 			// If stopAfterOne then run until one possible solution has found (or timer has ended)
 			// else only stop when the timer is done
 			if(stopAfterOne) {
@@ -98,6 +97,8 @@ public class ObjectMasterAllSolutions extends Master {
 				
 //				i++;
 			}
+			// Check solution space for possible solution
+						checkSolutionSpace(Ks);
 		}
 		
 		// return
@@ -118,6 +119,7 @@ public class ObjectMasterAllSolutions extends Master {
 	public static void checkSolutionSpace(HashMap<String, Double> Ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
+			//System.out.println(eq);
 			List<Symbol> symbols = new ArrayList<Symbol>();
 			for(Symbol s : eq.getListOfSymbols()) {
 				if(s.isTerminal()) {
@@ -131,7 +133,10 @@ public class ObjectMasterAllSolutions extends Master {
 				newSolutionSpace.add(eq);
 			}
 		}	
-		solutionSpace = newSolutionSpace;
+		if(newSolutionSpace.isEmpty())
+			solutionSpace = new ArrayList<Equation>();
+		else
+			solutionSpace = newSolutionSpace;
 	}
 
 
