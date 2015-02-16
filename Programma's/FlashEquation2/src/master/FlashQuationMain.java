@@ -35,7 +35,7 @@ public class FlashQuationMain {
 
 	public static void main(String[] args) {
 		List<String> toRun = new ArrayList<String>();
-//		toRun.add("all");
+		toRun.add("all");
 //		toRun.add("string");
 //		toRun.add("normal");
 		toRun.add("tuple");

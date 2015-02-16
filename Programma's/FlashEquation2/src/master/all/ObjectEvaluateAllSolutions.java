@@ -25,7 +25,7 @@ public class ObjectEvaluateAllSolutions {
 
 	// Initiele grootte is gekend dus gebruiken om tijd te besparen.
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
-	
+
 	/**
 	 * Constructor of ObjectEvaluateAllSolutions
 	 * @param tree
@@ -86,12 +86,35 @@ public class ObjectEvaluateAllSolutions {
 		//HashMap<Double,List<Equation>> temp = solvingEquation(splitEquations);
 		HashMap<Double,List<Equation>> temp = solvingEquation2(splitEquations);
 		for(Entry<Double,List<Equation>> entry : temp.entrySet()){
-			if(entry.getKey().equals(examples.get(0).get(ObjectMaster.getNameOfGoalK())))
-				bufferSolutions.addAll(entry.getValue());
+			if(entry.getKey().equals(examples.get(0).get(ObjectMaster.getNameOfGoalK()))){
+				for(Equation equation: entry.getValue()){
+					if(checkAgainstOtherExamples(equation))
+						bufferSolutions.addAll(entry.getValue());
+				}
+			}
 		}
-		
+
 		return temp;
 	}	
+
+	public boolean checkAgainstOtherExamples(Equation eq){
+		for(HashMap<String,Double> example :examples){
+			List<Symbol> symbols = new ArrayList<Symbol>();
+			for(Symbol s : eq.getListOfSymbols()) {
+				if(s.isTerminal()) {
+					String terminalName = ((Terminal) s).toString();
+					symbols.add(new Terminal(terminalName, example.get(terminalName))); 
+				} else {
+					symbols.add(s);
+				}
+			}
+			if(ObjectEvaluateAllSolutions.evaluateTerminalEquation(new Equation(symbols))!=example.get(ObjectMaster.getNameOfGoalK())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	/**
 	 * Concatenates all possible combinations of the solution for a first equation and a second
@@ -116,7 +139,7 @@ public class ObjectEvaluateAllSolutions {
 				if(operand.toString().equals("/") && valueSolution2.equals(0.0))
 					continue;
 				Double value = Grammar.getValue(valueSolution1, operand, valueSolution2);
-				
+
 				// put it in result
 				if(result.containsKey(value)) {
 					result.get(value).addAll(equationsValue1_2);
@@ -127,7 +150,7 @@ public class ObjectEvaluateAllSolutions {
 		}	
 		return result;
 	}
-	
+
 	/**
 	 * Evaluates if a equation containing only terminals equals the goal
 	 * @param equationToEvaluate
@@ -141,7 +164,7 @@ public class ObjectEvaluateAllSolutions {
 	public static double evaluateTerminalEquation(Equation equationToEvaluate) {
 		// first split on every equation
 		List<List<Symbol>> terms = splitOnEverySplitable(equationToEvaluate);
-		
+
 		// second evaluate every term
 		// the values of the terms and operands need to be read in the same order
 		List<Double> valueTerms = new ArrayList<Double>();
@@ -152,12 +175,13 @@ public class ObjectEvaluateAllSolutions {
 					operands.add((Operand) term.get(0)); // in case of operand, save operand
 				} else {
 					valueTerms.add(((Terminal) term.get(0)).getValue()); // in case of T, save value of terminal
+
 				}
 			} else {
 				valueTerms.add(calculateTerm(term));
 			}
 		}
-		
+
 		// calculate the concatenation of the terms
 		double result = valueTerms.get(0);
 		for(int i = 0; i < operands.size(); i++) {
@@ -165,7 +189,7 @@ public class ObjectEvaluateAllSolutions {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Calculates the value of a term (thus containing only nonSplitable parts
 	 * @param term
@@ -182,7 +206,7 @@ public class ObjectEvaluateAllSolutions {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * E+E*E
 	 * -> {E, +, E*E}
@@ -248,7 +272,7 @@ public class ObjectEvaluateAllSolutions {
 		symbolsResult.addAll(eq2.getListOfSymbols());
 		return new Equation(symbolsResult);
 	}
-	
+
 	/**
 	 * Returns the buffered solutions
 	 * @return
@@ -307,10 +331,10 @@ public class ObjectEvaluateAllSolutions {
 			currentSol = concatenateResults(current, (Operand) splittedEquation.get(1).get(0), remainder);
 		else
 			System.out.println("Something went wrong");
-		
+
 		return currentSol;
 	}
-	
+
 	/**
 	 * It takes the last two list of symbols in the list and solves that part. The remainder of
 	 * the equation is solved by recursively calling this function on the rest of the list. And then
@@ -366,8 +390,8 @@ public class ObjectEvaluateAllSolutions {
 			currentSol = concatenateResults(remainder, (Operand) splittedEquation.get(splittedEquation.size()-2).get(0), current);
 		else
 			System.out.println("Something went wrong");
-		
+
 		return currentSol;
 	}
-	
+
 }
