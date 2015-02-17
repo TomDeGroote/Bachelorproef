@@ -50,6 +50,7 @@ public class ObjectTupleEvaluate extends Evaluate {
 		// initialized
 		// for each over every level in TREE
 		for (; levelCount < TREE.size(); levelCount++) {
+			//System.out.println("Current level tree: " + levelCount);
 			// the current level
 			List<Equation> level = TREE.get(levelCount);
 			// for each over every equation on the current level
@@ -68,6 +69,7 @@ public class ObjectTupleEvaluate extends Evaluate {
 			// Don't forget to reset equationCount after for loop
 			equationCount = 0;
 		}
+		//System.out.println("Finished entire tree");
 		return bufferSolutions; // return buffered solutions when we are at the
 								// end of the tree
 	}

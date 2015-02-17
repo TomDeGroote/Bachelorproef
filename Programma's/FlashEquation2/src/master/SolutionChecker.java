@@ -1,9 +1,15 @@
 package master;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import master.all.ObjectEvaluateAllSolutions;
-import tree.*;
+import tree.Equation;
+import tree.Grammar;
+import tree.Operand;
+import tree.Symbol;
 
 public class SolutionChecker {
 
@@ -132,12 +138,35 @@ public class SolutionChecker {
 	public static boolean compareEquations(Equation eq1, Equation eq2){
 		if(eq1.getListOfSymbols().size() != eq2.getListOfSymbols().size())
 			return false;
+		
+		HashMap<Symbol,Integer> temporary1 = new HashMap<Symbol,Integer>();
+		
+		for(Symbol sym : eq1.getListOfSymbols()){
+			if(!temporary1.containsKey(sym))
+				temporary1.put(sym,1);
+			else
+				temporary1.put(sym,temporary1.get(sym)+1);
+		}
+		
+		for(Symbol sym : eq2.getListOfSymbols()){
+			if(!temporary1.containsKey(sym))
+				return false;
+			else
+				temporary1.put(sym,temporary1.get(sym)-1);
+		}
+		
+		for(Map.Entry<Symbol,Integer> entry : temporary1.entrySet()){
+			if(entry.getValue() != 0)
+				return false;
+		}
+		
 
 		List<List<Symbol>> temp1 = ObjectEvaluateAllSolutions.splitOnEverySplitable(eq1);
 		List<List<Symbol>> temp2 = ObjectEvaluateAllSolutions.splitOnEverySplitable(eq2);
 
 		if(temp1.size() != temp2.size())
 			return false;
+		
 		List<List<Equation>> listEq1 = new ArrayList<List<Equation>>();
 		List<List<Equation>> listEq2 = new ArrayList<List<Equation>>();;
 
@@ -147,7 +176,6 @@ public class SolutionChecker {
 		}
 
 		Boolean wasInSecondList = false;
-
 		for(int i = 0; i < listEq1.size(); i++){
 			wasInSecondList = false;
 			for(int j = 0; j < listEq2.size(); j++){
@@ -221,8 +249,10 @@ public class SolutionChecker {
 		for(int i = 0; i < list.size(); i++){
 			theSame = false;
 			for(int j = i-1; j > -1; j--){
-				if(compareEquations(list.get(i),list.get(j)))
+				if(compareEquations(list.get(i),list.get(j))){
 					theSame = true;
+					break;
+				}
 			}
 			if(!theSame){
 				result.add(list.get(i));
