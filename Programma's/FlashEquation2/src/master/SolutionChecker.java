@@ -7,6 +7,8 @@ import tree.*;
 
 public class SolutionChecker {
 
+	
+	private static boolean removeEqui = true;
 	/**
 	 * Takes 2 lists and returns het elements that are in the first but not in the second.
 	 * If both lists contain the same elements, then return an empty list.
@@ -23,6 +25,12 @@ public class SolutionChecker {
 		List<Equation> common = new ArrayList<Equation>();
 		List<Equation> unique1 = new ArrayList<Equation>();
 		List<Equation> unique2 = new ArrayList<Equation>();
+		if(removeEqui){
+			list1 = removeEquivalentEquations(list1);
+			list2 = removeEquivalentEquations(list2);
+		}
+		
+		
 		if(compareLists(list1,list2)){
 			result.add(list1);
 			result.add(unique1);
@@ -205,6 +213,23 @@ public class SolutionChecker {
 			return true;
 		else
 			return false;
+	}
+	
+	public static List<Equation> removeEquivalentEquations(List<Equation> list){
+		List<Equation> result = new ArrayList<Equation>();
+		Boolean theSame = false;
+		for(int i = 0; i < list.size(); i++){
+			theSame = false;
+			for(int j = i-1; j > -1; j--){
+				if(compareEquations(list.get(i),list.get(j)))
+					theSame = true;
+			}
+			if(!theSame){
+				result.add(list.get(i));
+			}
+		}
+		
+		return result;
 	}
 
 }

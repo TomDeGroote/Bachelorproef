@@ -1,15 +1,10 @@
 package master.test;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import master.SolutionChecker;
-import master.all.ObjectEvaluateAllSolutions;
-import master.normal.ObjectMaster;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,7 +18,6 @@ import tree.NonTerminal;
 import tree.Operand;
 import tree.Symbol;
 import tree.Terminal;
-import tree.Tree;
 
 public class SolutionCheckerTest {
 
@@ -32,6 +26,7 @@ public class SolutionCheckerTest {
 	private Equation eqTerminal1;
 	private Equation eqTerminal2;
 	private Equation eqTerminal3;
+	private Equation eqTerminal4;
 	
 	
 	@Before
@@ -87,6 +82,14 @@ public class SolutionCheckerTest {
 		inputEqTerminal3.add(new Terminal("K0", 5.0));
 		eqTerminal3 = new Equation(inputEqTerminal3);
 
+		List<Symbol> inputEqTerminal4 = new ArrayList<Symbol>();
+		inputEqTerminal4.add(new Terminal("K1", 3.0));
+		inputEqTerminal4.add(new Operand("+", true,true, 0));
+		inputEqTerminal4.add(new Terminal("K1", 3.0));
+		inputEqTerminal4.add(new Operand("*", false,true, 1));
+		inputEqTerminal4.add(new Terminal("K0", 5.0));
+		eqTerminal4 = new Equation(inputEqTerminal4);
+		
 	}
 	
 	
@@ -121,5 +124,14 @@ public class SolutionCheckerTest {
 	public void differentEquations() {
 		Assert.assertEquals(false, SolutionChecker.compareEquations(eqTerminal1, eqTerminal3));
 	}
-
+	
+	@Test
+	public void differentSizeEquations() {
+		Assert.assertEquals(false, SolutionChecker.compareEquations(eqTerminal2, eqTerminal4));
+	}
+	
+	@Test
+	public void emptyListTest() {
+		Assert.assertEquals(false, SolutionChecker.compareEquations(eq1, new Equation()));
+	}
 }

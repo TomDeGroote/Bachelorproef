@@ -9,11 +9,12 @@ import master.tuple.ObjectTupleMaster;
 import master.tuple.TupleWeightsMaster;
 import research.RandomGenerator;
 import tree.Equation;
+import tree.Tree;
 
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = -1;
+	private static final int DEADLINE = 100;
 	private static final boolean stopAfterOne = false;
 	
 	
@@ -110,8 +111,8 @@ public class FlashQuationMain {
 	 * @param printBest
 	 * @param printTime
 	 */
-	private static void runMaster(Master master, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom) {
-		Input input = new Input();
+	public static void runMaster(Master master, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom) {
+		Input input = new Input(Tree.FILENAME_P);
 		System.out.println(   "***   Executing " + master.getNameOfMaster());
 		// run master
 		long time = System.currentTimeMillis();
@@ -163,7 +164,7 @@ public class FlashQuationMain {
 	 * Currently using a 9 level tree, takes +- 800ms extra above deadline
 	 */
 	public static String getFormula(List<List<Double>> inputList, int deadline) {
-		Input input = new Input();
+		Input input = new Input(Tree.FILENAME_P);
 		ObjectMaster master = new ObjectMaster();
 		return master.run(deadline, true, inputList, input);
 	}
