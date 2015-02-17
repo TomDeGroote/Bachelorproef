@@ -2,3 +2,44 @@ Getallengenerator
 * Real random
 * Random alle K's 1 maal
 * Random alle K's x maal en max lengte vergelijking (K's kunnen dus meermaals voorkomen)
+
+Testen
+* Pruned Tree vs NP tree
+* ms nodig om een vergelijking te vinden
+* Aantal oplossingen die gevonden worden (unieke) binnen bepaalde tijd
+* Oplossingsgraad
+* Geprunede vergelijking vs normale
+
+
+* Wat was Jeroen aan het doen
+ - SolutionChecker aan het afwerken
+	-> Checken of het werkt (uitgebreid, basis is reeds getest)
+
+
+
+* Wat was Tom aan het doen
+ - Research implementatie
+	-> Enviromment bestaat
+	-> Grammar gewichten omhoog schuiven
+	-> Input aanmaak omhoog schuiven
+	-> Meer testen implementeren (momenteel basis om testen te runnen geimplementeerd)
+
+* Wat moet er nog allemaal gebeuren
+ - Research Implementatie (verder)
+ - Solutionchecker tester
+	-> Misschien ook naar lagere niveaus verplaatsen
+ ! Verschil tussen tupple en all
+ - Tuple of All met geheugen schrijven
+ - Evaluate pruning schrijven
+ - Omzetten +- naar - (Rechtstreeks implementeren)
+ - Random with weights needed
+
+
+* Wat nu doen
+ - Verschil tupple vs all -> Jeroen
+ - Onderzoek verder uitbreiden -> Tom
+
+ - Deadline morgen middag
+ - Verdere stappen in 5 min bespreken morgen
+
+ 

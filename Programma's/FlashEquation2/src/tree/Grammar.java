@@ -35,6 +35,7 @@ public class Grammar {
 		for (int i = 0; i < 9; i++) {
 			weights.add(new Terminal("W" + (i + 1), (double) i + 1));
 		}
+		weights.add(new Terminal("N1", -1.0));
 		return weights;
 	}
 
