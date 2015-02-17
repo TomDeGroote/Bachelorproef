@@ -328,7 +328,7 @@ public class ObjectEvaluateAllSolutionsTest {
 	@SuppressWarnings("unused")
 	private Tree readTree() throws IOException, ClassNotFoundException {
 		Tree tree;
-		FileInputStream fis = new FileInputStream(new File(Main.getFileNameTree()));
+		FileInputStream fis = new FileInputStream(new File(Tree.FILENAME_P));
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		// read object Tree

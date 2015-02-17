@@ -14,9 +14,8 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int NROFLEVELS = 4;
-	private static final String FILENAME = "treeObject";
-	private static final boolean REMOVEPRUNED = true;
+	private static final int NROFLEVELS = 5;
+	private static final boolean REMOVEPRUNED = false;
 	private static final boolean EXECUTE_STATISTICS = false;
 	/**
 	 * Main method of the tree-program
@@ -30,7 +29,11 @@ public class Main {
 		} else {
 			Tree tree = new Tree(NROFLEVELS, REMOVEPRUNED);
 			printTreeToFile(tree);
-			writeTree(tree);
+			if(REMOVEPRUNED) {
+				writeTree(tree, Tree.FILENAME_P);
+			} else {
+				writeTree(tree, Tree.FILENAME_NP);
+			}
 			System.out.println("Done!");
 		}
 	}
@@ -101,13 +104,13 @@ public class Main {
 				System.out.print(".");
 				writeToFile(nrOfElements, "Nr Of Elements");
 				System.out.print(".");
-				writeTree(treeProoned); // writes tree object of current calculated thing, takes a lot of time
+				writeTree(treeProoned, Tree.FILENAME_P); // writes tree object of current calculated thing, takes a lot of time
 				System.out.print(".");
 				if(i < 6) // only write tree to string for the first 5 levels
-					writeToFile(treeProoned.toString(), "Tree Prooned");
+					writeToFile(treeProoned.toString(), Tree.FILENAME_P + "_Text");
 				System.out.print(".");
 				if(i < 6) // only write tree to string for the first 5 levels
-					writeToFile(treeNotProoned.toString(), "Tree Not Prooned");
+					writeToFile(treeNotProoned.toString(), Tree.FILENAME_NP + "_Text");
 				System.out.println(".  Done");
 			}
 		} catch (Error e) {
@@ -121,8 +124,16 @@ public class Main {
 	 * @return
 	 * 			The filename where you can find back the tree object (in workspace)
 	 */
-	public static String getFileNameTreeObject() {
-		return FILENAME;
+	public static String getFileNameTreeP() {
+		return Tree.FILENAME_P;
+	}
+	
+	/**
+	 * @return
+	 * 			The filename where you can find back the tree object (in workspace)
+	 */
+	public static String getFileNameTreeNP() {
+		return Tree.FILENAME_NP;
 	}
 	
 	
@@ -164,23 +175,15 @@ public class Main {
 	 * Writes the created tree to a file (name is given as a constant fileName)
 	 * As an object
 	 */
-	private static void writeTree(Tree tree) {
+	private static void writeTree(Tree tree, String filename) {
 		try {
-			FileOutputStream fout = new FileOutputStream(FILENAME);
+			FileOutputStream fout = new FileOutputStream(filename);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(tree);
 			oos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	/*
-	 * Returns the filename of tree
-	 */
-	public static String getFileNameTree() {
-		return FILENAME;
 	}
 	
 }

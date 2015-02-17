@@ -25,12 +25,12 @@ public class Input {
 	 * Constructor of class input
 	 * This constructor will read the inputExample.txt file and the tree file.
 	 */
-	public Input() {
+	public Input(String treeFileName) {
 		inputList = new ArrayList<HashMap<String, Double>>();
 		primitiveInput = new ArrayList<Double[]>();
 		try {
 			text = new File("inputExample.txt");
-			readTree();
+			readTree(treeFileName);
 			readFile1(text);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -142,10 +142,15 @@ public class Input {
 	/**
 	 * Reads the tree from file (FILENAME given by tree.MAIN
 	 */
-	private void readTree() {
+	private void readTree(String treeFileName) {
 		ObjectInputStream ois = null;
 		try {
-			InputStream in = getClass().getResourceAsStream("/" + Main.getFileNameTree());
+			InputStream in;
+			if(treeFileName == null) {
+				in = getClass().getResourceAsStream("/" + Tree.FILENAME_P);
+			} else {
+				in = getClass().getResourceAsStream("/" + treeFileName);
+			}
 			//FileInputStream fis = new FileInputStream(new File(Main.getFileNameTree()));
 			ois = new ObjectInputStream(in);//fis);
 			

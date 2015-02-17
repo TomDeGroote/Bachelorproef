@@ -20,6 +20,8 @@ public class Tree implements Serializable {
 	private Equation startEquation;
 	private List<List<Equation>> listOfLevels;
 	private List<Equation> temporaryLevel;
+	public static final String FILENAME_P = "treeP";
+	public static final String FILENAME_NP = "treeNP";
 
 	/**
 	 * Constructor of the tree

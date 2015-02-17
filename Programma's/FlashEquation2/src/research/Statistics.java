@@ -12,6 +12,7 @@ import master.normal.ObjectMaster;
 import master.tuple.ObjectTupleMaster;
 import master.tuple.TupleWeightsMaster;
 import tree.Equation;
+import tree.Tree;
 
 public class Statistics {
 
@@ -33,12 +34,19 @@ public class Statistics {
 	private static final int minimum = -100;
 	private static final int maximum = 100;
 
-
+	// inputs
+	private static Input inputP = null;
+	private static Input inputNP = null;
 
 	public static void main(String[] args) {
-		boolean realRandom = false;
-		List<List<Double>> numbers = genetereNumbers(realRandom);
-		runStatistic(Runner.TUPLE, numbers, "FakeRandom", realRandom);	
+		boolean realRandom = false;	
+		inputP = new Input(Tree.FILENAME_P);
+		inputNP = new Input(Tree.FILENAME_NP);
+
+	}
+	
+	public static void PvsNP() {
+		
 	}
 	
 	public static List<List<Double>> genetereNumbers(boolean useRealRandom) {
@@ -58,7 +66,7 @@ public class Statistics {
 	 * @param strings
 	 * 			List containing the names of the to run Masters
 	 */
-	public static void runStatistic(Runner runner, List<List<Double>> numbers, String experimentName, boolean useRealRandom) {
+	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, String experimentName, boolean useRealRandom) {
 		Master master = null;
 		switch (runner) {
 		case TUPLE:
@@ -78,7 +86,7 @@ public class Statistics {
 			break;
 		}	
 		// run the master
-		runMaster(master, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, experimentName);
+		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, experimentName);
 		
 		
 		String s = "";
@@ -114,9 +122,8 @@ public class Statistics {
 	 * @param printBest
 	 * @param printTime
 	 */
-	private static void runMaster(Master master, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, String experimentName) {
+	private static void runMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, String experimentName) {
 		String toPrint = "";
-		Input input = new Input();
 		toPrint += "***   Executing " + master.getNameOfMaster() + "\n";
 		// run master
 		long time = System.currentTimeMillis();
