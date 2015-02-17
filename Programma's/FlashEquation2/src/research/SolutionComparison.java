@@ -14,7 +14,7 @@ import tree.Tree;
 public class SolutionComparison {
 
 	
-	private static int deadline = 100;
+	private static int deadline = -1;
 	private static boolean stopAfterOne = false ;
 	private static List<List<Double>> numbers;
 	
