@@ -13,6 +13,7 @@ import java.util.List;
 public class Grammar {
 	private static List<Operand> possibleOperands = new ArrayList<Operand>();
 	private static final String nonTerminalRepresentation = "E";
+	private static final boolean USE_MAX_MIN = false;
 
 	/**
 	 * This method will add all possible operands to operandPossiblities
@@ -23,8 +24,10 @@ public class Grammar {
 		possibleOperands.add(new Operand("/", false, false, 1));
 		possibleOperands.add(new Operand("+", true, true, 0));
 		possibleOperands.add(new Operand("-", true, false, 0));
-		possibleOperands.add(new Operand("Max", false, true, Integer.MAX_VALUE));
-		possibleOperands.add(new Operand("Min", false, true, Integer.MIN_VALUE));
+		if(USE_MAX_MIN) {
+			possibleOperands.add(new Operand("Max", false, true, Integer.MAX_VALUE));
+			possibleOperands.add(new Operand("Min", false, true, Integer.MIN_VALUE));
+		}
 	}
 
 	/**

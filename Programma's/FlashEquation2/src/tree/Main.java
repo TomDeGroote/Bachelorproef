@@ -15,7 +15,7 @@ import java.io.ObjectOutputStream;
 public class Main {
 
 	private static final int NROFLEVELS = 5;
-	private static final boolean REMOVEPRUNED = false;
+	private static final boolean REMOVEPRUNED = true;
 	private static final boolean EXECUTE_STATISTICS = false;
 	/**
 	 * Main method of the tree-program
