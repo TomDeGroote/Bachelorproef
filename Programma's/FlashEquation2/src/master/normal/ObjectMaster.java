@@ -44,6 +44,8 @@ public class ObjectMaster extends Master{
 	 */
 	@Override
 	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input) {		
+		solutionSpace = new ArrayList<Equation>();
+		
 		// set a possible deadline
 		if(deadline > 0) {
 			ObjectMaster.hasDeadLine = true;

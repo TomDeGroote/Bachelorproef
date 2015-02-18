@@ -16,7 +16,7 @@ public abstract class Master {
 	
 	protected static Evaluate evaluate;
 	
-	public static List<Equation> solutionSpace = new ArrayList<Equation>();
+	public static List<Equation> solutionSpace = null;
 	
 	protected static boolean hasDeadLine = false;		
 	protected static boolean stopAfterOne = false;	
