@@ -44,60 +44,92 @@ public class RandomGenerator {
 		double number = 0;
 		Random rn = new Random();
 		List<Symbol> symbols = new ArrayList<Symbol>();
-		// generate the first row
-		for(int l = 0; l < length-2; l++) {
+		boolean firstExampleOK = false;
+		while(!firstExampleOK) {
+			possibleOperands = Grammar.getPossibleOperands(); // possible operands
+			numbers = new ArrayList<Double>(); // the numbers of a row
+			operands = new ArrayList<Operand>(); // used operands in first row
+			number = 0;
+			symbols = new ArrayList<Symbol>();
+
+			
+			// generate the first row
+			for(int l = 0; l < length-2; l++) {
+				number = rn.nextInt((maximum - minimum) + 1) + minimum;
+				numbers.add(number);
+				symbols.add(new Terminal("K"+l, number));
+				Operand operand = possibleOperands.get(rn.nextInt(possibleOperands.size()));
+				operands.add(operand);			
+				symbols.add(operand);
+			}
+			// last number of first equation
 			number = rn.nextInt((maximum - minimum) + 1) + minimum;
 			numbers.add(number);
-			symbols.add(new Terminal("K"+l, number));
-			Operand operand = possibleOperands.get(rn.nextInt(possibleOperands.size()));
-			operands.add(operand);			
-			symbols.add(operand);
+			symbols.add(new Terminal("K"+ (length-2), number));
+	
+			// equation of the first row
+			Equation eq = new Equation(symbols);
+			
+			// set the first row as last generated equation
+			lastGeneratedEquation = eq;
+			
+			// evaluate the value of the equation and add it as Goal of the row
+			double goal = ObjectEvaluate.evaluateTerminalEquation(eq);
+			numbers.add(goal);
+			
+			// set last generated goal equal to goal of first row
+			lastGeneratedGoal = goal;
+			
+			double checkGoal = goal;
+			checkGoal = checkGoal*100000;
+			checkGoal = (int) (checkGoal%10);
+			if(checkGoal == 0) {
+				firstExampleOK = true;
+			} else {
+				firstExampleOK = false;
+			}
 		}
-		// last number of first equation
-		number = rn.nextInt((maximum - minimum) + 1) + minimum;
-		numbers.add(number);
-		symbols.add(new Terminal("K"+ (length-2), number));
-
-		// equation of the first row
-		Equation eq = new Equation(symbols);
-		
-		// set the first row as last generated equation
-		lastGeneratedEquation = eq;
-		
-		// evaluate the value of the equation and add it as Goal of the row
-		double goal = ObjectEvaluate.evaluateTerminalEquation(eq);
-		numbers.add(goal);
-		
-		// set last generated goal equal to goal of first row
-		lastGeneratedGoal = goal;
-		
 		// add first row to result
 		result.add(numbers);
 		
+		
 		// generate the next rows
 		for(int i = 1; i < nrOfExamples; i++) {
-			// reset symbols and numbers
-			List<Symbol> nextSymbols = new ArrayList<Symbol>();
 			List<Double> nextNumbers = new ArrayList<Double>();
-			
-			// generate the i'th row
-			for(int l = 0; l < length - 2; l++) {
+			boolean exampleOK = false;
+			while(!exampleOK) {
+				// reset symbols and numbers
+				List<Symbol> nextSymbols = new ArrayList<Symbol>();
+				nextNumbers = new ArrayList<Double>();
+				
+				// generate the i'th row
+				for(int l = 0; l < length - 2; l++) {
+					number = rn.nextInt((maximum - minimum) + 1) + minimum;
+					nextNumbers.add(number);
+					nextSymbols.add(new Terminal("K"+l, number));
+					nextSymbols.add(operands.get(l));
+				}
+				// last number of i'th equation
 				number = rn.nextInt((maximum - minimum) + 1) + minimum;
 				nextNumbers.add(number);
-				nextSymbols.add(new Terminal("K"+l, number));
-				nextSymbols.add(operands.get(l));
+				nextSymbols.add(new Terminal("K"+ (length-2), number));
+				
+				// equation of the first row
+				Equation nextEq = new Equation(nextSymbols);
+				
+				// evaluate the value of the equation and add it as Goal of the row
+				double nextGoal = ObjectEvaluate.evaluateTerminalEquation(nextEq);
+				nextNumbers.add(nextGoal);
+				
+				double checkGoal = nextGoal;
+				checkGoal = checkGoal*100000;
+				checkGoal = (int) (checkGoal%10);
+				if(checkGoal == 0) {
+					exampleOK = true;
+				} else {
+					exampleOK = false;
+				}		
 			}
-			// last number of i'th equation
-			number = rn.nextInt((maximum - minimum) + 1) + minimum;
-			nextNumbers.add(number);
-			nextSymbols.add(new Terminal("K"+ (length-2), number));
-			
-			// equation of the first row
-			Equation nextEq = new Equation(nextSymbols);
-			
-			// evaluate the value of the equation and add it as Goal of the row
-			nextNumbers.add(ObjectEvaluate.evaluateTerminalEquation(nextEq));
-			
 			// add first row to result
 			result.add(nextNumbers);
 		}
