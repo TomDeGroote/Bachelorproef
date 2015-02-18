@@ -14,13 +14,13 @@ import tree.Tree;
 public class FlashQuationMain {
 
 	// Deadline parameters
-	private static final int DEADLINE = 10000;
+	private static final int DEADLINE = 200;
 	private static final boolean stopAfterOne = false;
 	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
-	private static final boolean printAll = false;
+	private static final boolean printAll = true;
 	private static final boolean printBest = true;
 	private static final boolean printTime = true;
 	private static final boolean printRandom = true;
@@ -40,7 +40,7 @@ public class FlashQuationMain {
 //		toRun.add("string");
 //		toRun.add("normal");
 		toRun.add("tuple");
-		toRun.add("tupleWeight");
+//		toRun.add("tupleWeight");
 		runListOfStrings(toRun);
 	}
 	

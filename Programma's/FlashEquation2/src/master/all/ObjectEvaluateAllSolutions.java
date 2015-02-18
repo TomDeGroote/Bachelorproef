@@ -107,7 +107,7 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 			if(entry.getKey().equals(examples.get(0).get(ObjectMaster.getNameOfGoalK()))){
 				for(Equation equation: entry.getValue()){
 					if(checkAgainstOtherExamples(equation))
-						bufferSolutions.addAll(entry.getValue());
+						bufferSolutions.add(equation);
 				}
 			}
 		}
@@ -152,12 +152,12 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 
 				// All the possible equations when combining part1 and part2
 				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, operand, equationsValue2);
-				List<String> equationsValue1_2String = new ArrayList<String>();
-				for(Equation eq : equationsValue1_2){
-					if(eq.toString().length() < 12)
-						System.out.println(eq.toString());
-					equationsValue1_2String.add(eq.toString());
-				}
+//				List<String> equationsValue1_2String = new ArrayList<String>();
+//				for(Equation eq : equationsValue1_2){
+//					//if(eq.toString().length() < 12)
+//						//System.out.println(eq.toString());
+//					equationsValue1_2String.add(eq.toString());
+//				}
 				
 				// the resulting value
 				if(operand.toString().equals("/") && valueSolution2.equals(0.0))
