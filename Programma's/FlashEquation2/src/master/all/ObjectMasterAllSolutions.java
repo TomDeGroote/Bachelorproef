@@ -87,7 +87,8 @@ public class ObjectMasterAllSolutions extends Master {
 			} else {				
 				// start to evaluate
 				evaluate.addExample(Input.covertToHashMap(Ks));
-				solutionSpace.addAll(evaluate.evaluate());
+				List<Equation> toBeAdded = (List<Equation>) evaluate.evaluate();
+				solutionSpace.addAll(toBeAdded);
 
 				//				i++;
 			}

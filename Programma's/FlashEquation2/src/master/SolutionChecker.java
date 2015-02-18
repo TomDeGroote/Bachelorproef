@@ -113,7 +113,7 @@ public class SolutionChecker {
 		for(Equation eq1 : list1){
 			for(Equation eq2 : list2) {
 				if(compareEquations(eq1,eq2)){
-					result.remove(eq2);
+					result.remove(eq1);
 					//break;
 				}
 			}

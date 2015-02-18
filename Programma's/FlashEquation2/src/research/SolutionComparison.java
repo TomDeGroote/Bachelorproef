@@ -20,7 +20,7 @@ public class SolutionComparison {
 
 	// RandomGenerator parameters
 	private static final int length = 5; // inclusive solution
-	private static final int nrOfExamples = 4;
+	private static final int nrOfExamples = 3;
 	private static final int minimum = -100;
 	private static final int maximum = 100;
 
@@ -35,18 +35,18 @@ public class SolutionComparison {
 		Master masterAll = new ObjectMasterAllSolutions();
 		Master masterTuple = new ObjectTupleMaster();
 
-		numbers = RandomGenerator.generateCertainAllK(length, nrOfExamples, minimum, maximum);
-		//numbers = null;
-		
-		System.out.println("Random numbers");
-		for(List<Double> t : numbers){
+		//numbers = RandomGenerator.generateCertainAllK(length, nrOfExamples, minimum, maximum);
+		numbers = null;
+		if(numbers != null){
+			System.out.println("Random numbers");
+			for(List<Double> t : numbers){
+				System.out.println();
+				for(Double tt:t)
+					System.out.print(tt + " ");
+			}
 			System.out.println();
-			for(Double tt:t)
-				System.out.print(tt + " ");
+			System.out.println("End random numbers");
 		}
-		System.out.println();
-		System.out.println("End random numbers");
-		
 
 		masterAll.run(deadline, stopAfterOne, numbers, input);
 		List<Equation> allSolution = masterAll.getAllSolutions();
