@@ -2,8 +2,13 @@ package research;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import master.Input;
 import master.Master;
@@ -11,13 +16,18 @@ import master.all.ObjectMasterAllSolutions;
 import master.normal.ObjectMaster;
 import master.tuple.ObjectTupleMaster;
 import master.tuple.TupleWeightsMaster;
+
+import org.jopendocument.dom.OOUtils;
+import org.jopendocument.dom.spreadsheet.Sheet;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
+
 import tree.Equation;
 import tree.Tree;
 
 public class Statistics {
 
 	// Deadline parameters
-	private static final int DEADLINE = 100;
+	private static final int DEADLINE = 200;
 	private static final boolean stopAfterOne = false;
 	
 	
@@ -27,46 +37,79 @@ public class Statistics {
 	private static final boolean printBest = true;
 	private static final boolean printTime = true;
 	private static final boolean printRandom = true;
+	
+	// Random Parameters
+	private static final int length = 5; // AFBLIJVEN!!!
+	private static final int nrOfExamples = 1;
+	private static final int minRange = 0;
+	private static final int maxRange = 1000;
+	
+	// Research
+	private static final int nrOfIterations = 100;
+
 
 	// inputs
 	private static Input inputP = null;
 	private static Input inputNP = null;
 
-	public static void main(String[] args) {
-		boolean realRandom = false;	
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		inputP = new Input(Tree.FILENAME_P);
 		inputNP = new Input(Tree.FILENAME_NP);
-		PvsNP();
+		PvsNP(nrOfIterations);
+		System.out.println("Done!");
 	}
 	
-	public static void PvsNP() {
-		String statisticsAll_P = "Time - Size - Best\n";
-		String statisticsTuple_P = "Time - Size - Best\n";
-		String statisticsAll_NP = "Time - Size - Best\n";
-		String statisticsTuple_NP = "Time - Size - Best\n";
-		String randomUsed = "";
+	public static void PvsNP(int numberOfIterations) throws FileNotFoundException, IOException {
+		String randomUsed = "";		
 		
-		Master objectMaster = new ObjectMasterAllSolutions();
-		Master tupleMaster = new ObjectMasterAllSolutions();
+		// needed for excel document
+		final Object[][] statisticsAll_P = new Object[numberOfIterations][3];
+		final Object[][] statisticsAll_NP = new Object[numberOfIterations][3];
+		final Object[][] statisticsTuple_P = new Object[numberOfIterations][3];
+		final Object[][] statisticsTuple_NP = new Object[numberOfIterations][3];
+		final Object[][] random = new Object[numberOfIterations][length];
 
-		for(int i = 0; i < 5; i++) {	
+		
+		// Run statistics for ObjectAll, Tuple for P and NP
+		for(int i = 0; i < numberOfIterations; i++) {	
 			System.out.println("Experiment: " + (i+1));
-			List<List<Double>> numbers = genetereNumbers(true, 5, 1, 0, 100);
-			statisticsAll_P += runStatistic(Runner.OBJECTALL, inputP, numbers, true, true) + "\n";
-			statisticsTuple_P += runStatistic(Runner.TUPLE, inputP, numbers, true, true) + "\n";
-			statisticsAll_NP += runStatistic(Runner.OBJECTALL, inputNP, numbers, true, true) + "\n";
-			statisticsTuple_NP += runStatistic(Runner.OBJECTALL, inputNP, numbers, true, true) + "\n";
-
-			randomUsed += getRandomString(true, numbers) + "\n\n";
-			System.out.println("Done!");
+			List<List<Double>> numbers = genetereNumbers(true, length, nrOfExamples, minRange, maxRange);
+			runStatistic(Runner.OBJECTALL, inputP, numbers, true, true, statisticsAll_P, i);
+			runStatistic(Runner.OBJECTALL, inputNP, numbers, true, true, statisticsAll_NP, i);
+			runStatistic(Runner.TUPLE, inputP, numbers, true, true, statisticsTuple_P, i);
+			runStatistic(Runner.TUPLE, inputNP, numbers, true, true, statisticsTuple_NP, i);
+			getRandomString(true, numbers, false, random, i);
 		}
 		
-		// TODO write slechts de files van object
+		// combine all of the object to one big table
+		final Object[][] allCombined = new Object[numberOfIterations][12+length];
+		for(int i = 0; i < numberOfIterations; i++) {
+			for(int j = 0; j < 3; j++) {
+				allCombined[i][j] = statisticsAll_NP[i][j];
+			}
+			for(int j = 3; j < 6; j++) {
+				allCombined[i][j] = statisticsAll_P[i][j-3];
+			}
+			for(int j = 6; j < 9; j++) {
+				allCombined[i][j] = statisticsTuple_NP[i][j-6];
+			}
+			for(int j = 9; j < 12; j++) {
+				allCombined[i][j] = statisticsTuple_P[i][j-9];
+			}
+			for(int j = 12; j < 12+length; j++) {
+				allCombined[i][j] = random[i][j-12];
+			}
+		}
 		
-		writeToFile(statisticsAll_P, "PvsNP_P" + "_" + objectMaster.getNameOfMaster());
-		writeToFile(statisticsTuple_P, "PvsNP_P" + "_" + tupleMaster.getNameOfMaster());
-		writeToFile(statisticsAll_NP, "PvsNP_NP" + "_" + objectMaster.getNameOfMaster());
-		writeToFile(statisticsTuple_NP, "PvsNP_NP" + "_" + tupleMaster.getNameOfMaster());
+		// define column names for excel file
+		String[] columns = new String[] {"Time_All_NP", "Number", "Best Solution", "Time_All_P", "Number", "Best Solution", "Time_Tuple_NP", "Number", "Best Solution", "Time_Tuple_P", "Number", "Best Solution", "Random", "Random","Random","Random","Random"};
+
+		TableModel allComb = new DefaultTableModel(allCombined, columns);
+		// Save the data to an ODS file and open it.
+		final File file = new File("PvsNP");
+		SpreadSheet.createEmpty(allComb).saveAs(file);
+		
+		// write random to file
 		writeToFile(randomUsed, "PvsNP_Random");
 	}
 	
@@ -78,7 +121,7 @@ public class Statistics {
 	public static List<List<Double>> genetereNumbers(boolean useRealRandom, int length, int nrOfExamples, int minimum, int maximum) {
 		List<List<Double>> numbers = null;
 		if(useRealRandom) {
-			numbers = RandomGenerator.generateCertainAllK(length, nrOfExamples, minimum, maximum); // Real Random
+			numbers = RandomGenerator.generateRealRandom(length, nrOfExamples, minimum, maximum); // Real Random
 			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {
@@ -89,8 +132,9 @@ public class Statistics {
 	
 	/**
 	 * Runs Master whose name is in the parameter Runner
+	 * @param statisticsAll_P 
 	 */
-	public static String runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, boolean raw) {
+	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, boolean raw, Object[][] statisticsAll_P, int indexOfExel) {
 		Master master = null;
 		switch (runner) {
 		case TUPLE:
@@ -110,7 +154,7 @@ public class Statistics {
 			break;
 		}	
 		// run the master
-		return runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, raw);
+		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, raw, statisticsAll_P, indexOfExel);
 	}
 	
 	
@@ -120,26 +164,15 @@ public class Statistics {
 	 * 		Was realRandom used or not
 	 * @param numbers
 	 * 		The numbers to be written away
+	 * @param random 
+	 * @param iterator 
 	 */
-	private static String getRandomString(boolean useRealRandom, List<List<Double>> numbers) {
-		String s = "";
-		if(useRealRandom) {
-			s += "***   To be found: " + RandomGenerator.getLastGeneratedEquation() + "\n";		
-		} else {
-			System.out.println("***   To be found unknown");
-			System.out.println();
-		}
-		s += "***     Random    \n";
+	private static void getRandomString(boolean useRealRandom, List<List<Double>> numbers, boolean print, Object[][] random, int iterator) {
 		for(List<Double> ds : numbers) {
-			for(double d : ds) {
-				s += d + "";
-				for(int i = (d + "").length(); i < 7; i++) {
-					s += " ";
-				}
+			for(int i = 0 ; i < ds.size(); i++) {
+				random[iterator][i] = ds.get(i);
 			}
-			s += "\n";
 		}
-		return s;
 	}
 	
 
@@ -156,8 +189,9 @@ public class Statistics {
 	 * @param printTime
 	 * @param raw
 	 * 		If raw returns a string : "time  size  best"
+	 * @param statisticsAll_P 
 	 */
-	private static String runMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, boolean raw) {
+	private static void runMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, boolean raw, Object[][] statisticsAll_P, int i) {
 		String toPrint = "";
 		if(!raw) {
 			toPrint += "***   Executing " + master.getNameOfMaster() + "\n";
@@ -188,9 +222,8 @@ public class Statistics {
 				}
 			}
 		} else {
-			toPrint += "" + time + "  " + master.getAllSolutions().size() + "  " + master.getBestSolution();
+			statisticsAll_P[i] = new Object[] {time, master.getAllSolutions().size(), master.getBestSolution()};
 		}
-		return toPrint;
 	}
 	
 	/**
