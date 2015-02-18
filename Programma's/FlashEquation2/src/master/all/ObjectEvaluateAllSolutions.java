@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import master.Evaluate;
-import master.Input;
 import master.Master;
 import master.normal.ObjectMaster;
 import tree.Equation;
@@ -45,7 +44,6 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 	 * @return
 	 * 		The buffer with solutions
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Equation> evaluate() {
 		
 		// empty the buffer containing solutions
@@ -54,6 +52,7 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 		// before first ; no variable is needed because levelCount is already initialized
 		// for each over every level in TREE
 		for(; levelCount < TREE.size(); levelCount++) {
+			//System.out.println("Current level tree: " + levelCount);
 			// the current level
 			List<Equation> level =  TREE.get(levelCount);
 			// for each over every equation on the current level
@@ -71,6 +70,7 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 			// Don't forget to reset equationCount after for loop
 			equationCount = 0;
 		}
+		//System.out.println("Finished entire tree");
 		return bufferSolutions; // return buffered solutions when we are at the end of the tree
 	}
 	
@@ -152,7 +152,13 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 
 				// All the possible equations when combining part1 and part2
 				List<Equation> equationsValue1_2 = concatenateEquationLists(equationsValue1, operand, equationsValue2);
-
+				List<String> equationsValue1_2String = new ArrayList<String>();
+				for(Equation eq : equationsValue1_2){
+					if(eq.toString().length() < 12)
+						System.out.println(eq.toString());
+					equationsValue1_2String.add(eq.toString());
+				}
+				
 				// the resulting value
 				if(operand.toString().equals("/") && valueSolution2.equals(0.0))
 					continue;
