@@ -17,19 +17,14 @@ import master.normal.ObjectMaster;
 import master.tuple.ObjectTupleMaster;
 import master.tuple.TupleWeightsMaster;
 
-import org.jopendocument.dom.OOUtils;
-import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
-import tree.Equation;
 import tree.Tree;
 
 public class Statistics {
 
 	// Deadline parameters
-	private static final int DEADLINE = 200;
-	private static final boolean stopAfterOne = false;
-	
+	private static final int DEADLINE = 200;	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
@@ -45,7 +40,7 @@ public class Statistics {
 	private static final int maxRange = 1000;
 	
 	// Research
-	private static final int nrOfIterations = 100;
+	private static final int nrOfIterations = 5;
 
 
 	// inputs
@@ -60,30 +55,33 @@ public class Statistics {
 	}
 	
 	public static void PvsNP(int numberOfIterations) throws FileNotFoundException, IOException {
-		String randomUsed = "";		
+		// runStatistics variables
+		boolean useRealRandom = false;
+		boolean stopAfterOne = false;
+		
 		
 		// needed for excel document
-		final Object[][] statisticsAll_P = new Object[numberOfIterations][3];
-		final Object[][] statisticsAll_NP = new Object[numberOfIterations][3];
-		final Object[][] statisticsTuple_P = new Object[numberOfIterations][3];
-		final Object[][] statisticsTuple_NP = new Object[numberOfIterations][3];
-		final Object[][] random = new Object[numberOfIterations][length];
+		final Object[][] statisticsAll_P = new Object[numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsAll_NP = new Object[numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsTuple_P = new Object[numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsTuple_NP = new Object[numberOfIterations*nrOfExamples][3];
+		final Object[][] random = new Object[numberOfIterations*nrOfExamples][length];
 
 		
 		// Run statistics for ObjectAll, Tuple for P and NP
 		for(int i = 0; i < numberOfIterations; i++) {	
 			System.out.println("Experiment: " + (i+1));
-			List<List<Double>> numbers = genetereNumbers(true, length, nrOfExamples, minRange, maxRange);
-			runStatistic(Runner.OBJECTALL, inputP, numbers, true, true, statisticsAll_P, i);
-			runStatistic(Runner.OBJECTALL, inputNP, numbers, true, true, statisticsAll_NP, i);
-			runStatistic(Runner.TUPLE, inputP, numbers, true, true, statisticsTuple_P, i);
-			runStatistic(Runner.TUPLE, inputNP, numbers, true, true, statisticsTuple_NP, i);
-			getRandomString(true, numbers, false, random, i);
+			List<List<Double>> numbers = genetereNumbers(useRealRandom, length, nrOfExamples, minRange, maxRange);
+			runStatistic(Runner.OBJECTALL, inputP, numbers, useRealRandom, statisticsAll_P, i, stopAfterOne);
+			runStatistic(Runner.OBJECTALL, inputNP, numbers, useRealRandom, statisticsAll_NP, i, stopAfterOne);
+			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsTuple_P, i, stopAfterOne);
+			runStatistic(Runner.TUPLE, inputNP, numbers, useRealRandom, statisticsTuple_NP, i, stopAfterOne);
+			getRandomString(useRealRandom, numbers, false, random, i*nrOfExamples);
 		}
 		
 		// combine all of the object to one big table
-		final Object[][] allCombined = new Object[numberOfIterations][12+length];
-		for(int i = 0; i < numberOfIterations; i++) {
+		final Object[][] allCombined = new Object[numberOfIterations*nrOfExamples][12+length];
+		for(int i = 0; i < numberOfIterations*nrOfExamples; i++) {
 			for(int j = 0; j < 3; j++) {
 				allCombined[i][j] = statisticsAll_NP[i][j];
 			}
@@ -108,9 +106,6 @@ public class Statistics {
 		// Save the data to an ODS file and open it.
 		final File file = new File("PvsNP");
 		SpreadSheet.createEmpty(allComb).saveAs(file);
-		
-		// write random to file
-		writeToFile(randomUsed, "PvsNP_Random");
 	}
 	
 	/**
@@ -133,8 +128,9 @@ public class Statistics {
 	/**
 	 * Runs Master whose name is in the parameter Runner
 	 * @param statisticsAll_P 
+	 * @param b 
 	 */
-	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, boolean raw, Object[][] statisticsAll_P, int indexOfExel) {
+	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, Object[][] statisticsAll_P, int indexOfExel, boolean stopAfterOne) {
 		Master master = null;
 		switch (runner) {
 		case TUPLE:
@@ -154,7 +150,7 @@ public class Statistics {
 			break;
 		}	
 		// run the master
-		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, raw, statisticsAll_P, indexOfExel);
+		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, statisticsAll_P, indexOfExel);
 	}
 	
 	
@@ -168,9 +164,9 @@ public class Statistics {
 	 * @param iterator 
 	 */
 	private static void getRandomString(boolean useRealRandom, List<List<Double>> numbers, boolean print, Object[][] random, int iterator) {
-		for(List<Double> ds : numbers) {
-			for(int i = 0 ; i < ds.size(); i++) {
-				random[iterator][i] = ds.get(i);
+		for(int i = 0 ; i < numbers.get(0).size(); i++) {
+			for(int j = 0; j < nrOfExamples; j++) {
+				random[iterator+j][i] = numbers.get(j).get(i);
 			}
 		}
 	}
@@ -191,39 +187,12 @@ public class Statistics {
 	 * 		If raw returns a string : "time  size  best"
 	 * @param statisticsAll_P 
 	 */
-	private static void runMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, boolean raw, Object[][] statisticsAll_P, int i) {
-		String toPrint = "";
-		if(!raw) {
-			toPrint += "***   Executing " + master.getNameOfMaster() + "\n";
-		}
+	private static void runMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, boolean printAll, boolean printBest, boolean printTime, boolean printRandom, Object[][] statisticsAll_P, int i) {
 		// run master
 		long time = System.currentTimeMillis();
 		master.run(deadline, stopAfterOne, numbers, input);
 		time = System.currentTimeMillis() - time;
-		
-		if(!raw) {
-			if(printTime) {
-				toPrint +=  "  -     Time: " + time + "\n";
-			}
-			if(printSizeAll) {
-				toPrint += "  -     Size: " + master.getAllSolutions().size() + "\n"; 
-			}
-			if(printBest) {
-				try {
-					toPrint += "  -     Best: " + master.getBestSolution().toString() + "\n";
-				} catch (NullPointerException e) {
-					toPrint += "  -     Best: Empty" + "\n";
-				}
-			}
-			if(printAll) {
-				toPrint += "  -     All:\n";
-				for(Equation eq : master.getAllSolutions()) {
-					toPrint += "          + " + eq.toString() + "\n";
-				}
-			}
-		} else {
-			statisticsAll_P[i] = new Object[] {time, master.getAllSolutions().size(), master.getBestSolution()};
-		}
+		statisticsAll_P[nrOfExamples*i] = new Object[] {time, master.getAllSolutions().size(), master.getBestSolution()};
 	}
 	
 	/**
