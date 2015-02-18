@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import master.Evaluate;
 import master.Input;
 import master.Master;
 import master.Timer;
@@ -16,19 +15,13 @@ import tree.Tree;
 
 
 public class ObjectMaster extends Master{
-	
-	private static final String NAME_GOAL = "Goal";
-	
+		
 	private static Timer timer = new Timer(Long.MAX_VALUE);	
-	private static ObjectEvaluate evaluate;
 	
 	public static List<Equation> solutionSpace = new ArrayList<Equation>();
 	
 	public static HashMap<String, Double> example;
-	
-	private static boolean hasDeadLine = true;		// TODO jar
-	private static boolean stopAfterOne = false;	// TODO jar
-	
+		
 	/**
 	 * @param deadline
 	 * 			The time in milliseconds the program can maximumly run before it has to return something
@@ -99,7 +92,8 @@ public class ObjectMaster extends Master{
 			} else {				
 				// start to evaluate
 				evaluate.addExample(Input.covertToHashMap(Ks));
-				List<Equation> solutions = evaluate.evaluate();
+				@SuppressWarnings("unchecked")
+				List<Equation> solutions = (List<Equation>) evaluate.evaluate();
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
@@ -214,34 +208,6 @@ public class ObjectMaster extends Master{
 			solutions.add(eq);
 		}
 		return solutions;
-	}
-	/**
-	 * @return
-	 * 		The name of the goal column value
-	 */
-	public static String getNameOfGoalK() {
-		return NAME_GOAL;
-	}
-	
-	/**
-	 * Method used to check if there is still time on the clock
-	 * 
-	 * @return
-	 * 		True if the there is no more time left
-	 * 		False if there is time left
-	 * 
-	 * 		TODO aangepast voor jar support
-	 */
-	public static boolean timesUp() {
-		if(hasDeadLine) {
-			return timer.timesUp();			
-		} else {
-			if(evaluate.bufferSolutions.isEmpty()) {
-				return false;
-			} else {
-				return true;
-			}
-		}
 	}
 
 	@Override

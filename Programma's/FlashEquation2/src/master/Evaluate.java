@@ -5,12 +5,11 @@ import java.util.Collection;
 import java.util.List;
 
 import tree.Equation;
-import tree.Terminal;
 
 public abstract class Evaluate {
 
-	public List<Equation> bufferSolutions = new ArrayList<Equation>();
-
+	public static List<Equation> bufferSolutions = new ArrayList<Equation>();
+	
 	public abstract Collection<? extends Equation> evaluate();
 	
 	/**

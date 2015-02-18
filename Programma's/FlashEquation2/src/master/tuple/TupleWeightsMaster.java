@@ -13,7 +13,6 @@ import tree.Tree;
 
 public class TupleWeightsMaster extends Master {
 	
-	private static TupleWeightsEvaluate evaluate;
 	public static Double[] example;
 
 	
@@ -81,7 +80,8 @@ public class TupleWeightsMaster extends Master {
 				}
 			} else {				
 				// start to evaluate
-				List<Equation> solutions = evaluate.evaluate();
+				@SuppressWarnings("unchecked")
+				List<Equation> solutions = (List<Equation>) evaluate.evaluate();
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
@@ -105,7 +105,7 @@ public class TupleWeightsMaster extends Master {
 	public static void checkSolutionSpace(Double[] ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
-			if(evaluate.checkAgainstOtherExamples(eq)) {
+			if(((TupleWeightsEvaluate) evaluate).checkAgainstOtherExamples(eq)) {
 				newSolutionSpace.add(eq);
 			}
 		}	
@@ -186,36 +186,7 @@ public class TupleWeightsMaster extends Master {
 		}
 		return solutions;
 	}
-	/**
-	 * @return
-	 * 		The name of the goal column value
-	 */
-	public static String getNameOfGoalK() {
-		return NAME_GOAL;
-	}
 	
-	/**
-	 * Method used to check if there is still time on the clock
-	 * 
-	 * @return
-	 * 		True if the there is no more time left
-	 * 		False if there is time left
-	 */
-	public static boolean timesUp() {
-		if(hasDeadLine) {
-			return timer.timesUp();			
-		} else {
-			if(stopAfterOne) {
-				if(evaluate.bufferSolutions.isEmpty()) {
-					return false;
-				} else {
-					return true;
-				}
-			} else {
-				return false;
-			}
-		}
-	}
 
 	@Override
 	public String getNameOfMaster() {

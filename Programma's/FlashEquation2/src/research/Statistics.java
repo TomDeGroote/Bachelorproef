@@ -24,7 +24,7 @@ import tree.Tree;
 public class Statistics {
 
 	// Deadline parameters
-	private static final int DEADLINE = 200;	
+	private static final int DEADLINE = -1;	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
@@ -35,12 +35,12 @@ public class Statistics {
 	
 	// Random Parameters
 	private static final int length = 5; // AFBLIJVEN!!!
-	private static final int nrOfExamples = 1;
+	private static final int nrOfExamples = 5;
 	private static final int minRange = 0;
 	private static final int maxRange = 1000;
 	
 	// Research
-	private static final int nrOfIterations = 5;
+	private static final int nrOfIterations = 100;
 
 
 	// inputs
@@ -54,33 +54,64 @@ public class Statistics {
 		System.out.println("Done!");
 	}
 	
-	public static void PvsNP(int numberOfIterations) throws FileNotFoundException, IOException {
+	/**
+	 * Executes the P versus NP experiment
+	 * @param numberOfIterations
+	 * 			Number of iterations for this experiment
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public static void PvsNP(double numberOfIterations) throws FileNotFoundException, IOException {
 		// runStatistics variables
 		boolean useRealRandom = false;
-		boolean stopAfterOne = false;
+		boolean stopAfterOne = true;
 		
 		
 		// needed for excel document
-		final Object[][] statisticsAll_P = new Object[numberOfIterations*nrOfExamples][3];
-		final Object[][] statisticsAll_NP = new Object[numberOfIterations*nrOfExamples][3];
-		final Object[][] statisticsTuple_P = new Object[numberOfIterations*nrOfExamples][3];
-		final Object[][] statisticsTuple_NP = new Object[numberOfIterations*nrOfExamples][3];
-		final Object[][] random = new Object[numberOfIterations*nrOfExamples][length];
+		final Object[][] statisticsAll_P = new Object[(int) (numberOfIterations*nrOfExamples)][3];
+		final Object[][] statisticsAll_NP = new Object[(int) (numberOfIterations*nrOfExamples)][3];
+		final Object[][] statisticsTuple_P = new Object[(int) numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsTuple_NP = new Object[(int) numberOfIterations*nrOfExamples][3];
+		final Object[][] random = new Object[(int) numberOfIterations*nrOfExamples][length];
 
 		
 		// Run statistics for ObjectAll, Tuple for P and NP
-		for(int i = 0; i < numberOfIterations; i++) {	
-			System.out.println("Experiment: " + (i+1));
+		for(double i = 0; i < numberOfIterations; i++) {	
+			// print progress bar
+			System.out.print("Running: [");
+			for(int j = 0; j < i; j++) {
+				System.out.print("#");
+			}
+			for(double j = i; j < numberOfIterations; j++) {
+				System.out.print(" ");
+			}
+			System.out.print("] " + (i/numberOfIterations*100) + "%\r");
+			
+			// Run experiments
 			List<List<Double>> numbers = genetereNumbers(useRealRandom, length, nrOfExamples, minRange, maxRange);
-			runStatistic(Runner.OBJECTALL, inputP, numbers, useRealRandom, statisticsAll_P, i, stopAfterOne);
-			runStatistic(Runner.OBJECTALL, inputNP, numbers, useRealRandom, statisticsAll_NP, i, stopAfterOne);
-			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsTuple_P, i, stopAfterOne);
-			runStatistic(Runner.TUPLE, inputNP, numbers, useRealRandom, statisticsTuple_NP, i, stopAfterOne);
-			getRandomString(useRealRandom, numbers, false, random, i*nrOfExamples);
+			runStatistic(Runner.OBJECTALL, inputP, numbers, useRealRandom, statisticsAll_P, (int) i, stopAfterOne);
+			runStatistic(Runner.OBJECTALL, inputNP, numbers, useRealRandom, statisticsAll_NP, (int) i, stopAfterOne);
+			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsTuple_P, (int) i, stopAfterOne);
+			runStatistic(Runner.TUPLE, inputNP, numbers, useRealRandom, statisticsTuple_NP, (int) i, stopAfterOne);
+			getRandomString(useRealRandom, numbers, false, random, (int) i*nrOfExamples);
 		}
 		
+		// print the 100% bar
+		System.out.print("Running: [");
+		for(int j = 0; j < numberOfIterations; j++) {
+			System.out.print("#");
+		}
+		System.out.print("] 100.0%\r");
+		
+		// write every data to a separate .csv file
+		writeToCSV(statisticsAll_NP, "all_NP");
+		writeToCSV(statisticsAll_P, "all_P");
+		writeToCSV(statisticsTuple_NP, "tuple_NP");
+		writeToCSV(statisticsTuple_P, "tuple_P");
+		// Random is not written to the csv file
+		
 		// combine all of the object to one big table
-		final Object[][] allCombined = new Object[numberOfIterations*nrOfExamples][12+length];
+		final Object[][] allCombined = new Object[(int) numberOfIterations*nrOfExamples][12+length];
 		for(int i = 0; i < numberOfIterations*nrOfExamples; i++) {
 			for(int j = 0; j < 3; j++) {
 				allCombined[i][j] = statisticsAll_NP[i][j];
@@ -100,12 +131,60 @@ public class Statistics {
 		}
 		
 		// define column names for excel file
-		String[] columns = new String[] {"Time_All_NP", "Number", "Best Solution", "Time_All_P", "Number", "Best Solution", "Time_Tuple_NP", "Number", "Best Solution", "Time_Tuple_P", "Number", "Best Solution", "Random", "Random","Random","Random","Random"};
+		String[] columns = new String[] {"Time_All_NP", "Number_All_NP", "Best Solution_All_NP", "Time_All_P", "Number_All_P", "Best Solution_All_P", "Time_Tuple_NP", "Number_Tuple_NP", "Best Solution_Tuple_NP", "Time_Tuple_P", "Number_Tuple_P", "Best Solution_Tuple_P", "Random", "Random","Random","Random","Goal"};
 
 		TableModel allComb = new DefaultTableModel(allCombined, columns);
 		// Save the data to an ODS file and open it.
 		final File file = new File("PvsNP");
 		SpreadSheet.createEmpty(allComb).saveAs(file);
+	}
+	
+	/**
+	 * Writes a two dimensional object to a csv file in following format
+	 * Time, Solutions, Best Solution
+	 * a, b, c
+	 * d, e, f
+	 * @param allCombined
+	 * 			The two dimensional object to write
+	 * @param fileName
+	 * 			The fileName where to write the object (.csv automatically added)
+	 */
+	public static void writeToCSV(Object[][] allCombined, String fileName) {
+		try {
+		    FileWriter writer = new FileWriter(fileName + ".csv");
+	 
+		    // define header
+		    writer.append("Time");
+		    writer.append(',');
+		    writer.append("Solutions");
+		    writer.append(',');
+		    writer.append("Best Solution");
+		    writer.append('\n');
+		    
+		    // write data
+		    for(Object[] row : allCombined) {
+		    	boolean nullRow = true;
+		    	for(int i = 0; i < row.length; i++) {
+		    		if(row[i] == null) {
+		    			// no value in cell thus don't write it
+		    		} else {
+		    			nullRow = false;
+		    			writer.append(row[i].toString());
+			    		if(i < row.length-1) {
+			    			writer.append(',');
+			    		}
+		    		}
+		    	}
+		    	if(!nullRow) {
+		    		writer.append('\n');
+		    	}
+		    }
+	 
+		    writer.flush();
+		    writer.close();
+		} catch(IOException e) {
+		     e.printStackTrace();
+		} 
 	}
 	
 	/**

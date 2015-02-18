@@ -14,8 +14,6 @@ import tree.Tree;
 public class ObjectTupleMaster extends Master {
 	
 	public static Double[] example;
-	private static ObjectTupleEvaluate evaluate;
-
 	
 	/**
 	 * @param deadline
@@ -43,7 +41,7 @@ public class ObjectTupleMaster extends Master {
 		
 		// generate the evaluate class
 		evaluate = new ObjectTupleEvaluate(tree);
-		
+
 		ObjectTupleMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		
 		if(numbers ==  null) {
@@ -83,7 +81,8 @@ public class ObjectTupleMaster extends Master {
 				}
 			} else {				
 				// start to evaluate
-				List<Equation> solutions = evaluate.evaluate();
+				@SuppressWarnings("unchecked")
+				List<Equation> solutions = (List<Equation>) Master.evaluate.evaluate();
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
@@ -107,7 +106,7 @@ public class ObjectTupleMaster extends Master {
 	public static void checkSolutionSpace(Double[] ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
-			if(evaluate.checkAgainstOtherExamples(eq)) {
+			if(((ObjectTupleEvaluate) evaluate).checkAgainstOtherExamples(eq)) {
 				newSolutionSpace.add(eq);
 			}
 		}	
@@ -188,36 +187,7 @@ public class ObjectTupleMaster extends Master {
 		}
 		return solutions;
 	}
-	/**
-	 * @return
-	 * 		The name of the goal column value
-	 */
-	public static String getNameOfGoalK() {
-		return NAME_GOAL;
-	}
 	
-	/**
-	 * Method used to check if there is still time on the clock
-	 * 
-	 * @return
-	 * 		True if the there is no more time left
-	 * 		False if there is time left
-	 */
-	public static boolean timesUp() {
-		if(hasDeadLine) {
-			return timer.timesUp();			
-		} else {
-			if(stopAfterOne) {
-				if(evaluate.bufferSolutions.isEmpty()) {
-					return false;
-				} else {
-					return true;
-				}
-			} else {
-				return false;
-			}
-		}
-	}
 
 	@Override
 	public String getNameOfMaster() {

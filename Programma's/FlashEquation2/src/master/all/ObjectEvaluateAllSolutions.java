@@ -23,8 +23,6 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 	private int levelCount = 0;
 	private int equationCount = 0;
 
-	public  List<Equation> bufferSolutions = new LinkedList<Equation>();
-
 	// Initiele grootte is gekend dus gebruiken om tijd te besparen.
 	public List<HashMap<String, Double>> examples = new ArrayList<HashMap<String, Double>>();
 

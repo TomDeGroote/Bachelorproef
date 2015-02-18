@@ -23,7 +23,6 @@ public class TupleWeightsEvaluate extends Evaluate {
 	private int levelCount = 0;
 	private int equationCount = 0;
 	
-	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	public List<Double[]> examples = new ArrayList<Double[]>();
 	public List<Terminal> terminalList = new ArrayList<Terminal>();
 	private List<Terminal> weights = new ArrayList<Terminal>();

@@ -1,10 +1,7 @@
 package master;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import master.all.ObjectEvaluateAllSolutions;
-import master.tuple.ObjectTupleEvaluate;
 import tree.Equation;
 
 public abstract class Master {
@@ -66,13 +63,21 @@ public abstract class Master {
 	 * 		TODO aangepast voor jar support
 	 */
 	public static boolean timesUp() {
-		if(hasDeadLine) {
-			return timer.timesUp();			
-		} else {
-			if(evaluate.bufferSolutions.isEmpty()) {
-				return false;
+		if(stopAfterOne) {
+			if(hasDeadLine) {
+				if(timer.timesUp()) {
+					return true;
+				} else {
+					return !evaluate.bufferSolutions.isEmpty();
+				}
 			} else {
-				return true;
+				return !evaluate.bufferSolutions.isEmpty();
+			}
+		} else {
+			if(hasDeadLine) {
+				return timer.timesUp();
+			} else {
+				return false;
 			}
 		}
 	}
