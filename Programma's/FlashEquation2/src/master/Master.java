@@ -68,10 +68,10 @@ public abstract class Master {
 				if(timer.timesUp()) {
 					return true;
 				} else {
-					return !evaluate.bufferSolutions.isEmpty();
+					return !Evaluate.bufferSolutions.isEmpty();
 				}
 			} else {
-				return !evaluate.bufferSolutions.isEmpty();
+				return !Evaluate.bufferSolutions.isEmpty();
 			}
 		} else {
 			if(hasDeadLine) {
