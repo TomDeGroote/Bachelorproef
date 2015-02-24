@@ -199,15 +199,19 @@ public class RandomGenerator {
 		// create number of times a weight will be needed
 		Integer[] weightsNeeded = new Integer[rn.nextInt(3)];
 		for(int i = 0; i < weightsNeeded.length; i++) {
-			weightsNeeded[i] = rn.nextInt(10);
+			weightsNeeded[i] = rn.nextInt(9)+1;
 		}
 		
 		// create the number of times a K will appear
-		int KsToCreate = length-2-weightsNeeded.length;
+		int KsToCreate = length-1-weightsNeeded.length;
 		Integer[] nrOfKAppearances = new Integer[nrOfKs];
-		for(int i = 0; i < nrOfKs; i++) {
-			nrOfKAppearances[i] = rn.nextInt(((KsToCreate)+1));
+		for(int i = 0; i < nrOfKs-1; i++) {
+			int rand = rn.nextInt(KsToCreate-1)+1;
+			nrOfKAppearances[i] = rand;
+			KsToCreate -= rand;
 		}
+		nrOfKAppearances[nrOfKAppearances.length-1] = KsToCreate;
+		
 		
 		// create the Ks
 		Integer[] Ks = new Integer[nrOfKs];
@@ -222,8 +226,8 @@ public class RandomGenerator {
 		for(int i = 0; i < weightsNeeded.length; i++) {
 			randomSelect.add(i);
 		}
-		for(int i = weightsNeeded.length; i < Ks.length + weightsNeeded.length - 1; i++) {
-			for(int j = 0; j < nrOfKAppearances[i]; j++) {
+		for(int i = weightsNeeded.length; i < Ks.length + weightsNeeded.length; i++) {
+			for(int j = 0; j < nrOfKAppearances[i-weightsNeeded.length]; j++) {
 				randomSelect.add(i);
 			}
 		}	
@@ -232,10 +236,10 @@ public class RandomGenerator {
 		// generate the eqauation
 		List<Symbol> symbols = new ArrayList<Symbol>();
 		for(int i : randomSelect) {
-			if(i > 0 && i < weightsNeeded.length) {
+			if(i >= 0 && i < weightsNeeded.length) {
 				symbols.add(new Terminal("C"+i, (double) weightsNeeded[i])); 
 			} else {
-				int j = i - weightsNeeded.length + 1;
+				int j = i - weightsNeeded.length;
 				symbols.add(new Terminal("K"+j, (double) Ks[j])); 
 			}
 			int randomOperand = rn.nextInt((Grammar.getPossibleOperands().size()));
@@ -245,9 +249,11 @@ public class RandomGenerator {
 		
 		// the resulting random equation
 		Equation eq = new Equation(symbols);
-		result.get(0).add(ObjectEvaluate.evaluateTerminalEquation(eq));
+		double goal = ObjectEvaluate.evaluateTerminalEquation(eq);
+		result.get(0).add(goal);
 		
 		lastGeneratedEquation = eq;
+		lastGeneratedGoal = goal;
 		
 		// Generating the other equations
 		for(int i = 1; i < nrOfExamples; i++) {
@@ -259,13 +265,14 @@ public class RandomGenerator {
 				} else {
 					if(alreadyRandomized.containsKey(((Terminal) s).toString())) {
 						nextSymbols.add(new Terminal(((Terminal) s).toString(), alreadyRandomized.get(((Terminal) s).toString())));
-						result.get(i).add(alreadyRandomized.get(((Terminal) s).toString()));
 					} else {
 						String name = ((Terminal) s).toString();
 						double value = (double) rn.nextInt((max - min) + 1) + min;
 						alreadyRandomized.put(name, value);
 						nextSymbols.add(new Terminal(name, value));
-						result.get(i).add(value);
+						if(name.substring(0, 1).equals("K")) {
+							result.get(i).add(value);
+						}
 					}		
 				}
 			}
