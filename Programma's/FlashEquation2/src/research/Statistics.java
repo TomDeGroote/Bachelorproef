@@ -20,12 +20,13 @@ import master.tuple.TupleWeightsMaster;
 
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
+import tree.Grammar;
 import tree.Tree;
 
 public class Statistics {
 
 	// Deadline parameters
-	private static final int DEADLINE = 1000;	
+	private static final int DEADLINE = 10000;	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
@@ -35,9 +36,9 @@ public class Statistics {
 	private static final boolean printRandom = true;
 	
 	// Random Parameters
-	private static final int nrOfExamples = 5;
+	private static final int nrOfExamples = 1;
 	private static final int minRange = 0;
-	private static final int maxRange = 1000;
+	private static final int maxRange = 100;
 
 
 	// inputs
@@ -47,19 +48,146 @@ public class Statistics {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		inputP = new Input(Tree.FILENAME_P);
 		inputNP = new Input(Tree.FILENAME_NP);
-		runPvsNP();
+		//runPvsNP();
+		runWeightsvsNoWeights();
 		System.out.println("Done!");
 	}
 	
 	/**
-	 * TODO
+	 * Runs weights versus no weights method
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static void runWeightsvsNoWeights() throws FileNotFoundException, IOException {
+		int numberOfIterations = 3;
+		int length = 5;
+		boolean printStatus = true;
+		
+		// Define all Four
+		Object[][] allFourTable = new Object[numberOfIterations*nrOfExamples][(int) (length+1)];
+			
+		List<Object[][]> allFour = noVsWeights(numberOfIterations, printStatus, length);
+		
+		// Put only number of results in All results
+		Object[][] tempNoWeights = allFour.get(0);
+		for(int j = 0; j < tempNoWeights.length; j++) {
+			allFourTable[j][0] = tempNoWeights[j][1];
+		}
+		
+		// Put only number of results in All results
+		Object[][] tempPrime = allFour.get(1);
+		for(int j = 0; j < tempPrime.length; j++) {
+			allFourTable[j][1] = tempPrime[j][1];
+		}
+					
+		// Put only number of results in All results
+		Object[][] tempFive = allFour.get(2);
+		for(int j = 0; j < tempFive.length; j++) {
+			allFourTable[j][2] = tempFive[j][1];
+		}
+					
+		// Put only number of results in All results
+		Object[][] tempTen = allFour.get(3);
+		for(int j = 0; j < tempTen.length; j++) {
+			allFourTable[j][3] = tempTen[j][1];
+		}	
+		
+		
+		// prints the random numbers
+		System.out.println("Random: ");
+		Object[][] r = allFour.get(4);
+		for(Object[] row : r) {
+			for(Object elem : row) {
+				System.out.print(elem + " ");
+			}
+			System.out.println();
+		}
+
+		String[] headers = new String[] {"noWeights", "primeWeights", "fiveWeights", "tenWeights"};
+		// Write All Four
+		writeToCSV(allFourTable, "allFour", headers);	
+	}
+	
+	/**
+	 * 
+	 * @param numberOfIterations
+	 * @param write
+	 * @param printStatus
+	 * @return
+	 * 		List: 	0: statisticsNo
+	 * 				1: statisticsPrime
+	 * 				2: statisticsFive
+	 * 				3: statisticsTen
+	 * 				4: random
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static List<Object[][]> noVsWeights(double numberOfIterations, boolean printStatus, int length) throws FileNotFoundException, IOException {
+		// runStatistics variables
+		boolean useRealRandom = true;
+		boolean stopAfterOne = false;
+		
+		// needed for excel document
+		final Object[][] statisticsNo = new Object[(int) (numberOfIterations*nrOfExamples)][3];
+		final Object[][] statisticsPrime = new Object[(int) (numberOfIterations*nrOfExamples)][3];
+		final Object[][] statisticsFive = new Object[(int) numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsTen = new Object[(int) numberOfIterations*nrOfExamples][3];
+		final Object[][] random = new Object[(int) numberOfIterations*nrOfExamples][length];
+
+		// Run statistics for ObjectAll, Tuple for P and NP
+		for(double i = 0; i < numberOfIterations; i++) {
+			// print progress ba
+			if(printStatus) {
+				System.out.print("Running: [");
+				for(int j = 0; j < i; j++) {
+					System.out.print("#");
+				}
+				for(double j = i; j < numberOfIterations; j++) {
+					System.out.print(" ");
+				}
+				System.out.print("] " + (i/numberOfIterations*100) + "%\r");
+			}
+			
+			// Run experiments
+			List<List<Double>> numbers = genetereNumbers(useRealRandom, length, nrOfExamples, minRange, maxRange);
+			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsNo, (int) i, stopAfterOne);
+			Grammar.setWeights(new Double[] {1.0, 2.0}); 			// Set grammar weights
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsPrime, (int) i, stopAfterOne);
+			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsFive, (int) i, stopAfterOne);
+			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
+			getRandomString(useRealRandom, numbers, false, random, (int) i*nrOfExamples);
+		}
+		
+		// Prints the 100% end status
+		if(printStatus) {
+			// print the 100% bar
+			System.out.print("Running: [");
+			for(int j = 0; j < numberOfIterations; j++) {
+				System.out.print("#");
+			}
+			System.out.print("] 100.0%\r");
+		}
+		
+		List<Object[][]> result = new ArrayList<Object[][]>();
+		result.add(statisticsNo);
+		result.add(statisticsPrime);
+		result.add(statisticsFive);
+		result.add(statisticsTen);
+		result.add(random);
+		return result;
+	}
+	
+	/**
+	 * Executes the P vs NP experiment for a number of times and writes away the data as a CSV 
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
 	private static void runPvsNP() throws FileNotFoundException, IOException {
 		int numberOfIterations = 100;
 		double startLength = 2;
-		double stopLength = 6;
+		double stopLength = 11;
 		boolean write = false;
 		boolean printStatus = true;
 		
@@ -141,8 +269,8 @@ public class Statistics {
 	 */
 	private static List<Object[][]> PvsNP(double numberOfIterations, boolean write, boolean printStatus, int length) throws FileNotFoundException, IOException {
 		// runStatistics variables
-		boolean useRealRandom = false;
-		boolean stopAfterOne = true;
+		boolean useRealRandom = true;
+		boolean stopAfterOne = false;
 		
 		// needed for excel document
 		final Object[][] statisticsAll_P = new Object[(int) (numberOfIterations*nrOfExamples)][3];

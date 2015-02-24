@@ -14,7 +14,7 @@ public class Grammar {
 	private static List<Operand> possibleOperands = new ArrayList<Operand>();
 	private static final String nonTerminalRepresentation = "E";
 	private static final boolean USE_MAX_MIN = false;
-
+	private static List<Terminal> weights = null;
 	/**
 	 * This method will add all possible operands to operandPossiblities
 	 */
@@ -31,15 +31,33 @@ public class Grammar {
 	}
 
 	/**
-	 * @return The weights to be used (currently 1 tem 9)
+	 * @return The weights to be used
 	 */
 	public static List<Terminal> getWeights() {
-		List<Terminal> weights = new ArrayList<Terminal>();
-		for (int i = 0; i < 9; i++) {
-			weights.add(new Terminal("W" + (i + 1), (double) i + 1));
+		if(weights == null) {
+			weights = new ArrayList<Terminal>();
+			for (int i = 0; i < 9; i++) {
+				weights.add(new Terminal("W" + (i + 1), (double) i + 1));
+			}
+			weights.add(new Terminal("N1", -1.0));
 		}
-		weights.add(new Terminal("N1", -1.0));
 		return weights;
+	}
+	
+	/**
+	 * Sets the weights of Grammar
+	 * @param weights
+	 */
+	public static void setWeights(Double[] weights) {
+		List<Terminal> weightsTerminal = new ArrayList<Terminal>();
+		for(double w : weights) {
+			if(w >= 0) {
+				weightsTerminal.add(new Terminal("W" + w, w));
+			} else {
+				weightsTerminal.add(new Terminal("N" + Math.abs(w), w));
+			}
+		}
+		Grammar.weights = weightsTerminal;
 	}
 
 	/**
