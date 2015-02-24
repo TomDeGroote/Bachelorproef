@@ -1,6 +1,8 @@
 package research;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -177,6 +179,101 @@ public class RandomGenerator {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param nrOfKs
+	 * @param length
+	 * 			Should be at least the nrOfKs + 2
+	 * @param nrOfExamples
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static List<List<Double>> generateComplexRandom(int nrOfKs, int length, int nrOfExamples, int min, int max) {
+		List<List<Double>> result = new ArrayList<List<Double>>();
+		for(int i = 0; i < nrOfExamples; i++) {
+			result.add(new ArrayList<Double>());
+		}
+		Random rn = new Random();
+		
+		// create number of times a weight will be needed
+		Integer[] weightsNeeded = new Integer[rn.nextInt(3)];
+		for(int i = 0; i < weightsNeeded.length; i++) {
+			weightsNeeded[i] = rn.nextInt(10);
+		}
+		
+		// create the number of times a K will appear
+		int KsToCreate = length-2-weightsNeeded.length;
+		Integer[] nrOfKAppearances = new Integer[nrOfKs];
+		for(int i = 0; i < nrOfKs; i++) {
+			nrOfKAppearances[i] = rn.nextInt(((KsToCreate)+1));
+		}
+		
+		// create the Ks
+		Integer[] Ks = new Integer[nrOfKs];
+		for(int i = 0; i < Ks.length; i++) {
+			Ks[i] = rn.nextInt((max - min) + 1) + min;
+			// add the Ks to what will be send back
+			result.get(0).add((double) Ks[i]);
+		}
+		
+		// the random order of things
+		List<Integer> randomSelect = new ArrayList<Integer>();
+		for(int i = 0; i < weightsNeeded.length; i++) {
+			randomSelect.add(i);
+		}
+		for(int i = weightsNeeded.length; i < Ks.length + weightsNeeded.length - 1; i++) {
+			for(int j = 0; j < nrOfKAppearances[i]; j++) {
+				randomSelect.add(i);
+			}
+		}	
+		Collections.shuffle(randomSelect);
+		
+		// generate the eqauation
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		for(int i : randomSelect) {
+			if(i > 0 && i < weightsNeeded.length) {
+				symbols.add(new Terminal("C"+i, (double) weightsNeeded[i])); 
+			} else {
+				int j = i - weightsNeeded.length + 1;
+				symbols.add(new Terminal("K"+j, (double) Ks[j])); 
+			}
+			int randomOperand = rn.nextInt((Grammar.getPossibleOperands().size()));
+			symbols.add(Grammar.getPossibleOperands().get(randomOperand));
+		}
+		symbols.remove(symbols.size()-1);
+		
+		// the resulting random equation
+		Equation eq = new Equation(symbols);
+		result.get(0).add(ObjectEvaluate.evaluateTerminalEquation(eq));
+		
+		lastGeneratedEquation = eq;
+		
+		// Generating the other equations
+		for(int i = 1; i < nrOfExamples; i++) {
+			HashMap<String, Double> alreadyRandomized = new HashMap<String, Double>();
+			List<Symbol> nextSymbols = new ArrayList<Symbol>(); 
+			for(Symbol s : eq.getListOfSymbols()) {
+				if(s.isOperand()) {
+					nextSymbols.add(s);
+				} else {
+					if(alreadyRandomized.containsKey(((Terminal) s).toString())) {
+						nextSymbols.add(new Terminal(((Terminal) s).toString(), alreadyRandomized.get(((Terminal) s).toString())));
+						result.get(i).add(alreadyRandomized.get(((Terminal) s).toString()));
+					} else {
+						String name = ((Terminal) s).toString();
+						double value = (double) rn.nextInt((max - min) + 1) + min;
+						alreadyRandomized.put(name, value);
+						nextSymbols.add(new Terminal(name, value));
+						result.get(i).add(value);
+					}		
+				}
+			}
+			result.get(i).add(ObjectEvaluate.evaluateTerminalEquation(new Equation(nextSymbols)));
+		}
+		
+		return result;
+	}
 	/**
 	 * @return
 	 * 			The last random generated equation

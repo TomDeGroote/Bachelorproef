@@ -23,6 +23,8 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import tree.Grammar;
 import tree.Tree;
 
+// TODO error
+
 public class Statistics {
 
 	// Deadline parameters
@@ -46,10 +48,19 @@ public class Statistics {
 	private static Input inputNP = null;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		inputP = new Input(Tree.FILENAME_P);
-		inputNP = new Input(Tree.FILENAME_NP);
+//		inputP = new Input(Tree.FILENAME_P);
+//		inputNP = new Input(Tree.FILENAME_NP);
 		//runPvsNP();
-		runWeightsvsNoWeights();
+//		runWeightsvsNoWeights();
+		
+		List<List<Double>> r = RandomGenerator.generateComplexRandom(2, 6, 3, 0, 100);
+		System.out.println("Last generated: " + RandomGenerator.getLastGeneratedEquation());
+		for(List<Double> row : r) {
+			for (Double elem : row) {
+				System.out.print(elem + " ");
+			}
+			System.out.println();
+		}
 		System.out.println("Done!");
 	}
 	
