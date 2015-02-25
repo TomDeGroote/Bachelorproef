@@ -28,7 +28,7 @@ import tree.Tree;
 public class Statistics {
 
 	// Deadline parameters
-	private static final int DEADLINE = 10000;	
+	private static final int DEADLINE = -1;	
 	
 	// Print Parameters
 	private static final boolean printSizeAll = true;
@@ -38,7 +38,7 @@ public class Statistics {
 	private static final boolean printRandom = true;
 	
 	// Random Parameters
-	private static final int nrOfExamples = 1;
+	private static final int nrOfExamples = 3;
 	private static final int minRange = 0;
 	private static final int maxRange = 100;
 
@@ -48,19 +48,19 @@ public class Statistics {
 	private static Input inputNP = null;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-//		inputP = new Input(Tree.FILENAME_P);
-//		inputNP = new Input(Tree.FILENAME_NP);
+		inputP = new Input(Tree.FILENAME_P);
+		inputNP = new Input(Tree.FILENAME_NP);
 		//runPvsNP();
-//		runWeightsvsNoWeights();
+		runWeightsvsNoWeights();
 		
-		List<List<Double>> r = RandomGenerator.generateComplexRandom(2, 6, 3, 0, 100);
-		System.out.println("Last generated: " + RandomGenerator.getLastGeneratedEquation());
-		for(List<Double> row : r) {
-			for (Double elem : row) {
-				System.out.print(elem + " ");
-			}
-			System.out.println();
-		}
+//		List<List<Double>> r = RandomGenerator.generateComplexRandom(2, 6, 3, 0, 100);
+//		System.out.println("Last generated: " + RandomGenerator.getLastGeneratedEquation());
+//		for(List<Double> row : r) {
+//			for (Double elem : row) {
+//				System.out.print(elem + " ");
+//			}
+//			System.out.println();
+//		}
 		System.out.println("Done!");
 	}
 	
@@ -135,7 +135,7 @@ public class Statistics {
 	 */
 	private static List<Object[][]> noVsWeights(double numberOfIterations, boolean printStatus, int length) throws FileNotFoundException, IOException {
 		// runStatistics variables
-		boolean useRealRandom = true;
+		boolean useRealRandom = false;
 		boolean stopAfterOne = false;
 		
 		// needed for excel document
@@ -429,7 +429,7 @@ public class Statistics {
 			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {
-			numbers = RandomGenerator.generateCertainAllK(length, nrOfExamples, minimum, maximum); // Real Random
+			numbers = RandomGenerator.generateComplexRandom(length-3, length, nrOfExamples, minimum, maximum); // Real Random
 		}
 		return numbers;
 	}
