@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
  */
 public class Main {
 
-	private static final int NROFLEVELS = 4;
+	private static final int NROFLEVELS = 6;
 	private static final boolean REMOVEPRUNED = true;
 	private static final boolean EXECUTE_STATISTICS = false;
 	/**

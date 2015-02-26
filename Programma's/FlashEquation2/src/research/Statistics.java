@@ -166,8 +166,8 @@ public class Statistics {
 			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsPrime, (int) i, stopAfterOne);
 			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
 			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsFive, (int) i, stopAfterOne);
-			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
+//			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
+//			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
 			getRandomString(useRealRandom, numbers, false, random, (int) i*nrOfExamples);
 		}
 		
