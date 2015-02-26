@@ -206,9 +206,13 @@ public class RandomGenerator {
 		int KsToCreate = length-1-weightsNeeded.length;
 		Integer[] nrOfKAppearances = new Integer[nrOfKs];
 		for(int i = 0; i < nrOfKs-1; i++) {
-			int rand = rn.nextInt(KsToCreate-1)+1;
-			nrOfKAppearances[i] = rand;
-			KsToCreate -= rand;
+			if(KsToCreate > 1) {
+				int rand = rn.nextInt(KsToCreate-1)+1;
+				nrOfKAppearances[i] = rand;
+				KsToCreate -= rand;
+			} else {
+				nrOfKAppearances[i] = 0;
+			}
 		}
 		nrOfKAppearances[nrOfKAppearances.length-1] = KsToCreate;
 		
@@ -257,6 +261,14 @@ public class RandomGenerator {
 		
 		// Generating the other equations
 		for(int i = 1; i < nrOfExamples; i++) {
+			// create the Ks
+			Integer[] NextKs = new Integer[nrOfKs];
+			for(int j = 0; j < NextKs.length; j++) {
+				NextKs[j] = rn.nextInt((max - min) + 1) + min;
+				// add the Ks to what will be send back
+				result.get(i).add((double) NextKs[j]);
+			}
+			
 			HashMap<String, Double> alreadyRandomized = new HashMap<String, Double>();
 			List<Symbol> nextSymbols = new ArrayList<Symbol>(); 
 			for(Symbol s : eq.getListOfSymbols()) {
@@ -267,12 +279,14 @@ public class RandomGenerator {
 						nextSymbols.add(new Terminal(((Terminal) s).toString(), alreadyRandomized.get(((Terminal) s).toString())));
 					} else {
 						String name = ((Terminal) s).toString();
-						double value = (double) rn.nextInt((max - min) + 1) + min;
+						double value;
+						if(name.substring(0, 1).equals("K")) {
+							value = NextKs[Integer.parseInt(name.substring(1))];
+						} else {
+							value = ((Terminal) s).getValue();
+						}
 						alreadyRandomized.put(name, value);
 						nextSymbols.add(new Terminal(name, value));
-						if(name.substring(0, 1).equals("K")) {
-							result.get(i).add(value);
-						}
 					}		
 				}
 			}

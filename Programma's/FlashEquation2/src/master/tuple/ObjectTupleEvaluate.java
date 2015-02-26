@@ -416,11 +416,9 @@ public class ObjectTupleEvaluate extends Evaluate {
 												Grammar.getCorrespondingOperand(firstS),
 												examples.get(i)[number])));
 					} else {
-						int number = (int) Double.parseDouble(old.toString()
-								.substring(1)); // TODO only allows terminals of
-												// length 1 in name (K, E, ...)
-						newSymbols.add(new Terminal(old.toString(), examples
-								.get(i)[number]));
+						int number = (int) Double.parseDouble(old.toString().substring(1)); // TODO only allows terminals of
+																							// length 1 in name (K, E, ...)
+						newSymbols.add(new Terminal(old.toString(), examples.get(i)[number]));
 					}
 				}
 			}

@@ -50,8 +50,18 @@ public class Statistics {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		inputP = new Input(Tree.FILENAME_P);
 		inputNP = new Input(Tree.FILENAME_NP);
+		// In case of Error
 		//runPvsNP();
-		runWeightsvsNoWeights();
+		long time = System.currentTimeMillis();
+		runWeightsvsNoWeights(); // put on true to recover data
+		long x = (System.currentTimeMillis() - time) / 1000;
+		int seconds = (int) (x % 60);
+		x = x/60;
+		int minutes = (int) (x % 60);
+		x = x/60;
+		int hours = (int) (x % 24);
+		System.out.println("Time ms: " + time);
+		System.out.println("Time: " + hours + "h" + minutes + "min" + seconds + "s");
 		
 //		List<List<Double>> r = RandomGenerator.generateComplexRandom(2, 6, 3, 0, 100);
 //		System.out.println("Last generated: " + RandomGenerator.getLastGeneratedEquation());
@@ -70,15 +80,23 @@ public class Statistics {
 	 * @throws IOException
 	 */
 	private static void runWeightsvsNoWeights() throws FileNotFoundException, IOException {
-		int numberOfIterations = 3;
-		int length = 5;
+		int numberOfIterations = 100;
+		int length = 5; // length with the solution included
 		boolean printStatus = true;
 		
 		// Define all Four
 		Object[][] allFourTable = new Object[numberOfIterations*nrOfExamples][(int) (length+1)];
 			
-		List<Object[][]> allFour = noVsWeights(numberOfIterations, printStatus, length);
-		
+		List<Object[][]> allFour = noVsWeights(numberOfIterations, printStatus, length);	
+		writeData(allFourTable, allFour);
+	}
+
+	/**
+	 * Writes data to corresponding CSV file
+	 * @param allFourTable
+	 * @param allFour
+	 */
+	private static void writeData(Object[][] allFourTable, List<Object[][]> allFour) {
 		// Put only number of results in All results
 		Object[][] tempNoWeights = allFour.get(0);
 		for(int j = 0; j < tempNoWeights.length; j++) {
@@ -114,9 +132,9 @@ public class Statistics {
 			System.out.println();
 		}
 
-		String[] headers = new String[] {"noWeights", "primeWeights", "fiveWeights", "tenWeights"};
+		String[] headers = new String[] {"noWeights", "primeWeights", "twoWeights", "tenWeights"};
 		// Write All Four
-		writeToCSV(allFourTable, "allFour", headers);	
+		writeToCSV(allFourTable, "allFour", headers);
 	}
 	
 	/**
@@ -141,13 +159,13 @@ public class Statistics {
 		// needed for excel document
 		final Object[][] statisticsNo = new Object[(int) (numberOfIterations*nrOfExamples)][3];
 		final Object[][] statisticsPrime = new Object[(int) (numberOfIterations*nrOfExamples)][3];
-		final Object[][] statisticsFive = new Object[(int) numberOfIterations*nrOfExamples][3];
+		final Object[][] statisticsTwo = new Object[(int) numberOfIterations*nrOfExamples][3];
 		final Object[][] statisticsTen = new Object[(int) numberOfIterations*nrOfExamples][3];
 		final Object[][] random = new Object[(int) numberOfIterations*nrOfExamples][length];
 
 		// Run statistics for ObjectAll, Tuple for P and NP
 		for(double i = 0; i < numberOfIterations; i++) {
-			// print progress ba
+			// print progress bar
 			if(printStatus) {
 				System.out.print("Running: [");
 				for(int j = 0; j < i; j++) {
@@ -163,11 +181,11 @@ public class Statistics {
 			List<List<Double>> numbers = genetereNumbers(useRealRandom, length, nrOfExamples, minRange, maxRange);
 			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsNo, (int) i, stopAfterOne);
 			Grammar.setWeights(new Double[] {1.0, 2.0}); 			// Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsPrime, (int) i, stopAfterOne);
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTwo, (int) i, stopAfterOne);
 			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsFive, (int) i, stopAfterOne);
-//			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
-//			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsPrime, (int) i, stopAfterOne);
+			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
+			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
 			getRandomString(useRealRandom, numbers, false, random, (int) i*nrOfExamples);
 		}
 		
@@ -184,7 +202,7 @@ public class Statistics {
 		List<Object[][]> result = new ArrayList<Object[][]>();
 		result.add(statisticsNo);
 		result.add(statisticsPrime);
-		result.add(statisticsFive);
+		result.add(statisticsTwo);
 		result.add(statisticsTen);
 		result.add(random);
 		return result;
@@ -426,10 +444,11 @@ public class Statistics {
 		List<List<Double>> numbers = null;
 		if(useRealRandom) {
 			numbers = RandomGenerator.generateRealRandom(length, nrOfExamples, minimum, maximum); // Real Random
-			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
+			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation()); // TODO
 			System.out.println();
 		} else {
 			numbers = RandomGenerator.generateComplexRandom(length-2, length, nrOfExamples, minimum, maximum); // Real Random
+			System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
 		}
 		return numbers;
 	}
@@ -473,10 +492,14 @@ public class Statistics {
 	 * @param iterator 
 	 */
 	private static void getRandomString(boolean useRealRandom, List<List<Double>> numbers, boolean print, Object[][] random, int iterator) {
-		for(int i = 0 ; i < numbers.get(0).size(); i++) {
-			for(int j = 0; j < nrOfExamples; j++) {
-				random[iterator+j][i] = numbers.get(j).get(i);
+		try {
+			for(int i = 0 ; i < numbers.get(0).size(); i++) {
+				for(int j = 0; j < nrOfExamples; j++) {
+					random[iterator+j][i] = numbers.get(j).get(i);
+				}
 			}
+		} catch(Exception e) {
+			System.out.println("Error: " + numbers.size() + " " + numbers.get(0).size() + " " + random.length + " " + random[0].length);
 		}
 	}
 	
