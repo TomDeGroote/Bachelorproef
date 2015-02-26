@@ -429,7 +429,7 @@ public class Statistics {
 			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {
-			numbers = RandomGenerator.generateComplexRandom(length-3, length, nrOfExamples, minimum, maximum); // Real Random
+			numbers = RandomGenerator.generateComplexRandom(length-2, length, nrOfExamples, minimum, maximum); // Real Random
 		}
 		return numbers;
 	}

@@ -183,7 +183,7 @@ public class RandomGenerator {
 	 * 
 	 * @param nrOfKs
 	 * @param length
-	 * 			Should be at least the nrOfKs + 2
+	 * 			Should be at least the nrOfKs + 1
 	 * @param nrOfExamples
 	 * @param min
 	 * @param max
@@ -197,7 +197,7 @@ public class RandomGenerator {
 		Random rn = new Random();
 		
 		// create number of times a weight will be needed
-		Integer[] weightsNeeded = new Integer[rn.nextInt(3)];
+		Integer[] weightsNeeded = new Integer[rn.nextInt(2)];
 		for(int i = 0; i < weightsNeeded.length; i++) {
 			weightsNeeded[i] = rn.nextInt(9)+1;
 		}
