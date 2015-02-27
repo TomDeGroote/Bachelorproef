@@ -93,7 +93,7 @@ public class ObjectEvaluateAllSolutionsTest {
 	public void testEvaluate() {
 		System.out.println("Giving example 1");
 		evaluate.addExample(Input.covertToHashMap(KsExample1));
-		evaluate.evaluate();
+		evaluate.evaluate(new ObjectMaster());
 		for(Equation eq : evaluate.getBufferSolutions()) {
 			System.out.println(eq.toString());
 		}

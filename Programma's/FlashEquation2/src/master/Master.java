@@ -7,16 +7,16 @@ import tree.Equation;
 public abstract class Master {
 
 	
-	protected static Timer timer = new Timer(Long.MAX_VALUE);	
+	protected Timer timer = new Timer(Long.MAX_VALUE);	
 	
 	protected static final String NAME_GOAL = "Goal";
 	
-	protected static Evaluate evaluate;
+	protected Evaluate evaluate;
 	
-	public static List<Equation> solutionSpace = null;
+	public List<Equation> solutionSpace = null;
 	
-	protected static boolean hasDeadLine = false;		
-	protected static boolean stopAfterOne = false;	
+	protected boolean hasDeadLine = false;		
+	protected boolean stopAfterOne = false;	
 
 	/**
 	 * @param deadline
@@ -62,16 +62,16 @@ public abstract class Master {
 	 * 
 	 * 		TODO aangepast voor jar support
 	 */
-	public static boolean timesUp() {
+	public boolean timesUp(Evaluate evaluate) {
 		if(stopAfterOne) {
 			if(hasDeadLine) {
 				if(timer.timesUp()) {
 					return true;
 				} else {
-					return !Evaluate.bufferSolutions.isEmpty();
+					return !evaluate.bufferSolutions.isEmpty();
 				}
 			} else {
-				return !Evaluate.bufferSolutions.isEmpty();
+				return !evaluate.bufferSolutions.isEmpty();
 			}
 		} else {
 			if(hasDeadLine) {

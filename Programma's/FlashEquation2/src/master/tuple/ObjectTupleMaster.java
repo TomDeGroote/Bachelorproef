@@ -13,7 +13,7 @@ import tree.Tree;
 
 public class ObjectTupleMaster extends Master {
 	
-	public static Double[] example;
+	public Double[] example;
 	
 	/**
 	 * @param deadline
@@ -32,7 +32,7 @@ public class ObjectTupleMaster extends Master {
 		
 		// set a possible deadline
 		if(deadline > 0) {
-			ObjectTupleMaster.hasDeadLine = true;
+			this.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
 		
@@ -42,7 +42,7 @@ public class ObjectTupleMaster extends Master {
 		// generate the evaluate class
 		evaluate = new ObjectTupleEvaluate(tree);
 
-		ObjectTupleMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		this.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		
 		if(numbers ==  null) {
 			return run(input.getPrimitiveList());
@@ -56,7 +56,7 @@ public class ObjectTupleMaster extends Master {
 	 * 		Returns the current best known solution in String format
 	 * 		Or "Empty" if there is no solution yet
 	 */
-	private static String run(List<Double[]> list) {
+	private String run(List<Double[]> list) {
 //		int i = 1; // counter to say how many examples have passed
 		for(Double[] Ks : list) {
 			// remember the example
@@ -66,7 +66,7 @@ public class ObjectTupleMaster extends Master {
 			evaluate.addExample(example);
 			
 			// start timer
-			Master.timer.start();
+			this.timer.start();
 			
 			// Check solution space for possible solution
 			checkSolutionSpace(Ks);
@@ -77,12 +77,12 @@ public class ObjectTupleMaster extends Master {
 				// If the solution space is empty start searching for a new equation
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
-					solutionSpace.addAll(evaluate.evaluate());
+					solutionSpace.addAll(evaluate.evaluate(this));
 				}
 			} else {				
 				// start to evaluate
 				@SuppressWarnings("unchecked")
-				List<Equation> solutions = (List<Equation>) Master.evaluate.evaluate();
+				List<Equation> solutions = (List<Equation>) this.evaluate.evaluate(this);
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
@@ -103,7 +103,7 @@ public class ObjectTupleMaster extends Master {
 	 * 		The input 
 	 * 		Should be of form (but as hashmap): {(K0, 3), (K1, 4), ..., (KN-1, 2), (Goal, 5)}
 	 */
-	public static void checkSolutionSpace(Double[] ks) {
+	public void checkSolutionSpace(Double[] ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
 			if(((ObjectTupleEvaluate) evaluate).checkAgainstOtherExamples(eq)) {

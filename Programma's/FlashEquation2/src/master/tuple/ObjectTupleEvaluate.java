@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import master.Evaluate;
+import master.Master;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;
@@ -42,7 +43,7 @@ public class ObjectTupleEvaluate extends Evaluate {
 	 *            List of K's, last element in the list is the desired solution
 	 * @return The buffer with solutions
 	 */
-	public List<Equation> evaluate() {
+	public List<Equation> evaluate(Master master) {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		// before first ; no variable is needed because levelCount is already
@@ -55,7 +56,7 @@ public class ObjectTupleEvaluate extends Evaluate {
 			// for each over every equation on the current level
 			for (; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if (!ObjectTupleMaster.timesUp()) {
+				if (!master.timesUp(this)) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to
 					// alreadySolved

@@ -8,9 +8,9 @@ import tree.Equation;
 
 public abstract class Evaluate {
 
-	public static List<Equation> bufferSolutions = new ArrayList<Equation>();
+	public List<Equation> bufferSolutions = new ArrayList<Equation>();
 	
-	public abstract Collection<? extends Equation> evaluate();
+	public abstract Collection<? extends Equation> evaluate(Master master);
 	
 	/**
 	 * Adds an example to the current example list

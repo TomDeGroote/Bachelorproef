@@ -13,7 +13,7 @@ import tree.Tree;
 
 public class TupleWeightsMaster extends Master {
 	
-	public static Double[] example;
+	public Double[] example;
 
 	
 	/**
@@ -28,20 +28,21 @@ public class TupleWeightsMaster extends Master {
 	 * 			The formula in string form if a formula was found
 	 */
 	@Override
-	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input) {		
+	public String run(int deadline, boolean stopAfterOne, List<List<Double>> numbers, Input input) {
+		solutionSpace = new ArrayList<Equation>();
+
 		// set a possible deadline
 		if(deadline > 0) {
-			TupleWeightsMaster.hasDeadLine = true;
+			this.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
-		
 		// read the tree generated earlier
 		Tree tree = input.getTree();
 		
 		// generate the evaluate class
 		evaluate = new TupleWeightsEvaluate(tree);
 		
-		TupleWeightsMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		this.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		
 		if(numbers ==  null) {
 			return run(input.getPrimitiveList());
@@ -55,7 +56,7 @@ public class TupleWeightsMaster extends Master {
 	 * 		Returns the current best known solution in String format
 	 * 		Or "Empty" if there is no solution yet
 	 */
-	private static String run(List<Double[]> list) {
+	private String run(List<Double[]> list) {
 //		int i = 1; // counter to say how many examples have passed
 		for(Double[] Ks : list) {
 			// remember the example
@@ -76,12 +77,12 @@ public class TupleWeightsMaster extends Master {
 				// If the solution space is empty start searching for a new equation
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
-					solutionSpace.addAll(evaluate.evaluate());
+					solutionSpace.addAll(evaluate.evaluate(this));
 				}
 			} else {				
 				// start to evaluate
 				@SuppressWarnings("unchecked")
-				List<Equation> solutions = (List<Equation>) evaluate.evaluate();
+				List<Equation> solutions = (List<Equation>) evaluate.evaluate(this);
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
@@ -102,7 +103,7 @@ public class TupleWeightsMaster extends Master {
 	 * 		The input 
 	 * 		Should be of form (but as hashmap): {(K0, 3), (K1, 4), ..., (KN-1, 2), (Goal, 5)}
 	 */
-	public static void checkSolutionSpace(Double[] ks) {
+	public void checkSolutionSpace(Double[] ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
 			if(((TupleWeightsEvaluate) evaluate).checkAgainstOtherExamples(eq)) {

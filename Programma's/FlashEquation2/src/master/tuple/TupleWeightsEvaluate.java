@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import master.Evaluate;
+import master.Master;
 import tree.Equation;
 import tree.Grammar;
 import tree.Operand;
@@ -46,7 +47,7 @@ public class TupleWeightsEvaluate extends Evaluate {
 	 * @return
 	 * 		The buffer with solutions
 	 */
-	public List<Equation> evaluate() {
+	public List<Equation> evaluate(Master master) {
 		// empty the buffer containing solutions
 		bufferSolutions = new ArrayList<Equation>();
 		
@@ -58,7 +59,7 @@ public class TupleWeightsEvaluate extends Evaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!TupleWeightsMaster.timesUp()) {
+				if(!master.timesUp(this)) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					evaluateEquation(eq, 0, true); // check for first example
@@ -397,7 +398,11 @@ public class TupleWeightsEvaluate extends Evaluate {
 	 * 		False if not
 	 * 
 	 */
-	public boolean checkAgainstOtherExamples(Equation eq) {
+	public boolean checkAgainstOtherExamples(Equation eq) { // TODO
+		if(eq == null) {
+			System.out.println("check agains other, TPWE: " + eq); 
+			return false;
+		}
 		for(int i = 1; i < examples.size(); i++) {
 			List<Symbol> newSymbols = new ArrayList<Symbol>();
 			for(Symbol s : eq.getListOfSymbols()) {

@@ -17,7 +17,7 @@ import tree.Tree;
 
 public class ObjectMasterAllSolutions extends Master {
 
-	public static HashMap<String, Double> example;
+	public HashMap<String, Double> example;
 
 	/**
 	 * @param deadline
@@ -38,7 +38,7 @@ public class ObjectMasterAllSolutions extends Master {
 		solutionSpace = new ArrayList<Equation>();
 		// set a possible deadline
 		if(deadline > 0) {
-			ObjectMasterAllSolutions.hasDeadLine = true;
+			this.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
 		
@@ -48,7 +48,7 @@ public class ObjectMasterAllSolutions extends Master {
 		// generate the evaluate class
 		evaluate = new ObjectEvaluateAllSolutions(tree);
 
-		ObjectMasterAllSolutions.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		this.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		if(numbers ==  null) {
 			return run(input.getList());
 		} else {
@@ -63,7 +63,7 @@ public class ObjectMasterAllSolutions extends Master {
 	 * 
 	 * 		TODO aangepast voor jar
 	 */
-	private static String run(List<HashMap<String, Double>> numbers) {
+	private String run(List<HashMap<String, Double>> numbers) {
 		//		int i = 1; // counter to say how many examples have passed
 		for(HashMap<String, Double> Ks : numbers) {
 			// remember the example
@@ -82,12 +82,12 @@ public class ObjectMasterAllSolutions extends Master {
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
 					evaluate.addExample(Input.covertToHashMap(Ks));
-					solutionSpace.addAll(evaluate.evaluate());
+					solutionSpace.addAll(evaluate.evaluate(this));
 				}
 			} else {				
 				// start to evaluate
 				evaluate.addExample(Input.covertToHashMap(Ks));
-				List<Equation> toBeAdded = (List<Equation>) evaluate.evaluate();
+				List<Equation> toBeAdded = (List<Equation>) evaluate.evaluate(this);
 				solutionSpace.addAll(toBeAdded);
 
 				//				i++;
@@ -110,7 +110,7 @@ public class ObjectMasterAllSolutions extends Master {
 	 * 		The input 
 	 * 		Should be of form (but as hashmap): {(K0, 3), (K1, 4), ..., (KN-1, 2), (Goal, 5)}
 	 */
-	public static void checkSolutionSpace(HashMap<String, Double> Ks) {
+	public void checkSolutionSpace(HashMap<String, Double> Ks) {
 		List<Equation> newSolutionSpace = new ArrayList<Equation>();
 		for(Equation eq : solutionSpace) {
 			if(!timer.timesUp()){

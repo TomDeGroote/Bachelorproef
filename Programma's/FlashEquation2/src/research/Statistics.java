@@ -41,13 +41,16 @@ public class Statistics {
 	private static final int nrOfExamples = 3;
 	private static final int minRange = 0;
 	private static final int maxRange = 100;
+	
+	private static Statistics statistics = new Statistics();
+	private static Thread[] threads;
 
 
 	// inputs
 	private static Input inputP = null;
 	private static Input inputNP = null;
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
 		inputP = new Input(Tree.FILENAME_P);
 		inputNP = new Input(Tree.FILENAME_NP);
 		// In case of Error
@@ -78,9 +81,10 @@ public class Statistics {
 	 * Runs weights versus no weights method
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	private static void runWeightsvsNoWeights() throws FileNotFoundException, IOException {
-		int numberOfIterations = 100;
+	private static void runWeightsvsNoWeights() throws FileNotFoundException, IOException, InterruptedException {
+		int numberOfIterations = 3;
 		int length = 5; // length with the solution included
 		boolean printStatus = true;
 		
@@ -150,8 +154,9 @@ public class Statistics {
 	 * 				4: random
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	private static List<Object[][]> noVsWeights(double numberOfIterations, boolean printStatus, int length) throws FileNotFoundException, IOException {
+	private static List<Object[][]> noVsWeights(double numberOfIterations, boolean printStatus, int length) throws FileNotFoundException, IOException, InterruptedException {
 		// runStatistics variables
 		boolean useRealRandom = false;
 		boolean stopAfterOne = false;
@@ -164,40 +169,28 @@ public class Statistics {
 		final Object[][] random = new Object[(int) numberOfIterations*nrOfExamples][length];
 
 		// Run statistics for ObjectAll, Tuple for P and NP
+		List<List<List<Double>>> allRandom = new ArrayList<List<List<Double>>>();
 		for(double i = 0; i < numberOfIterations; i++) {
-			// print progress bar
-			if(printStatus) {
-				System.out.print("Running: [");
-				for(int j = 0; j < i; j++) {
-					System.out.print("#");
-				}
-				for(double j = i; j < numberOfIterations; j++) {
-					System.out.print(" ");
-				}
-				System.out.print("] " + (i/numberOfIterations*100) + "%\r");
-			}
-			
-			// Run experiments
+			// Create random numbers
 			List<List<Double>> numbers = genetereNumbers(useRealRandom, length, nrOfExamples, minRange, maxRange);
-			runStatistic(Runner.TUPLE, inputP, numbers, useRealRandom, statisticsNo, (int) i, stopAfterOne);
-			Grammar.setWeights(new Double[] {1.0, 2.0}); 			// Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTwo, (int) i, stopAfterOne);
-			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsPrime, (int) i, stopAfterOne);
-			Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
-			runStatistic(Runner.TUPLEWEIGHT, inputP, numbers, useRealRandom, statisticsTen, (int) i, stopAfterOne);
 			getRandomString(useRealRandom, numbers, false, random, (int) i*nrOfExamples);
+			allRandom.add(numbers);
 		}
 		
-		// Prints the 100% end status
-		if(printStatus) {
-			// print the 100% bar
-			System.out.print("Running: [");
-			for(int j = 0; j < numberOfIterations; j++) {
-				System.out.print("#");
-			}
-			System.out.print("] 100.0%\r");
-		}
+		// Run no weights
+		runThreads(Runner.TUPLE, numberOfIterations, useRealRandom, stopAfterOne, statisticsNo, allRandom, 1);	
+		
+		// Run two weights
+		Grammar.setWeights(new Double[] {1.0, 2.0}); 			// Set grammar weights
+		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsTwo, allRandom, 2);
+		
+		// Run prime weights
+		Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
+		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsPrime, allRandom, 3);
+		
+		// Run ten weights
+		Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
+		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsTen, allRandom, 4);
 		
 		List<Object[][]> result = new ArrayList<Object[][]>();
 		result.add(statisticsNo);
@@ -206,6 +199,39 @@ public class Statistics {
 		result.add(statisticsTen);
 		result.add(random);
 		return result;
+	}
+
+	/**
+	 * Runs the threads of a given
+	 * @param numberOfIterations
+	 * @param useRealRandom
+	 * @param stopAfterOne
+	 * @param statisticsNo
+	 * @param allRandom
+	 * @throws InterruptedException
+	 */
+	private static void runThreads(Runner runner, double numberOfIterations, boolean useRealRandom, boolean stopAfterOne, Object[][] statisticsNo, List<List<List<Double>>> allRandom, int experimentNr) throws InterruptedException {
+		if(experimentNr == 1) {
+			// print basis for status bar
+			System.out.print("0: [");
+			for(int i = 0; i < numberOfIterations; i++) {
+				System.out.print(" ");
+			}		
+			System.out.println("]");
+		}
+		
+		threads = new Thread[(int) numberOfIterations];
+		for(int i = 0; i < numberOfIterations; i++) {
+			runStatistic(runner, inputP, allRandom.get(i), useRealRandom, statisticsNo, (int) i, stopAfterOne);
+		}
+		
+		// wait for all of the above threads to finish
+		System.out.print(experimentNr + ": [");
+		for(int i = 0; i < threads.length; i++) {
+		  threads[i].join();
+		  System.out.print("#");
+		}
+		System.out.println("]");
 	}
 	
 	/**
@@ -310,7 +336,7 @@ public class Statistics {
 
 		// Run statistics for ObjectAll, Tuple for P and NP
 		for(double i = 0; i < numberOfIterations; i++) {
-			// print progress ba
+			// print progress bar
 			if(printStatus) {
 				System.out.print("Running: [");
 				for(int j = 0; j < i; j++) {
@@ -444,7 +470,7 @@ public class Statistics {
 		List<List<Double>> numbers = null;
 		if(useRealRandom) {
 			numbers = RandomGenerator.generateRealRandom(length, nrOfExamples, minimum, maximum); // Real Random
-			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation()); // TODO
+			System.out.println("***   To be found: " + RandomGenerator.getLastGeneratedEquation());
 			System.out.println();
 		} else {
 			numbers = RandomGenerator.generateComplexRandom(length-2, length, nrOfExamples, minimum, maximum); // Real Random
@@ -458,7 +484,7 @@ public class Statistics {
 	 * @param statisticsAll_P 
 	 * @param b 
 	 */
-	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, Object[][] statisticsAll_P, int indexOfExel, boolean stopAfterOne) {
+	public static void runStatistic(Runner runner, Input input, List<List<Double>> numbers, boolean useRealRandom, Object[][] statisticsAll_P, int indexOfExcel, boolean stopAfterOne) {
 		Master master = null;
 		switch (runner) {
 		case TUPLE:
@@ -477,8 +503,13 @@ public class Statistics {
 			System.out.println("Default not running");
 			break;
 		}	
+		
+		RunnableMaster runMaster = statistics.new RunnableMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, statisticsAll_P, indexOfExcel);
+        Thread t = new Thread(runMaster);
+        threads[indexOfExcel] = t;
+        t.start();
 		// run the master
-		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, statisticsAll_P, indexOfExel);
+//		runMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, statisticsAll_P, indexOfExel);
 	}
 	
 	
@@ -555,5 +586,37 @@ public class Statistics {
 	
 	public enum Runner {
 		OBJECT, TUPLE, TUPLEWEIGHT, OBJECTALL 
+	}
+	
+	/**
+	 * Thread class
+	 */
+	public class RunnableMaster implements Runnable {
+
+	    private Master master;
+	    private Input input;
+	    private int deadline;
+	    private boolean stopAfterOne;
+	    private List<List<Double>> numbers;
+	    private Object[][] statisticsAll_P;
+	    private int i;
+
+	    public RunnableMaster(Master master, Input input, int deadline, boolean stopAfterOne, List<List<Double>> numbers,boolean printSizeAll, 
+	    		boolean printAll, boolean printBest, boolean printTime, boolean printRandom, Object[][] statisticsAll_P, int i) {
+	        this.master = master;
+	        this.input = input;
+	        this.deadline = deadline;
+	        this.stopAfterOne = stopAfterOne;
+	        this.numbers = numbers;
+	        this.statisticsAll_P = statisticsAll_P;
+	        this.i = i;
+	    }
+
+	    public void run() {
+			long time = System.currentTimeMillis();
+			master.run(deadline, stopAfterOne, numbers, input);
+			time = System.currentTimeMillis() - time;
+			statisticsAll_P[nrOfExamples*i] = new Object[] {time, master.getAllSolutions().size(), master.getBestSolution()};
+	    }
 	}
 }

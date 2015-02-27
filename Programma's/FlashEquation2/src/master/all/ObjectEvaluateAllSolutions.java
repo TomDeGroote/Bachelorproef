@@ -42,7 +42,7 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 	 * @return
 	 * 		The buffer with solutions
 	 */
-	public List<Equation> evaluate() {
+	public List<Equation> evaluate(Master master) {
 		
 		// empty the buffer containing solutions
 		bufferSolutions = new LinkedList<Equation>();
@@ -56,7 +56,7 @@ public class ObjectEvaluateAllSolutions extends Evaluate {
 			// for each over every equation on the current level
 			for(; equationCount < level.size(); equationCount++) {
 				// keep running while master decides we need to keep going
-				if(!ObjectMasterAllSolutions.timesUp()) {
+				if(!master.timesUp(this)) {
 					Equation eq = level.get(equationCount);
 					// add the result of the evaluation of this equation to alreadySolved
 					evaluateEquation(eq);

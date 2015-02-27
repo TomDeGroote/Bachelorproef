@@ -1,0 +1,11 @@
+AllFour <- read.csv(file="/home/tom/Git/Bachelorproef/Programma's/FlashEquation2/allFour.csv",head=TRUE,sep=",")
+
+# Define all means as vectors
+mean <- c(mean(AllFour[["noWeights"]]), mean(AllFour[["twoWeights"]]), mean(AllFour[["primeWeights"]]), mean(AllFour[["tenWeights"]]))
+allW <- data.frame(noW=c(AllFour[["noWeights"]]), twoW=c(AllFour[["twoWeights"]]), primeW=c(AllFour[["primeWeights"]]), noW=c(AllFour[["tenWeights"]]))
+
+mean
+nr0 <- c((nrow(allW)-sum(allW$noW == 0))/nrow(allW)*100, (nrow(allW)-sum(allW$twoW == 0))/nrow(allW)*100, (nrow(allW)-sum(allW$primeW == 0))/nrow(allW)*100, (nrow(allW)-sum(allW$tenW == 0))/nrow(allW)*100)
+nr0
+
+barplot(nr0, names.arg=c("No Weights", "Two Weights", "Prime Weights", "Ten Weights"))

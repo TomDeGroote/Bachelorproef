@@ -41,7 +41,7 @@ public class ObjectMaster extends Master{
 		
 		// set a possible deadline
 		if(deadline > 0) {
-			ObjectMaster.hasDeadLine = true;
+			this.hasDeadLine = true;
 			timer = new Timer(deadline);
 		}
 		
@@ -53,7 +53,7 @@ public class ObjectMaster extends Master{
 		// generate the evaluate class
 		evaluate = new ObjectEvaluate(tree);
 		
-		ObjectMaster.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
+		this.stopAfterOne = stopAfterOne; // initialize if the program should stop after one solution
 		if(numbers ==  null) {
 			return run(input.getList());
 		} else {
@@ -68,7 +68,7 @@ public class ObjectMaster extends Master{
 	 * 
 	 * 		TODO aangepast voor jar
 	 */
-	private static String run(List<HashMap<String, Double>> numbers) {
+	private String run(List<HashMap<String, Double>> numbers) {
 //		int i = 1; // counter to say how many examples have passed
 		for(HashMap<String, Double> Ks : numbers) {
 			// remember the example
@@ -87,13 +87,13 @@ public class ObjectMaster extends Master{
 				if(solutionSpace.isEmpty()) {
 					// start to evaluate
 					evaluate.addExample(Input.covertToHashMap(Ks));
-					solutionSpace.addAll(evaluate.evaluate());
+					solutionSpace.addAll(evaluate.evaluate(this));
 				}
 			} else {				
 				// start to evaluate
 				evaluate.addExample(Input.covertToHashMap(Ks));
 				@SuppressWarnings("unchecked")
-				List<Equation> solutions = (List<Equation>) evaluate.evaluate();
+				List<Equation> solutions = (List<Equation>) evaluate.evaluate(this);
 				solutionSpace.addAll(solutions);
 //				i++;
 			}
