@@ -1,0 +1,80 @@
+_______________
+| Introductie |
+~~~~~~~~~~~~~~~
+Probleemgebied:
+	.. vergelijkingen over een door gebruikers gedefinieerde set getallen dmv ...
+Onderzoeksvraag:
+	.. te vinden in de door de door gebruikers gedifinieerde set getallen?
+Hypothese
+	Het is mogelijk om een vergelijking te vinden in beperkte tijd over een door gebruikers gedefinieerde set getallen.
+
+
+_______________
+|   Methoden  |
+~~~~~~~~~~~~~~~
+-- volledig veranderd
+De bewerkingsboom wordt op voorhand, eenmalig, adhv contextvrije grammatica berekend. Redundante vergelijkingen worden verwijderd. Dit leidt tot een boom met een minimaal aantal knooppunten die alle mogelijke vergelijkingen bevat. Wanneer voorbeeldwaardes worden gegeven wordt deze optimale boom efficiënt doorlopen op zoek naar een vergelijking die voor (alle) gegeven voorbeelden voldoet.
+?? miss voorbeeld geven van een redundante vergelijking?
+
+H1: OK
+
+H2: Er kunnen meer unieke oplossingen gevonden worden in beperkte ...
+
+?? misschien een inspringing maken bij de hypotheses om een duidelijker onderscheid tussen de hypotheses en de text te bekomen?
+
+-- volledig veranderd
+Voor een bredere zoekruimte worden gewichten toegevoegd aan de CFG.
+
+H3: da tussenhaakjes weg laten
+
+-- bijkomend
+Om de oplossingsgraad te verhogen worden de vergelijkingen efficiënt geavalueerd. Dit houdt in dat geen overbodige vergelijkingen worden uitgerekend. bv. T0*T1/T1, werd reeds gevonden als T1.
+
+Hypothese 4:
+Het efficiënt evalueren verhoogt de opllosingsgraad tov de brute-force manier. 
+
+
+_______________
+|     CFG     |
+~~~~~~~~~~~~~~~
+
+Linker kant
+------------
+Productieregels van de vorm:
+E → T (R0)  
+E → E O T (R1)
+met E een niet-terminaal symbool, T een terminaal symbool en O een operatie.
+
+
+Rechter kant
+-------------
+Voorbeeld:
+E
+→ E O T
+→ E O T O T
+→ T O T O T
+T wordt bij het evalueren vervangen door gegeven waarden of gewichten
+O werd reeds vervangen door mogelijke operaties
+
+
+
+_______________
+|  Resultaten |
+~~~~~~~~~~~~~~~
+* Grafiek1 	-> geeft Prunen vs NonPrunden # knopen weer -> nog lijntje tekenen voor de niet geprunede boom en dan ook legende
+* Uitleg	-> Antwoord H1: Naarmate de diepte van de boom toeneemt worden er meer redundante knopen verwijderd. Deze besparing stagneerd rond de 40%.
+		-> Antwoord H2: We verwachten dat de tijdswinst dezelfde curve zal volgen aangezien ze afhankelijk is van het aantal vergelijkingen die moeten worden geavalueerd. Verdere experimenten zullen dit uitwijzen.
+* Grafiek2	-> geeft 3 experimenten weer gegroepeerd per balk groep, E1: AR 3ex, E2: RR 2ex, RR 1ex
+* Uitleg	-> Antwoord H3: De oplossingsgraad met gewichten is duidelijk hoger in alle experimenten. Verwacht wordt dat een combinatie van E1 & E2 een goede representatie is van de door de gebruiker gezochte vergelijkingen. In werkelijkheid wordt bijgevolg een plossingsgraad van ... verwacht. Dit is enkel mogelijk indien erin geslaagd wordt de zoekruimte efficiënt te doorlopen. Verdere implementatie en onderzoeken zullen dit uitwijzen.
+
+
+_______________
+|  Conclusie  |
+~~~~~~~~~~~~~~~
+Door het berekenen van de optimale contextvrije boom (met een beperkt aantal operanties) en het gebruiken van gewichten kunnen reeds in ... van de gevallen vergelijkingen gevonden worden als er geen tijdsbeperking is. Het is van uiterst belang dat de zoekruimte efficiënt zal doorlopen worden om deze oplossingsgraad te benaderen. Verdere experimenten zullen uitwijzen welke combinatie van gewichten en operaties ideaal is om een zo groot mogelijke zoekruimte te hebben die op een efficiënte manier kan doorlopen worden en een zo hoog mogelijke oplossingsgraad opleverd voor gebruikersvoorbeelden.
+
+
+
+
+
+

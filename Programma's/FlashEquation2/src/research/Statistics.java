@@ -38,7 +38,7 @@ public class Statistics {
 	private static final boolean printRandom = true;
 	
 	// Random Parameters
-	private static final int nrOfExamples = 3;
+	private static final int nrOfExamples = 1;
 	private static final int minRange = 0;
 	private static final int maxRange = 100;
 	
@@ -57,24 +57,24 @@ public class Statistics {
 		//runPvsNP();
 		long time = System.currentTimeMillis();
 		runWeightsvsNoWeights(); // put on true to recover data
-		long x = (System.currentTimeMillis() - time) / 1000;
+		System.out.print("Total");
+		printTime(time);
+		System.out.println("Done!");
+	}
+
+	/**
+	 * Prints the time it took
+	 * @param prevTime
+	 * 		The previous time
+	 */
+	private static void printTime(long prevTime) {
+		long x = (System.currentTimeMillis() - prevTime) / 1000;
 		int seconds = (int) (x % 60);
 		x = x/60;
 		int minutes = (int) (x % 60);
 		x = x/60;
 		int hours = (int) (x % 24);
-		System.out.println("Time ms: " + time);
-		System.out.println("Time: " + hours + "h" + minutes + "min" + seconds + "s");
-		
-//		List<List<Double>> r = RandomGenerator.generateComplexRandom(2, 6, 3, 0, 100);
-//		System.out.println("Last generated: " + RandomGenerator.getLastGeneratedEquation());
-//		for(List<Double> row : r) {
-//			for (Double elem : row) {
-//				System.out.print(elem + " ");
-//			}
-//			System.out.println();
-//		}
-		System.out.println("Done!");
+		System.out.println(" Time: " + hours + "h" + minutes + "min" + seconds + "s" + "   ");
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class Statistics {
 	 * @throws InterruptedException 
 	 */
 	private static void runWeightsvsNoWeights() throws FileNotFoundException, IOException, InterruptedException {
-		int numberOfIterations = 3;
+		int numberOfIterations = 100;
 		int length = 5; // length with the solution included
 		boolean printStatus = true;
 		
@@ -158,7 +158,7 @@ public class Statistics {
 	 */
 	private static List<Object[][]> noVsWeights(double numberOfIterations, boolean printStatus, int length) throws FileNotFoundException, IOException, InterruptedException {
 		// runStatistics variables
-		boolean useRealRandom = false;
+		boolean useRealRandom = true;
 		boolean stopAfterOne = false;
 		
 		// needed for excel document
@@ -178,20 +178,28 @@ public class Statistics {
 		}
 		
 		// Run no weights
+		long time = System.currentTimeMillis();
 		runThreads(Runner.TUPLE, numberOfIterations, useRealRandom, stopAfterOne, statisticsNo, allRandom, 1);	
+		printTime(time);
 		
 		// Run two weights
 		Grammar.setWeights(new Double[] {1.0, 2.0}); 			// Set grammar weights
+		time = System.currentTimeMillis();
 		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsTwo, allRandom, 2);
-		
+		printTime(time);
+
 		// Run prime weights
 		Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 5.0, 7.0}); // Set grammar weights
+		time = System.currentTimeMillis();
 		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsPrime, allRandom, 3);
-		
+		printTime(time);
+
 		// Run ten weights
-		Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
-		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsTen, allRandom, 4);
-		
+//		Grammar.setWeights(new Double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0}); // Set grammar weights
+//		time = System.currentTimeMillis();
+//		runThreads(Runner.TUPLEWEIGHT, numberOfIterations, useRealRandom, stopAfterOne, statisticsTen, allRandom, 4);
+//		printTime(time);
+
 		List<Object[][]> result = new ArrayList<Object[][]>();
 		result.add(statisticsNo);
 		result.add(statisticsPrime);
@@ -220,9 +228,10 @@ public class Statistics {
 			System.out.println("]");
 		}
 		
+		// for status bar
 		threads = new Thread[(int) numberOfIterations];
 		for(int i = 0; i < numberOfIterations; i++) {
-			runStatistic(runner, inputP, allRandom.get(i), useRealRandom, statisticsNo, (int) i, stopAfterOne);
+			runStatistic(runner, inputP, allRandom.get(i), useRealRandom, statisticsNo, (int) (i), stopAfterOne);
 		}
 		
 		// wait for all of the above threads to finish
@@ -231,7 +240,7 @@ public class Statistics {
 		  threads[i].join();
 		  System.out.print("#");
 		}
-		System.out.println("]");
+		System.out.print("]");
 	}
 	
 	/**
@@ -504,6 +513,7 @@ public class Statistics {
 			break;
 		}	
 		
+
 		RunnableMaster runMaster = statistics.new RunnableMaster(master, input, DEADLINE, stopAfterOne, numbers, printSizeAll, printAll, printBest, printTime, printRandom, statisticsAll_P, indexOfExcel);
         Thread t = new Thread(runMaster);
         threads[indexOfExcel] = t;
