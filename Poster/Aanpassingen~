@@ -4,7 +4,7 @@ _______________
 Probleemgebied:
 	.. vergelijkingen over een door gebruikers gedefinieerde set getallen dmv ...
 Onderzoeksvraag:
-	.. te vinden in de door de door gebruikers gedifinieerde set getallen?
+	.. te vinden in de door gebruikers gedifinieerde set getallen?
 Hypothese
 	Het is mogelijk om een vergelijking te vinden in beperkte tijd over een door gebruikers gedefinieerde set getallen.
 
@@ -28,7 +28,7 @@ Voor een bredere zoekruimte worden gewichten toegevoegd aan de CFG.
 H3: da tussenhaakjes weg laten
 
 -- bijkomend
-Om de oplossingsgraad te verhogen worden de vergelijkingen efficiënt geavalueerd. Dit houdt in dat geen overbodige vergelijkingen worden uitgerekend. bv. T0*T1/T1, werd reeds gevonden als T1.
+Om de oplossingsgraad te verhogen worden de vergelijkingen efficiënt geavalueerd. Dit houdt in dat geen overbodige vergelijkingen worden uitgerekend. bv. T0*T1/T1, werd reeds gevonden als T0.
 
 Hypothese 4:
 Het efficiënt evalueren verhoogt de opllosingsgraad tov de brute-force manier. 

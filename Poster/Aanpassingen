@@ -63,7 +63,7 @@ _______________
 ~~~~~~~~~~~~~~~
 * Grafiek1 	-> geeft Prunen vs NonPrunden # knopen weer -> nog lijntje tekenen voor de niet geprunede boom en dan ook legende
 * Uitleg	-> Antwoord H1: Naarmate de diepte van de boom toeneemt worden er meer redundante knopen verwijderd. Deze besparing stagneerd rond de 40%.
-		-> Antwoord H2: We verwachten dat de tijdswinst dezelfde curve zal volgen aangezien ze afhankelijk is van het aantal vergelijkingen die moeten worden geavalueerd. Verdere experimenten zullen dit uitwijzen.
+		-> Antwoord H2: Verwacht wordt dat de tijdswinst dezelfde curve zal volgen aangezien ze afhankelijk is van het aantal vergelijkingen die moeten worden geavalueerd. Verdere experimenten zullen dit uitwijzen.
 * Grafiek2	-> geeft 3 experimenten weer gegroepeerd per balk groep, E1: AR 3ex, E2: RR 2ex, RR 1ex
 * Uitleg	-> Antwoord H3: De oplossingsgraad met gewichten is duidelijk hoger in alle experimenten. Verwacht wordt dat een combinatie van E1 & E2 een goede representatie is van de door de gebruiker gezochte vergelijkingen. In werkelijkheid wordt bijgevolg een plossingsgraad van ... verwacht. Dit is enkel mogelijk indien erin geslaagd wordt de zoekruimte efficiënt te doorlopen. Verdere implementatie en onderzoeken zullen dit uitwijzen.
 
@@ -71,7 +71,7 @@ _______________
 _______________
 |  Conclusie  |
 ~~~~~~~~~~~~~~~
-Door het berekenen van de optimale contextvrije boom (met een beperkt aantal operanties) en het gebruiken van gewichten kunnen reeds in ... van de gevallen vergelijkingen gevonden worden als er geen tijdsbeperking is. Het is van uiterst belang dat de zoekruimte efficiënt zal doorlopen worden om deze oplossingsgraad te benaderen. Verdere experimenten zullen uitwijzen welke combinatie van gewichten en operaties ideaal is om een zo groot mogelijke zoekruimte te hebben die op een efficiënte manier kan doorlopen worden en een zo hoog mogelijke oplossingsgraad opleverd voor gebruikersvoorbeelden.
+Door het berekenen van de optimale contextvrije boom (met een beperkt aantal operaties) en het gebruiken van gewichten kunnen reeds in ... van de gevallen vergelijkingen gevonden worden als er geen tijdsbeperking is. Het is van uiterst belang dat de zoekruimte efficiënt zal doorlopen worden om deze oplossingsgraad te benaderen. Verdere experimenten zullen uitwijzen welke combinatie van gewichten en operaties ideaal is om een zo groot mogelijke zoekruimte te hebben die op een efficiënte manier kan doorlopen worden en een zo hoog mogelijke oplossingsgraad opleverd voor gebruikersvoorbeelden.
 
 
 
