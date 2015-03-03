@@ -11,7 +11,7 @@ import research.RandomGenerator;
 import tree.Equation;
 import tree.Tree;
 
-public class FlashQuationMain {
+public class FlashQuationMain { // 
 
 	// Deadline parameters
 	private static final int DEADLINE = 1000;
