@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="vectorBasedTree.pdf">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="563.11225"
-     inkscape:cy="602.30638"
+     inkscape:zoom="1.3151614"
+     inkscape:cx="594.72751"
+     inkscape:cy="678.21289"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -82,11 +82,7 @@
          x="24.285713"
          y="473.79077"
          id="tspan2995"
-         style="font-family:Helvetica;-inkscape-font-specification:Helvetica">E+E+E       <tspan
-   style="fill:#008000"
-   id="tspan3021">E*E+E</tspan><tspan
-   style="fill:#ff0000"
-   id="tspan3795">       E+E*E</tspan>       E*E*E</tspan></text>
+         style="font-family:Helvetica;-inkscape-font-specification:Helvetica;fill:#000000">E+E+E       E*E+E       E+E*E       E*E*E</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.02403653px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 381.3512,278.36276 185.88009,340.6977"
@@ -133,5 +129,17 @@
            height="50.204582"
            x="545.17932"
            y="609.71332" /></flowRegion><flowPara
-         id="flowPara3803"></flowPara></flowRoot>  </g>
+         id="flowPara3803"></flowPara></flowRoot>    <path
+       style="fill:none;stroke:#f3a423;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 423.86282,437.97501 125.014,44.27435"
+       id="path3908"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#f3a423;fill-opacity:1;stroke:#f3a423;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="M 548.81644,437.3453 423.93356,481.92862"
+       id="path3910"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+  </g>
 </svg>
