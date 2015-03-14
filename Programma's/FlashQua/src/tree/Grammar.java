@@ -21,9 +21,9 @@ import tree.symbols.operands.Sum;
 public class Grammar {
 	public static final String NONTERMINALREP = "E";
 	public static final String TERMINALREP = "E";
-	public static final Terminal[] KS = new Terminal[]{new Terminal("K0", 5.0), new Terminal("K1", 6.0)};
+	public static final Terminal[] KS = new Terminal[]{new Terminal("K0", 5.0), new Terminal("K1", 6.0), new Terminal("W1", 1.0), new Terminal("W2", 2.0), new Terminal("W3", 3.0), new Terminal("W5", 5.0), new Terminal("W7", 7.0)};
 	public static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum()};
-	public static final Double GOAL = 31.0;
+	public static final Double GOAL = 12.0;
 	
 	/**
 	 * @return
@@ -59,7 +59,7 @@ public class Grammar {
 						break;
 					}
 				} catch(UselessEquationException e) {
-				//	System.out.println(e.getMessage());
+					//System.out.println(e.getMessage());
 				}
 			}
 		}

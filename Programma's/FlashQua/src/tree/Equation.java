@@ -59,6 +59,11 @@ public class Equation implements Serializable {
 		lastSplitableOperand = previous.lastSplitableOperand;
 		valueOfLastSplitable = previous.valueOfLastSplitable;
 
+		// Check if the added part is a neutral element for the nonSplitable operand
+		if(terminal.getValue().equals(operand.getNeutralElement())) {
+			throw new UselessEquationException("Equation will not add extra information: ***********************" + operand.toString() + terminal.getValue()); // TODO zorg dat alle gewichten er in zitten
+		}
+		
 		if(operand.isSplitable()) {	
 			// this represents the inverse nonSplitable part of the possibly added part
 			List<Symbol> inverse = new ArrayList<Symbol>();
@@ -76,6 +81,13 @@ public class Equation implements Serializable {
 			valueOfLastSplitable = terminal.getValue();
 			lastSplitableOperand = operand;
 			
+			// Check if we are not adding something that already exists, could be replaced by a weight
+			for(int i = 0; i < nonSplitableParts.size()-1; i++) {
+				if(nonSplitableParts.get(i).equals(newLastNonSplitable)) {
+					throw new UselessEquationException("Equation will not add extra information: ***********************" + this.toString()); // TODO zorg dat alle gewichten er in zitten
+				}
+			}
+			
 			// Check if the adding of this part does not undo an other creating of a part
 			if(nonSplitableParts.contains(inverse)) {
 				throw new UselessEquationException("Equation will not add extra information: " + this.toString());
@@ -92,6 +104,7 @@ public class Equation implements Serializable {
 					throw new UselessEquationException("Equation will not add extra information: " + this.toString());
 				}
 			}
+			
 			// Check if the adding of this operand and terminal does not undo anything in the last part
 			boolean inverseOperand = false;
 			for(Symbol s : nonSplitableParts.get(nonSplitableParts.size()-1)) {
@@ -113,6 +126,13 @@ public class Equation implements Serializable {
 			inverse.set(0, ((Operand) inverse.get(0)).getInverseOperand()); 
 			if(nonSplitableParts.contains(inverse)) {
 				throw new UselessEquationException("Equation will not add extra information: " + this.toString());
+			}
+			
+			// Check if we are not adding something that already exists, could be replaced by a weight TODO
+			for(int i = 0; i < nonSplitableParts.size()-1; i++) {
+				if(nonSplitableParts.get(nonSplitableParts.size()-1).equals(nonSplitableParts.get(i))) {
+					throw new UselessEquationException("Equation will not add extra information: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + this.toString());
+				}
 			}
 			
 			
@@ -175,7 +195,7 @@ public class Equation implements Serializable {
 	
 	/**
 	 * Overrides the equal method
-	 * this method sees if a given equation and this equation are equal // TODO
+	 * this method sees if a given equation and this equation are equal
 	 */
 	@Override
     public boolean equals(Object obj) {

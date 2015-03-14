@@ -11,7 +11,7 @@ import java.io.FileWriter;
  */
 public class Main {
 	
-	private final static int NROFLEVELS = 8;
+	private final static int NROFLEVELS = 7;
 	private final static boolean PRUNE = true;
 	
 	public static void main(String[] args) {
