@@ -1,0 +1,14 @@
+* Extra Prunen Tree
+* Gebruik maken van geheugen, zo vergelijkingen die reeds zijn uitgerekend niet meer uitrekenen
+	-> Ik heb zo'n voorgevoel dat het dan beter is om de boom zelf gewoon terug op te stellen
+	-> Canonieke Vorm
+	-> Links vervangen is voldoende, kijk dit wel nog eens na -> enkel als je niet toe laat om de bewerking nog uit te rekenen nadien
+* CountDown Probleem bekijken
+* Equation discovery algormitmes bekijken
+* Als vergelijking gevonden en daarna valt ze weg, kan je dan daarna nog een vergelijking vinden op die tak?
+
+
+
+E*T								
+E*T*T	E+T*T							
+E*T*T*T	E+T*T*T	E*T+T*T	E+T+T*T					
