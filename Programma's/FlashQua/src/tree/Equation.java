@@ -86,8 +86,27 @@ public class Equation implements Serializable {
 			nonSplitableParts.get(nonSplitableParts.size()-1).add(terminal);
 			valueOfLastSplitable = operand.calculateValue(valueOfLastSplitable, terminal.getValue());
 			
+			// Check if the first element is not the same as the second if / is doing TODO hardcoded
+			if(operand.toString().equals("/")) {
+				if(nonSplitableParts.get(0).get(1).equals(terminal)) {
+					throw new UselessEquationException("Equation will not add extra information: " + this.toString());
+				}
+			}
 			// Check if the adding of this operand and terminal does not undo anything in the last part
-			
+			boolean inverseOperand = false;
+			for(Symbol s : nonSplitableParts.get(nonSplitableParts.size()-1)) {
+				if(inverseOperand) {
+					if(s.equals(terminal)) {
+						throw new UselessEquationException("Equation will not add extra information: " + this.toString());
+					}
+				} else {
+					if(s.equals(operand.getInverseOperand())) {
+						inverseOperand = true;
+					} else {
+						inverseOperand = false;
+					}
+				}
+			}
 			
 			// Check if the adding of this part does not undo an other creating of a part
 			List<Symbol> inverse = new ArrayList<Symbol>(nonSplitableParts.get(nonSplitableParts.size()-1));

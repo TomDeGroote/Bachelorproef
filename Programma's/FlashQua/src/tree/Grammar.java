@@ -59,7 +59,7 @@ public class Grammar {
 						break;
 					}
 				} catch(UselessEquationException e) {
-					System.out.println(e.getMessage());
+				//	System.out.println(e.getMessage());
 				}
 			}
 		}

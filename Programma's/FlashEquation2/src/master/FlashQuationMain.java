@@ -14,7 +14,7 @@ import tree.Tree;
 public class FlashQuationMain { // 
 
 	// Deadline parameters
-	private static final int DEADLINE = 1000;
+	private static final int DEADLINE = -1;
 	private static final boolean stopAfterOne = false;
 	
 	
