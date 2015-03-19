@@ -12,7 +12,6 @@ import tree.symbols.operands.Multiplication;
 import tree.symbols.operands.Operand;
 import tree.symbols.operands.Substraction;
 import tree.symbols.operands.Sum;
-import exceptions.UselessEquationException;
 
 /**
  * Represents the grammar that is going to be used to construct the Equation
@@ -93,16 +92,14 @@ public class Grammar {
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
 			for(Terminal K : KS) { // expand for every possible K
 				// add the made expansion to the list of expansion equations
-				try {
-					Equation possibleNewEquation = new Equation(equation, operand, K);
+				Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
+				if(possibleNewEquation != null) {
 					if(!alreadyFound.contains(possibleNewEquation)) {
 						if(possibleNewEquation.getValueOfEquation().equals(GOAL)) {
 							addPossibleSolution(possibleNewEquation);
 						}
 						alreadyFound.add(possibleNewEquation);
 					}
-				} catch(UselessEquationException e) {
-//					System.out.println(e.getMessage());
 				}
 			}
 		}

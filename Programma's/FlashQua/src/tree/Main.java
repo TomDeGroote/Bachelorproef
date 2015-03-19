@@ -54,6 +54,14 @@ public class Main {
 			printTreeToFile(tree);
 		}
 		System.out.println("Done!");
+		System.out.println("countDivision: " + Equation.countDivision + " -> " + (Equation.countDivisionTime/1000000) + "ms");
+		System.out.println("countNeutral: " + Equation.countNeutral + " -> " + (Equation.countNeutralTime/1000000) + "ms");
+		System.out.println("countReplacementWeight: " + Equation.countReplacementWeight + " -> " + (Equation.countReplacementWeightTime/1000000) + "ms");
+		System.out.println("countUndoAnyPart: " + Equation.countUndoAnyPart + " -> " + (Equation.countUndoAnyPartTime/1000000) + "ms");
+		System.out.println("countUndoCreating: " + Equation.countUndoCreating + " -> " + (Equation.countUndoCreatingTime/1000000) + "ms");
+		System.out.println("countUndoLastPart: " + Equation.countUndoLastPart + " -> " + (Equation.countUndoLastPartTime/1000000) + "ms");
+		System.out.println("countWeightReplace: " + Equation.countWeightReplace + " -> " + (Equation.countWeightReplaceTime/1000000) + "ms");
+		System.out.println("Constructor time: " + (Equation.totalConstructorTime/1000000));
 	}
 	
 	

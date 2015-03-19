@@ -28,23 +28,53 @@ public class Equation implements Serializable {
 	public boolean pruned = false;
 	public Double value = 0.0;
 	private HashMap<Symbol, Integer> terminalCounter = new HashMap<Symbol, Integer>();
+	public final int HASHCODE;
 	
+	public static int countNeutral = 0;
+	public static int countWeightReplace = 0;
+	public static int countUndoCreating = 0;
+	public static int countDivision = 0;
+	public static int countUndoLastPart = 0;
+	public static int countUndoAnyPart = 0;
+	public static int countReplacementWeight = 0;
+
+	public static long countNeutralTime = 0;
+	public static long countWeightReplaceTime = 0;
+	public static long countUndoCreatingTime = 0;
+	public static long countDivisionTime = 0;
+	public static long countUndoLastPartTime = 0;
+	public static long countUndoAnyPartTime = 0;
+	public static long countReplacementWeightTime = 0;
+
+	public static long totalConstructorTime = 0;
 	/**
 	 * Constructor when no parameters are given
 	 * This constructor will generate an equation = E
 	 * 
 	 */
 	public Equation(Terminal t) {
+		System.nanoTime(); // Increases time.. A Lot..
 		lastSplitableOperand = new Sum();
 		List<Symbol> firstPart = new ArrayList<Symbol>();
 		firstPart.add(lastSplitableOperand);
 		firstPart.add(t);
 		nonSplitableParts.add(firstPart);
 		this.valueOfLastSplitable = t.getValue();
-		setValueOfEquation();
+		this.value = t.getValue();
+		this.HASHCODE = getHashCode();
 	}
 	
 
+	public Equation(List<List<Symbol>> nonSplitableParts, Operand lastSplitableOperand, Double valueRestOfEquation, Double valueOfLastSplitable, Double value, HashMap<Symbol, Integer> terminalCounter) {
+		System.nanoTime(); // Increases time.. A Lot..
+		this.nonSplitableParts = nonSplitableParts;
+		this.lastSplitableOperand = lastSplitableOperand;
+		this.valueOfLastSplitable = valueOfLastSplitable;
+		this.valueRestOfEquation = valueRestOfEquation;
+		this.value = value;
+		this. terminalCounter = terminalCounter;
+		this.HASHCODE = getHashCode();
+	}
 	/**
 	 * This constructor will generate a equation containing the symbols
 	 * of inputList using those symbols in the same order.
@@ -56,17 +86,22 @@ public class Equation implements Serializable {
 	 * @throws UselessEquationException 
 	 * @throws EquationHasSolutionException 
 	 */
-	public Equation(Equation previous, Operand operand, Terminal terminal) throws UselessEquationException {
+	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
+		List<List<Symbol>> nonSplitableParts = new ArrayList<List<Symbol>>();
+		Operand lastSplitableOperand = previous.lastSplitableOperand;
+		Double valueOfLastSplitable = previous.valueOfLastSplitable;
+		Double valueRestOfEquation = previous.valueRestOfEquation;
+		
+		long time = System.nanoTime();
+		if(terminal.getValue().equals(operand.getNeutralElement())) {
+			countNeutral++;
+			return null;
+		}
+		countNeutralTime += System.nanoTime() - time;
+		
 		// fields needed of previous equation
 		for(List<Symbol> prevNon : previous.nonSplitableParts) {
 			nonSplitableParts.add(new ArrayList<Symbol>(prevNon));
-		}
-		valueRestOfEquation = previous.valueRestOfEquation;
-		lastSplitableOperand = previous.lastSplitableOperand;
-		valueOfLastSplitable = previous.valueOfLastSplitable;
-		
-		if(terminal.getValue().equals(operand.getNeutralElement())) {
-			throw new UselessEquationException("Equation will not add extra information: ");// + this.toString()); // TODO zorg dat alle gewichten er in zitten
 		}
 		
 		if(operand.isSplitable()) {	
@@ -86,17 +121,24 @@ public class Equation implements Serializable {
 			valueOfLastSplitable = terminal.getValue();
 			lastSplitableOperand = operand;
 			
+			time = System.nanoTime();
 			// Check if we are not adding something that already exists, could be replaced by a weight
 			for(int i = 0; i < nonSplitableParts.size()-1; i++) {
 				if(nonSplitableParts.get(i).equals(newLastNonSplitable)) {
-					throw new UselessEquationException("Equation will not add extra information: ");// + this.toString()); // TODO zorg dat alle gewichten er in zitten
+					countWeightReplace++;
+					return null;
 				}
 			}
+			countWeightReplaceTime += System.nanoTime() - time;
+
 			
+			time = System.nanoTime();
 			// Check if the adding of this part does not undo an other creating of a part
 			if(nonSplitableParts.contains(inverse)) {
-				throw new UselessEquationException("Equation will not add extra information: ");// + this.toString());
+				countUndoCreating++;
+				return null;
 			}
+			countUndoCreatingTime += System.nanoTime() - time;
 		} else {	
 			// create the equation TODO hardcoded
 			List<Symbol> lastPart = nonSplitableParts.get(nonSplitableParts.size()-1);
@@ -123,19 +165,24 @@ public class Equation implements Serializable {
 			}
 			valueOfLastSplitable = operand.calculateValue(valueOfLastSplitable, terminal.getValue());
 			
+			time = System.nanoTime();
 			// Check if the first element is not the same as the second if / is doing TODO hardcoded
 			if(operand.toString().equals("/")) {
 				if(nonSplitableParts.get(0).get(1).equals(terminal)) {
-					throw new UselessEquationException("Equation will not add extra information: ");// + this.toString());
+					countDivision++;
+					return null;
 				}
 			}
+			countDivisionTime += System.nanoTime() - time;
 			
+			time = System.nanoTime();
 			// Check if the adding of this operand and terminal does not undo anything in the last part
 			boolean inverseOperand = false;
 			for(Symbol s : nonSplitableParts.get(nonSplitableParts.size()-1)) {
 				if(inverseOperand) {
 					if(s.equals(terminal)) {
-						throw new UselessEquationException("Equation will not add extra information: ");// + this.toString());
+						countUndoLastPart++;
+						return null;
 					}
 				} else {
 					if(s.equals(operand.getInverseOperand())) {
@@ -145,23 +192,31 @@ public class Equation implements Serializable {
 					}
 				}
 			}
+			countUndoLastPartTime += System.nanoTime() - time;
 			
+			time = System.nanoTime();
 			// Check if the adding of this part does not undo an other creating of a part
 			List<Symbol> inverse = new ArrayList<Symbol>(nonSplitableParts.get(nonSplitableParts.size()-1));
 			inverse.set(0, ((Operand) inverse.get(0)).getInverseOperand()); 
 			if(nonSplitableParts.contains(inverse)) {
-				throw new UselessEquationException("Equation will not add extra information: ");// + this.toString());
+				countUndoAnyPart++;
+				return null;
 			}
-			
+			countUndoAnyPartTime += System.nanoTime() - time;
+
+			time = System.nanoTime();
 			// Check if we are not adding something that already exists, could be replaced by a weight TODO
 			for(int i = 0; i < nonSplitableParts.size()-1; i++) {
 				if(nonSplitableParts.get(nonSplitableParts.size()-1).equals(nonSplitableParts.get(i))) {
-					throw new UselessEquationException("Equation will not add extra information: ");// + this.toString());
+					countReplacementWeight++;
+					return null;
 				}
-			}			
+			}	
+			countReplacementWeightTime += System.nanoTime() - time;
+
 		}
 		
-		terminalCounter = previous.terminalCounter;
+		HashMap<Symbol, Integer> terminalCounter = new HashMap<Symbol, Integer>(previous.terminalCounter);
 		
 		// count the terminals
 		if(terminalCounter.containsKey(terminal)) {
@@ -170,7 +225,7 @@ public class Equation implements Serializable {
 			terminalCounter.put(terminal, 1);
 		}
 		
-		setValueOfEquation();
+		return new Equation(nonSplitableParts, lastSplitableOperand, valueRestOfEquation, valueOfLastSplitable, calculateValueOfEquation(lastSplitableOperand, valueRestOfEquation, valueOfLastSplitable), terminalCounter);
 	}
 	
 	public static boolean checkIfUsefullEquation(Equation previous, Operand operand, Terminal terminal) {
@@ -202,9 +257,9 @@ public class Equation implements Serializable {
 	 * @return
 	 * 		The value of this equation
 	 */
-	public void setValueOfEquation() {
+	public static Double calculateValueOfEquation(Operand lastSplitableOperand, Double valueRestOfEquation, Double valueOfLastSplitable) {
 		// operand between rest of equation and lastNonSplitablePart can be found at the first position of the lastNonSplitable part
-		this.value = lastSplitableOperand.calculateValue(valueRestOfEquation, valueOfLastSplitable);
+		return lastSplitableOperand.calculateValue(valueRestOfEquation, valueOfLastSplitable);
 	}
 
 	/**
@@ -274,14 +329,17 @@ public class Equation implements Serializable {
 	
 	@Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
-            // if deriving: appendSuper(super.hashCode()).
-            append(getValueOfEquation()).
-            append(terminalCounter).
-            append(nonSplitableParts.size()).
-            toHashCode();
+		return HASHCODE;
     }
 	
+	 private int getHashCode() {
+			return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+		            append(getValueOfEquation()).
+		            append(terminalCounter).
+		            append(nonSplitableParts.size()).
+		            toHashCode();
+	}
+	 
 	public HashMap<Symbol, Integer> getTerminalCounter() {
 		return terminalCounter;
 	}
