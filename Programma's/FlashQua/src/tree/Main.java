@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import exceptions.MaxLevelReachedException;
@@ -20,8 +21,8 @@ import exceptions.OutOfTimeException;
  */
 public class Main {
 	
-	public static Double[] WEIGHTS = new Double[]{1.0, 2.0, 3.0, 5.0, 7.0};
-	public static Double[] KS = new Double[]{5.0, 6.0};
+	public static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
+	public static double[] KS = new double[]{5.0, 6.0};
 	
 	public final static int DEADLINE = -1;
 	public final static int MAXLEVEL = 4;
@@ -31,7 +32,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println();
-		List<Double[]> input = readFile();
+		List<double[]> input = readFile();
 		Grammar.setColumnValues(input, WEIGHTS);
 		
 		Tree tree = new Tree();
@@ -46,6 +47,7 @@ public class Main {
 		System.out.println("Done: " + (System.currentTimeMillis()-start));
 		
 		System.out.println("\nSolutions:");
+		HashSet<Equation> i = Grammar.solutions;
 		for(Equation eq : Grammar.solutions) {
 			System.out.println(eq + " => " + eq.hashCode());
 		}
@@ -53,15 +55,6 @@ public class Main {
 			System.out.println("Writing to file!");
 			printTreeToFile(tree);
 		}
-		System.out.println("Done!");
-		System.out.println("countDivision: " + Equation.countDivision + " -> " + (Equation.countDivisionTime/1000000) + "ms");
-		System.out.println("countNeutral: " + Equation.countNeutral + " -> " + (Equation.countNeutralTime/1000000) + "ms");
-		System.out.println("countReplacementWeight: " + Equation.countReplacementWeight + " -> " + (Equation.countReplacementWeightTime/1000000) + "ms");
-		System.out.println("countUndoAnyPart: " + Equation.countUndoAnyPart + " -> " + (Equation.countUndoAnyPartTime/1000000) + "ms");
-		System.out.println("countUndoCreating: " + Equation.countUndoCreating + " -> " + (Equation.countUndoCreatingTime/1000000) + "ms");
-		System.out.println("countUndoLastPart: " + Equation.countUndoLastPart + " -> " + (Equation.countUndoLastPartTime/1000000) + "ms");
-		System.out.println("countWeightReplace: " + Equation.countWeightReplace + " -> " + (Equation.countWeightReplaceTime/1000000) + "ms");
-		System.out.println("Constructor time: " + (Equation.totalConstructorTime/1000000));
 	}
 	
 	
@@ -123,18 +116,18 @@ public class Main {
 	 * 		The file to be read
 	 * 
 	 */
-	private static List<Double[]> readFile() throws IOException {
+	private static List<double[]> readFile() throws IOException {
 		InputStream in = Main.class.getResourceAsStream("/inputExample.txt");
 		//FileInputStream fis = new FileInputStream(fin);
 		
 		//Construct BufferedReader from InputStreamReader
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));//fis));
 		
-		List<Double[]> input = new ArrayList<Double[]>();
+		List<double[]> input = new ArrayList<double[]>();
 		String line = null;
 		while ((line = br.readLine()) != null) {
 			String[] splitOnSpace = line.split(" ");
-			Double[] primLine = new Double[splitOnSpace.length];
+			double[] primLine = new double[splitOnSpace.length];
 			// add all K elements to hashmap
 			for(int i = 0; i < splitOnSpace.length-1; i++) {
 				double value = Double.parseDouble(splitOnSpace[i]);

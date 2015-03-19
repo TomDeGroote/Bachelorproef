@@ -19,7 +19,7 @@ public abstract class Operand extends Symbol {
 	 * @return
 	 * 		= value1 THIS value2
 	 */
-	public abstract Double calculateValue(Double value1, Double value2);
+	public abstract double calculateValue(double value1, double value2);
 
 	/**
 	 * Calculates the value of this operation and a value

@@ -25,7 +25,7 @@ public class Grammar {
 	public static final String TERMINALREP = "E";
 	public static Terminal[] KS;
 	public static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum()};
-	public static Double GOAL;
+	public static double GOAL;
 	public static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String,Double>>();
 	
 	public static HashSet<Equation> solutions = new HashSet<Equation>();
@@ -40,16 +40,16 @@ public class Grammar {
 	 * @param weights
 	 * 			The weights
 	 */
-	public static void setColumnValues(List<Double[]> multiInput, Double[] weights) {
+	public static void setColumnValues(List<double[]> multiInput, double[] weights) {
 		// set first equation that will be used to evaluate the rest TODO pick hardest equation
-		Double[] input = multiInput.get(0);
+		double[] input = multiInput.get(0);
 		Grammar.KS = new Terminal[weights.length+input.length-1]; 
 		int i = 0;
 		for(i = 0; i < input.length-1; i++) {
-			Grammar.KS[i] = new Terminal("K" + i, input[i]);
+			Grammar.KS[i] = new Terminal("K" + i, input[i], false);
 		}
-		for(Double weight : weights) {
-			Grammar.KS[i++] = new Terminal("W"+ weight.intValue(), weight);
+		for(double weight : weights) {
+			Grammar.KS[i++] = new Terminal("W"+ (int) weight, weight, true);
 		}
 		GOAL = input[input.length-1];
 		
@@ -58,8 +58,8 @@ public class Grammar {
 			for(int j = 0; j < multiInput.get(i).length-1; j++) {
 				terms.put("K" + j, multiInput.get(i)[j]);
 			}
-			for(Double weight : weights) {
-				terms.put("W"+ weight.intValue(), weight);
+			for(double weight : weights) {
+				terms.put("W"+ (int) weight, weight);
 			}
 			terms.put("G", multiInput.get(i)[multiInput.get(i).length-1]);
 			otherEqs.add(terms);
@@ -95,7 +95,7 @@ public class Grammar {
 				Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
 				if(possibleNewEquation != null) {
 					if(!alreadyFound.contains(possibleNewEquation)) {
-						if(possibleNewEquation.getValueOfEquation().equals(GOAL)) {
+						if(possibleNewEquation.getValueOfEquation() == GOAL) {
 							addPossibleSolution(possibleNewEquation);
 						}
 						alreadyFound.add(possibleNewEquation);
@@ -114,7 +114,7 @@ public class Grammar {
 		for(HashMap<String, Double> otherEq : otherEqs) {
 			List<Double> values = new ArrayList<Double>();
 			for(List<Symbol> part : parts) {
-				Double value = 0.0;
+				double value = 0.0;
 				for(int i = 0; i < part.size(); i += 2) {
 					Operand op = (Operand) part.get(i);
 					Terminal v1 = (Terminal) part.get(i+1);
@@ -122,12 +122,12 @@ public class Grammar {
 				}
 				values.add(value);
 			}
-			Double value = 0.0;
+			double value = 0.0;
 			for(int i = 0; i < parts.size(); i++) {
 				Operand op = new Sum();
 				value = op.calculateValue(value, values.get(i));
 			}
-			if(!value.equals(otherEq.get("G"))) {
+			if(value != otherEq.get("G")) {
 				return;
 			}
 		}
@@ -143,7 +143,7 @@ public class Grammar {
 	 *            A double
 	 * @return result of value1 operand value2
 	 */
-	public static Double getValue(Double value1, Operand operand, Double value2) {
+	public static double getValue(double value1, Operand operand, double value2) {
 		return operand.calculateValue(value1, value2);
 	}
 }

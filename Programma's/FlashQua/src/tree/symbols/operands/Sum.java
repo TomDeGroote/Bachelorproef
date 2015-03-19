@@ -8,7 +8,7 @@ public class Sum extends Operand {
 	}
 
 	@Override
-	public Double calculateValue(Double value1, Double value2) {
+	public double calculateValue(double value1, double value2) {
 		return value1 + value2;
 	}
 
