@@ -1,6 +1,6 @@
-package tree.symbols.operands;
+package treebuilder.symbols.operands;
 
-import tree.symbols.Symbol;
+import treebuilder.symbols.Symbol;
 
 
 /**

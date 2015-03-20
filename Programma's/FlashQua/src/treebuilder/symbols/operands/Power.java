@@ -1,15 +1,15 @@
-package tree.symbols.operands;
+package treebuilder.symbols.operands;
 
 @SuppressWarnings("serial")
-public class Root extends Operand {
+public class Power extends Operand {
 
-	public Root() {
-		super.representation = "r";
+	public Power() {
+		super.representation = "^";
 	}
 
 	@Override
 	public double calculateValue(double value1, double value2) {
-		throw new IllegalArgumentException();
+		return Math.pow(value1, value2);
 	}
 
 	@Override
@@ -34,6 +34,6 @@ public class Root extends Operand {
 
 	@Override
 	public Operand getInverseOperand() {
-		return new Power();
+		return new Root();
 	}
 }

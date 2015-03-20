@@ -1,4 +1,4 @@
-package tree.symbols;
+package treebuilder.symbols;
 
 import java.io.Serializable;
 

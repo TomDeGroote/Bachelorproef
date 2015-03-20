@@ -1,15 +1,15 @@
-package tree.symbols.operands;
+package treebuilder.symbols.operands;
 
 @SuppressWarnings("serial")
-public class Sum extends Operand {
+public class Substraction extends Operand {
 
-	public Sum() {
-		super.representation = "+";
+	public Substraction() {
+		super.representation = "-";
 	}
 
 	@Override
 	public double calculateValue(double value1, double value2) {
-		return value1 + value2;
+		return value1 - value2;
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class Sum extends Operand {
 
 	@Override
 	public boolean isCommutative() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -34,6 +34,6 @@ public class Sum extends Operand {
 
 	@Override
 	public Operand getInverseOperand() {
-		return new Substraction();
+		return new Sum();
 	}
 }

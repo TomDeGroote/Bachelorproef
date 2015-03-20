@@ -10,9 +10,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import tree.Equation;
-import tree.Grammar;
-import tree.Tree;
+import research.RandomGenerator;
+import treebuilder.Equation;
+import treebuilder.Grammar;
+import treebuilder.Tree;
 import exceptions.MaxLevelReachedException;
 import exceptions.OutOfTimeException;
 
@@ -23,18 +24,37 @@ import exceptions.OutOfTimeException;
  */
 public class Main {
 	
-	public static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
-	public static double[] KS = new double[]{5.0, 6.0};
+	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
-	public final static int DEADLINE = -1;
-	public final static int MAXLEVEL = 4;
+	private final static int DEADLINE = -1;
+	private final static int MAXLEVEL = 5;
 	
-	public final static boolean INPUT = true;
-	public final static boolean PRINTTOFILE = false;
+	private final static boolean PRINTTOFILE = false;
+	
+	private final static boolean USERANDOM = true;
+	private final static int NROFKS = 3;
+	private final static int LENGTH = 4;
+	private final static int NROFEXAMPLES = 2;
+	private final static int MIN = 0;
+	private final static int MAX = 100;
+
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println();
-		List<double[]> input = readFile();
+		List<double[]> input = new ArrayList<double[]>();
+		if(USERANDOM) {
+			List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
+			for(List<Double> r : random) {
+				double[] row = new double[r.size()];
+				for(int i = 0; i < r.size(); i++) {
+					row[i] = r.get(i);
+				}
+				input.add(row);
+			}
+		} else {
+			input = readFile();
+		}
+		System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
 		Grammar.setColumnValues(input, WEIGHTS);
 		
 		Tree tree = new Tree();

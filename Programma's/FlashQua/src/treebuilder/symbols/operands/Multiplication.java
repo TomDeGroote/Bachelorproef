@@ -1,15 +1,15 @@
-package tree.symbols.operands;
+package treebuilder.symbols.operands;
 
 @SuppressWarnings("serial")
-public class Power extends Operand {
+public class Multiplication extends Operand {
 
-	public Power() {
-		super.representation = "^";
+	public Multiplication() {
+		super.representation = "*";
 	}
 
 	@Override
 	public double calculateValue(double value1, double value2) {
-		return Math.pow(value1, value2);
+		return value1 * value2;
 	}
 
 	@Override
@@ -19,13 +19,14 @@ public class Power extends Operand {
 
 	@Override
 	public boolean isCommutative() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public Double getNeutralElement() {
 		return 1.0;
 	}
+	
 
 	@Override
 	public Double calculateValue(Double value) {
@@ -34,6 +35,6 @@ public class Power extends Operand {
 
 	@Override
 	public Operand getInverseOperand() {
-		return new Root();
+		return new Division();
 	}
 }

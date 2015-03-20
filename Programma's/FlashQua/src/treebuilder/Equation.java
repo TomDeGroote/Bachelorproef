@@ -1,4 +1,4 @@
-package tree;
+package treebuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import tree.symbols.Symbol;
-import tree.symbols.Terminal;
-import tree.symbols.operands.Division;
-import tree.symbols.operands.Multiplication;
-import tree.symbols.operands.Operand;
-import tree.symbols.operands.Sum;
+import treebuilder.symbols.Symbol;
+import treebuilder.symbols.Terminal;
+import treebuilder.symbols.operands.Division;
+import treebuilder.symbols.operands.Multiplication;
+import treebuilder.symbols.operands.Operand;
+import treebuilder.symbols.operands.Sum;
 import exceptions.EquationHasSolutionException;
 import exceptions.UselessEquationException;
 

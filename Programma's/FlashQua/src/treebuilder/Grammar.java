@@ -1,18 +1,19 @@
-package tree;
+package treebuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import tree.symbols.Symbol;
-import tree.symbols.Terminal;
-import tree.symbols.operands.Division;
-import tree.symbols.operands.Multiplication;
-import tree.symbols.operands.Operand;
-import tree.symbols.operands.Power;
-import tree.symbols.operands.Substraction;
-import tree.symbols.operands.Sum;
+import treebuilder.Equation;
+import treebuilder.symbols.Symbol;
+import treebuilder.symbols.Terminal;
+import treebuilder.symbols.operands.Division;
+import treebuilder.symbols.operands.Multiplication;
+import treebuilder.symbols.operands.Operand;
+import treebuilder.symbols.operands.Power;
+import treebuilder.symbols.operands.Substraction;
+import treebuilder.symbols.operands.Sum;
 
 /**
  * Represents the grammar that is going to be used to construct the Equation
@@ -146,5 +147,9 @@ public class Grammar {
 	 */
 	public static double getValue(double value1, Operand operand, double value2) {
 		return operand.calculateValue(value1, value2);
+	}
+	
+	public static Operand[] getPossibleOperands() {
+		return OPERANDS;
 	}
 }

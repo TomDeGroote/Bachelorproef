@@ -1,9 +1,11 @@
-package tree;
+package treebuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import treebuilder.Equation;
+import treebuilder.Grammar;
 import exceptions.MaxLevelReachedException;
 import exceptions.OutOfTimeException;
 

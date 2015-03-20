@@ -6,11 +6,11 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import tree.Equation;
-import tree.symbols.Symbol;
-import tree.symbols.Terminal;
-import tree.symbols.operands.Multiplication;
-import tree.symbols.operands.Sum;
+import treebuilder.symbols.Symbol;
+import treebuilder.symbols.Terminal;
+import treebuilder.symbols.operands.Multiplication;
+import treebuilder.symbols.operands.Sum;
+import treebuilder.Equation;
 
 public class EquationTest {
 
