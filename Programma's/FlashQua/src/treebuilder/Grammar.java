@@ -22,7 +22,7 @@ import treebuilder.symbols.operands.Sum;
  * @author Jeroen & Tom
  *
  */
-public class Grammar {
+public class Grammar implements Runnable {
 	public static final String NONTERMINALREP = "E";
 	public static final String TERMINALREP = "E";
 	public static Terminal[] KS;
@@ -151,5 +151,29 @@ public class Grammar {
 	
 	public static Operand[] getPossibleOperands() {
 		return OPERANDS;
+	}
+
+	private Equation toExpand;
+	public Grammar(Equation equation) {
+		this.toExpand = equation;
+	}
+	
+	@Override
+	public void run() {
+		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
+			for(Terminal K : KS) { // expand for every possible K
+				// add the made expansion to the list of expansion equations
+				Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K);
+				if(possibleNewEquation != null) {
+					if(!Tree.alreadyFound.contains(possibleNewEquation)) {
+						if(possibleNewEquation.getValueOfEquation() == GOAL) {
+							addPossibleSolution(possibleNewEquation);
+						}
+						Tree.alreadyFound.add(possibleNewEquation);
+					}
+				}
+			}
+		}
+		
 	}
 }

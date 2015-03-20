@@ -27,11 +27,11 @@ public class Main {
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
 	private final static int DEADLINE = -1;
-	private final static int MAXLEVEL = 5;
+	private final static int MAXLEVEL = 4;
 	
 	private final static boolean PRINTTOFILE = false;
 	
-	private final static boolean USERANDOM = true;
+	private final static boolean USERANDOM = false;
 	private final static int NROFKS = 3;
 	private final static int LENGTH = 4;
 	private final static int NROFEXAMPLES = 2;
@@ -39,7 +39,7 @@ public class Main {
 	private final static int MAX = 100;
 
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println();
 		List<double[]> input = new ArrayList<double[]>();
 		if(USERANDOM) {
@@ -51,10 +51,10 @@ public class Main {
 				}
 				input.add(row);
 			}
+			System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
 		} else {
 			input = readFile();
 		}
-		System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
 		Grammar.setColumnValues(input, WEIGHTS);
 		
 		Tree tree = new Tree();
