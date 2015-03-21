@@ -27,7 +27,7 @@ public class Main {
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
 	private final static int DEADLINE = -1;
-	private final static int MAXLEVEL = 4;
+	private final static int MAXLEVEL = 5;
 	
 	private final static boolean PRINTTOFILE = false;
 	
@@ -76,6 +76,7 @@ public class Main {
 			System.out.println("Writing to file!");
 			printTreeToFile(tree);
 		}
+		System.out.println("Done!");
 	}
 	
 	

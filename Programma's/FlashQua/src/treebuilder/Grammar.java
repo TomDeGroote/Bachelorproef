@@ -154,6 +154,7 @@ public class Grammar implements Runnable {
 	}
 
 	private Equation toExpand;
+	public List<Equation> found = new ArrayList<Equation>();
 	public Grammar(Equation equation) {
 		this.toExpand = equation;
 	}
@@ -169,7 +170,8 @@ public class Grammar implements Runnable {
 						if(possibleNewEquation.getValueOfEquation() == GOAL) {
 							addPossibleSolution(possibleNewEquation);
 						}
-						Tree.alreadyFound.add(possibleNewEquation);
+						found.add(possibleNewEquation);
+//						Tree.alreadyFound.add(possibleNewEquation);
 					}
 				}
 			}

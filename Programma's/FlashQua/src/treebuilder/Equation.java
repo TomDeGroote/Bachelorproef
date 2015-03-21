@@ -38,7 +38,7 @@ public class Equation implements Serializable {
 	 * 
 	 */
 	public Equation(Terminal t) {
-		System.nanoTime(); // Increases time.. A Lot..
+//		System.nanoTime(); // Increases time.. A Lot..
 		lastSplitableOperand = new Sum();
 		List<Symbol> firstPart = new ArrayList<Symbol>();
 		firstPart.add(lastSplitableOperand);
@@ -51,7 +51,7 @@ public class Equation implements Serializable {
 	
 
 	public Equation(List<List<Symbol>> nonSplitableParts, Operand lastSplitableOperand, double valueRestOfEquation, double valueOfLastSplitable, double value, HashMap<Symbol, Integer> terminalCounter) {
-		System.nanoTime(); // Increases time.. A Lot..
+//		System.nanoTime(); // Increases time.. A Lot..
 		this.nonSplitableParts = nonSplitableParts;
 		this.lastSplitableOperand = lastSplitableOperand;
 		this.valueOfLastSplitable = valueOfLastSplitable;

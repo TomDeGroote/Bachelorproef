@@ -19,6 +19,7 @@ public class Tree {
 	private static int equation = 0;
 	
 	private static Thread[] threads;
+	private static int THREADSIZE = 20;
 
 	// The tree itself
 	private List<HashSet<Equation>> tree = new ArrayList<HashSet<Equation>>();
@@ -40,26 +41,38 @@ public class Tree {
 		while(true) {
 			alreadyFound = new HashSet<Equation>();
 			List<Equation> previousLevel = new ArrayList<Equation>(tree.get(level-1));
-			threads = new Thread[previousLevel.size()];
+			threads = new Thread[THREADSIZE];
+			Grammar[] grammars = new Grammar[THREADSIZE];
 			for (; equation < previousLevel.size(); equation++) {
 				if((System.currentTimeMillis() - startTime) < deadline || deadline < 0) {
 					Equation eq = previousLevel.get(equation);
-					threads[equation] = new Thread(new Grammar(eq)); // start a new thread to expand the equation
-					threads[equation].start();
-					Grammar.expand(tree.get(tree.size()-1), eq);
+					grammars[equation%THREADSIZE] = new Grammar(eq);
+					threads[equation%THREADSIZE] = new Thread(grammars[equation%THREADSIZE]); // start a new thread to expand the equation
+					threads[equation%THREADSIZE].start();
+//					alreadyFound.addAll(Grammar.expand(tree.get(tree.size()-1), eq));
+					if(equation%THREADSIZE+1 == THREADSIZE) {
+						for(int i = 0; i < threads.length; i++) {
+							threads[i].join();
+							alreadyFound.addAll(grammars[i].found);
+						}
+						threads = new Thread[THREADSIZE];
+					}
 				} else {
 					throw new OutOfTimeException("Out of time");
 				}
 			}
 			for(int i = 0; i < threads.length; i++) {
-				threads[i].join();
+				if(threads[i] != null) {
+					threads[i].join();
+					alreadyFound.addAll(grammars[i].found);
+				}
 			}
 			equation = 0;
 			level++;
+			tree.add(alreadyFound);
 			if(level > maxlevel-2 && maxlevel > 0) {
 				throw new MaxLevelReachedException("Maximum level reached");
 			}
-			tree.add(alreadyFound);
 		}
 	}
 
