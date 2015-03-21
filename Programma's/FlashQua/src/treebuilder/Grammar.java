@@ -73,7 +73,7 @@ public class Grammar implements Runnable {
 	public static HashSet<Equation> getStartEquation() {
 		HashSet<Equation> eqs = new HashSet<Equation>();
 		for(Terminal K : KS) {
-			eqs.add(new Equation(K));
+			eqs.add(new Equation(K, KS.length+1));
 		}
 		return eqs;
 	}

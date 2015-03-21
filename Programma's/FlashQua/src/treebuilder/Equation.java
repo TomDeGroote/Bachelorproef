@@ -18,10 +18,10 @@ import treebuilder.symbols.operands.Sum;
 @SuppressWarnings("serial")
 public class Equation implements Serializable {
 	
-	private List<NonSplittable> nonSplitableParts = new ArrayList<NonSplittable>();
+	public List<NonSplittable> nonSplitableParts = new ArrayList<NonSplittable>();
 	private double valueRestOfEquation = 0.0;
 	private boolean pruned = false;
-	private double value = 0.0;
+	public double value = 0.0;
 	private List<Integer> terminalCounter = new ArrayList<Integer>();
 	private final int HASHCODE;
 	
@@ -30,11 +30,14 @@ public class Equation implements Serializable {
 	 * This constructor will generate an equation = E
 	 * 
 	 */
-	public Equation(Terminal t) {
+	public Equation(Terminal t, int nrOfColumns) {
 		NonSplittable firstPart = new NonSplittable(new Sum(), t);
 		nonSplitableParts.add(firstPart);
 		this.value = firstPart.getValue();
 		this.HASHCODE = getHashCode();
+		for(int i = 0; i < nrOfColumns; i++) {
+			terminalCounter.add(0);
+		}
 		terminalCounter.add(t.getNumber(), 1);
 	}
 	

@@ -64,5 +64,9 @@ public abstract class Operand extends Symbol {
 		return true;
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		Operand otherOperand = (Operand) obj;
+		return otherOperand.representation.equals(this.representation);
+	}
 }

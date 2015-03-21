@@ -6,51 +6,63 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import treebuilder.symbols.Symbol;
-import treebuilder.symbols.Terminal;
+import treebuilder.Equation;
+import treebuilder.NonSplittable;
+import treebuilder.symbols.ColumnValue;
+import treebuilder.symbols.Weight;
 import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Sum;
-import treebuilder.Equation;
 
 public class EquationTest {
 
 	@Test
 	public void equalEquationTest() {
-		List<List<Symbol>> parts1 = new ArrayList<List<Symbol>>();
-		List<Symbol> part1 = new ArrayList<Symbol>();
-		part1.add(new Sum());
-		part1.add(new Terminal("K0", 5.0, false));
-		part1.add(new Multiplication());
-		part1.add(new Terminal("W3", 3.0, true));
-		List<Symbol> part2 = new ArrayList<Symbol>();
-		part2.add(new Sum());
-		part2.add(new Terminal("K1", 6.0, false));
+		List<NonSplittable> parts1 = new ArrayList<NonSplittable>();
+		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		NonSplittable part2 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
 		parts1.add(part1);
 		parts1.add(part2);
 		
-		List<List<Symbol>> parts2 = new ArrayList<List<Symbol>>();
-		List<Symbol> part3 = new ArrayList<Symbol>();
-		part3.add(new Sum());
-		part3.add(new Terminal("K1", 6.0, false));
-		List<Symbol> part4 = new ArrayList<Symbol>();
-		part4.add(new Sum());
-		part4.add(new Terminal("K0", 5.0, false));
-		part4.add(new Multiplication());
-		part4.add(new Terminal("W3", 3.0, true));
+		List<NonSplittable> parts2 = new ArrayList<NonSplittable>();
+		NonSplittable part3 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
+		NonSplittable part4 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
+		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0));
 		parts2.add(part3);
 		parts2.add(part4);
 		
-		Equation eq1 = new Equation(new Terminal("Fuck", 2.0, false));
+		Equation eq1 = new Equation(new ColumnValue(2.0, 5), 5);
 		eq1.value = 31.0;
 		eq1.nonSplitableParts = parts1;
 		
-		Equation eq2 = new Equation(new Terminal("Fuck", 2.0, false));
+		Equation eq2 = new Equation(new ColumnValue(2.0, 5), 5);
 		eq2.value = 31.0;
 		eq2.nonSplitableParts = parts2;
 		
 		System.out.println(eq1);
 		System.out.println(eq2);
 		Assert.assertEquals(true, eq1.equals(eq2));
+		Assert.assertEquals(true, eq1.hashCode() == eq2.hashCode());
+
+	}
+	
+	@Test
+	public void equalNonSplittablePartsTest() {
+		
+		// +K0*W3 = 15
+		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		// +K1 = 6
+		NonSplittable part2 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
+		
+		// +K1 = 6
+		NonSplittable part3 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
+		// +K0*W3 = 15
+		NonSplittable part4 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
+		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0));
+		
+		Assert.assertEquals(true, part1.equals(part4));
+		Assert.assertEquals(true, part2.equals(part3));
 	}
 
 }
