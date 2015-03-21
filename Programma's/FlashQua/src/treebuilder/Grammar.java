@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import treebuilder.Equation;
-import treebuilder.symbols.Symbol;
+import treebuilder.symbols.ColumnValue;
 import treebuilder.symbols.Terminal;
+import treebuilder.symbols.Weight;
 import treebuilder.symbols.operands.Division;
 import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Operand;
@@ -21,17 +21,19 @@ import treebuilder.symbols.operands.Sum;
  * 
  * @author Jeroen & Tom
  *
+ * TODO weights not supported anymore
  */
 public class Grammar implements Runnable {
-	public static final String NONTERMINALREP = "E";
-	public static final String TERMINALREP = "E";
-	public static Terminal[] KS;
-	public static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
-	public static double GOAL;
-	public static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String,Double>>();
-	
-	public static HashSet<Equation> solutions = new HashSet<Equation>();
-	public static int AVOIDED = 0;
+	// The column values, weights and operands for all grammars
+	private static ColumnValue[] KS;
+	private static Weight[] WEIGTHS;
+	private static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
+	// The goal for all grammars
+	private static double GOAL;
+	// The other equations that should be fulfilled
+	private static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
+	// The found solutions
+	private static HashSet<Equation> solutions = new HashSet<Equation>();
 	
 	
 	/**
@@ -43,34 +45,30 @@ public class Grammar implements Runnable {
 	 * 			The weights
 	 */
 	public static void setColumnValues(List<double[]> multiInput, double[] weights) {
-		// set first equation that will be used to evaluate the rest TODO pick hardest equation
-		double[] input = multiInput.get(0);
-		Grammar.KS = new Terminal[weights.length+input.length-1]; 
-		int i = 0;
-		for(i = 0; i < input.length-1; i++) {
-			Grammar.KS[i] = new Terminal("K" + i, input[i], false);
+		// initialize the space for the other equations
+		for(int i = 1; i < multiInput.size(); i++) {
+			otherEqs.add(new HashMap<String, Double>());
 		}
-		for(double weight : weights) {
-			Grammar.KS[i++] = new Terminal("W"+ (int) weight, weight, true);
-		}
-		GOAL = input[input.length-1];
 		
-		for(i = 1; i < multiInput.size(); i++) {
-			HashMap<String, Double> terms = new HashMap<String, Double>();
-			for(int j = 0; j < multiInput.get(i).length-1; j++) {
-				terms.put("K" + j, multiInput.get(i)[j]);
+		// set first column values for all grammars
+		KS = new ColumnValue[multiInput.get(0).length];
+		for(int i = 0; i < KS.length; i++) {
+			KS[i] = new ColumnValue(multiInput.get(0)[i], i);
+			// add the column value to all other equations
+			for(int j = 0; j < otherEqs.size(); j++) {
+				otherEqs.get(j).put(KS[i].toString(), multiInput.get(j+1)[i]);
 			}
-			for(double weight : weights) {
-				terms.put("W"+ (int) weight, weight);
-			}
-			terms.put("G", multiInput.get(i)[multiInput.get(i).length-1]);
-			otherEqs.add(terms);
+		}
+		
+		// set weights for all grammars
+		WEIGTHS = new Weight[weights.length];
+		for(int i = 0; i < WEIGTHS.length; i++) {
+			WEIGTHS[i] = new Weight(weights[i]);
 		}
 	}
 	
 	/**
-	 * @return
-	 * 			The first equation of the Grammar
+	 * @return The first equation of the Grammar
 	 */
 	public static HashSet<Equation> getStartEquation() {
 		HashSet<Equation> eqs = new HashSet<Equation>();
@@ -94,7 +92,7 @@ public class Grammar implements Runnable {
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
 			for(Terminal K : KS) { // expand for every possible K
 				// add the made expansion to the list of expansion equations
-				Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
+				Equation possibleNewEquation = Equation.createEquation(equation, operand, K, GOAL);
 				if(possibleNewEquation != null) {
 					if(!alreadyFound.contains(possibleNewEquation)) {
 						if(possibleNewEquation.getValueOfEquation() == GOAL) {
@@ -111,29 +109,37 @@ public class Grammar implements Runnable {
 	/**
 	 * Add possible solutions
 	 */
-	public static void addPossibleSolution(Equation eq) {
-		List<List<Symbol>> parts = eq.getEquationParts();
-		for(HashMap<String, Double> otherEq : otherEqs) {
-			List<Double> values = new ArrayList<Double>();
-			for(List<Symbol> part : parts) {
-				double value = 0.0;
-				for(int i = 0; i < part.size(); i += 2) {
-					Operand op = (Operand) part.get(i);
-					Terminal v1 = (Terminal) part.get(i+1);
-					value = op.calculateValue(value, otherEq.get(v1.toString()));
-				}
+	public static boolean addPossibleSolution(Equation eq) {
+		List<NonSplittable> nonSplittableParts = eq.getEquationParts();
+		
+		for(HashMap<String, Double> otherEq : otherEqs) { // check for every other input if equation is possible
+			
+			List<Double> values = new ArrayList<Double>();	// the values of every seperate part
+			for(NonSplittable part : nonSplittableParts) {
+				double value = ((Operand) part.getSymbols().get(0)).calculateValue(otherEq.get(((Terminal) part.getSymbols().get(1)).toString()));
+				for(int i = 2; i < part.getSymbols().size(); i = i+2) {
+					value = ((Operand) part.getSymbols().get(0)).calculateValue(value, otherEq.get(((Terminal) part.getSymbols().get(1)).toString()));				}
 				values.add(value);
 			}
-			double value = 0.0;
-			for(int i = 0; i < parts.size(); i++) {
-				Operand op = new Sum();
-				value = op.calculateValue(value, values.get(i));
+			
+			double result = nonSplittableParts.get(0).getFirstOperand().calculateValue(values.get(0));
+			for(int i = 1; i < values.size(); i++) {
+				result = nonSplittableParts.get(i).getFirstOperand().calculateValue(result, values.get(i));
 			}
-			if(value != otherEq.get("G")) {
-				return;
+			
+			if(result != GOAL) {
+				return false;
 			}
 		}
 		solutions.add(eq);
+		return true;
+	}
+	
+	/**
+	 * @return the solotions found with this grammar
+	 */
+	public HashSet<Equation> getSolutions() {
+		return Grammar.solutions;
 	}
 
 	/**
@@ -164,7 +170,7 @@ public class Grammar implements Runnable {
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
 			for(Terminal K : KS) { // expand for every possible K
 				// add the made expansion to the list of expansion equations
-				Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K);
+				Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K, GOAL);
 				if(possibleNewEquation != null) {
 					if(!Tree.alreadyFound.contains(possibleNewEquation)) {
 						if(possibleNewEquation.getValueOfEquation() == GOAL) {

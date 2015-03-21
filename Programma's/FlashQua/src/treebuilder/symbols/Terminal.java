@@ -7,15 +7,12 @@ package treebuilder.symbols;
  *
  */
 @SuppressWarnings("serial")
-public class Terminal extends Symbol {
+public abstract class Terminal extends Symbol {
 
 	private final Double value;
-	private final boolean isWeight;
 	
-	public Terminal(String terminal, Double value, boolean isWeight) {
-		super.representation = terminal;
+	public Terminal(double value) {
 		this.value = value;
-		this.isWeight = isWeight;
 	}
 	
 	@Override
@@ -27,16 +24,22 @@ public class Terminal extends Symbol {
 	 * @return
 	 * 		The value of this terminal
 	 */
-	public Double getValue() {
-		return value;
+	public double getValue() {
+		return this.value;
 	}
 
 	/**
-	 * @return the isWeight
+	 * @return
+	 * 		True if this is a weight
+	 * 		False if this is a column value
 	 */
-	public boolean isWeight() {
-		return isWeight;
-	}
+	public abstract boolean isWeight();
+	
+	/**
+	 * @return the number of this terminal
+	 * 		-> in case of this being a weight the number will be equal  to the value
+	 */
+	public abstract int getNumber();
 	
 	
 	
