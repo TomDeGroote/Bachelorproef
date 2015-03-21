@@ -122,20 +122,27 @@ public class Grammar implements Runnable {
 	 */
 	public static boolean addPossibleSolution(Equation eq) {
 		List<NonSplittable> nonSplittableParts = eq.getEquationParts();
-		
+		if("+K0^W2.0-K1".equals(eq.toString())) {
+			System.out.println("Got ya!");
+		}
 		for(int j = 0; j < otherEqs.size(); j++) { // check for every other input if equation is possible
 			HashMap<String, Double> otherEq = otherEqs.get(j);
 			List<Double> values = new ArrayList<Double>();	// the values of every seperate part
 			for(NonSplittable part : nonSplittableParts) {
-				double value = ((Operand) part.getSymbols().get(0)).calculateValue(otherEq.get(((Terminal) part.getSymbols().get(1)).toString()));
-				for(int i = 2; i < part.getSymbols().size(); i = i+2) {
-					value = ((Operand) part.getSymbols().get(0)).calculateValue(value, otherEq.get(((Terminal) part.getSymbols().get(1)).toString()));				}
+				double value = 0.0;
+				for(int i = 0; i < part.getSymbols().size(); i += 2) {
+					if(((Terminal) part.getSymbols().get(i+1)).isWeight()) {
+						value = ((Operand) part.getSymbols().get(i)).calculateValue(value, ((Terminal) part.getSymbols().get(i+1)).getValue());
+					} else {
+						value = ((Operand) part.getSymbols().get(i)).calculateValue(value, otherEq.get(((Terminal) part.getSymbols().get(i+1)).toString()));
+					}
+				}
 				values.add(value);
 			}
 			
-			double result = nonSplittableParts.get(0).getFirstOperand().calculateValue(values.get(0));
-			for(int i = 1; i < values.size(); i++) {
-				result = nonSplittableParts.get(i).getFirstOperand().calculateValue(result, values.get(i));
+			double result = 0.0;
+			for(double v : values) {
+				result += v;
 			}
 			
 			if(result != otherGoals.get(j)) {

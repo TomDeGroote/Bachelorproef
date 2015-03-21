@@ -53,6 +53,13 @@ public class NonSplittable {
 	}
 	
 	/**
+	 * @return The last terminal of this NonSplitable
+	 */
+	public Terminal getLastTerminal() {
+		return (Terminal) symbols.get(symbols.size()-1);
+	}
+	
+	/**
 	 * @return The symbols of this nonSplitable
 	 */
 	public List<Symbol> getSymbols() {

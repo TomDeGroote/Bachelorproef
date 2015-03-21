@@ -66,7 +66,6 @@ public class Equation implements Serializable {
 		}
 		
 		if(operand.isSplitable()) {
-			
 			// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
 			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
 				if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
@@ -103,6 +102,10 @@ public class Equation implements Serializable {
 			return new Equation(newNonSplittableParts, newRestOfEquationValue, newValue, newTerminalCounter);
 			
 		} else {
+			// W1.0*K1 should not exist
+			if(previous.getLastNonSplittable().getLastTerminal().isWeight() && previous.getLastNonSplittable().getLastTerminal().getValue() == operand.getNeutralElement()) {
+				return null;
+			}
 			
 			// The value of the terminal we are going to add should be bigger than (or equal) to the last terminal part that starts with the same operand
 			for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
@@ -114,10 +117,11 @@ public class Equation implements Serializable {
 				}
 			}
 			
+			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
+
 			// The value of the terminal we are going to add keep the new NonSplittable part bigger than (or equal) to the last nonSplittable part that starts with the same operand
 			// Can not be done because the equation can't start with a minus!!
-			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
-//			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
+//			for(int i = previous.getEquationParts().size()-2; i >= 0; i--) {
 //				if(previous.getEquationParts().get(i).getFirstOperand().equals(newNonSplittable.getFirstOperand())) {
 //					if(previous.getEquationParts().get(i).getValue() > newNonSplittable.getValue()) {
 //						return null;
