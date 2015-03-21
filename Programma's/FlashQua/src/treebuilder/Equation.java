@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import treebuilder.symbols.Symbol;
 import treebuilder.symbols.Terminal;
+import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Operand;
 import treebuilder.symbols.operands.Sum;
 
@@ -121,6 +122,15 @@ public class Equation implements Serializable {
 						return null;
 					}
 					break;
+				}
+			}
+			
+			// There should not be a K0/K0
+			List<Symbol> nonSplittablePrevious = new ArrayList<Symbol>(previous.getLastNonSplittable().getSymbols());
+			nonSplittablePrevious.set(0, new Multiplication());
+			for(int i = 0; i < nonSplittablePrevious.size(); i += 2) {
+				if(nonSplittablePrevious.get(i).equals(operand.getInverseOperand()) && nonSplittablePrevious.get(i+1).equals(terminal)) {
+					return null;
 				}
 			}
 			

@@ -7,6 +7,7 @@ import treebuilder.symbols.Symbol;
 import treebuilder.symbols.Terminal;
 import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Operand;
+import treebuilder.symbols.operands.Sum;
 
 public class NonSplittable {
 
@@ -20,7 +21,7 @@ public class NonSplittable {
 	 */
 	public NonSplittable(Operand nextOperand, Terminal nextTerminal) {
 		this.symbols = new ArrayList<Symbol>();
-		this.value = nextOperand.calculateValue(nextTerminal.getValue());
+		this.value = (new Sum()).calculateValue(nextTerminal.getValue());
 		symbols.add(nextOperand);
 		symbols.add(nextTerminal);
 	}
@@ -69,6 +70,7 @@ public class NonSplittable {
 
 	/**
 	 * @return the value of this nonSplitable
+	 * always positive!
 	 */
 	public double getValue() {
 		return value;

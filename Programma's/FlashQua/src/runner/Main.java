@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import research.RandomGenerator;
@@ -69,6 +70,7 @@ public class Main {
 		System.out.println("Done: " + (System.currentTimeMillis()-start));
 		
 		System.out.println("\nSolutions:");
+		HashSet<Equation> sol = Grammar.getSolutions();
 		for(Equation eq : Grammar.getSolutions()) {
 			System.out.println(eq + " => " + eq.hashCode());
 		}

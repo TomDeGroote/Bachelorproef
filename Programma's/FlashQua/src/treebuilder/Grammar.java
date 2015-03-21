@@ -174,9 +174,6 @@ public class Grammar implements Runnable {
 	
 	@Override
 	public void run() {
-		if(this.toExpand.toString().equals("+K1")) {
-			System.out.println("expanding K1");
-		}
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
 			expand(operand, KS);
 			expand(operand, WEIGTHS);
