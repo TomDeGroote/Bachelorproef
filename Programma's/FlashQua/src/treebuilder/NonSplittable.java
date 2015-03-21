@@ -20,7 +20,7 @@ public class NonSplittable {
 	}
 	
 	public NonSplittable(NonSplittable previous, Operand nextOperand, Terminal nextTerminal) {
-		this.symbols = previous.getSymbols();
+		this.symbols = new ArrayList<Symbol>(previous.getSymbols());
 		this.value = nextOperand.calculateValue(previous.getValue(), nextTerminal.getValue());
 		symbols.add(nextOperand);
 		symbols.add(nextTerminal);

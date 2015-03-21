@@ -1,19 +1,14 @@
 package treebuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import treebuilder.symbols.Symbol;
 import treebuilder.symbols.Terminal;
-import treebuilder.symbols.operands.Division;
-import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Operand;
 import treebuilder.symbols.operands.Sum;
-import exceptions.EquationHasSolutionException;
-import exceptions.UselessEquationException;
 
 /**
  * Represents an equation that can be formed by combining symbols.
@@ -27,7 +22,7 @@ public class Equation implements Serializable {
 	private double valueRestOfEquation = 0.0;
 	private boolean pruned = false;
 	private double value = 0.0;
-	private HashMap<Symbol, Integer> terminalCounter = new HashMap<Symbol, Integer>();
+	private List<Integer> terminalCounter = new ArrayList<Integer>();
 	private final int HASHCODE;
 	
 	/**
@@ -40,11 +35,11 @@ public class Equation implements Serializable {
 		nonSplitableParts.add(firstPart);
 		this.value = firstPart.getValue();
 		this.HASHCODE = getHashCode();
-		terminalCounter.put(t, 1);
+		terminalCounter.add(t.getNumber(), 1);
 	}
 	
 
-	public Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, HashMap<Symbol, Integer> terminalCounter) {
+	public Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, List<Integer> terminalCounter) {
 //		System.nanoTime(); // Increases time.. A Lot..
 		this.nonSplitableParts = nonSplitableParts;
 		this.valueRestOfEquation = valueRestOfEquation;
@@ -68,35 +63,94 @@ public class Equation implements Serializable {
 		
 		if(operand.isSplitable()) {
 			
+			// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
+			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
+				if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
+					if(previous.getEquationParts().get(i).getValue() < terminal.getValue()) {
+						return null;
+					}
+					break;
+				}
+			}
+			
+			// create equation and return it
+			List<NonSplittable> newNonSplittableParts = new ArrayList<NonSplittable>(previous.getEquationParts());
+			newNonSplittableParts.add(new NonSplittable(operand, terminal));
+			
+			double newRestOfEquationValue = previous.getLastNonSplittable().getFirstOperand().calculateValue(previous.getValueRestOfEquation(), previous.getLastNonSplittable().getValue());
+			double newValue = operand.calculateValue(newRestOfEquationValue, terminal.getValue());
+			
+			List<Integer> newTerminalCounter = new ArrayList<Integer>(previous.getTerminalCounter());
+			newTerminalCounter.set(terminal.getNumber(), newTerminalCounter.get(terminal.getNumber()) + 1);
+			
+			return new Equation(newNonSplittableParts, newRestOfEquationValue, newValue, newTerminalCounter);
+			
+		} else {
+			
+			// The value of the terminal we are going to add should be bigger than (or equal) to the last terminal part that starts with the same operand
+			for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
+				if(previous.getLastNonSplittable().getSymbols().get(i).equals(operand)) {
+					if(((Terminal) previous.getLastNonSplittable().getSymbols().get(i+1)).getValue() < terminal.getValue()) {
+						return null;
+					}
+					break;
+				}
+			}
+			
+			// The value of the terminal we are going to add keep the new NonSplittable part bigger than (or equal) to the last nonSplittable part that starts with the same operand
+			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
+			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
+				if(previous.getEquationParts().get(i).getFirstOperand().equals(newNonSplittable.getFirstOperand())) {
+					if(previous.getEquationParts().get(i).getValue() < newNonSplittable.getValue()) {
+						return null;
+					}
+					break;
+				}
+			}
+			
+			// create equation
+			List<NonSplittable> newNonSplittableParts = new ArrayList<NonSplittable>(previous.getEquationParts());
+			newNonSplittableParts.set(newNonSplittableParts.size()-1, newNonSplittable);
+			
+			double newValue = newNonSplittable.getFirstOperand().calculateValue(previous.getValueRestOfEquation(), newNonSplittable.getValue());
+			
+			List<Integer> newTerminalCounter = new ArrayList<Integer>(previous.getTerminalCounter());
+			newTerminalCounter.set(terminal.getNumber(), newTerminalCounter.get(terminal.getNumber()) + 1);
+
+			return new Equation(newNonSplittableParts, previous.getValueRestOfEquation(), newValue, newTerminalCounter);
 		}
-		
-		
-		
-		
-		return null;
 	}
 	
 	/**
-	 * @return
-	 * 			The split parts of this equation
+	 * @return The last nonSplittable part of this equation
+	 */
+	public NonSplittable getLastNonSplittable() {
+		return this.getEquationParts().get(this.getEquationParts().size()-1);
+	}
+	
+	/**
+	 * @return The split parts of this equation
 	 */
 	public List<NonSplittable> getEquationParts() {
 		return nonSplitableParts;
 	}
 	
 	/**
-	 * 
-	 * @return
-	 * 		The value of this equation
+	 * @return The value of this equation
 	 */
 	public double getValueOfEquation() {
 		return value;
 	}
 	
 	/**
-	 * 
-	 * @return
-	 * 		The value of this equation
+	 * @return The value of the rest of this equation
+	 */
+	public double getValueRestOfEquation() {
+		return valueRestOfEquation;
+	}
+	
+	/**
+	 * @return The value of this equation
 	 */
 	public static double calculateValueOfEquation(Operand lastSplitableOperand, double valueRestOfEquation, double valueOfLastSplitable) {
 		// operand between rest of equation and lastNonSplitablePart can be found at the first position of the lastNonSplitable part
@@ -104,8 +158,7 @@ public class Equation implements Serializable {
 	}
 
 	/**
-	 * @return
-	 * 		Returns the list of symbols of this equation, the symbols are in order.
+	 * @return Returns the list of symbols of this equation, the symbols are in order.
 	 */
 	public List<Symbol> getListOfSymbols() {
 		List<Symbol> symbols = new ArrayList<Symbol>();
@@ -118,7 +171,7 @@ public class Equation implements Serializable {
 	}
 	
 	/**
-	 * Returns a string version of this equation
+	 * @return a string version of this equation
 	 */
 	@Override
 	public String toString() {
@@ -158,14 +211,14 @@ public class Equation implements Serializable {
 	
 	/**
 	 * Calculates the HashCode of this equation
-	 * @return
+	 * @return the hashCode
 	 */
 	private int getHashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
 		            append(getValueOfEquation()).
 		            append(nonSplitableParts.size());
-		for(Symbol s : getTerminalCounter().keySet()) {
-			builder.append(s + " " + getTerminalCounter().get(s));
+		for(int s : getTerminalCounter()) {
+			builder.append(s);
 		}
 		return builder.toHashCode();
 	}
@@ -173,7 +226,7 @@ public class Equation implements Serializable {
 	/**
 	 * @return the number of appearances of all terminals in this equation
 	 */
-	public HashMap<Symbol, Integer> getTerminalCounter() {
+	public List<Integer> getTerminalCounter() {
 		return terminalCounter;
 	}
 

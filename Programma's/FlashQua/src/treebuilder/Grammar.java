@@ -138,7 +138,7 @@ public class Grammar implements Runnable {
 	/**
 	 * @return the solotions found with this grammar
 	 */
-	public HashSet<Equation> getSolutions() {
+	public static HashSet<Equation> getSolutions() {
 		return Grammar.solutions;
 	}
 

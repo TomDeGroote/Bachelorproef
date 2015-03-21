@@ -69,7 +69,7 @@ public class Main {
 		System.out.println("Done: " + (System.currentTimeMillis()-start));
 		
 		System.out.println("\nSolutions:");
-		for(Equation eq : Grammar.solutions) {
+		for(Equation eq : Grammar.getSolutions()) {
 			System.out.println(eq + " => " + eq.hashCode());
 		}
 		if(PRINTTOFILE) {
