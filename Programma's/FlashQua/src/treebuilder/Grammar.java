@@ -32,6 +32,7 @@ public class Grammar implements Runnable {
 	private static double GOAL;
 	// The other equations that should be fulfilled
 	private static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
+	private static List<Double> otherGoals = new ArrayList<Double>();
 	// The found solutions
 	private static HashSet<Equation> solutions = new HashSet<Equation>();
 	
@@ -51,13 +52,18 @@ public class Grammar implements Runnable {
 		}
 		
 		// set first column values for all grammars
-		KS = new ColumnValue[multiInput.get(0).length];
+		KS = new ColumnValue[multiInput.get(0).length-1];
 		for(int i = 0; i < KS.length; i++) {
 			KS[i] = new ColumnValue(multiInput.get(0)[i], i);
 			// add the column value to all other equations
 			for(int j = 0; j < otherEqs.size(); j++) {
 				otherEqs.get(j).put(KS[i].toString(), multiInput.get(j+1)[i]);
 			}
+		}
+		// set GOALs
+		GOAL = multiInput.get(0)[multiInput.get(0).length-1];
+		for(int i = 1; i < multiInput.size(); i++) {
+			otherGoals.add(multiInput.get(i)[multiInput.get(i).length-1]);
 		}
 		
 		// set weights for all grammars
@@ -112,8 +118,8 @@ public class Grammar implements Runnable {
 	public static boolean addPossibleSolution(Equation eq) {
 		List<NonSplittable> nonSplittableParts = eq.getEquationParts();
 		
-		for(HashMap<String, Double> otherEq : otherEqs) { // check for every other input if equation is possible
-			
+		for(int j = 0; j < otherEqs.size(); j++) { // check for every other input if equation is possible
+			HashMap<String, Double> otherEq = otherEqs.get(j);
 			List<Double> values = new ArrayList<Double>();	// the values of every seperate part
 			for(NonSplittable part : nonSplittableParts) {
 				double value = ((Operand) part.getSymbols().get(0)).calculateValue(otherEq.get(((Terminal) part.getSymbols().get(1)).toString()));
@@ -127,7 +133,7 @@ public class Grammar implements Runnable {
 				result = nonSplittableParts.get(i).getFirstOperand().calculateValue(result, values.get(i));
 			}
 			
-			if(result != GOAL) {
+			if(result != otherGoals.get(j)) {
 				return false;
 			}
 		}
