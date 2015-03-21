@@ -82,6 +82,10 @@ public class Grammar implements Runnable {
 			int terminalCounterSpace = KS.length+WEIGTHS.length;
 			eqs.add(new Equation(K, terminalCounterSpace));
 		}
+		for(Terminal K : WEIGTHS) {
+			int terminalCounterSpace = KS.length+WEIGTHS.length;
+			eqs.add(new Equation(K, terminalCounterSpace));
+		}
 		return eqs;
 	}
 

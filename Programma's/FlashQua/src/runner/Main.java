@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import research.RandomGenerator;
@@ -32,10 +31,10 @@ public class Main {
 	
 	private final static boolean PRINTTOFILE = false;
 	
-	private final static boolean USERANDOM = false;
+	private final static boolean USERANDOM = true;
 	private final static int NROFKS = 3;
 	private final static int LENGTH = 4;
-	private final static int NROFEXAMPLES = 2;
+	private final static int NROFEXAMPLES = 1;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
 
@@ -70,7 +69,6 @@ public class Main {
 		System.out.println("Done: " + (System.currentTimeMillis()-start));
 		
 		System.out.println("\nSolutions:");
-		HashSet<Equation> sol = Grammar.getSolutions();
 		for(Equation eq : Grammar.getSolutions()) {
 			System.out.println(eq + " => " + eq.hashCode());
 		}

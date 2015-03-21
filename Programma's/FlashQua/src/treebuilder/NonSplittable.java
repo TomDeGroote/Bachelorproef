@@ -65,7 +65,7 @@ public class NonSplittable {
 	public NonSplittable getInverseNonSplittable() {
 		List<Symbol> inverseSymbols = new ArrayList<Symbol>(getSymbols());
 		inverseSymbols.set(0, ((Operand) inverseSymbols.get(0)).getInverseOperand());
-		return new NonSplittable(inverseSymbols, ((Operand) inverseSymbols.get(0)).calculateValue(getValue()));
+		return new NonSplittable(inverseSymbols, (new Sum()).calculateValue(getValue()));
 	}
 
 	/**
