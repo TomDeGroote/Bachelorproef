@@ -76,9 +76,22 @@ public class Equation implements Serializable {
 				}
 			}
 			
+			// There should not be a -K1 if there is a +K1
+			if(previous.getEquationParts().contains(new NonSplittable(operand.getInverseOperand(), terminal))) {
+				return null;
+			}
+			
+			// the new part that may be added 
+			NonSplittable newNonSplittable = new NonSplittable(operand, terminal);
+			
+			// There should not be a +K1 if there is a +K1 (replaced by weights)
+			if(previous.getEquationParts().contains(newNonSplittable)) {
+				return null;
+			}
+			
 			// create equation and return it
 			List<NonSplittable> newNonSplittableParts = new ArrayList<NonSplittable>(previous.getEquationParts());
-			newNonSplittableParts.add(new NonSplittable(operand, terminal));
+			newNonSplittableParts.add(newNonSplittable);
 			
 			double newRestOfEquationValue = previous.getLastNonSplittable().getFirstOperand().calculateValue(previous.getValueRestOfEquation(), previous.getLastNonSplittable().getValue());
 			double newValue = operand.calculateValue(newRestOfEquationValue, terminal.getValue());
@@ -104,11 +117,22 @@ public class Equation implements Serializable {
 			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
 			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
 				if(previous.getEquationParts().get(i).getFirstOperand().equals(newNonSplittable.getFirstOperand())) {
-					if(previous.getEquationParts().get(i).getValue() < newNonSplittable.getValue()) {
+					if(previous.getEquationParts().get(i).getValue() > newNonSplittable.getValue()) {
 						return null;
 					}
 					break;
 				}
+			}
+			
+			// There should not be a -K0*K1 if there is a +K0*K1
+			NonSplittable inverseNonSplittable = newNonSplittable.getInverseNonSplittable();
+			if(previous.getEquationParts().contains(inverseNonSplittable)) {
+				return null;
+			}
+			
+			// There should not be a +K0*K1 if it already has a +K0*K1, replace by weights
+			if(previous.getEquationParts().contains(newNonSplittable)) {
+				return null;
 			}
 			
 			// create equation

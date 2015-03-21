@@ -25,6 +25,11 @@ public class NonSplittable {
 		symbols.add(nextTerminal);
 	}
 	
+	private NonSplittable(List<Symbol> symbols, double value) {
+		this.symbols = symbols;
+		this.value = value;
+	}
+	
 	/**
 	 * 
 	 * @param previous
@@ -51,6 +56,15 @@ public class NonSplittable {
 	 */
 	public List<Symbol> getSymbols() {
 		return symbols;
+	}
+	
+	/**
+	 * @return The symbols of this nonSplitable
+	 */
+	public NonSplittable getInverseNonSplittable() {
+		List<Symbol> inverseSymbols = new ArrayList<Symbol>(getSymbols());
+		inverseSymbols.set(0, ((Operand) inverseSymbols.get(0)).getInverseOperand());
+		return new NonSplittable(inverseSymbols, ((Operand) inverseSymbols.get(0)).calculateValue(getValue()));
 	}
 
 	/**

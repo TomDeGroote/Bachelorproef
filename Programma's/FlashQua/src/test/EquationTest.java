@@ -64,5 +64,15 @@ public class EquationTest {
 		Assert.assertEquals(true, part1.equals(part4));
 		Assert.assertEquals(true, part2.equals(part3));
 	}
+	
+	@Test
+	public void inverseNonSplittablePartsTest() {
+		
+		// +K0*W3 = 15
+		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		
+		Assert.assertEquals("-K0*W3.0", part1.getInverseNonSplittable().toString());
+	}
 
 }
