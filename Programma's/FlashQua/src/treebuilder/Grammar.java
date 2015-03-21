@@ -69,7 +69,7 @@ public class Grammar implements Runnable {
 		// set weights for all grammars
 		WEIGTHS = new Weight[weights.length];
 		for(int i = 0; i < WEIGTHS.length; i++) {
-			WEIGTHS[i] = new Weight(weights[i]);
+			WEIGTHS[i] = new Weight(weights[i], KS.length+i);
 		}
 	}
 	
@@ -79,7 +79,8 @@ public class Grammar implements Runnable {
 	public static HashSet<Equation> getStartEquation() {
 		HashSet<Equation> eqs = new HashSet<Equation>();
 		for(Terminal K : KS) {
-			eqs.add(new Equation(K, KS.length+1));
+			int terminalCounterSpace = KS.length+WEIGTHS.length;
+			eqs.add(new Equation(K, terminalCounterSpace));
 		}
 		return eqs;
 	}
@@ -94,23 +95,23 @@ public class Grammar implements Runnable {
 	 * @throws IllegalArgumentException
 	 * 			If the last element is not a nonTerminal
 	 */
-	public static HashSet<Equation> expand(HashSet<Equation> alreadyFound, Equation equation) throws IllegalArgumentException {
-		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
-			for(Terminal K : KS) { // expand for every possible K
-				// add the made expansion to the list of expansion equations
-				Equation possibleNewEquation = Equation.createEquation(equation, operand, K, GOAL);
-				if(possibleNewEquation != null) {
-					if(!alreadyFound.contains(possibleNewEquation)) {
-						if(possibleNewEquation.getValueOfEquation() == GOAL) {
-							addPossibleSolution(possibleNewEquation);
-						}
-						alreadyFound.add(possibleNewEquation);
-					}
-				}
-			}
-		}
-		return alreadyFound;
-	}
+//	public static HashSet<Equation> expand(HashSet<Equation> alreadyFound, Equation equation) throws IllegalArgumentException {
+//		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
+//			for(Terminal K : KS) { // expand for every possible K
+//				// add the made expansion to the list of expansion equations
+//				Equation possibleNewEquation = Equation.createEquation(equation, operand, K, GOAL);
+//				if(possibleNewEquation != null) {
+//					if(!alreadyFound.contains(possibleNewEquation)) {
+//						if(possibleNewEquation.getValueOfEquation() == GOAL) {
+//							addPossibleSolution(possibleNewEquation);
+//						}
+//						alreadyFound.add(possibleNewEquation);
+//					}
+//				}
+//			}
+//		}
+//		return alreadyFound;
+//	}
 	
 	/**
 	 * Add possible solutions
@@ -177,20 +178,26 @@ public class Grammar implements Runnable {
 			System.out.println("expanding K1");
 		}
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
-			for(Terminal K : KS) { // expand for every possible K
-				// add the made expansion to the list of expansion equations
-				Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K, GOAL);
-				if(possibleNewEquation != null) {
-					if(!Tree.alreadyFound.contains(possibleNewEquation)) {
-						if(possibleNewEquation.getValueOfEquation() == GOAL) {
-							addPossibleSolution(possibleNewEquation);
-						}
-						found.add(possibleNewEquation);
-//						Tree.alreadyFound.add(possibleNewEquation);
-					}
-				}
-			}
+			expand(operand, KS);
+			expand(operand, WEIGTHS);
 		}
 		
 	}
+	
+	private void expand(Operand operand, Terminal[] terminals) {
+		for(Terminal K : terminals) { // expand for every possible K
+			// add the made expansion to the list of expansion equations
+			Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K, GOAL);
+			if(possibleNewEquation != null) {
+				if(!Tree.alreadyFound.contains(possibleNewEquation)) {
+					if(possibleNewEquation.getValueOfEquation() == GOAL) {
+						addPossibleSolution(possibleNewEquation);
+					}
+					found.add(possibleNewEquation);
+//					Tree.alreadyFound.add(possibleNewEquation);
+				}
+			}
+		}
+	}
+	
 }

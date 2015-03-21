@@ -9,8 +9,8 @@ package treebuilder.symbols;
 @SuppressWarnings("serial")
 public class Weight extends Terminal {
 	
-	public Weight(Double value) {
-		super(value);
+	public Weight(double value, int number) {
+		super(value, number);
 		super.representation = "W" + value;
 	}
 
@@ -21,14 +21,6 @@ public class Weight extends Terminal {
 	 */
 	public boolean isWeight() {
 		return true;
-	}
-	
-	/**
-	 * @return the number of this terminal
-	 * 		-> in case of this being a weight the number will be equal  to the value
-	 */
-	public int getNumber() {
-		return (int) super.getValue();
 	}
 	
 	

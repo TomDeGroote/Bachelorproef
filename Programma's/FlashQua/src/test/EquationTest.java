@@ -19,7 +19,7 @@ public class EquationTest {
 	public void equalEquationTest() {
 		List<NonSplittable> parts1 = new ArrayList<NonSplittable>();
 		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
-		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0, 2));
 		NonSplittable part2 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
 		parts1.add(part1);
 		parts1.add(part2);
@@ -27,7 +27,7 @@ public class EquationTest {
 		List<NonSplittable> parts2 = new ArrayList<NonSplittable>();
 		NonSplittable part3 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
 		NonSplittable part4 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
-		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0));
+		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0, 2));
 		parts2.add(part3);
 		parts2.add(part4);
 		
@@ -51,7 +51,7 @@ public class EquationTest {
 		
 		// +K0*W3 = 15
 		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
-		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0, 2));
 		// +K1 = 6
 		NonSplittable part2 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
 		
@@ -59,7 +59,7 @@ public class EquationTest {
 		NonSplittable part3 = new NonSplittable(new Sum(), new ColumnValue(6.0, 1));
 		// +K0*W3 = 15
 		NonSplittable part4 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
-		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0));
+		part4 = new NonSplittable(part4, new Multiplication(), new Weight(3.0, 2));
 		
 		Assert.assertEquals(true, part1.equals(part4));
 		Assert.assertEquals(true, part2.equals(part3));
@@ -70,7 +70,7 @@ public class EquationTest {
 		
 		// +K0*W3 = 15
 		NonSplittable part1 = new NonSplittable(new Sum(), new ColumnValue(5.0, 0));
-		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0));
+		part1 = new NonSplittable(part1, new Multiplication(), new Weight(3.0, 1));
 		
 		Assert.assertEquals("-K0*W3.0", part1.getInverseNonSplittable().toString());
 	}

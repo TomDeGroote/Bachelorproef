@@ -9,10 +9,11 @@ package treebuilder.symbols;
 @SuppressWarnings("serial")
 public abstract class Terminal extends Symbol {
 
-	private final Double value;
-	
-	public Terminal(double value) {
+	private final double value;
+	private final int number;
+	public Terminal(double value, int number) {
 		this.value = value;
+		this.number = number;
 	}
 	
 	@Override
@@ -37,11 +38,10 @@ public abstract class Terminal extends Symbol {
 	
 	/**
 	 * @return the number of this terminal
-	 * 		-> in case of this being a weight the number will be equal  to the value
 	 */
-	public abstract int getNumber();
-	
-	
+	public int getNumber() {
+		return this.number;
+	}
 	
 	
 }
