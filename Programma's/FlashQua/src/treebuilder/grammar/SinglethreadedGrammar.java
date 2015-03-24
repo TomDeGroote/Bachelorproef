@@ -23,6 +23,7 @@ public class SinglethreadedGrammar extends Grammar{
 			for(Terminal K : KS) { // expand for every possible K
 				// add the made expansion to the list of expansion equations
 				Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
+				
 				if(possibleNewEquation != null) {
 					if(!alreadyFound.contains(possibleNewEquation)) {
 						if(possibleNewEquation.getValueOfEquation() == GOAL) {

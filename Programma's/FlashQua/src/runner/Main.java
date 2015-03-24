@@ -20,6 +20,7 @@ import treebuilder.comparators.GreaterThanOrEquals;
 import treebuilder.comparators.SmallerThan;
 import treebuilder.comparators.SmallerThanOrEquals;
 import treebuilder.grammar.Grammar;
+import treebuilder.tree.MultithreadedTree;
 import treebuilder.tree.SinglethreadTree;
 import treebuilder.tree.Tree;
 import exceptions.MaxLevelReachedException;
@@ -31,14 +32,21 @@ import exceptions.OutOfTimeException;
  *
  */
 public class Main {
-	
+	// the weights to be used (basically constants)
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
+	// Deadline and maxlevel parameters
 	private final static int DEADLINE = -1;
-	private final static int MAXLEVEL = 5;
+	private final static int MAXLEVEL = 3;
 	
-	private final static boolean PRINTTOFILE = true;
+	// Print the tree to a file or not, warning if you create many levels this writing will 
+	// take a very long time
+	private final static boolean PRINTTOFILE = false;
 	
+	// Multithreaded or not
+	private final static boolean MULTITHREADED = false;
+
+	// Random settings
 	private final static boolean USERANDOM = false;
 	private final static int NROFKS = 3;
 	private final static int LENGTH = 5;
@@ -49,30 +57,26 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println();
-		List<double[]> input = new ArrayList<double[]>();
-		List<Comparator> comparers = new ArrayList<Comparator>();
+		// read the file input or generate the random input
+		Tuple<List<double[]>, List<Comparator>> fileInput;
 		if(USERANDOM) {
-			List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
-			for(List<Double> r : random) {
-				double[] row = new double[r.size()];
-				for(int i = 0; i < r.size(); i++) {
-					row[i] = r.get(i);
-				}
-				input.add(row);
-			}
-			System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
-			for(double[] i : input) {
-				comparers.add(new Equals());
-			}
+			fileInput = generateRandomInput();
 		} else {
-			Tuple<List<double[]>, List<Comparator>> fileInput = readFile();
-			input = fileInput.x;
-			comparers = fileInput.y;
+			fileInput = readFile();
 		}
 
-		Grammar.setColumnValues(input, WEIGHTS, comparers);
+		// Set the grammar to use this input and the weights
+		Grammar.setColumnValues(fileInput.x, WEIGHTS, fileInput.y);
 		
-		Tree tree = new SinglethreadTree();
+		// initialize the right tree
+		Tree tree;
+		if(MULTITHREADED) {
+			tree = new MultithreadedTree();
+		} else {
+			tree = new SinglethreadTree();
+		}
+		
+		// expand the tree untill the given deadline or max level
 		long start = System.currentTimeMillis();
 		try {
 			tree.expand(start, DEADLINE, MAXLEVEL);
@@ -83,15 +87,41 @@ public class Main {
 		}
 		System.out.println("Done: " + (System.currentTimeMillis()-start));
 		
+		// print the solutions
 		System.out.println("\nSolutions:");
 		for(Equation eq : Grammar.getSolutions()) {
 			System.out.println(eq + " => " + eq.hashCode());
 		}
+		
+		// Write the tree to the file if nessecary
 		if(PRINTTOFILE) {
 			System.out.println("Writing to file!");
 			printTreeToFile(tree);
 		}
 		System.out.println("Done!");
+	}
+
+
+	/**
+	 * @return The random input generated and the comparators to be used
+	 */
+	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput() {
+		List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
+		List<double[]> input = new ArrayList<double[]>();
+		List<Comparator> comparers = new ArrayList<Comparator>();
+		for(List<Double> r : random) {
+			double[] row = new double[r.size()];
+			for(int i = 0; i < r.size(); i++) {
+				row[i] = r.get(i);
+			}
+			input.add(row);
+		}
+		System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
+		for(int i = 0; i < input.size(); i++) {
+			comparers.add(new Equals());
+		}
+		Main m = new Main();
+		return m.new Tuple<List<double[]>, List<Comparator>>(input, comparers);
 	}
 	
 	
@@ -130,10 +160,13 @@ public class Main {
 	}	
 	
 	/**
-	 * Reads a file. This will convert a text file with column values to a list of HashMap<String, Double>
-	 * e.g. text file: 3 6 8 -> [3, 6, 8]
-	 * @param
-	 * 		The file to be read
+	 * Reads a file for input
+	 * Inputfile format expected: n n r c
+	 * With n a number (double)
+	 * With r the expected result (double)
+	 * with c the comparator to be used
+	 * @return 
+	 * 		A tuple containing the input numbers and a list of comparators to be used
 	 * 
 	 */
 	private static Tuple<List<double[]>, List<Comparator>> readFile() throws IOException {
@@ -152,8 +185,8 @@ public class Main {
 				inputLine[i] = Double.parseDouble(line[i]);
 				System.out.println("Value: " + inputLine[i]);
 			}
-			input.add(inputLine);
 			comparators.add(parseComparator(line[line.length-1]));
+			input.add(inputLine);
 		}	
 		sc.close();
 		Main m = new Main(); // BAH!!
@@ -161,8 +194,15 @@ public class Main {
 	}
 
 
-	private static Comparator parseComparator(String string) {
-		switch (string) {
+	/**
+	 * Parses the comparator to be used, default -> =
+	 * @param comparator
+	 * 			The comparator to be parsed
+	 * @return
+	 * 			The Comparator (as a class)
+	 */
+	private static Comparator parseComparator(String comparator) {
+		switch (comparator) {
 		case "=":
 			return new Equals();
 		case "<":

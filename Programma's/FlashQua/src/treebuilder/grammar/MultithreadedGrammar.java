@@ -11,7 +11,7 @@ import treebuilder.tree.Tree;
 public class MultithreadedGrammar extends Grammar implements Runnable {
 
 	private Equation toExpand;
-	public List<Equation> found = new ArrayList<Equation>();
+	private List<Equation> found = new ArrayList<Equation>();
 	
 	public MultithreadedGrammar(Equation equation) {
 		this.toExpand = equation;
@@ -45,5 +45,12 @@ public class MultithreadedGrammar extends Grammar implements Runnable {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @return The equations found by this grammar
+	 */
+	public List<Equation> getFound() {
+		return this.found;
 	}
 }
