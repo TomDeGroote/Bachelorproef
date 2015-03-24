@@ -33,10 +33,10 @@ public class Main {
 	
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
-	private final static int DEADLINE = 2000;
-	private final static int MAXLEVEL = 6;
+	private final static int DEADLINE = -1;
+	private final static int MAXLEVEL = 5;
 	
-	private final static boolean PRINTTOFILE = false;
+	private final static boolean PRINTTOFILE = true;
 	
 	private final static boolean USERANDOM = false;
 	private final static int NROFKS = 3;
@@ -49,6 +49,7 @@ public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println();
 		List<double[]> input = new ArrayList<double[]>();
+		List<Comparator> comparers = new ArrayList<Comparator>();
 		if(USERANDOM) {
 			List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
 			for(List<Double> r : random) {
@@ -59,13 +60,15 @@ public class Main {
 				input.add(row);
 			}
 			System.out.println("To be found: " + RandomGenerator.getLastGeneratedEquation());
+			for(double[] i : input) {
+				comparers.add(new Equals());
+			}
 		} else {
-			input = readFile();
+			Tuple<List<double[]>, List<Comparator>> fileInput = readFile();
+			input = fileInput.x;
+			comparers = fileInput.y;
 		}
-		List<Comparator> comparers = new ArrayList<Comparator>();
-		for(double[] i : input) {
-			comparers.add(new Equals());
-		}
+
 		Grammar.setColumnValues(input, WEIGHTS, comparers);
 		
 		Tree tree = new Tree();
@@ -149,59 +152,29 @@ public class Main {
 	 * 		The file to be read
 	 * 
 	 */
-	private static List<double[]> readFile() throws IOException {
+	private static Tuple<List<double[]>, List<Comparator>> readFile() throws IOException {
 		InputStream in = Main.class.getResourceAsStream("/inputExample.txt");
 		//FileInputStream fis = new FileInputStream(fin);
 		
 		//Construct BufferedReader from InputStreamReader
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));//fis));
+		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(in)));//fis));
 		
 		List<double[]> input = new ArrayList<double[]>();
-		String line = null;
-		while ((line = br.readLine()) != null) {
-			String[] splitOnSpace = line.split(" ");
-			double[] primLine = new double[splitOnSpace.length];
-			// add all K elements to hashmap
-			for(int i = 0; i < splitOnSpace.length-1; i++) {
-				double value = Double.parseDouble(splitOnSpace[i]);
-				primLine[i] = value;
+		List<Comparator> comparators = new ArrayList<Comparator>();
+		while(sc.hasNextLine()) {
+			String[] line = sc.nextLine().split(" ");
+			double[] inputLine = new double[line.length-1];
+			for(int i = 0; i < line.length-1; i++) {
+				inputLine[i] = Double.parseDouble(line[i]);
+				System.out.println("Value: " + inputLine[i]);
 			}
-			// add last element, the goal to hashmap
-			double value = Double.parseDouble(splitOnSpace[splitOnSpace.length-1]);		
-			primLine[primLine.length-1] = value;
-			
-			input.add(primLine);
-		}
-		br.close();
-		return input;
+			input.add(inputLine);
+			comparators.add(parseComparator(line[line.length-1]));
+		}	
+		sc.close();
+		Main m = new Main(); // BAH!!
+		return m.new Tuple<List<double[]>, List<Comparator>>(input, comparators);
 	}
-	
-	/**
-	 * Reads a file. This will convert a text file with column values to a list of HashMap<String, Double>
-	 * e.g. text file: 3 6 8 -> [3, 6, 8]
-	 * @param
-	 * 		The file to be read
-	 * 
-	 */
-//	private static Tuple<List<double[]>, List<Comparator>> readFile() throws IOException {
-//		InputStream in = Main.class.getResourceAsStream("/inputExample.txt");
-//		//FileInputStream fis = new FileInputStream(fin);
-//		
-//		//Construct BufferedReader from InputStreamReader
-//		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(in)));//fis));
-//		
-//		List<Object[]> input = new ArrayList<Object[]>();
-//		while(sc.hasNextLine()) {
-//			String[] line = sc.nextLine().split(" ");
-//			Object[] inputLine = new Object[line.length];
-//			for(int i = 0; i < line.length-1; i++) {
-//				inputLine[i] = Double.parseDouble(line[i]);
-//			}
-//			inputLine[inputLine.length-1] = parseComparator(line[line.length-1]);
-//		}	
-//		sc.close();
-//		return null;
-//	}
 
 
 	private static Comparator parseComparator(String string) {
@@ -217,7 +190,7 @@ public class Main {
 		case ">=":
 			return new GreaterThanOrEquals();
 		default:
-			throw new IllegalArgumentException();
+			return new Equals();
 		}
 	}
 	

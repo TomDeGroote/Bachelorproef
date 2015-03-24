@@ -158,7 +158,7 @@ public class Grammar implements Runnable {
 				result += v;
 			}
 			
-			if(!comparator.compareOK(result, otherGoals.get(j))) {
+			if(!otherComparators.get(j).compareOK(result, otherGoals.get(j))) {
 				return false;
 			}
 		}
