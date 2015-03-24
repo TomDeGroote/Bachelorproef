@@ -51,7 +51,7 @@ public class Grammar implements Runnable {
 	 * @param weights
 	 * 			The weights
 	 */
-	public static void setColumnValues(List<double[]> multiInput, double[] weights, Comparator[] comparators) {
+	public static void setColumnValues(List<double[]> multiInput, double[] weights, List<Comparator> comparators) {
 		// initialize the space for the other equations
 		for(int i = 1; i < multiInput.size(); i++) {
 			otherEqs.add(new HashMap<String, Double>());
@@ -79,9 +79,9 @@ public class Grammar implements Runnable {
 		}
 		
 		// set comparator first equation
-		comparator = comparators[0];
-		for(int i = 1; i < comparators.length; i++) {
-			otherComparators.add(comparators[i]);
+		comparator = comparators.get(0);
+		for(int i = 1; i < comparators.size(); i++) {
+			otherComparators.add(comparators.get(i));
 		}
 		
 	}
@@ -158,7 +158,7 @@ public class Grammar implements Runnable {
 				result += v;
 			}
 			
-			if(comparator.compareOK(result, otherGoals.get(j))) {
+			if(!comparator.compareOK(result, otherGoals.get(j))) {
 				return false;
 			}
 		}
@@ -205,7 +205,7 @@ public class Grammar implements Runnable {
 			Equation possibleNewEquation = Equation.expandEquation(this.toExpand, operand, K);
 			if(possibleNewEquation != null) {
 				if(!Tree.alreadyFound.contains(possibleNewEquation)) {
-					if(comparator.compareOK(possibleNewEquation.getValueOfEquation(),GOAL)) {
+					if(comparator.compareOK(possibleNewEquation.getValueOfEquation(), GOAL)) {
 						addPossibleSolution(possibleNewEquation);
 					}
 					found.add(possibleNewEquation);

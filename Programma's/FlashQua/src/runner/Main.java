@@ -9,11 +9,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import research.RandomGenerator;
 import treebuilder.Equation;
 import treebuilder.Grammar;
 import treebuilder.Tree;
+import treebuilder.comparators.Comparator;
+import treebuilder.comparators.Equals;
+import treebuilder.comparators.GreaterThan;
+import treebuilder.comparators.GreaterThanOrEquals;
+import treebuilder.comparators.SmallerThan;
+import treebuilder.comparators.SmallerThanOrEquals;
 import exceptions.MaxLevelReachedException;
 import exceptions.OutOfTimeException;
 
@@ -55,7 +62,11 @@ public class Main {
 		} else {
 			input = readFile();
 		}
-		Grammar.setColumnValues(input, WEIGHTS);
+		List<Comparator> comparers = new ArrayList<Comparator>();
+		for(double[] i : input) {
+			comparers.add(new Equals());
+		}
+		Grammar.setColumnValues(input, WEIGHTS, comparers);
 		
 		Tree tree = new Tree();
 		long start = System.currentTimeMillis();
@@ -163,5 +174,71 @@ public class Main {
 		}
 		br.close();
 		return input;
+	}
+	
+	/**
+	 * Reads a file. This will convert a text file with column values to a list of HashMap<String, Double>
+	 * e.g. text file: 3 6 8 -> [3, 6, 8]
+	 * @param
+	 * 		The file to be read
+	 * 
+	 */
+//	private static Tuple<List<double[]>, List<Comparator>> readFile() throws IOException {
+//		InputStream in = Main.class.getResourceAsStream("/inputExample.txt");
+//		//FileInputStream fis = new FileInputStream(fin);
+//		
+//		//Construct BufferedReader from InputStreamReader
+//		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(in)));//fis));
+//		
+//		List<Object[]> input = new ArrayList<Object[]>();
+//		while(sc.hasNextLine()) {
+//			String[] line = sc.nextLine().split(" ");
+//			Object[] inputLine = new Object[line.length];
+//			for(int i = 0; i < line.length-1; i++) {
+//				inputLine[i] = Double.parseDouble(line[i]);
+//			}
+//			inputLine[inputLine.length-1] = parseComparator(line[line.length-1]);
+//		}	
+//		sc.close();
+//		return null;
+//	}
+
+
+	private static Comparator parseComparator(String string) {
+		switch (string) {
+		case "=":
+			return new Equals();
+		case "<":
+			return new SmallerThan();
+		case "<=":
+			return new SmallerThanOrEquals();
+		case ">":
+			return new GreaterThan();
+		case ">=":
+			return new GreaterThanOrEquals();
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	/**
+	 * To Support multiple type returns
+	 * 
+	 * @param <X>
+	 * @param <Y>
+	 */
+	public class Tuple<X, Y> {
+		public final X x;
+		public final Y y;
+
+		public Tuple(X x, Y y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		@Override
+		public String toString() {
+			return x.toString() + " = " + y;
+		}
 	}
 }
