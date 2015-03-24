@@ -26,14 +26,14 @@ public class Main {
 	
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
-	private final static int DEADLINE = -1;
-	private final static int MAXLEVEL = 4;
+	private final static int DEADLINE = 2000;
+	private final static int MAXLEVEL = 6;
 	
-	private final static boolean PRINTTOFILE = true;
+	private final static boolean PRINTTOFILE = false;
 	
 	private final static boolean USERANDOM = false;
 	private final static int NROFKS = 3;
-	private final static int LENGTH = 4;
+	private final static int LENGTH = 5;
 	private final static int NROFEXAMPLES = 2;
 	private final static int MIN = 0;
 	private final static int MAX = 100;

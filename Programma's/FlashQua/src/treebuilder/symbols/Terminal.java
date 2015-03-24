@@ -11,6 +11,7 @@ public abstract class Terminal extends Symbol {
 
 	private final double value;
 	private final int number;
+	
 	public Terminal(double value, int number) {
 		this.value = value;
 		this.number = number;

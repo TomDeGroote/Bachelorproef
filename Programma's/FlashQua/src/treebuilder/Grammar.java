@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import treebuilder.comparators.Comparator;
 import treebuilder.symbols.ColumnValue;
 import treebuilder.symbols.Terminal;
 import treebuilder.symbols.Weight;
@@ -24,15 +25,20 @@ import treebuilder.symbols.operands.Sum;
  * TODO weights not supported anymore
  */
 public class Grammar implements Runnable {
-	// The column values, weights and operands for all grammars
+	// possible operands
+	private static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
+
+	// first equation
 	private static ColumnValue[] KS;
 	private static Weight[] WEIGTHS;
-	private static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
-	// The goal for all grammars
+	private static Comparator comparator;
 	private static double GOAL;
-	// The other equations that should be fulfilled
+
+	// other equations
 	private static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
 	private static List<Double> otherGoals = new ArrayList<Double>();
+	private static List<Comparator> otherComparators = new ArrayList<Comparator>();
+	
 	// The found solutions
 	private static HashSet<Equation> solutions = new HashSet<Equation>();
 	
@@ -45,7 +51,7 @@ public class Grammar implements Runnable {
 	 * @param weights
 	 * 			The weights
 	 */
-	public static void setColumnValues(List<double[]> multiInput, double[] weights) {
+	public static void setColumnValues(List<double[]> multiInput, double[] weights, Comparator[] comparators) {
 		// initialize the space for the other equations
 		for(int i = 1; i < multiInput.size(); i++) {
 			otherEqs.add(new HashMap<String, Double>());
@@ -71,6 +77,13 @@ public class Grammar implements Runnable {
 		for(int i = 0; i < WEIGTHS.length; i++) {
 			WEIGTHS[i] = new Weight(weights[i], KS.length+i);
 		}
+		
+		// set comparator first equation
+		comparator = comparators[0];
+		for(int i = 1; i < comparators.length; i++) {
+			otherComparators.add(comparators[i]);
+		}
+		
 	}
 	
 	/**
@@ -145,7 +158,7 @@ public class Grammar implements Runnable {
 				result += v;
 			}
 			
-			if(result != otherGoals.get(j)) {
+			if(comparator.compareOK(result, otherGoals.get(j))) {
 				return false;
 			}
 		}
@@ -159,26 +172,15 @@ public class Grammar implements Runnable {
 	public static HashSet<Equation> getSolutions() {
 		return Grammar.solutions;
 	}
-
-	/**
-	 * @param valueSolution1
-	 *            A double
-	 * @param operand
-	 *            the operand
-	 * @param valueSolution2
-	 *            A double
-	 * @return result of value1 operand value2
-	 */
-	public static double getValue(double value1, Operand operand, double value2) {
-		return operand.calculateValue(value1, value2);
-	}
 	
 	public static Operand[] getPossibleOperands() {
 		return OPERANDS;
 	}
 
+	
 	private Equation toExpand;
 	public List<Equation> found = new ArrayList<Equation>();
+	
 	public Grammar(Equation equation) {
 		this.toExpand = equation;
 	}
@@ -188,17 +190,22 @@ public class Grammar implements Runnable {
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
 			expand(operand, KS);
 			expand(operand, WEIGTHS);
-		}
-		
+		}		
 	}
 	
+	/**
+	 * Expands an equation
+	 * 
+	 * @param operand
+	 * @param terminals
+	 */
 	private void expand(Operand operand, Terminal[] terminals) {
 		for(Terminal K : terminals) { // expand for every possible K
 			// add the made expansion to the list of expansion equations
-			Equation possibleNewEquation = Equation.createEquation(this.toExpand, operand, K, GOAL);
+			Equation possibleNewEquation = Equation.expandEquation(this.toExpand, operand, K);
 			if(possibleNewEquation != null) {
 				if(!Tree.alreadyFound.contains(possibleNewEquation)) {
-					if(possibleNewEquation.getValueOfEquation() == GOAL) {
+					if(comparator.compareOK(possibleNewEquation.getValueOfEquation(),GOAL)) {
 						addPossibleSolution(possibleNewEquation);
 					}
 					found.add(possibleNewEquation);

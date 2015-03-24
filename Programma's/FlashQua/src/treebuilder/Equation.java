@@ -43,7 +43,7 @@ public class Equation implements Serializable {
 	}
 	
 
-	public Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, List<Integer> terminalCounter) {
+	private Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, List<Integer> terminalCounter) {
 //		System.nanoTime(); // Increases time.. A Lot..
 		this.nonSplitableParts = nonSplitableParts;
 		this.valueRestOfEquation = valueRestOfEquation;
@@ -53,7 +53,7 @@ public class Equation implements Serializable {
 	}
 	
 
-	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal, double goal) {
+	public static Equation expandEquation(Equation previous, Operand operand, Terminal terminal) {
 		
 		// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 		if(operand.isSplitable() && terminal.isWeight()) {
@@ -189,14 +189,6 @@ public class Equation implements Serializable {
 	 */
 	public double getValueRestOfEquation() {
 		return valueRestOfEquation;
-	}
-	
-	/**
-	 * @return The value of this equation
-	 */
-	public static double calculateValueOfEquation(Operand lastSplitableOperand, double valueRestOfEquation, double valueOfLastSplitable) {
-		// operand between rest of equation and lastNonSplitablePart can be found at the first position of the lastNonSplitable part
-		return lastSplitableOperand.calculateValue(valueRestOfEquation, valueOfLastSplitable);
 	}
 
 	/**
