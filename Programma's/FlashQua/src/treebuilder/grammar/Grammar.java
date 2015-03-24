@@ -1,10 +1,12 @@
-package treebuilder;
+package treebuilder.grammar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import treebuilder.Equation;
+import treebuilder.NonSplittable;
 import treebuilder.comparators.Comparator;
 import treebuilder.symbols.ColumnValue;
 import treebuilder.symbols.Terminal;
@@ -21,26 +23,24 @@ import treebuilder.symbols.operands.Sum;
  * tree.
  * 
  * @author Jeroen & Tom
- *
- * TODO weights not supported anymore
  */
-public class Grammar implements Runnable {
+public abstract class Grammar {
 	// possible operands
-	private static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
+	protected static final Operand[] OPERANDS = new Operand[]{new Multiplication(), new Substraction(), new Division(), new Sum(), new Power()};
 
 	// first equation
-	private static ColumnValue[] KS;
-	private static Weight[] WEIGTHS;
-	private static Comparator comparator;
-	private static double GOAL;
+	protected static ColumnValue[] KS;
+	protected static Weight[] WEIGTHS;
+	protected static Comparator comparator;
+	protected static double GOAL;
 
 	// other equations
-	private static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
-	private static List<Double> otherGoals = new ArrayList<Double>();
-	private static List<Comparator> otherComparators = new ArrayList<Comparator>();
+	protected static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
+	protected static List<Double> otherGoals = new ArrayList<Double>();
+	protected static List<Comparator> otherComparators = new ArrayList<Comparator>();
 	
 	// The found solutions
-	private static HashSet<Equation> solutions = new HashSet<Equation>();
+	protected static HashSet<Equation> solutions = new HashSet<Equation>();
 	
 	
 	/**
@@ -82,8 +82,7 @@ public class Grammar implements Runnable {
 		comparator = comparators.get(0);
 		for(int i = 1; i < comparators.size(); i++) {
 			otherComparators.add(comparators.get(i));
-		}
-		
+		}	
 	}
 	
 	/**
@@ -101,43 +100,12 @@ public class Grammar implements Runnable {
 		}
 		return eqs;
 	}
-
-	/**
-	 * This method expands a given equation
-	 * 
-	 * @param equation
-	 *            An equation ending with a nonTerminal
-	 * @return A list of equations which represent the expansions of the given
-	 *         equation
-	 * @throws IllegalArgumentException
-	 * 			If the last element is not a nonTerminal
-	 */
-//	public static HashSet<Equation> expand(HashSet<Equation> alreadyFound, Equation equation) throws IllegalArgumentException {
-//		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
-//			for(Terminal K : KS) { // expand for every possible K
-//				// add the made expansion to the list of expansion equations
-//				Equation possibleNewEquation = Equation.createEquation(equation, operand, K, GOAL);
-//				if(possibleNewEquation != null) {
-//					if(!alreadyFound.contains(possibleNewEquation)) {
-//						if(possibleNewEquation.getValueOfEquation() == GOAL) {
-//							addPossibleSolution(possibleNewEquation);
-//						}
-//						alreadyFound.add(possibleNewEquation);
-//					}
-//				}
-//			}
-//		}
-//		return alreadyFound;
-//	}
 	
 	/**
 	 * Add possible solutions
 	 */
 	public static boolean addPossibleSolution(Equation eq) {
 		List<NonSplittable> nonSplittableParts = eq.getEquationParts();
-		if("+K0^W2.0-K1".equals(eq.toString())) {
-			System.out.println("Got ya!");
-		}
 		for(int j = 0; j < otherEqs.size(); j++) { // check for every other input if equation is possible
 			HashMap<String, Double> otherEq = otherEqs.get(j);
 			List<Double> values = new ArrayList<Double>();	// the values of every seperate part
@@ -173,46 +141,10 @@ public class Grammar implements Runnable {
 		return Grammar.solutions;
 	}
 	
+	/**
+	 * @return the possible operands 
+	 */
 	public static Operand[] getPossibleOperands() {
 		return OPERANDS;
-	}
-
-	
-	private Equation toExpand;
-	public List<Equation> found = new ArrayList<Equation>();
-	
-	public Grammar(Equation equation) {
-		this.toExpand = equation;
-	}
-	
-	@Override
-	public void run() {
-		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
-			expand(operand, KS);
-			expand(operand, WEIGTHS);
-		}		
-	}
-	
-	/**
-	 * Expands an equation
-	 * 
-	 * @param operand
-	 * @param terminals
-	 */
-	private void expand(Operand operand, Terminal[] terminals) {
-		for(Terminal K : terminals) { // expand for every possible K
-			// add the made expansion to the list of expansion equations
-			Equation possibleNewEquation = Equation.expandEquation(this.toExpand, operand, K);
-			if(possibleNewEquation != null) {
-				if(!Tree.alreadyFound.contains(possibleNewEquation)) {
-					if(comparator.compareOK(possibleNewEquation.getValueOfEquation(), GOAL)) {
-						addPossibleSolution(possibleNewEquation);
-					}
-					found.add(possibleNewEquation);
-//					Tree.alreadyFound.add(possibleNewEquation);
-				}
-			}
-		}
-	}
-	
+	}	
 }

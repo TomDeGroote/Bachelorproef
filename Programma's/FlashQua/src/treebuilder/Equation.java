@@ -21,15 +21,12 @@ public class Equation implements Serializable {
 	
 	public List<NonSplittable> nonSplitableParts = new ArrayList<NonSplittable>();
 	private double valueRestOfEquation = 0.0;
-	private boolean pruned = false;
 	public double value = 0.0;
 	private List<Integer> terminalCounter = new ArrayList<Integer>();
 	private final int HASHCODE;
 	
 	/**
-	 * Constructor when no parameters are given
-	 * This constructor will generate an equation = E
-	 * 
+	 * Constructor of a basic equation
 	 */
 	public Equation(Terminal t, int nrOfColumns) {
 		NonSplittable firstPart = new NonSplittable(new Sum(), t);
@@ -51,9 +48,20 @@ public class Equation implements Serializable {
 		this. terminalCounter = terminalCounter;
 		this.HASHCODE = getHashCode();
 	}
-	
 
-	public static Equation expandEquation(Equation previous, Operand operand, Terminal terminal) {
+	/**
+	 * Constructor for an equation that is an expansion of another equation
+	 * 
+	 * @param previous
+	 * 			The equation to expand to a new equation
+	 * @param operand
+	 * 			The operand to be added
+	 * @param terminal
+	 * 			The terminal to be added
+	 * @return
+	 * 			The equation
+	 */
+	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
 		
 		// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 		if(operand.isSplitable() && terminal.isWeight()) {
@@ -263,14 +271,4 @@ public class Equation implements Serializable {
 	public List<Integer> getTerminalCounter() {
 		return terminalCounter;
 	}
-
-
-	public boolean isPruned() {
-		return pruned;
-	}
-
-
-	public void setPruned(boolean pruned) {
-		this.pruned = pruned;
-	}	
 }

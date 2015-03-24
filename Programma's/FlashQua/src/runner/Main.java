@@ -13,14 +13,15 @@ import java.util.Scanner;
 
 import research.RandomGenerator;
 import treebuilder.Equation;
-import treebuilder.Grammar;
-import treebuilder.Tree;
 import treebuilder.comparators.Comparator;
 import treebuilder.comparators.Equals;
 import treebuilder.comparators.GreaterThan;
 import treebuilder.comparators.GreaterThanOrEquals;
 import treebuilder.comparators.SmallerThan;
 import treebuilder.comparators.SmallerThanOrEquals;
+import treebuilder.grammar.Grammar;
+import treebuilder.tree.SinglethreadTree;
+import treebuilder.tree.Tree;
 import exceptions.MaxLevelReachedException;
 import exceptions.OutOfTimeException;
 
@@ -71,7 +72,7 @@ public class Main {
 
 		Grammar.setColumnValues(input, WEIGHTS, comparers);
 		
-		Tree tree = new Tree();
+		Tree tree = new SinglethreadTree();
 		long start = System.currentTimeMillis();
 		try {
 			tree.expand(start, DEADLINE, MAXLEVEL);
@@ -91,23 +92,6 @@ public class Main {
 			printTreeToFile(tree);
 		}
 		System.out.println("Done!");
-	}
-	
-	
-	/**
-	 * @return
-	 * 			The filename where you can find back the tree object (in workspace)
-	 */
-	public static String getFileNameTreeP() {
-		return Tree.FILENAME_P;
-	}
-	
-	/**
-	 * @return
-	 * 			The filename where you can find back the tree object (in workspace)
-	 */
-	public static String getFileNameTreeNP() {
-		return Tree.FILENAME_NP;
 	}
 	
 	
