@@ -41,7 +41,6 @@ public class MultithreadedGrammar extends Grammar implements Runnable {
 						addPossibleSolution(possibleNewEquation);
 					}
 					found.add(possibleNewEquation);
-//					Tree.alreadyFound.add(possibleNewEquation);
 				}
 			}
 		}

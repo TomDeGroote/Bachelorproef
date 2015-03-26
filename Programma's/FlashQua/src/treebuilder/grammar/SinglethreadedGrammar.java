@@ -20,20 +20,35 @@ public class SinglethreadedGrammar extends Grammar{
 	 */
 	public static HashSet<Equation> expand(HashSet<Equation> alreadyFound, Equation equation) throws IllegalArgumentException {
 		for (Operand operand : OPERANDS) { // for every possible operand generate the expansion
-			for(Terminal K : KS) { // expand for every possible K
-				// add the made expansion to the list of expansion equations
-				Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
-				
-				if(possibleNewEquation != null) {
-					if(!alreadyFound.contains(possibleNewEquation)) {
-						if(possibleNewEquation.getValueOfEquation() == GOAL) {
-							addPossibleSolution(possibleNewEquation);
-						}
-						alreadyFound.add(possibleNewEquation);
+			expandForOperand(alreadyFound, equation, operand, KS);
+			expandForOperand(alreadyFound, equation, operand, WEIGTHS);
+		}
+		return alreadyFound;
+	}
+
+	/**
+	 * Expands a equation to the given terminals
+	 * @param alreadyFound
+	 * 			The equations already found
+	 * @param equation
+	 * 			The equation to expand
+	 * @param operand
+	 * 			The operand used to expand
+	 * @param terminals
+	 * 			The terminals to expand to
+	 */
+	private static void expandForOperand(HashSet<Equation> alreadyFound, Equation equation, Operand operand, Terminal[] terminals) {
+		for(Terminal K : terminals) { // expand for every possible K
+			// add the made expansion to the list of expansion equations
+			Equation possibleNewEquation = Equation.createEquation(equation, operand, K);
+			if(possibleNewEquation != null) {
+				if(!alreadyFound.contains(possibleNewEquation)) {
+					if(possibleNewEquation.getValueOfEquation() == GOAL) {
+						addPossibleSolution(possibleNewEquation);
 					}
+					alreadyFound.add(possibleNewEquation);
 				}
 			}
 		}
-		return alreadyFound;
 	}
 }
