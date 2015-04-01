@@ -20,6 +20,7 @@ import master.tuple.TupleWeightsMaster;
 
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
+import research.RandomGenerator;
 import tree.Grammar;
 import tree.Tree;
 
