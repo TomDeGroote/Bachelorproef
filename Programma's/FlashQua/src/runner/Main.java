@@ -41,15 +41,15 @@ public class Main {
 	
 	// Print the tree to a file or not, warning if you create many levels this writing will 
 	// take a very long time
-	private final static boolean PRINTTOFILE = true;
+	private final static boolean PRINTTOFILE = false;
 	
 	// Multithreaded or not
 	private final static boolean MULTITHREADED = true;
 
 	// Random settings
-	private final static boolean USERANDOM = false;
+	private final static boolean USERANDOM = true;
 	private final static int NROFKS = 3;
-	private final static int LENGTH = 5;
+	private final static int LENGTH = 4;
 	private final static int NROFEXAMPLES = 2;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
@@ -106,13 +106,14 @@ public class Main {
 	 * @return The random input generated and the comparators to be used
 	 */
 	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput() {
-		List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
+		List<List<Double>> random = RandomGenerator.generateRealRandom(LENGTH, NROFEXAMPLES, MIN, MAX);		
 		List<double[]> input = new ArrayList<double[]>();
 		List<Comparator> comparers = new ArrayList<Comparator>();
 		for(List<Double> r : random) {
 			double[] row = new double[r.size()];
 			for(int i = 0; i < r.size(); i++) {
 				row[i] = r.get(i);
+				System.out.println(row[i]);
 			}
 			input.add(row);
 		}

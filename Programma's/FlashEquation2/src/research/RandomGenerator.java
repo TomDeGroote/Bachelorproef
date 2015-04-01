@@ -169,7 +169,7 @@ public class RandomGenerator {
 	}
 
 	/**
-	 * Generates list of seemingly random numbers between startRange and endRange
+	 * Generates list of random numbers between startRange and endRange
 	 * Every row represents column values with the last value of the row the goal value
 	 * @param length
 	 * 			The number of column values (inclusive goal value)
@@ -190,6 +190,28 @@ public class RandomGenerator {
 	public static List<List<Double>> generateRealRandom(int length, int nrOfExamples, int minimum, int maximum) {
 		List<List<Double>> result = new ArrayList<List<Double>>();
 		Random rn = new Random();
+
+		for(int i = 0; i < nrOfExamples; i++) {
+			List<Double> row = new ArrayList<Double>();
+			for(int j = 0; j < length; j++) {
+				//generating values close to the original
+				row.add((double) (rn.nextInt(100)));
+			}
+			result.add(row);
+		}
+
+		List<Symbol> s = new ArrayList<Symbol>();
+		s.add(new NonTerminal("Unknown"));
+		lastGeneratedEquation = new Equation(s);
+
+		// return the result
+		return result;
+	}
+	
+	
+	public static List<List<Double>> generateGaussianRandom(int length, int nrOfExamples, int minimum, int maximum) {
+		List<List<Double>> result = new ArrayList<List<Double>>();
+		Random rn = new Random();
 		double VARIANCE = 3.0f;
 
 		//First row is real random.
@@ -201,10 +223,10 @@ public class RandomGenerator {
 
 		for(int i = 1; i < nrOfExamples; i++) {
 			row = new ArrayList<Double>();
+			//double temp = rn.nextGaussian();
 			for(int j = 0; j < length; j++) {
 				//generating values close to the original
 				double temp = rn.nextGaussian();
-				System.out.println(temp);
 				row.add((double) (Math.round((result.get(0).get(j) + temp * VARIANCE)*100.0)/100.0));
 			}
 			result.add(row);
