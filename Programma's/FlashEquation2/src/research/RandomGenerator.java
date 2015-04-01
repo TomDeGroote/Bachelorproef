@@ -1,5 +1,8 @@
 package research;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,10 +18,35 @@ import tree.Symbol;
 import tree.Terminal;
 
 public class RandomGenerator {
-	
+
 	private static Equation lastGeneratedEquation = null;
 	private static double lastGeneratedGoal = 0;
-	
+
+	public static void main(String[] args){
+		try{
+			List<List<Double>> random = RandomGenerator.generateRealRandom(4, 3, 0, 100);
+
+			File file = new File("src/inputExample.txt");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			for(List<Double> temp : random ){
+				for(double t : temp){
+					bw.write(t + " ");
+				}
+				bw.write("\n");
+			}
+			
+			bw.close();
+		} catch (Exception e){
+
+		}
+	}
+
 	/**
 	 * Generates list of random numbers between startRange and endRange
 	 * Every row represents column values with the last value of the row the goal value
@@ -54,7 +82,7 @@ public class RandomGenerator {
 			number = 0;
 			symbols = new ArrayList<Symbol>();
 
-			
+
 			// generate the first row
 			for(int l = 0; l < length-2; l++) {
 				number = rn.nextInt((maximum - minimum) + 1) + minimum;
@@ -68,20 +96,20 @@ public class RandomGenerator {
 			number = rn.nextInt((maximum - minimum) + 1) + minimum;
 			numbers.add(number);
 			symbols.add(new Terminal("K"+ (length-2), number));
-	
+
 			// equation of the first row
 			Equation eq = new Equation(symbols);
-			
+
 			// set the first row as last generated equation
 			lastGeneratedEquation = eq;
-			
+
 			// evaluate the value of the equation and add it as Goal of the row
 			double goal = ObjectEvaluate.evaluateTerminalEquation(eq);
 			numbers.add(goal);
-			
+
 			// set last generated goal equal to goal of first row
 			lastGeneratedGoal = goal;
-			
+
 			double checkGoal = goal;
 			checkGoal = checkGoal*100000;
 			checkGoal = (int) (checkGoal%10);
@@ -93,8 +121,8 @@ public class RandomGenerator {
 		}
 		// add first row to result
 		result.add(numbers);
-		
-		
+
+
 		// generate the next rows
 		for(int i = 1; i < nrOfExamples; i++) {
 			List<Double> nextNumbers = new ArrayList<Double>();
@@ -103,7 +131,7 @@ public class RandomGenerator {
 				// reset symbols and numbers
 				List<Symbol> nextSymbols = new ArrayList<Symbol>();
 				nextNumbers = new ArrayList<Double>();
-				
+
 				// generate the i'th row
 				for(int l = 0; l < length - 2; l++) {
 					number = rn.nextInt((maximum - minimum) + 1) + minimum;
@@ -115,14 +143,14 @@ public class RandomGenerator {
 				number = rn.nextInt((maximum - minimum) + 1) + minimum;
 				nextNumbers.add(number);
 				nextSymbols.add(new Terminal("K"+ (length-2), number));
-				
+
 				// equation of the first row
 				Equation nextEq = new Equation(nextSymbols);
-				
+
 				// evaluate the value of the equation and add it as Goal of the row
 				double nextGoal = ObjectEvaluate.evaluateTerminalEquation(nextEq);
 				nextNumbers.add(nextGoal);
-				
+
 				double checkGoal = nextGoal;
 				checkGoal = checkGoal*100000;
 				checkGoal = (int) (checkGoal%10);
@@ -135,13 +163,13 @@ public class RandomGenerator {
 			// add first row to result
 			result.add(nextNumbers);
 		}
-		
+
 		// return the result
 		return result;
 	}
-	
+
 	/**
-	 * Generates list of random numbers between startRange and endRange
+	 * Generates list of seemingly random numbers between startRange and endRange
 	 * Every row represents column values with the last value of the row the goal value
 	 * @param length
 	 * 			The number of column values (inclusive goal value)
@@ -162,23 +190,34 @@ public class RandomGenerator {
 	public static List<List<Double>> generateRealRandom(int length, int nrOfExamples, int minimum, int maximum) {
 		List<List<Double>> result = new ArrayList<List<Double>>();
 		Random rn = new Random();
+		double VARIANCE = 3.0f;
 
-		for(int i = 0; i < nrOfExamples; i++) {
-			List<Double> row = new ArrayList<Double>();
+		//First row is real random.
+		List<Double> row = new ArrayList<Double>();
+		for(int j = 0; j < length; j++) {
+			row.add((double) (rn.nextInt((maximum - minimum) + 1) + minimum));
+		}
+		result.add(row);
+
+		for(int i = 1; i < nrOfExamples; i++) {
+			row = new ArrayList<Double>();
 			for(int j = 0; j < length; j++) {
-				row.add((double) (rn.nextInt((maximum - minimum) + 1) + minimum));
+				//generating values close to the original
+				double temp = rn.nextGaussian();
+				System.out.println(temp);
+				row.add((double) (Math.round((result.get(0).get(j) + temp * VARIANCE)*100.0)/100.0));
 			}
 			result.add(row);
 		}
-		
+
 		List<Symbol> s = new ArrayList<Symbol>();
 		s.add(new NonTerminal("Unknown"));
 		lastGeneratedEquation = new Equation(s);
-		
+
 		// return the result
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * @param nrOfKs
@@ -195,13 +234,13 @@ public class RandomGenerator {
 			result.add(new ArrayList<Double>());
 		}
 		Random rn = new Random();
-		
+
 		// create number of times a weight will be needed
 		Integer[] weightsNeeded = new Integer[rn.nextInt(2)];
 		for(int i = 0; i < weightsNeeded.length; i++) {
 			weightsNeeded[i] = rn.nextInt(9)+1;
 		}
-		
+
 		// create the number of times a K will appear
 		int KsToCreate = length-1-weightsNeeded.length;
 		Integer[] nrOfKAppearances = new Integer[nrOfKs];
@@ -215,8 +254,8 @@ public class RandomGenerator {
 			}
 		}
 		nrOfKAppearances[nrOfKAppearances.length-1] = KsToCreate;
-		
-		
+
+
 		// create the Ks
 		Integer[] Ks = new Integer[nrOfKs];
 		for(int i = 0; i < Ks.length; i++) {
@@ -224,7 +263,7 @@ public class RandomGenerator {
 			// add the Ks to what will be send back
 			result.get(0).add((double) Ks[i]);
 		}
-		
+
 		// the random order of things
 		List<Integer> randomSelect = new ArrayList<Integer>();
 		for(int i = 0; i < weightsNeeded.length; i++) {
@@ -236,7 +275,7 @@ public class RandomGenerator {
 			}
 		}	
 		Collections.shuffle(randomSelect);
-		
+
 		// generate the eqauation
 		List<Symbol> symbols = new ArrayList<Symbol>();
 		for(int i : randomSelect) {
@@ -250,15 +289,15 @@ public class RandomGenerator {
 			symbols.add(Grammar.getPossibleOperands().get(randomOperand));
 		}
 		symbols.remove(symbols.size()-1);
-		
+
 		// the resulting random equation
 		Equation eq = new Equation(symbols);
 		double goal = ObjectEvaluate.evaluateTerminalEquation(eq);
 		result.get(0).add(goal);
-		
+
 		lastGeneratedEquation = eq;
 		lastGeneratedGoal = goal;
-		
+
 		// Generating the other equations
 		for(int i = 1; i < nrOfExamples; i++) {
 			// create the Ks
@@ -268,7 +307,7 @@ public class RandomGenerator {
 				// add the Ks to what will be send back
 				result.get(i).add((double) NextKs[j]);
 			}
-			
+
 			HashMap<String, Double> alreadyRandomized = new HashMap<String, Double>();
 			List<Symbol> nextSymbols = new ArrayList<Symbol>(); 
 			for(Symbol s : eq.getListOfSymbols()) {
@@ -292,7 +331,7 @@ public class RandomGenerator {
 			}
 			result.get(i).add(ObjectEvaluate.evaluateTerminalEquation(new Equation(nextSymbols)));
 		}
-		
+
 		return result;
 	}
 	/**
@@ -308,7 +347,7 @@ public class RandomGenerator {
 				result += s.toString();
 			}
 		}
-		
+
 		result += " = " + lastGeneratedGoal;		
 		return result;
 	}
