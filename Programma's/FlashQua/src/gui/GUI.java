@@ -17,7 +17,15 @@ public class GUI {
 	private JFrame frmFlashqua;
 	
 	private JTextPane txtpnFileinput;
+	/**
+	 * Column letter followed the nr of rows which are the examples to be used
+	 * e.g. K 1 2 3
+	 */
 	private JTextPane txtpnExamplesolution;
+	/**
+	 * Column letters
+	 * e.g. A B C D
+	 */
 	private JTextPane txtpnColumns;
 	
 	private File excelFile; 
@@ -134,8 +142,19 @@ public class GUI {
 	 * Handles the action when the browse button for bullseye is clicked
 	 */
 	private void btnCalculateClicked(JButton button) {
-		String exampleSolution = txtpnExamplesolution.getText();
-		String columns = txtpnColumns.getText();
+		String[] exampleSolution = txtpnExamplesolution.getText().split(" ");
+		String[] columns = txtpnColumns.getText().split(" ");
+		
+		System.out.println("Example Solutions:");
+		for(int i = 1; i < exampleSolution.length; i++) {
+			System.out.println(exampleSolution[0] + exampleSolution[i]);
+		}
+		
+		System.out.println("Columns to be used:");
+		for(String column : columns) {
+			System.out.println(column);
+		}
+		
 	}
 	
 	/**
