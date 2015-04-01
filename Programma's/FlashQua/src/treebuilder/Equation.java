@@ -62,7 +62,9 @@ public class Equation implements Serializable {
 	 * 			The equation
 	 */
 	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
-		
+		if(previous.toString().equals("+W3*W3") && operand.equals(new Multiplication()) && terminal.toString().equals("W3")) {
+			System.out.println("..");
+		}
 		// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 		if(operand.isSplitable() && terminal.isWeight()) {
 			return null;
@@ -142,7 +144,7 @@ public class Equation implements Serializable {
 			List<Symbol> nonSplittablePrevious = new ArrayList<Symbol>(previous.getLastNonSplittable().getSymbols());
 			nonSplittablePrevious.set(0, new Multiplication());
 			for(int i = 0; i < nonSplittablePrevious.size(); i += 2) {
-				if(nonSplittablePrevious.get(i).equals(operand.getInverseOperand()) && nonSplittablePrevious.get(i+1).equals(terminal)) {
+				if((nonSplittablePrevious.get(i).equals(operand.getInverseOperand()) || nonSplittablePrevious.get(i).equals(operand)) && nonSplittablePrevious.get(i+1).equals(terminal)) {
 					return null;
 				}
 			}

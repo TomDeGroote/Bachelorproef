@@ -33,15 +33,15 @@ import exceptions.OutOfTimeException;
  */
 public class Main {
 	// the weights to be used (basically constants)
-	private static double[] WEIGHTS = new double[]{};//1.0, 2.0, 3.0, 5.0, 7.0};
+	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	
 	// Deadline and maxlevel parameters
-	private final static int DEADLINE = -1;
+	private final static int DEADLINE = 2000;
 	private final static int MAXLEVEL = 5;
 	
 	// Print the tree to a file or not, warning if you create many levels this writing will 
 	// take a very long time
-	private final static boolean PRINTTOFILE = false;
+	private final static boolean PRINTTOFILE = true;
 	
 	// Multithreaded or not
 	private final static boolean MULTITHREADED = true;
