@@ -55,7 +55,7 @@ public class Main {
 	private final static int MAX = 100;
 
 	
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] agrs) throws IOException, InterruptedException {
 		System.out.println();
 		// read the file input or generate the random input
 		Tuple<List<double[]>, List<Comparator>> fileInput;
@@ -66,6 +66,7 @@ public class Main {
 		}
 
 		// Set the grammar to use this input and the weights
+		Grammar.clean();
 		Grammar.setColumnValues(fileInput.x, WEIGHTS, fileInput.y);
 		
 		// initialize the right tree
@@ -106,7 +107,7 @@ public class Main {
 	 * @return The random input generated and the comparators to be used
 	 */
 	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput() {
-		List<List<Double>> random = RandomGenerator.generateRealRandom(LENGTH, NROFEXAMPLES, MIN, MAX);		
+		List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);		
 		List<double[]> input = new ArrayList<double[]>();
 		List<Comparator> comparers = new ArrayList<Comparator>();
 		for(List<Double> r : random) {
