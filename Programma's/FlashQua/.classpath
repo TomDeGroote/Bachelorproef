@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libraries/javaluator-3.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libraries/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="libraries/jOpenDocument-1.3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FlashEquation2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
