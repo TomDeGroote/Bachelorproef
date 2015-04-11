@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import treebuilder.grammar.Grammar;
 import treebuilder.symbols.Symbol;
 import treebuilder.symbols.Terminal;
 import treebuilder.symbols.operands.Multiplication;
@@ -42,7 +43,7 @@ public class Equation implements Serializable {
 
 
 	private Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, List<Integer> terminalCounter) {
-		//		System.nanoTime(); // Increases time.. A Lot..
+
 		this.nonSplitableParts = nonSplitableParts;
 		this.valueRestOfEquation = valueRestOfEquation;
 		this.value = value;
@@ -290,5 +291,27 @@ public class Equation implements Serializable {
 	 */
 	public List<Integer> getTerminalCounter() {
 		return terminalCounter;
+	}
+	
+	/**
+	 * @return the size of this equation
+	 */
+	public int size() {
+		return this.toString().length();
+	}
+
+
+	/**
+	 * @return the quality of this equation, does not encapsulate it's length
+	 */
+	public double getEquationQuality() {
+		double nrOfKs = Grammar.getNrOfKs();
+		double nrOfKsContained = 0;
+		for(int i = 0; i < nrOfKs; i++) {
+			if(terminalCounter.get(i) > 0) {
+				nrOfKsContained++;
+			}
+		}
+		return nrOfKsContained/nrOfKs;
 	}
 }

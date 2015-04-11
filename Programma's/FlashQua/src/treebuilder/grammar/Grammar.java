@@ -21,7 +21,7 @@ import treebuilder.symbols.operands.Sum;
 /**
  * Represents the grammar that is going to be used to construct the Equation
  * tree.
- * 
+ * TODO choose most difficult equation
  * @author Jeroen & Tom
  */
 public abstract class Grammar {
@@ -30,6 +30,7 @@ public abstract class Grammar {
 
 	// first equation
 	protected static ColumnValue[] KS;
+
 	protected static Weight[] WEIGTHS;
 	protected static Comparator comparator;
 	protected static double GOAL;
@@ -83,11 +84,15 @@ public abstract class Grammar {
 		for(int i = 0; i < WEIGTHS.length; i++) {
 			WEIGTHS[i] = new Weight(weights[i], KS.length+i);
 		}
-		
+
 		// set comparator first equation
 		comparator = comparators.get(0);
-		for(int i = 1; i < comparators.size(); i++) {
-			otherComparators.add(comparators.get(i));
+		for(int i = 0; i < otherEqs.size(); i++) {
+			if(i >= comparators.size()) {
+				otherComparators.add(comparators.get(0));
+			} else {
+				otherComparators.add(comparators.get(i));
+			}
 		}	
 	}
 	
@@ -140,6 +145,38 @@ public abstract class Grammar {
 		return true;
 	}
 	
+
+	/**
+	 * Calculates the value of column values based on a given equation
+	 * 
+	 * @param eq
+	 * 			The given equation
+	 * @param ks
+	 * 			The column values to be used
+	 * @return The result
+	 */
+	public static double calculateValue(Equation eq, double[] ks) {
+		List<NonSplittable> nonSplittableParts = eq.getEquationParts();
+		double result = 0.0;
+		List<Double> values = new ArrayList<Double>();	// the values of every seperate part
+		for(NonSplittable part : nonSplittableParts) {
+			double value = 0.0;
+			for(int i = 0; i < part.getSymbols().size(); i += 2) {
+				if(((Terminal) part.getSymbols().get(i+1)).isWeight()) {
+					value = ((Operand) part.getSymbols().get(i)).calculateValue(value, ((Terminal) part.getSymbols().get(i+1)).getValue());
+				} else {
+					value = ((Operand) part.getSymbols().get(i)).calculateValue(value, ks[((Terminal) part.getSymbols().get(i+1)).getNumber()]);
+				}
+			}
+			values.add(value);
+		}
+		
+		for(double v : values) {
+			result += v;
+		}
+		return result;
+	}
+	
 	/**
 	 * @return the solotions found with this grammar
 	 */
@@ -153,4 +190,11 @@ public abstract class Grammar {
 	public static Operand[] getPossibleOperands() {
 		return OPERANDS;
 	}	
+	
+	/**
+	 * @return the nr of column values
+	 */
+	public static int getNrOfKs() {
+		return KS.length;
+	}
 }
