@@ -36,13 +36,13 @@
 		-> Er kan veel efficiënter gepruned (Prunen op Terminals) worden als we geen rekening moeten houden met de reeds bestaande boom
 			-> Optimalisaties van de countdown probleem waren hier een grote hulp (Credit gegeven).
 		-> Prunen op zelfde vergelijkingen wordt nog steeds doorgevoerd, nu wel op runtime, maar het tijdsverlies is beperkt
-		-> Opgepast slechts 1 (losstaand) gewicht toegelaten!
+		-> Opgepast slechts 1 (solo) gewicht toegelaten!
 	9. Haakjes toevoegen
 		-> Meer in de lijn van wat de gebruiker zoekt
 		-> Logischere aanpak
 		-> sommige vergelijkingen kunnen op lagere diepte al gevonden worden (x + y)^2 bv diepte 3 ipv x^2 + 2*x*y + y^2 diepte 7
 		-> Maar meer mogelijkheden op lagere diepte zorgen weer voor meer knopen en dus opties op latere niveaus.
-	10. Slechts toelaten van 1 losstaand gewicht (Ik denk niet dat dit heel relevant gaat zijn.)
+	10. Slechts toelaten van 1 gewicht (Ik denk niet dat dit heel relevant gaat zijn.)
 		-> TODO
 
 * Expermimenten (onafhankelijk van het feit of brackets doorkomt of niet)
