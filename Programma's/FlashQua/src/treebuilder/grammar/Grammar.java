@@ -40,12 +40,13 @@ public abstract class Grammar {
 	protected static List<Comparator> otherComparators;
 	
 	// The found solutions
-	protected static HashSet<Equation> solutions = new HashSet<Equation>();
+	protected static HashSet<Equation> solutions;
 	
 	public static void clean(){
 		otherEqs = new ArrayList<HashMap<String, Double>>();
 		otherGoals = new ArrayList<Double>();
 		otherComparators = new ArrayList<Comparator>();
+		solutions = new HashSet<Equation>();
 	}
 	
 	/**
