@@ -1,0 +1,58 @@
+* Zeker uit te leggen
+	- Uitleggen CFG
+	- Count down probleem
+	- Gemaakte veronderstellingen die de gebruiker wilt
+		-> Wil dat de kolomwaarden gebruikt worden
+		-> Kan af en toe constantes verwachten 2*x + 1 bv
+		-> Zoekt geen superlange vergelijkingen
+		-> kolomwaardes kunnen meermaals of niet gebruikt worden
+	- Geen gebruikersdata
+		-> Dus zelf genereerd met verschillende randomgeneratoren
+		-> Moeilijkheid vergelijking bepalen aan de hand van de gebruikte randomgenerator
+* Verhaallijn
+	1. Verkozen om de boom op voorhand op te stellen
+		-> Berekenen vraagt veel tijd op diepe niveaus
+	2. Prunen van deze op voorhand berekende boom (Prunen op zelfde vergelijkingen)
+		-> Minder knopen moeten doorlopen worden
+		-> Maakt een groot verschil op diepe niveaus
+	3. Wat gebeurt er als we constantes toevoegen
+		-> Er worden meer oplossingen gevonden (maar zijn deze ook wel nuttig?)
+	4. Welke constantes gaan we gebruiken
+		-> 10, 5, prime -> Prime gekozen op basis van experimentele resultaten
+	5. Constantes berekenen adhv het gebruik van een onbekende
+		-> Niet nuttig aangezien dan elke vergelijking een oplossing heeft. Maar dit worden oplossingen gebasseerd op constantes en niet op de kolomwaarden. Onze veronderstelling
+	6. Niet meer berekenen boom op voorhand
+		-> Praktisch raken we niet echt diep genoeg om de grote voordelen te plukken
+		-> Er kan veel efficiënter gepruned (Prunen op Terminals) worden als we geen rekening meoten houden met de reeds bestaande boom
+		-> Prunen op zelfde vergelijkingen wordt nog steeds doorgevoerd, nu wel op runtime, maar het tijdsverlies hierdoor valt wel mee
+		-> Opgepast slechts 1 gewicht toegelaten!
+	7. Haakjes toevoegen
+		-> Meer in de lijn van wat de gebruiker zoekt
+		-> Logischere aanpak
+		-> sommige vergelijkingen kunnen op lagere diepte al gevonden worden (x + y)^2 bv diepte 3 ipv x^2 + 2*x*y + y^2 diepte 7
+		-> TODO
+	8. Slechts toelaten van 1 gewicht
+		-> TODO
+
+* Expermimenten (onafhangkelijk van het feit of brackets doorkomt of niet)
+	!! Alle experimenten moeten worden uitgevoerd met de meest gebruikersrepresentatieve randomgenerator (of allemaal)
+	- Vergelijken van de randomgeneratoren
+	- Prunen op vergelijkingen vs niet prunen op vergelijkingen		-> Maakt keuze prunen op vergelijkingen duidelijk
+	- No Weigts vs 10, 5, prime						-> Maakt keuze van prime weights duidelijk obv oplossingsgraad en keuze no weights op basis van snelheid
+	- Prunen op basis van gewichten en vergelijkingen vs niet prunen
+		- Voor no weights						-> Prunen mogelijk: op basis van vgl, op basis van K1 - K1 enzo
+		- Voor prime weights						-> Alles van prunen no weights + prunen obv K1 + K1 enzo
+
+* Nog te vermelden
+	- GUI geschreven
+	- Code beschikbaar via git
+	- Basisapplicatie mogelijk via git
+
+* Toekomst
+	- Eventuele interne implementatie in Libre-/Openoffice of Microsoft Excel
+	- Gebruik Constraintprogramming
+		-> Niet bewandeld wegens te weinig kennis
+	- Gebruik andere programmeertaal
+		-> C++, Prolog, Haskell
+		-> Niet bewandeld wegens te weinig kennis
+
