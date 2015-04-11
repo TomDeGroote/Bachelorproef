@@ -36,13 +36,19 @@ public abstract class Grammar {
 	protected static double GOAL;
 
 	// other equations
-	protected static List<HashMap<String, Double>> otherEqs = new ArrayList<HashMap<String, Double>>();
-	protected static List<Double> otherGoals = new ArrayList<Double>();
-	protected static List<Comparator> otherComparators = new ArrayList<Comparator>();
+	protected static List<HashMap<String, Double>> otherEqs;
+	protected static List<Double> otherGoals;
+	protected static List<Comparator> otherComparators;
 	
 	// The found solutions
-	protected static HashSet<Equation> solutions = new HashSet<Equation>();
+	protected static HashSet<Equation> solutions;
 	
+	public static void clean(){
+		otherEqs = new ArrayList<HashMap<String, Double>>();
+		otherGoals = new ArrayList<Double>();
+		otherComparators = new ArrayList<Comparator>();
+		solutions = new HashSet<Equation>();
+	}
 	
 	/**
 	 * Set the Terminal values for this grammar

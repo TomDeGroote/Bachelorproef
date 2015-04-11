@@ -11,8 +11,8 @@ import exceptions.OutOfTimeException;
 
 public abstract class Tree {
 	
-	protected static int level = 0;
-	protected static int equation = 0;
+	protected static int level;
+	protected static int equation;
 
 	// The tree itself
 	protected List<HashSet<Equation>> tree = new ArrayList<HashSet<Equation>>();
@@ -23,6 +23,11 @@ public abstract class Tree {
 		// set the start equation on the first level
 		tree.add(Grammar.getStartEquation());
 		level++;
+	}
+	
+	public static void clean(){
+		level = 0;
+		equation = 0;
 	}
 
 	/**

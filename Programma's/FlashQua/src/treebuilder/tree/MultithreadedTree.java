@@ -62,7 +62,8 @@ public class MultithreadedTree extends Tree {
 			
 			// check if maximum level is reached
 			if(level > maxlevel-1 && maxlevel > 0) {
-				throw new MaxLevelReachedException("Maximum level reached");
+				//throw new MaxLevelReachedException("Max Level");//TODO"Maximum level reached");
+				break;
 			}
 		}
 	}
