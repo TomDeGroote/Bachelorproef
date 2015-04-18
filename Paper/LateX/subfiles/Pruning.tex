@@ -1,0 +1,19 @@
+\documentclass[Main.tex]{subfiles}
+\begin{document}
+\section{Pruning}
+
+Tijdens het overlopen van de boom komen er veel knooppunten meerdere keren voor. Deze redundante knooppunten nemen niet alleen plaats in op de diepte van het huidige niveau. Hieruit worden dan met behulp van de productieregels ook enkel redundante knooppunten gecre\"eerd. Een voorbeeld van een redundante knoop is $E + E \times E$, indien $E \times E + E$ reeds gekend is.
+
+\subsection{Manier}
+Sommige termen zijn voor ons redundant op een bepaald niveau, maar zijn de nakomelingen van deze term niet redundant op hun niveau. Na het bepalen van de knopen op een bepaalde diepte, is er controle op knopen die redundant zijn op hun niveau. Maar ook een controle op knopen waarvan de nakomelingen niet equivalent zijn, deze knopen worden gebruikt om het volgende niveau te bepalen. De eerste lijst wordt gebruikt om zijn eigen niveau van de boom te beschrijven.
+
+
+
+\subsection{Resulaten}
+
+De gevolgen van deze eenvoudig vorm van pruning zijn enorm. Door de exponenti\"ele groei van de boom zijn er veel minder knopen op diepere niveau's. %TODO figuur (poster)
+\subfile{subfiles/tabels/pruning_table.tex}
+Aangezien er veel minder punten zijn is de tijd nodig om de volledige boom te doorlopen en op te stellen ook significant gedaald. 
+
+
+\end{document}
