@@ -61,12 +61,57 @@ public class Main {
 		comparingWeights();
 	}
 	
+	private static void comparingRandomGenerators() throws IOException, InterruptedException {
+		String s = "";
+		
+		ArrayList<Double> solutions = new ArrayList<Double>();
+		List<double[]> weights = new ArrayList<double[]>();
+		
+		double[] zeroWeights = new double[]{}; weights.add(zeroWeights); 
+		
+		s += ",realRandom, ComplexRandom, easyRandom";
+		String r = ""; 
+		DEADLINE = -1;
+		USINGWEIGHTS = false;
+		for(int j = 0; j < 2; j++){
+			solutions.add(0.0);
+		}
+		List<KindOfRandom> kors = new ArrayList<KindOfRandom>();
+		kors.add(KindOfRandom.REAL);kors.add(KindOfRandom.COMPLEX);kors.add(KindOfRandom.EASY);
+		for(int i = 0; i < nrOfIterations; i++){
+			double percentage = i % (nrOfIterations/100.0);
+			if(percentage == 0.0)
+				System.out.println(((double)i)/(nrOfIterations/100) + "%");
+			USEOPTIMALISATIONS = false;
+			NROFKS = 3;
+			NROFEXAMPLES = 2;
+			r += "\n Next Compare:";
+			
+			for(int j = 0; j < kors.size()-1; j++){
+				Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(kors.get(j));
+				r += "\n solutions:";
+				main2(zeroWeights,fileInput);
+				if(Grammar.getSolutions().size() > 0){
+					for(Equation eq : Grammar.getSolutions())
+						r += "\n"+eq.toString();
+					solutions.set(j,solutions.get(j)+1);
+				}
+			}
+		}
+		s += "\nSolution%";
+		for(double temp : solutions)
+			s += ", " + temp;
+		s += ",";
+		writeToFile(s, "compareGenerators.csv");
+		writeToFile(r, "solutionsGeneratorsCompare.txt");
+	}
+	
 	private static void comparingOptimalisationsNoWeights() throws IOException, InterruptedException {
 		String s = "";
 		ArrayList<Double> time = new ArrayList<Double>();
 		ArrayList<Double> solutions = new ArrayList<Double>();
 		List<double[]> weights = new ArrayList<double[]>();
-		double[] oneWeights = new double[]{1.0}; weights.add(oneWeights); 
+		double[] oneWeight = new double[]{1.0}; weights.add(oneWeight); 
 		s += ",noOptimalisations, optimalized";
 		String r = ""; 
 		DEADLINE = -1;
@@ -82,14 +127,14 @@ public class Main {
 			NROFKS = 3;
 			NROFEXAMPLES = 2;
 			r += "\n Next Compare:";
-			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput();
+			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(KindOfRandom.COMPLEX);
 			for(double[] temp : fileInput.x) 
 				for(double t : temp)
 					r += "\n"+t;
 			for(int j = 0; j < 2; j++){
 				r += "\n solutions:";
 				USEOPTIMALISATIONS = (j == 0) ? false : true;
-				main2(oneWeights,fileInput);
+				main2(oneWeight,fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0){
 					for(Equation eq : Grammar.getSolutions())
@@ -120,7 +165,7 @@ public class Main {
 		ArrayList<Double> solutions = new ArrayList<Double>();
 		List<double[]> weights = new ArrayList<double[]>();
 		
-		double[] noWeights = new double[]{1.0}; weights.add(noWeights); s += ",noWeights";
+		double[] noWeights = new double[]{}; weights.add(noWeights); s += ",noWeights";
 		double[] threeWeights = new double[]{1.0, 2.0, 3.0}; weights.add(threeWeights); s += ",threeWeights";
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};weights.add(primeWeights); s += ",primeWeights";
 		double[] fiveWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0}; weights.add(fiveWeights); s += ",fiveWeights";
@@ -137,7 +182,7 @@ public class Main {
 				System.out.println(((double)i)/(nrOfIterations/100) + "%");
 			NROFKS = 3;
 			NROFEXAMPLES = 2;
-			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput();
+			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(KindOfRandom.COMPLEX);
 			for(int j = 0; j < weights.size(); j++){
 				USINGWEIGHTS = (j == 0) ? false : true;
 				main2(weights.get(j),fileInput);
@@ -205,11 +250,28 @@ public class Main {
 	}
 
 
+	private enum KindOfRandom {REAL, COMPLEX, EASY};
 	/**
 	 * @return The random input generated and the comparators to be used
 	 */
-	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput() {
-		List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);		
+	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput(KindOfRandom kor) {
+		List<List<Double>> random;
+		switch (kor){
+		case REAL:
+			random = RandomGenerator.generateRealRandom(LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		case COMPLEX:
+			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		case EASY:
+			random = RandomGenerator.generateCertainAll(LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		default:
+			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+			
+		}
+	
 		List<double[]> input = new ArrayList<double[]>();
 		List<Comparator> comparers = new ArrayList<Comparator>();
 		for(List<Double> r : random) {
