@@ -34,7 +34,6 @@ import exceptions.OutOfTimeException;
 public class Main {
 	// the weights to be used (basically constants)
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
-	
 	// Deadline and maxlevel parameters
 	private final static int DEADLINE = 2000;
 	private final static int MAXLEVEL = 5;
@@ -53,14 +52,15 @@ public class Main {
 	private final static int NROFEXAMPLES = 2;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
+	public static boolean USEOPTIMALISATIONS = true;
+	public static boolean USINGWEIGHTS = true;
 
-	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println();
 		// read the file input or generate the random input
 		Tuple<List<double[]>, List<Comparator>> fileInput;
 		if(USERANDOM) {
-			fileInput = generateRandomInput();
+			fileInput = generateRandomInput(KindOfRandom.COMPLEX);
 		} else {
 			fileInput = readFile();
 		}
@@ -100,13 +100,31 @@ public class Main {
 		}
 		System.out.println("Done!");
 	}
+	
 
 
+
+	private enum KindOfRandom {REAL, COMPLEX, EASY};
 	/**
 	 * @return The random input generated and the comparators to be used
 	 */
-	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput() {
-		List<List<Double>> random = RandomGenerator.generateComplexRandom(NROFKS, LENGTH, NROFEXAMPLES, MIN, MAX);		
+	private static Tuple<List<double[]>, List<Comparator>> generateRandomInput(KindOfRandom kor) {
+		List<List<Double>> random;
+		switch (kor){
+		case REAL:
+			random = RandomGenerator.generateRealRandom(LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		case COMPLEX:
+			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		case EASY:
+			random = RandomGenerator.generateCertainAllK(LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+		default:
+			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
+			break;
+			
+		}
 		List<double[]> input = new ArrayList<double[]>();
 		List<Comparator> comparers = new ArrayList<Comparator>();
 		for(List<Double> r : random) {
