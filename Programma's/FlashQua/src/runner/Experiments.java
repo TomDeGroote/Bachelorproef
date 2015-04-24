@@ -31,9 +31,9 @@ import exceptions.OutOfTimeException;
  * @author Jeroen & Tom
  *
  */
-public class Main {
+public class Experiments {
 	// the weights to be used (basically constants)
-	//private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
+	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 
 	// Deadline and maxlevel parameters
 	private static int DEADLINE = -1;
@@ -54,11 +54,15 @@ public class Main {
 	private final static int MIN = 0;
 	private final static int MAX = 100;
 	private final static int nrOfIterations = 100;
-	public static boolean USEOPTIMALISATIONS;
+	public static boolean USEOPTIMALISATIONS = true;
 	public static boolean USINGWEIGHTS = true;
 
-	public static void main(String[] args) throws IOException, InterruptedException {
-		comparingWeights();
+	
+	public static void main(String[] agrs) throws IOException, InterruptedException {
+		//comparingRandomGenerators();
+		//comparingWeights();
+		//comparingOptimalisationsNoWeights();
+		System.out.println("We did it Reddit!");
 	}
 	
 	private static void comparingRandomGenerators() throws IOException, InterruptedException {
@@ -67,17 +71,18 @@ public class Main {
 		ArrayList<Double> solutions = new ArrayList<Double>();
 		List<double[]> weights = new ArrayList<double[]>();
 		
-		double[] zeroWeights = new double[]{}; weights.add(zeroWeights); 
+		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0}; weights.add(primeWeights); 
 		
 		s += ",realRandom, ComplexRandom, easyRandom";
 		String r = ""; 
 		DEADLINE = -1;
-		USINGWEIGHTS = false;
-		for(int j = 0; j < 2; j++){
-			solutions.add(0.0);
-		}
+		USINGWEIGHTS = true;
+		
 		List<KindOfRandom> kors = new ArrayList<KindOfRandom>();
 		kors.add(KindOfRandom.REAL);kors.add(KindOfRandom.COMPLEX);kors.add(KindOfRandom.EASY);
+		for(int j = 0; j < kors.size() ; j++){
+			solutions.add(0.0);
+		}
 		for(int i = 0; i < nrOfIterations; i++){
 			double percentage = i % (nrOfIterations/100.0);
 			if(percentage == 0.0)
@@ -87,10 +92,10 @@ public class Main {
 			NROFEXAMPLES = 2;
 			r += "\n Next Compare:";
 			
-			for(int j = 0; j < kors.size()-1; j++){
+			for(int j = 0; j < kors.size(); j++){
 				Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(kors.get(j));
 				r += "\n solutions:";
-				main2(zeroWeights,fileInput);
+				main2(primeWeights,fileInput);
 				if(Grammar.getSolutions().size() > 0){
 					for(Equation eq : Grammar.getSolutions())
 						r += "\n"+eq.toString();
@@ -170,7 +175,7 @@ public class Main {
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};weights.add(primeWeights); s += ",primeWeights";
 		double[] fiveWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0}; weights.add(fiveWeights); s += ",fiveWeights";
 //		double[] tenWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};weights.add(tenWeights); s += ",tenWeights";
-
+		USEOPTIMALISATIONS = true;
 		DEADLINE = -1;
 		for(int j = 0; j < weights.size(); j++){
 			time.add(0.0);
@@ -264,7 +269,7 @@ public class Main {
 			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
 			break;
 		case EASY:
-			random = RandomGenerator.generateCertainAll(LENGTH, NROFEXAMPLES, MIN, MAX);
+			random = RandomGenerator.generateCertainAllK(LENGTH, NROFEXAMPLES, MIN, MAX);
 			break;
 		default:
 			random = RandomGenerator.generateComplexRandom(NROFKS,LENGTH, NROFEXAMPLES, MIN, MAX);
@@ -286,7 +291,7 @@ public class Main {
 		for(int i = 0; i < input.size(); i++) {
 			comparers.add(new Equals());
 		}
-		Main m = new Main();
+		Experiments m = new Experiments();
 		return m.new Tuple<List<double[]>, List<Comparator>>(input, comparers);
 	}
 
@@ -355,7 +360,7 @@ public class Main {
 			input.add(inputLine);
 		}	
 		sc.close();
-		Main m = new Main(); // BAH!!
+		Experiments m = new Experiments(); // BAH!!
 		return m.new Tuple<List<double[]>, List<Comparator>>(input, comparators);
 	}
 

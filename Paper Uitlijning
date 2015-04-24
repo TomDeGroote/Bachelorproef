@@ -54,7 +54,8 @@
 		* Complex random
 		* Known Random
 	- Prunen op vergelijkingen vs niet prunen op vergelijkingen		-> Maakt keuze prunen op vergelijkingen duidelijk
-	- No Weights vs 10, 5, prime						-> Maakt keuze van prime weights duidelijk obv oplossingsgraad en keuze no weights op basis van snelheid
+	- No Weights vs 10, 5, prime						-> Maakt keuze van prime weights duidelijk obv oplossingsgraad 
+										   en keuze no weights op basis van snelheid
 	- Prunen op basis van gewichten en vergelijkingen vs niet prunen
 		- Voor no weights						-> Prunen mogelijk: op basis van vgl, op basis van K1 - K1 enzo
 		- Voor prime weights						-> Alles van prunen no weights + prunen obv K1 + K1 enzo
