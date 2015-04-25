@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.14)  25 APR 2015 14:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.14)  24 APR 2015 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -152,45 +152,53 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
 
-(./subfiles/Abstract.tex) (./subfiles/Introductie.tex)
-(./subfiles/Probleemstelling.tex
+(./subfiles/Abstract.tex) (./subfiles/Introductie.tex
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
-) (./subfiles/Aanpak.tex)
-(./subfiles/Dataset.tex
-Underfull \hbox (badness 2951) in paragraph at lines 6--7
-\OT1/ptm/m/n/10 We ver-melden welke mo-geli-jke ran-dom-gen-er-a-toren we
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
+
+Underfull \hbox (badness 1383) in paragraph at lines 10--11
+\OT1/ptm/m/n/10 gram-mat-ica (CFG) ge-bruikt. Vol-gens de 'formele taal
  []
 
-) (./subfiles/Experimenten.tex) (./subfiles/Resultaten.tex)
-(./subfiles/AndereAanpak.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.m
-ap}
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 22--23
+\OT1/ptm/m/n/10 dat vergeli-jkin-gen kan voorstellen. In-dien een nieuwe
+ []
+
+) (./subfiles/FlashEquation.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdfte
+x.map}
 
 
 
-]) (./subfiles/ToekomstigWerk.tex) (./subfiles/Conclusie.tex)
-(./subfiles/Code.tex)
+]) (./subfiles/Pruning.tex (./subfiles/tabels/pruning_table.tex))
 No file Main.bbl.
-[2
-
-] (./Main.aux) ) 
+[2] (./Main.aux) ) 
 Here is how much of TeX's memory you used:
- 1272 strings out of 493304
- 15574 string characters out of 6139870
- 73647 words of memory out of 5000000
- 4707 multiletter control sequences out of 15000+600000
+ 1256 strings out of 493304
+ 15267 string characters out of 6139870
+ 75647 words of memory out of 5000000
+ 4708 multiletter control sequences out of 15000+600000
  21273 words of font info for 58 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 27i,10n,20p,633b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/times/utmr8a.pfb>
-Output written on Main.pdf (2 pages, 51902 bytes).
+ 27i,10n,20p,898b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8
+a.pfb>
+Output written on Main.pdf (2 pages, 88926 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 31 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

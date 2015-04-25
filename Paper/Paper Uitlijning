@@ -22,9 +22,7 @@
 		-> Maar is dus zeker ook volledig
 	4. Prunen van deze op voorhand berekende boom (Prunen op zelfde vergelijkingen)
 		-> Minder knopen moeten doorlopen worden
-		-> Maakt een groot verschil op diepe niveaus (Butterfly Effect)
-
-
+		-> Maakt een groot verschil op diepe niveaus (Butterfly Effect)q
 	5. Wat gebeurt er als we constanten toevoegen
 		-> Er worden meer oplossingen gevonden (maar zijn deze ook wel nuttig?)
 		-> Toename in de grote van de boom, maar ook toename in het aantal gevallen waar op zijn minst één oplossing gevonden wordt.

@@ -1,28 +1,11 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Introductie}
-\subsection{Naburige problemen}
-Steeds vaker wordt er van een computer verwacht dat deze complexere taken kan uitvoeren. Terwijl het voor de gebruikers meestal duidelijk is wat er gewenst wordt, is dit voor de computer niet altijd het geval. Een recent voorbeeld hiervan is de 'FlashFill' functionaliteit dit momenteel aanwezig is in Excell 2014. Hierbij is het de bedoeling dat de computer het gewenste patroon, dat door de gebruiker gekend is, op een set van data herkent en kan toepassen. \par
-Een ontbrekende functionaliteit hierin is wel het herkennen van wiskundige bewerkingen, het 'vinden' van een passende vergelijking. Het bepalen van dit soort van vergelijking is geen onbekend onderzoeksdomein. In 2002 verscheen er een paper die een oplossing voor het 'Countdown Problem' gaf. Bij het 'Countdown' is een Brits televisie programma waarbij de deelnemers een wiskunde vergelijking zoeken met de gegeven nummers om zo dicht mogelijk tot bij een bepaald streefdoel te komen. Een belangrijke beperking op dit probleem zijn wel dat elk gegeven cijfer maximaal \'e\'enmalig mag voorkomen. Indien een gebruiker bepaalde waarde meermaals wilt gebruiken is dit niet meer volgens de regels van 'Countdown'. Aangezien de gebruiker sommige waarden meermaals wil kunnen gebruiken moet er een alternative manier van aanpak gevolgd worden. \par
-De vraag die ondezocht wordt in deze paper is nu: \\ "Gegeven een aantal voorbeelden, is het mogelijk om een passende vergelijking te vinden binnen beperkte tijd?"
 
-\subsection{Context-vrije grammatica}
-Een eerste belangrijk punt is de manier waarop een vergelijking wordt voor gesteld. Hiervoor wordt er context-vrije grammatica (CFG) gebruikt. Volgens de 'formele taal theorie' is een CFG een formele grammatica waarbij elke productieregel er uit ziet als volgt: $V \rightarrow w$. Waarbij $V$ een enkel niet-terminaal symbool is en $w$ een tekenreeks is van niet-terminale en terminale symbolen. 'Context vrij' betekend dat de productieregels kunnen toegepast worden los van de context waarin het niet-terminale symbool zich bevind. In een gegeven tekenreeks kan $V$ vervangen worden door de tekenreeks van $w$. \\
-
-%TODO replace by figure
-\begin{center}
-\fbox{\begin{varwidth}{\textwidth}
-$E \rightarrow E + E$ \\
-$E \rightarrow E - E$  \\
-$E \rightarrow E \times E$ \\
-$E \rightarrow E \div E$ \\
-$E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$
-\end{varwidth}}
-\end{center} 
-In bovenstaande figuur staat een voorbeeld van een CFG dat vergelijkingen kan voorstellen. Indien een nieuwe wiskundige operatie gewenst is is deze eenvoudig toe te voegen aan de reeds bestaande grammatica. Gemakkelijke aanpasbaarheid is een voordeel van het werken met een context-vrije grammatica, omdat de productieregels volledige onafhankelijk van elkaar kunnen staan. Deze CFG is de basis waarop er gewerkt wordt om een oplossing te vinden tot het probleem.
-
-\subsection{Boomstructuur}
-Aangezien er op voorhand niet geweten kan worden welke uitwerking van de CFG er nodig zal zijn om een oplossing te voorzien, wordt er door herhaaldelijke toepassing van de productieregels op de begin term $E$ een boomstructuur gecre\"eerd waarin alle mogelijkheden opgenoemd worden. De operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal mogelijke productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. Het verloop van deze boom staat beschreven in volgende figuur en tabel. %TODO Grafiek en Tabel%
-
-Vanwege de grote berekeningstijden op diepere niveau's van de boom en de onafhankelijkheid van het probleem tot de boom, is het ten zeerste aangeraden om deze boom slechts \'e\'enmalig op voorhand te bepalen. Een belangrijk voordeel van deze manier van opstellen is dat er geen enkele mogelijkheid kan ontbreken. 
+$\rightarrow$ Hier moet situering van het werk komen + de bijdragen die het zal leveren aan de mensheid
+Doel van de paper
+Key results
+Waarom
+ - Nog niemand heeft dit exact onderzoek gedaan
+ - Aanhalen Countdown
 \end{document}
