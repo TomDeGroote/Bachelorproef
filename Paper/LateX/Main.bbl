@@ -1,0 +1,9 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Hutton}{2002}]{count2002}
+Graham Hutton.
+\newblock Functional pearl: The countdown problem.
+\newblock {\em Journal of Functional Programming}, 6(12):609--616, November
+  2002.
+
+\end{thebibliography}
