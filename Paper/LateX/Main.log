@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.4.25)  26 APR 2015 16:18
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.4.25)  28 APR 2015 10:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -157,14 +157,8 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 57.
 
-(./subfiles/Abstract.tex) (./subfiles/Introductie.tex
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
-
-
-LaTeX Warning: Citation `count2002' on page 1 undefined on input line 4.
-
-) (./subfiles/Probleemstelling.tex
+(./subfiles/Abstract.tex) (./subfiles/Introductie.tex)
+(./subfiles/Probleemstelling.tex
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
 
@@ -187,51 +181,40 @@ Underfull \hbox (badness 1264) in paragraph at lines 19--20
 
 
 ])
-(./subfiles/Aanpak.tex
-Underfull \hbox (badness 10000) in paragraph at lines 29--3
-\OT1/ptm/m/n/10 'Snelheid, cor-rec-theid, ge-bruik-ers-ge-mak en uit-brei-d-
+(./subfiles/Aanpak.tex) (./subfiles/Dataset.tex
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 9.
+
+Underfull \hbox (badness 6842) in paragraph at lines 16--17
+\OT1/ptm/m/n/10 Hierbij wor-den de doel-waar-den van de willekeurige
  []
 
-) (./subfiles/Dataset.tex
-Underfull \hbox (badness 2951) in paragraph at lines 6--7
-\OT1/ptm/m/n/10 We ver-melden welke mo-geli-jke ran-dom-gen-er-a-toren we
+) (./subfiles/Experimenten.tex) (./subfiles/Resultaten.tex [2])
+(./subfiles/AndereAanpak.tex) (./subfiles/ToekomstigWerk.tex
+Underfull \hbox (badness 1127) in paragraph at lines 9--10
+\OT1/ptm/m/n/10 de kleinere diepte waarop er een geschikte vergeli-jk-ing
  []
 
-) (./subfiles/Experimenten.tex) (./subfiles/Resultaten.tex)
-(./subfiles/AndereAanpak.tex) (./subfiles/ToekomstigWerk.tex)
-(./subfiles/Conclusie.tex) (./subfiles/Code.tex) [2] (./Main.bbl
-Underfull \hbox (badness 1122) in paragraph at lines 4--8
-[]\OT1/ptm/m/n/10 Graham Hut-ton.  Func-tional pearl: The
- []
-
-) [3
-
-] (./Main.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+) (./subfiles/Conclusie.tex) (./subfiles/Code.tex) [3] (./Main.aux) ) 
 Here is how much of TeX's memory you used:
- 1377 strings out of 493315
- 17055 string characters out of 6137904
+ 1370 strings out of 493315
+ 16993 string characters out of 6137904
  76868 words of memory out of 5000000
- 4797 multiletter control sequences out of 15000+600000
- 24583 words of font info for 62 fonts, out of 8000000 for 9000
+ 4795 multiletter control sequences out of 15000+600000
+ 22899 words of font info for 60 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 27i,16n,21p,911b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
-xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texliv
-e/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
-/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2
-013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-
-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts
-/type1/urw/times/utmri8a.pfb>
-Output written on Main.pdf (3 pages, 90360 bytes).
+ 27i,16n,20p,879b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/loca
+l/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2013/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2013/texmf-dist/
+fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
+1/urw/times/utmr8a.pfb>
+Output written on Main.pdf (3 pages, 93572 bytes).
 PDF statistics:
  47 PDF objects out of 1000 (max. 8388607)
  33 compressed objects within 1 object stream
