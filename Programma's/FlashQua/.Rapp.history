@@ -1,0 +1,633 @@
+x=c(3,4,5,6,7,6,5,4,3)
+hist(x)
+gegevens=read.csv(file=file.choose(),header = TRUE, dec=",", sep = ";")
+gegevens
+gegevens = read.table(file=file.choose(), header = TRUE, sep="")
+gegevens
+gegevens=read.csv(file=file.choose(),header = TRUE, dec=",", sep = ";")
+kleur = c(’D’,’D’,’L’,’L’,’R’,’R’)        geslacht = c(’M’,’V’,’M’,’V’,’M’,’V’)        aantal = c(9,14,12,11,3,7)        oef1 = data.frame(kleur,geslacht,aantal)        oef1
+kleur = c(’D’,’D’,’L’,’L’,’R’,’R’)
+gegevens=read.table(file=file.choose(), header=TRUE, sep="")
+plot(gegevens$middelbaar,gegevens$bachelor,type="p",xlab="Score middelbaar",ylab="Score 1e Bachelor",main="Score 1e Bachelor = f(Score middelbaar)")
+lengteM = gegevens$lengte[gegevens$geslacht=="M"]     lengteV = gegevens$lengte[gegevens$geslacht=="V"]
+mu_M = mean(lengteM)
+mu_M
+med_M = median(lengteM)
+med_M
+mu_V = mean(lengteV)     mu_V     med_V = median(lengteV)     med_V
+par(mfrow=c(1,2))h_M = hist(lengteM)h_V = hist(lengteV)
+h2_M=hist(lengteM,freq=FALSE)     h2_V=hist(lengteV,freq=FALSE)
+lengte=gegevens$lengte
+lengte
+var(lengte)
+var_l
+var_1
+var_lmin_max_l=range(lengte)min_max_lrange_l = min_max_l[2]-min_max_l[1]range_liqr_l = IQR(lengte)iqr_lsd_l = sd(lengte)sd_l
+boxplot(lengte,ylab="lengte (in cm)",main="Boxplot van de variabele lengte")
+boxplot(lengte,xlab="lengte (in cm)",main="Boxplot van de variabele lengte")
+boxplot(list(lengteM, lengteV),ylab="lengte (in cm)",names=c("jongens", "meisjes"),main="Boxplot van de lengte van de jongens en de meisjes apart")
+boxplot(lengte,xlab="lengte (in cm)",main="Boxplot van de variabele lengte")
+boxplot(lengte,ylab="lengte (in cm)",main="Boxplot van de variabele lengte")
+verschil = gegevens$middelbaar - gegevens$bachelor
+verschil
+mu_D = mean(verschil)     mu_D     med_D = median(verschil)     med_D
+boxplot(verschil,ylab="Verschil",main="Boxplot van het verschil")
+gegevens
+bachB = gegevens$bachelor[gegevens$studierichting=="B"]
+boxplot(bachB,ylab="Bach B",main="Boxplot van het bachB")
+bachC = gegevens$bachelor[gegevens$studierichting=="C"]
+boxplot(bachC,ylab="Bach C",main="Boxplot van het bachC")
+bachG = gegevens$bachelor[gegevens$studierichting=="G"]#
+> boxplot(bachG,ylab="Bach G",main="Boxplot van het bachG")
+boxplot(bachG,ylab="Bach G",main="Boxplot van het bachG")
+bachB = gegevens$bachelor[gegevens$studierichting=="B"]#
+boxplot(bachB,ylab="Bach B",main="Boxplot van het bachB")
+mu_B = mean(bachB)#
+mu_B#
+med_B = median(bachB)#
+med_B
+var(bachB)
+mu_C = mean(bachC)#
+mu_C#
+med_C = median(bachC)#
+med_C#
+var(bachC)
+mu_G = mean(bachG)#
+mu_G#
+med_G = median(bachG)#
+med_G#
+var(bachG)
+pnorm(8,mean=5,sd=2)
+pnorm(4,mean=5,sd=sqrt(3))
+pnorm(2.5,mean=2,sd=5,lower.tail=FALSE)
+pnorm(5,mean=3,sd=2)-pnorm(2,mean=3,sd=2)
+qnorm(0.1,mean=7,sd=1)
+qnorm(0.91,mean=25,sd=5)
+qnorm(0.06,mean=25,sd=5)
+qnorm(0.91,mean=25,sd=sqrt(5))
+qnorm(0.1,mean=25,sd=sqrt(5))
+qnorm(0.06,mean=25,sd=sqrt(5))
+qnorm(0.9,mean=110,sd=20)
+pnorm(120,mean=110,sd=20)
+pnorm(6.15,mean=6,sd=0.1)-pnorm(5.90,mean=6,sd=0.1)
+pnorm(6.10,mean=6,sd=0.1,lower.tail=FALSE)
+pnorm(5.95,mean=6,sd=0.1)
+qnorm(0.95,mean=6,sd=0.1)
+qnorm(0.05,mean=6,sd=0.1,lower.tail=FALSE)
+ls()
+statdata1=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+statdata2=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+statdata3=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+qqnorm(statdata1$data1)#
+names(statdata1)
+data1=(statdata$data1)#
+logdata1=log(data1)#
+qqnorm(logdata1)
+data1=(statdata1$data1)#
+logdata1=log(data1)#
+qqnorm(logdata1)
+qqnorm(statdata2$data2)
+logdata2=log(data2+10)
+data2=(statdata2$data2)#
+logdata2=log(data2+10)
+qqnorm(logdata2)
+logdata2=log(data2+c)#
+qqnorm(logdata2)
+logdata2=log(data2+20)#
+qqnorm(logdata2)
+resultaten = read.table(file=file.choose(),header=TRUE,sep" ")#
+boxplot(resultaten$lengte)#
+hist(resultaten$lengte)
+resultaten = read.table(file=file.choose(),header=TRUE,sep"")
+resultaten=read.table(file=file.choose(),header=TRUE,sep=" ")
+boxplot(resultaten$lengte)#
+hist(resultaten$lengte)
+resultaten = read.table(file=file.choose(),header=TRUE,sep="")#
+boxplot(resultaten$lengte)#
+hist(resultaten$lengte)
+boxplot(resultaten$lengte)
+qqnorm(lengte)
+qqnorm(resultaten$lengte)
+lengteV=resultaten$lengte[resultaten$geslacht=="V"]#
+lengteM=resultaten$lengte[resultaten$geslacht=="M"]
+boxplot(lengteM)#
+hist(lengteM)#
+qqnorm(lengteM)#
+boxplot(lengteV)#
+hist(lengteV)#
+qqnorm(lengteV)
+hist(lengteV)
+boxplot(lengteV)
+hist(lengteM)
+boxplot(lengteM)
+qqnorm(lengteM)
+Co=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+hist(Co)
+Co=read.csv(file=file.choose(),header=TRUE,dec=",",sep=" ")#
+hist(Co)
+hist(Co$emissie)
+Co=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+hist(Co$emissie)
+boxplot(Co$emissie)
+qqnorm(Co$emissie)
+logdata=log(Co$emissie)#
+qqnorm(logdata)
+boxplot(logdata)
+boxplot(Rkm$levensduur)
+Rkm=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+boxplot(Rkm$levensduur)
+hist(Rkm$levensduur)
+qqnorm(Rkm$levensduur)
+qqnorm(log(Rkm$levensduur))
+n=length(levensduur)#
+p=seq(from=0.5/n,to=(n-0.5)/n,by=1/n)#
+x=qexp(p,1)#
+qqplot(x,levensduur,xlab="theoretische kwantielen van de standaardexponentiële verdeling", ylab="geordende steekproef",main="Exponentiële QQ-plot")
+n=length(Rkm$levensduur)#
+p=seq(from=0.5/n,to=(n-0.5)/n,by=1/n)#
+x=qexp(p,1)#
+qqplot(x,Rkm$levensduur,xlab="theoretische kwantielen van de standaardexponentiële verdeling", ylab="geordende steekproef",main="Exponentiële QQ-plot")
+datajuni=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+qqnorm(datajuni$temperatuur)
+qqnorm(log(datajuni$temperatuur))
+t.test(datajuni$temperatuur,mu=20,alternative="two.sided")
+help(t.test)
+t.test(datajuni$temperatuur,mu=20,alternative="greater")
+t.test(datajuni$temperatuur,mu=20,alternative="less")
+t.test(datajuni$temperatuur,mu=20,conf.level=0.99)
+t.test(datajuni$temperatuur,mu=20,conf.level=0.95)
+t.test(datajuni$temperatuur,mu=20,conf.level=0.99)
+datajuni=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+t.test(datajuni$temperatuur,mu=20,conf.level=0.99)
+datajuni2=datajuni[datajuni$temperatuur!=20,]n2=length(datajuni2$temperatuur)
+groter=datajuni2[datajuni2$temperatuur>20,]a=length(groter$temperatuur)
+binom.test(a,n2,0.5,alternative="two.sided")
+co=read.csv(file.file.choose(),header=TRUE,dec=",",sep=";")
+co=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+qqnorm(co)
+qqnorm(co$x)
+qqnorm(co$emissie)
+qqnorm(log(co$emissie))
+shapiro.test(co$emissie)
+dataBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+boxplot(dataBMI$4)
+boxplot(dataBMI$1993)
+hist(dataBMI$1993))
+hist(dataBMI$1993)
+qqnorm(dataBMI)
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=".",sep=";")#
+boxplot(vrouwBMI$country)
+boxplot(vrouwBMI$2008)
+boxplot(vrouwBMI$Belgium)
+help.start()
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+boxplot(vrouwBMI$belgium)
+vrouwBMI
+boxplot(vrouwBMI$X1994)
+boxplot(vrouwBMI$Continent)
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)
+clear
+clear()
+vrouwBMI1993
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=".",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)
+nrow(vrouwBMI2008)
+ncol(vrouwBMI2008)
+vrouwBMI2008$Continent == "4"
+summary(vrouwBMI2008)
+t.test(vrouwBMI2008,mu=26,alternative="two.sided")
+26.35727-25.45501
+26.35727-27.25953
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+#
+summary(vrouwBMI1993)#
+summary(vrouwBMI2008)#
+#
+t.test(vrouwBMI2008,mu=26,alternative="two.sided")
+t.test(vrouwBMI1993,mu=25,alternative="two.sided")
+24.85069-24.11658
+(0.90226^2)/(0.73411^2)
+mean(vrouwBMI1993)
+sd(vrouwBMI1993)
+sd(vrouwBMI2008)
+var(vrouwBMI2008)
+cholesterol=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+cholesterol
+Verschil = cholesterol$cholest2 - cholesterol$cholest4
+Verschil
+shapiro.test(Verschil)
+qqnorm(Verschil)
+qqline(Verschil)
+qqnorm(Verschil)
+qqline(Verschil)
+t.test(cholesterol$cholest2.cholesterol$cholest4,paired=TRUE)
+t.test(cholesterol$cholest2,cholesterol$cholest4,paired=TRUE)
+t.test(Verschil,mu=0,alternative="greater")
+t.test(Verschil,mu=0,alternative="less")
+resultaten=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")
+resultaten
+zwaai1 = resultaten$zwaai[resulaten$leeftijd=="1"]
+zwaai1 = resultaten$zwaai[resultaten$leeftijd=="1"]
+zwaai2 = resultaten$zwaai[resultaten$leeftijd=="2"]
+Verschil = zwaai1 - zwaai2#
+shapiro.test(Verschil)
+shapiro.test(zwaai1)
+shapiro.test(zwaai2)
+boxplot(evenwicht$zwaai~evenwicht$leeftijd)
+boxplot(resultaten$zwaai~resultaten$leeftijd)
+zwaai=resultaten$zwaai#
+leeftijd=resultaten$leeftijd#
+var.test(zwaai[leeftijd==1],zwaai[leeftijd==2])
+t.test(zwaai[leeftijd==1],zwaai[leeftijd==2],var.equal=TRUE)
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+summary(vrouwBMI1993)#
+sd(vrouwBMI1993)#
+summary(vrouwBMI2008)#
+sd(vrouwBMI2008)
+vrouwBMI2008
+vrouwBMI1993
+verschil=vrouwBMI1993-vrouwBMI2008#
+verschil2=verschil[verschil!=0]#
+n2=length(verschil2)#
+groter=verschil2[verschil2>0]#
+a=length(groter)#
+binom.test(a,n2,0.5)
+binom.test(a,n2,0.5)
+binom.test(a,n2,0.5, alternative = c("greater"),conf.level=0.95)
+Project Statistiek######
+##Vraag 1###
+#
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+summary(vrouwBMI1993)#
+sd(vrouwBMI1993)#
+summary(vrouwBMI2008)#
+sd(vrouwBMI2008)#
+#
+#Niet-Parametrisch#
+verschil=vrouwBMI1993-vrouwBMI2008#
+verschil2=verschil[verschil!=0]#
+n2=length(verschil2)#
+groter=verschil2[verschil2>0]#
+a=length(groter)#
+binom.test(a,n2,0.5,alternative = c("greater"),conf.level=0.95)
+binom.test(a,n2,0.5,alternative = c("two.sided"),conf.level=0.95)
+shapiro.test(verschil)
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(3,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm()verschil)#
+shapiro.test(verschil)
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(3,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm(verschil)#
+shapiro.test(verschil)
+t.test(vrouwBMI1993,vrouwBMI2008,paired=TRUE)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.90)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+shapiro.test(verschil)
+Project Statistiek######
+############################
+##Vraag 1###
+############
+#
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+par(mfrow=1,3)#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm(verschil)#
+shapiro.test(verschil)#
+#
+#############################################
+#Normaal verdeeld voor aplha = 0.05 en 0.10##
+#############################################
+#
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+Project Statistiek######
+############################
+##Vraag 1###
+############
+#
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+par(mfrow=c(1,3))#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm(verschil)#
+shapiro.test(verschil)#
+#
+#############################################
+#Normaal verdeeld voor aplha = 0.05 en 0.10##
+#############################################
+#
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("less"),paired=TRUE,conf.level=0.95)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+Project Statistiek######
+############################
+##Vraag 1###
+############
+#
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+shapiro.test(vrouwBMI2008)#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+par(mfrow=c(1,3))#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm(verschil)#
+shapiro.test(verschil)#
+#
+#############################################
+#Normaal verdeeld voor aplha = 0.05 en 0.10##
+#############################################
+#
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("greater"),paired=TRUE,conf.level=0.95)
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("less"),paired=TRUE,conf.level=0.95)
+Manuele ingave gegevens.#
+jaartallen<- c(1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007)#
+#, 2008#
+#
+BMI<-c(23.6643, 23.79664, 23.9182, 24.04013, 24.16268, 24.28476, 24.40299, 24.52525, 24.64966, 24.7785,24.91805, 25.05858, 25.21249, 25.36823, 25.52531, 25.69331, 25.86083, 26.03133, 26.20243, 26.36937, 26.54081, 26.71558, 26.8835, 27.04576, 27.20395, 27.36747, 27.52055, 27.67914) #
+#, 27.84092#
+#
+df = data.frame(jaartallen,BMI)#
+#
+## Test normaliteit#
+shapiro.test(jaartallen)#
+shapiro.test(BMI)#
+#
+## Correlatie#
+cor(jaartallen,BMI)#
+cor.test(jaartallen,BMI,method="pearson")#
+#
+## Lineaire regressie#
+Results <- lm(BMI ~ jaartallen)#
+summary(Results)#
+anova(Results)#
+results.res = resid(Results)#
+#
+qqnorm(residuals(Results))#
+#
+par(mfrow=c(1,2))#
+plot(jaartallen,results.res,ylab="Residuen",xlab="Jaartallen",main="BMI")#
+abline(0,0,col="red",lty=1)#
+abline(2.5,0,col="red",lty=1)#
+abline(-2.5,0,col="red",lty=1)#
+#
+shapiro.test(results.res)#
+#
+# !! nagaan of residuen normaal verdeeld zijn#
+plot(df,type="p",xlab="Jaartallen",ylab="BMI-waarden",main="BMI vrouwen op El Salvador")#
+abline(Results,col="red",lty=1)
+Project Statistiek######
+############################
+##Vraag 1###
+############
+#
+vrouwBMI=read.csv(file=file.choose(),header=TRUE,dec=",",sep=";")#
+vrouwBMI1993=vrouwBMI$X1993[vrouwBMI$Continent=="4"]#
+vrouwBMI2008=vrouwBMI$X2008[vrouwBMI$Continent=="4"]#
+#
+# Beide datasets grafisch bekijken#
+#
+par(mfrow=c(2,3))#
+boxplot(vrouwBMI1993)#
+hist(vrouwBMI1993)#
+qqnorm(vrouwBMI1993)#
+#shapiro.test(vrouwBMI1993)#
+#
+boxplot(vrouwBMI2008)#
+hist(vrouwBMI2008)#
+qqnorm(vrouwBMI2008)#
+#shapiro.test(vrouwBMI2008)#
+#
+#Verschil tussen de gepaarde waarden#
+#
+verschil=vrouwBMI1993-vrouwBMI2008#
+par(mfrow=c(1,3))#
+boxplot(verschil)#
+hist(verschil)#
+qqnorm(verschil)#
+shapiro.test(verschil)#
+#Normaal verdeeld voor aplha = 0.05 en 0.10 Dus T-Test##
+#
+t.test(vrouwBMI1993,vrouwBMI2008,alternative = c("less"),paired=TRUE,conf.level=0.95)#
+##############################
+##   practicum : vraag 2   ###
+##############################
+#
+## Manuele ingave gegevens.#
+jaartallen<- c(1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007)#
+#, 2008#
+#
+BMI<-c(23.6643, 23.79664, 23.9182, 24.04013, 24.16268, 24.28476, 24.40299, 24.52525, 24.64966, 24.7785,24.91805, 25.05858, 25.21249, 25.36823, 25.52531, 25.69331, 25.86083, 26.03133, 26.20243, 26.36937, 26.54081, 26.71558, 26.8835, 27.04576, 27.20395, 27.36747, 27.52055, 27.67914) #
+#, 27.84092#
+#
+df = data.frame(jaartallen,BMI)#
+#
+## Test normaliteit#
+shapiro.test(jaartallen)#
+shapiro.test(BMI)#
+#
+## Correlatie#
+cor(jaartallen,BMI)#
+cor.test(jaartallen,BMI,method="pearson")#
+#
+## Lineaire regressie#
+Results <- lm(BMI ~ jaartallen)#
+summary(Results)#
+anova(Results)#
+results.res = resid(Results)#
+#
+qqnorm(residuals(Results))#
+#
+par(mfrow=c(1,2))#
+plot(jaartallen,results.res,ylab="Residuen",xlab="Jaartallen",main="BMI")#
+abline(0,0,col="red",lty=1)#
+abline(2.5,0,col="red",lty=1)#
+abline(-2.5,0,col="red",lty=1)#
+#
+shapiro.test(results.res)#
+#
+# !! nagaan of residuen normaal verdeeld zijn#
+plot(df,type="p",xlab="Jaartallen",ylab="BMI-waarden",main="BMI vrouwen op El Salvador")#
+abline(Results,col="red",lty=1)#
+# er zijn geen uitschieters in de data
+~/Documents/Bachelorproef/Programma's/FlashQua/compareGenerators.csv
+Documents/Bachelorproef/Programma's/FlashQua/compareGenerators.csv
+w1 <- read.csv(file="w1.dat",sep=",",head=TRUE)
+w1 <- read.csv(file="~/Documents/Bachelorproef/Programma's/FlashQua/compareGenerators.csv",sep=",",head=TRUE)
+w1 <- read.csv(file="~/Documents/Bachelorproef/Programma's/FlashQua/compareGenerators",sep=",",head=TRUE)
+ls()
+w1 <- read.csv(file="~/Documents/Bachelorproef/Programma's/FlashQua/compareGenerators",sep=",",head=TRUE)
+getwd()
+setwd("/Users/Jeroen/Documents/Bachelorproef/Programma's/FlashQua")
+getwd()
+mydata = read.csv(file="/compareGenerators",sep=",",head=TRUE)
+mydata = read.csv(file="compareGenerators.csv",sep=",",head=TRUE)
+mydata = read.csv(file="/compareGenerators.csv",sep=",",head=TRUE)
+mydata = read.csv(file="compareGenerators.csv",sep=",",head=TRUE)
+mydata = read.csv(file="compareGenerators.csv")
+mydata = read.csv(file="compareGenerators.csv")
+hist(mydata$Solution%)
+hist(mydata)
+names(mydata)
+mydata = read.csv(file="compareGenerators.csv",row.names = 1)
+names(mydata)
+hist(mydata%X)
+hist(mydata%realRandom)
+help(hist)
+mydata = read.csv(file="compareGenerators copy.csv",row.names = 1)
+names(mydata)
+hist(mydata$solution)
+mydata = read.csv(file="compareGenerators.csv")
+barplot(sort(mydata,decreasing=TRUE), main="Draws", ylab="Generator",xlab="Drops")
+plot(mydata)
+mydata = read.csv(file="compareGenerators copy.csv",row.names = 1)
+counts <- table(mydata$solution)
+barplot(counts)
+data <- structure(list(W= mydata$solution, .Names=c("Test"), class="data.frame"),row.names = c(NA, -5L))
+attach(data)
+print(data)
+barplot(as.matrix(data),main="Test Chart")
+barplot(as.matrix(data),main="Test Chart",beside=TRUE)
