@@ -25,7 +25,7 @@ import exceptions.OutOfTimeException;
  */
 public class Experiments {
 	private static int DEADLINE = -1;
-	private final static int MAXLEVEL = 5;
+	private final static int MAXLEVEL = 4;
 	private final static boolean PRINTTOFILE = false;
 	private final static boolean MULTITHREADED = true;
 	private static int NROFKS;
@@ -33,9 +33,9 @@ public class Experiments {
 	private static int NROFEXAMPLES;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
-	private final static int nrOfIterations = 25;
-	public static boolean USEOPTIMALISATIONS = true;
-	public static boolean USINGWEIGHTS = true;
+	private final static int nrOfIterations = 1;
+//	public static boolean USEOPTIMALISATIONS = true;
+//	public static boolean USINGWEIGHTS = true;
 
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
@@ -55,7 +55,7 @@ public class Experiments {
 		s += ",realRandom, ComplexRandom, easyRandom";
 		String r = ""; 
 		DEADLINE = -1;
-		USINGWEIGHTS = true;
+		Main.USINGWEIGHTS = true;
 		
 		List<KindOfRandom> kors = new ArrayList<KindOfRandom>();
 		kors.add(KindOfRandom.REAL);kors.add(KindOfRandom.COMPLEX);kors.add(KindOfRandom.EASY);
@@ -66,7 +66,7 @@ public class Experiments {
 			double percentage = i % (nrOfIterations/100.0);
 			if(percentage == 0.0)
 				System.out.println(((double)i)/(nrOfIterations/100) + "%");
-			USEOPTIMALISATIONS = false;
+			Main.USEOPTIMALISATIONS = false;
 			NROFKS = 3;
 			NROFEXAMPLES = 2;
 			r += "\n Next Compare:";
@@ -99,7 +99,7 @@ public class Experiments {
 		s += ",noOptimalisations, optimalized";
 		String r = ""; 
 		DEADLINE = -1;
-		USINGWEIGHTS = true;
+		Main.USINGWEIGHTS = true;
 		int AMOUNTOFCOLUMNS = 2;
 		for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 			time.add(0.0);
@@ -118,7 +118,7 @@ public class Experiments {
 					r += "\n"+t;
 			for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 				r += "\n solutions:";
-				USEOPTIMALISATIONS = (j == 0) ? false : true;
+				Main.USEOPTIMALISATIONS = (j == 0) ? false : true;
 				main2(primeWeights,fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0){
@@ -155,7 +155,7 @@ public class Experiments {
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};weights.add(primeWeights); s += ",primeWeights";
 		double[] fiveWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0}; weights.add(fiveWeights); s += ",fiveWeights";
 //		double[] tenWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};weights.add(tenWeights); s += ",tenWeights";
-		USEOPTIMALISATIONS = true;
+		Main.USEOPTIMALISATIONS = true;
 		DEADLINE = -1;
 		for(int j = 0; j < weights.size(); j++){
 			time.add(0.0);
@@ -169,7 +169,7 @@ public class Experiments {
 			NROFEXAMPLES = 2;
 			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(KindOfRandom.COMPLEX);
 			for(int j = 0; j < weights.size(); j++){
-				USINGWEIGHTS = (j == 0) ? false : true;
+				Main.USINGWEIGHTS = (j == 0) ? false : true;
 				main2(weights.get(j),fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0)
@@ -293,6 +293,7 @@ public class Experiments {
 	 * 		The file name where the string s will be written
 	 */
 	private static void writeToFile(String s, String fileName) {
+		System.out.println("Writing to file: \n" + s);
 		BufferedWriter writer = null;
 		try {
 			File file = new File(fileName);

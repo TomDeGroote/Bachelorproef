@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import runner.Main;
 import treebuilder.grammar.Grammar;
 import treebuilder.symbols.Symbol;
 import treebuilder.symbols.Terminal;
 import treebuilder.symbols.operands.Multiplication;
 import treebuilder.symbols.operands.Operand;
 import treebuilder.symbols.operands.Sum;
-import runner.Main;
 
 /**
  * Represents an equation that can be formed by combining symbols.
@@ -43,7 +43,6 @@ public class Equation implements Serializable {
 
 
 	private Equation(List<NonSplittable> nonSplitableParts, double valueRestOfEquation, double value, List<Integer> terminalCounter) {
-
 		this.nonSplitableParts = nonSplitableParts;
 		this.valueRestOfEquation = valueRestOfEquation;
 		this.value = value;
@@ -78,7 +77,6 @@ public class Equation implements Serializable {
 
 		if(operand.isSplitable()) {
 			NonSplittable newNonSplittable = new NonSplittable(operand, terminal);
-			
 			if(Main.USEOPTIMALISATIONS) {
 				// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
 				for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
@@ -123,7 +121,6 @@ public class Equation implements Serializable {
 					return null;
 				}
 	
-	
 				// The value of the terminal we are going to add should be bigger than (or equal) to the last terminal part that starts with the same operand
 				for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
 					if(previous.getLastNonSplittable().getSymbols().get(i).equals(operand)) {
@@ -154,14 +151,14 @@ public class Equation implements Serializable {
 					}
 				}
 	
+				// There should not be a +K0*K1 if it already has a +K0*K1, replace by weights
+				if(previous.getEquationParts().contains(newNonSplittable)) {
+					return null;
+				}
+				
 				// There should not be a -K0*K1 if there is a +K0*K1
 				NonSplittable inverseNonSplittable = newNonSplittable.getInverseNonSplittable();
 				if(previous.getEquationParts().contains(inverseNonSplittable)) {
-					return null;
-				}
-	
-				// There should not be a +K0*K1 if it already has a +K0*K1, replace by weights
-				if(previous.getEquationParts().contains(newNonSplittable)) {
 					return null;
 				}
 			}
@@ -241,14 +238,17 @@ public class Equation implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(Main.USEOPTIMALISATIONS) {
+		if(!Main.USEOPTIMALISATIONS) {
 			return false;
 		}
 		Equation otherEquation = (Equation) obj;
 		// the last nonSplitablePart needs be equal TODO
-//				if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
-//					return false; 
-//				}
+		if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
+			return false; 
+		}
+		if(otherEquation.getValueOfEquation() != this.getValueOfEquation()) {
+			return false;
+		}
 		List<NonSplittable> otherEq = new ArrayList<NonSplittable>(otherEquation.getEquationParts());
 		for(NonSplittable part : nonSplitableParts) {
 			if(otherEq.contains(part)) {
@@ -259,6 +259,8 @@ public class Equation implements Serializable {
 		}
 		return true;
 	}
+	
+	static int counter = 0;
 
 	@Override
 	public int hashCode() {
