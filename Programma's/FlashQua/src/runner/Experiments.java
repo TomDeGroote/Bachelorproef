@@ -33,15 +33,15 @@ public class Experiments {
 	private static int NROFEXAMPLES;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
-	private final static int nrOfIterations = 100;
+	private final static int nrOfIterations = 25;
 	public static boolean USEOPTIMALISATIONS = true;
 	public static boolean USINGWEIGHTS = true;
 
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
-		comparingRandomGenerators();
-		comparingWeights();
-		comparingOptimalisationsNoWeights();
+		//comparingRandomGenerators();
+		//comparingWeights();
+		comparingOptimalisations();
 	}
 	
 	private static void comparingRandomGenerators() throws IOException, InterruptedException {
@@ -90,17 +90,18 @@ public class Experiments {
 		writeToFile(r, "solutionsGeneratorsCompare.txt");
 	}
 	
-	private static void comparingOptimalisationsNoWeights() throws IOException, InterruptedException {
+	private static void comparingOptimalisations() throws IOException, InterruptedException {
 		String s = "";
 		ArrayList<Double> time = new ArrayList<Double>();
 		ArrayList<Double> solutions = new ArrayList<Double>();
 		List<double[]> weights = new ArrayList<double[]>();
-		double[] oneWeight = new double[]{1.0}; weights.add(oneWeight); 
+		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0}; weights.add(primeWeights); 
 		s += ",noOptimalisations, optimalized";
 		String r = ""; 
 		DEADLINE = -1;
-		USINGWEIGHTS = false;
-		for(int j = 0; j < 2; j++){
+		USINGWEIGHTS = true;
+		int AMOUNTOFCOLUMNS = 2;
+		for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 			time.add(0.0);
 			solutions.add(0.0);
 		}
@@ -115,10 +116,10 @@ public class Experiments {
 			for(double[] temp : fileInput.x) 
 				for(double t : temp)
 					r += "\n"+t;
-			for(int j = 0; j < 2; j++){
+			for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 				r += "\n solutions:";
 				USEOPTIMALISATIONS = (j == 0) ? false : true;
-				main2(oneWeight,fileInput);
+				main2(primeWeights,fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0){
 					for(Equation eq : Grammar.getSolutions())
@@ -127,7 +128,7 @@ public class Experiments {
 				}
 			}
 		}
-		for(int i = 0; i < 2; i++){
+		for(int i = 0; i < AMOUNTOFCOLUMNS; i++){
 			time.set(i,time.get(i)/nrOfIterations);
 			solutions.set(i,solutions.get(i)/nrOfIterations);
 		}
