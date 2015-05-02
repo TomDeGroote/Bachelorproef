@@ -1,24 +1,16 @@
 package runner;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import research.RandomGenerator;
 import treebuilder.Equation;
 import treebuilder.comparators.Comparator;
 import treebuilder.comparators.Equals;
-import treebuilder.comparators.GreaterThan;
-import treebuilder.comparators.GreaterThanOrEquals;
-import treebuilder.comparators.SmallerThan;
-import treebuilder.comparators.SmallerThanOrEquals;
 import treebuilder.grammar.Grammar;
 import treebuilder.tree.MultithreadedTree;
 import treebuilder.tree.SinglethreadTree;
@@ -27,27 +19,15 @@ import exceptions.MaxLevelReachedException;
 import exceptions.OutOfTimeException;
 
 /**
- * The main class of the tree program. From here a tree will be created and written to a file named fileName (A constant of this class) (as an object)
+ * The main experiment class of the tree program. From here a tree will be created and written to a file named fileName (A constant of this class) (as an object)
  * @author Jeroen & Tom
  *
  */
 public class Experiments {
-	// the weights to be used (basically constants)
-	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
-
-	// Deadline and maxlevel parameters
 	private static int DEADLINE = -1;
 	private final static int MAXLEVEL = 5;
-
-	// Print the tree to a file or not, warning if you create many levels this writing will 
-	// take a very long time
 	private final static boolean PRINTTOFILE = false;
-
-	// Multithreaded or not
 	private final static boolean MULTITHREADED = true;
-
-	// Random settings
-	private final static boolean USERANDOM = true;
 	private static int NROFKS;
 	private final static int LENGTH = 4;
 	private static int NROFEXAMPLES;
@@ -59,10 +39,9 @@ public class Experiments {
 
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
-		//comparingRandomGenerators();
-		//comparingWeights();
-		//comparingOptimalisationsNoWeights();
-		System.out.println("We did it Reddit!");
+		comparingRandomGenerators();
+		comparingWeights();
+		comparingOptimalisationsNoWeights();
 	}
 	
 	private static void comparingRandomGenerators() throws IOException, InterruptedException {
@@ -207,7 +186,7 @@ public class Experiments {
 		s += "\nSolution% ,";
 		for(double temp : solutions)
 			s += temp+", ";
-		writeToFile(s, "weightsComparison.csv");
+		writeToFile(s, "compareWeights.csv");
 	}
 
 	private static double elapsedTime;
@@ -329,65 +308,6 @@ public class Experiments {
 			}
 		}
 	}	
-
-	/**
-	 * Reads a file for input
-	 * Inputfile format expected: n n r c
-	 * With n a number (double)
-	 * With r the expected result (double)
-	 * with c the comparator to be used
-	 * @return 
-	 * 		A tuple containing the input numbers and a list of comparators to be used
-	 * 
-	 */
-	private static Tuple<List<double[]>, List<Comparator>> readFile() throws IOException {
-		InputStream in = Main.class.getResourceAsStream("/inputExample.txt");
-		//FileInputStream fis = new FileInputStream(fin);
-
-		//Construct BufferedReader from InputStreamReader
-		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(in)));//fis));
-
-		List<double[]> input = new ArrayList<double[]>();
-		List<Comparator> comparators = new ArrayList<Comparator>();
-		while(sc.hasNextLine()) {
-			String[] line = sc.nextLine().split(" ");
-			double[] inputLine = new double[line.length-1];
-			for(int i = 0; i < line.length-1; i++) {
-				inputLine[i] = Double.parseDouble(line[i]);
-				System.out.println("Value: " + inputLine[i]);
-			}
-			comparators.add(parseComparator(line[line.length-1]));
-			input.add(inputLine);
-		}	
-		sc.close();
-		Experiments m = new Experiments(); // BAH!!
-		return m.new Tuple<List<double[]>, List<Comparator>>(input, comparators);
-	}
-
-
-	/**
-	 * Parses the comparator to be used, default -> =
-	 * @param comparator
-	 * 			The comparator to be parsed
-	 * @return
-	 * 			The Comparator (as a class)
-	 */
-	private static Comparator parseComparator(String comparator) {
-		switch (comparator) {
-		case "=":
-			return new Equals();
-		case "<":
-			return new SmallerThan();
-		case "<=":
-			return new SmallerThanOrEquals();
-		case ">":
-			return new GreaterThan();
-		case ">=":
-			return new GreaterThanOrEquals();
-		default:
-			return new Equals();
-		}
-	}
 
 	/**
 	 * To Support multiple type returns

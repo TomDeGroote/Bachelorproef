@@ -1,14 +1,15 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
-\section{Andere aanpakken}
-Hier halen we paden aan die ons doorheen het jaar zijn tegengekomen. In onze ogen hebben ze geen meerwaarde en hier verantwoorden we waarom
+\section{Limieten van het onderzoek}
+
+Er zijn een aantal methoden die wegens verscheidene redenen niet onderzocht zijn geweest tijdens dit werk. Hieronder is een overzicht te vinden van deze methoden met de specifieke redenen erbij. 
+
 \subsection{Heuristiek}
-Resultaten kunnen enorm verschillen door $\times \div$ en \^{}.
-\subsection{Constraint programming}
-Onze kennis is niet goed genoeg om hier degelijke resultaten in te genereren
+Belangrijke hulpmiddelen bij het verbeteren van zoekalgoritmes is het implementeren van een passende heuristiek om het doorlopen van de boom gerichter te laten gebeuren. In het onderzoek naar een heuristiek voor het vinden van een passende vergelijking is gebleken dat de waarde van knopen enorm snel kunnen verschillen, zoals de invloed van $\times$, $\div$ en \^{}. Het verlaten van deze denkpiste is een gevolg van het feit dat er zich geen vanzelfsprekende heuristiek zich aanbood.
+
+\subsection{Constraint Logic Programming}
+Het bepalen van deze vergelijkingen kan gemakkelijk gezien worden als een 'Constraint Logic Problem', maar benodigde kennis hiervoor is te beperkt bij de onderzoekers. In de begin stappen van het onderzoek is een poging ondernomen om 'Prolog' te gebruiken, maar nadien bleek dat voor dit onderzoek 'Java' geschikter bleek.
+
 \subsection{Op basis van onbekende}
-1 vb, je kan met 1 onbekende werken, enz
-Niet nuttig aangezien dan altijd een oplossing gevonden wordt
-Enerzijds veroorzaakt dit een enorme overhead waardoor de zoektijd enorm toeneemt
-anderzijds zullen de gevonden vergelijkingen gebasseerd zijn op constantes eerder dan op kolomwaarden
+Voor elk van de gegeven voorbeelden kan er een onbekende  bepaald worden. Dus er wordt een stelsel van vergelijkingen opgesteld worden waarbij er even veel onbekenden zijn als er vergelijkingen zijn. Mogelijke problemen hiermee zijn dat er te veel constanten gebruikt worden en dat de gevonden vergelijking te weinig gegeven waarden bevat. Hierdoor zullen de overige voorbeelden naar alle waarschijnlijkheid niet naar de verwachtingswaarde van de gebruiker zijn. De extra overhead gecre\"eerd door de berekeningen van het stelsel is een belangrijke reden om geen verder onderzoek te doen in de beperkte tijd die er voor dit werk was.
 \end{document}
