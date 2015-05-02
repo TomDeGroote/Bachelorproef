@@ -64,37 +64,39 @@ public class Equation implements Serializable {
 	 * 			The equation
 	 */
 	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
-		if(Main.USINGWEIGHTS){
+		if(Main.USEOPTIMALISATIONS) {
 			// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 			if(operand.isSplitable() && terminal.isWeight()) {
 				return null;
 			}
-		}
-
-		// if the weight is the neutral element of the operand than it is useless
-		if(terminal.isWeight() && operand.getNeutralElement().equals(terminal.getValue())) {
-			return null;
+	
+			// if the weight is the neutral element of the operand than it is useless
+			if(terminal.isWeight() && operand.getNeutralElement().equals(terminal.getValue())) {
+				return null;
+			}
 		}
 
 		if(operand.isSplitable()) {
-			// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
-			for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
-				if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
-					if(previous.getEquationParts().get(i).getValue() > terminal.getValue()) {
-						return null;
-					}
-					break;
-				}
-			}
-
-			// There should not be a -K1 if there is a +K1
-			if(previous.getEquationParts().contains(new NonSplittable(operand.getInverseOperand(), terminal))) {
-				return null;
-			}
-
-			// the new part that may be added 
 			NonSplittable newNonSplittable = new NonSplittable(operand, terminal);
-			if(Main.USINGWEIGHTS){
+			
+			if(Main.USEOPTIMALISATIONS) {
+				// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
+				for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
+					if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
+						if(previous.getEquationParts().get(i).getValue() > terminal.getValue()) {
+							return null;
+						}
+						break;
+					}
+				}
+	
+				// There should not be a -K1 if there is a +K1
+				if(previous.getEquationParts().contains(new NonSplittable(operand.getInverseOperand(), terminal))) {
+					return null;
+				}
+	
+				// the new part that may be added 
+	
 				// There should not be a +K1 if there is a +K1 (replaced by weights)
 				if(previous.getEquationParts().contains(newNonSplittable)) {
 					return null;
@@ -114,13 +116,14 @@ public class Equation implements Serializable {
 			return new Equation(newNonSplittableParts, newRestOfEquationValue, newValue, newTerminalCounter);
 
 		} else {
-			if(Main.USEOPTIMALISATIONS){
+			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
+			if(Main.USEOPTIMALISATIONS) {
 				// W1.0*K1 should not exist
 				if(previous.getLastNonSplittable().getLastTerminal().isWeight() && previous.getLastNonSplittable().getLastTerminal().getValue() == operand.getNeutralElement() && !operand.toString().equals("/")) {
 					return null;
 				}
-
-
+	
+	
 				// The value of the terminal we are going to add should be bigger than (or equal) to the last terminal part that starts with the same operand
 				for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
 					if(previous.getLastNonSplittable().getSymbols().get(i).equals(operand)) {
@@ -130,48 +133,38 @@ public class Equation implements Serializable {
 						break;
 					}
 				}
-			}
-
-			NonSplittable newNonSplittable = new NonSplittable(previous.getLastNonSplittable(), operand, terminal);
-
-			// The value of the terminal we are going to add keep the new NonSplittable part bigger than (or equal) to the last nonSplittable part that starts with the same operand
-			// Can not be done because the equation can't start with a minus!!
-			//			for(int i = previous.getEquationParts().size()-2; i >= 0; i--) {
-			//				if(previous.getEquationParts().get(i).getFirstOperand().equals(newNonSplittable.getFirstOperand())) {
-			//					if(previous.getEquationParts().get(i).getValue() > newNonSplittable.getValue()) {
-			//						return null;
-			//					}
-			//					break;
-			//				}
-			//			}
-			if(Main.USEOPTIMALISATIONS){
+	
+	
+				// The value of the terminal we are going to add keep the new NonSplittable part bigger than (or equal) to the last nonSplittable part that starts with the same operand
+				// Can not be done because the equation can't start with a minus!!
+				//			for(int i = previous.getEquationParts().size()-2; i >= 0; i--) {
+				//				if(previous.getEquationParts().get(i).getFirstOperand().equals(newNonSplittable.getFirstOperand())) {
+				//					if(previous.getEquationParts().get(i).getValue() > newNonSplittable.getValue()) {
+				//						return null;
+				//					}
+				//					break;
+				//				}
+				//			}
 				// There should not be a K0/K0
-				if(Main.USINGWEIGHTS){
-					List<Symbol> nonSplittablePrevious = new ArrayList<Symbol>(previous.getLastNonSplittable().getSymbols());
-					nonSplittablePrevious.set(0, new Multiplication());
-					for(int i = 0; i < nonSplittablePrevious.size(); i += 2) {
-						if((nonSplittablePrevious.get(i).equals(operand.getInverseOperand()) || nonSplittablePrevious.get(i).equals(operand)) && nonSplittablePrevious.get(i+1).equals(terminal)) {
-							return null;
-						}
-					}
-				}
-			}
-
-			// There should not be a -K0*K1 if there is a +K0*K1
-			NonSplittable inverseNonSplittable = newNonSplittable.getInverseNonSplittable();
-			if(Main.USEOPTIMALISATIONS){
-				if(previous.getEquationParts().contains(inverseNonSplittable)) {
-					return null;
-				}
-
-				if(Main.USINGWEIGHTS){
-					// There should not be a +K0*K1 if it already has a +K0*K1, replace by weights
-					if(previous.getEquationParts().contains(newNonSplittable)) {
+				List<Symbol> nonSplittablePrevious = new ArrayList<Symbol>(previous.getLastNonSplittable().getSymbols());
+				nonSplittablePrevious.set(0, new Multiplication());
+				for(int i = 0; i < nonSplittablePrevious.size(); i += 2) {
+					if((nonSplittablePrevious.get(i).equals(operand.getInverseOperand()) || nonSplittablePrevious.get(i).equals(operand)) && nonSplittablePrevious.get(i+1).equals(terminal)) {
 						return null;
 					}
 				}
+	
+				// There should not be a -K0*K1 if there is a +K0*K1
+				NonSplittable inverseNonSplittable = newNonSplittable.getInverseNonSplittable();
+				if(previous.getEquationParts().contains(inverseNonSplittable)) {
+					return null;
+				}
+	
+				// There should not be a +K0*K1 if it already has a +K0*K1, replace by weights
+				if(previous.getEquationParts().contains(newNonSplittable)) {
+					return null;
+				}
 			}
-
 			// create equation
 			List<NonSplittable> newNonSplittableParts = new ArrayList<NonSplittable>(previous.getEquationParts());
 			newNonSplittableParts.set(newNonSplittableParts.size()-1, newNonSplittable);
@@ -248,11 +241,14 @@ public class Equation implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if(Main.USEOPTIMALISATIONS) {
+			return false;
+		}
 		Equation otherEquation = (Equation) obj;
 		// the last nonSplitablePart needs be equal TODO
-				if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
-					return false; 
-				}
+//				if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
+//					return false; 
+//				}
 		List<NonSplittable> otherEq = new ArrayList<NonSplittable>(otherEquation.getEquationParts());
 		for(NonSplittable part : nonSplitableParts) {
 			if(otherEq.contains(part)) {
