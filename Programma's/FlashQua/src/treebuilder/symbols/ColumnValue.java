@@ -11,7 +11,7 @@ public class ColumnValue extends Terminal {
 	
 	public ColumnValue(double value, int number) {
 		super(value, number);		
-		super.representation = "K" + number;
+		super.representation = getCharForNumber(number+1);//"K" + number;
 	}
 
 	/**
@@ -23,6 +23,17 @@ public class ColumnValue extends Terminal {
 		return false;
 	}
 	
+	/**
+	 * Converts a number to a letter
+	 * 
+	 * @param i
+	 * 		The number
+	 * @return
+	 * 		The letter
+	 */
+	private String getCharForNumber(int i) {
+	    return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
+	}
 	
 	
 	

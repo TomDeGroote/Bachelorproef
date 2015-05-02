@@ -11,7 +11,7 @@ public class Weight extends Terminal {
 	
 	public Weight(double value, int number) {
 		super(value, number);
-		super.representation = "W" + (int) value;
+		super.representation = (int) value + ""; //"W" + (int) value;
 	}
 
 	/**

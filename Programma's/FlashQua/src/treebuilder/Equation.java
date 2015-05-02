@@ -64,13 +64,6 @@ public class Equation implements Serializable {
 	 * 			The equation
 	 */
 	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
-//		if(previous.toString().equals("+W3*W3") && operand.equals(new Multiplication()) && terminal.toString().equals("W3")) {
-//			System.out.println("..");
-//		}
-
-//		if(previous.toString().equals("+K0/K2") && operand.toString().equals("/") && terminal.toString().equals("K1"))
-//			System.out.println("");
-
 		if(Main.USINGWEIGHTS){
 			// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 			if(operand.isSplitable() && terminal.isWeight()) {
@@ -239,8 +232,12 @@ public class Equation implements Serializable {
 	@Override
 	public String toString() {
 		String result = "";
+		boolean firstSymbol = true;
 		for(Symbol symbol : getListOfSymbols()) {
-			result += symbol.toString();
+			if(!firstSymbol) {
+				result += symbol.toString();
+			}
+			firstSymbol = false;
 		}
 		return result;
 	}
@@ -252,10 +249,10 @@ public class Equation implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		Equation otherEquation = (Equation) obj;
-		// the last nonSplitablePart needs be equal
-		//		if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
-		//			return false; TODO
-		//		}
+		// the last nonSplitablePart needs be equal TODO
+				if(!this.nonSplitableParts.get(this.nonSplitableParts.size()-1).equals(otherEquation.nonSplitableParts.get(otherEquation.nonSplitableParts.size()-1))) {
+					return false; 
+				}
 		List<NonSplittable> otherEq = new ArrayList<NonSplittable>(otherEquation.getEquationParts());
 		for(NonSplittable part : nonSplitableParts) {
 			if(otherEq.contains(part)) {

@@ -315,7 +315,6 @@ public class GUI {
 		    HSSFCell cell;
 		    
 		    int columnNr = (int) columnString.toLowerCase().toCharArray()[0]-96 - 1;
-
 		    row = sheet.getRow(rowNr-1);
 		    cell = row.getCell(columnNr);
 		    if(cell == null) {
