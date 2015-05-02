@@ -1,15 +1,24 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Experimenten}
-Alle experimenten worden enerzijds getest op oplossingsgraad als de volledige boom wordt doorlopen en anderzijds binnen een tijdmarge van 2s
-Aanhalen dat we naarmate de expemimenten vorderen we ons baseren op voorgaande experimenten om keuzes te maken, anders zou het runnen van de experimenten enerzijds nutteloos zijn en anderzijds gigantisch veel tijd vragen (denk bv maar aan 10 gewicten enzo)
+Voor het verder verklaren van de experimenten zijn er een aantal zaken die vermeld moeten worden. De volgorde waarin de experimenen zijn uitgevoerd is van belang. Bij de meeste experimenten wordt er gebaseerd op de resultaten van de voorgaande experimenten. Er zijn verschillende beoordelingswijzen die gebruikt worden bij het onderzoeken van de experimenten. Enerzijds testen de experimenten op oplossingsgraad\footnote{Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.} en anderzijds op de tijdsmarge die het algoritme nodig heeft. 
+\par
+Indien er niet gebaseerd wordt op de resultaten van vorige experimenten, dan zijn sommige van de latere experimenten enorm tijdrovend. Deze tijdrovende experimenten tonen ook niets aan wat niet aangetoond kan worden met de huidige manier van experimenteren.
+\par
+Alle experimenten zijn uitgevoerd op een '2.26 GHz Intel Core 2 Duo' processor. Het aantal iteraties van elk experiment is 500 en de gebruikte diepte van de boom is tot en met 5 termen breed, een voorbeeld van een vergelijking op die diepte is $K1^{K2}+K3 \div K4*K5$.
 
-Vermelden welke processor enzo
 \subsection{Boom op voorhand opstellen}
-Enkel tijdswinst aanhalen hier
+
+Enkel tijdswinst aanhalen hier %TODO
+
 \subsection{Prunen op vergelijkingen}
+
+
 Boom wordt niet op voorhand opgesteld aangezien we dan meer kunnen prunen, met name K1-K1 enzo
 \subsection{Gewichten}
+Voor het bepalen van een optimale set van constante waarden, die gebruikt kunnen worden door het algoritme, wordt er op dezelfde input verscheidene sets van constanten getest. 
+
+
 Uitgevoerd op basis van een geprunde boom (experiment hierboven)
 \subsection{Prunen op vergelijkingen en gewichten}
 Gebasseerd op prime gewichten, boom wordt niet meer op voorhand berekend
