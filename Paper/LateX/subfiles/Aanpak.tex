@@ -1,12 +1,22 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Aanpak}
+Omdat de beperkingen van het 'Countdown' probleem niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Er is met verschillende algoritmes geëxperimenteerd. Elk algoritme zal besproken worden aan de hand van enkele stappen.
 \subsection{Brute Force}
-Dit is de vertrek basis, we willen dit enorm verbeteren door het toepassen van optimalisaties
+\subsubsection*{Het opstellen van de bewerkingsboom}
+Dit wordt bereikt door gebruik te maken van de context-vrije grammatica. Er wordt gestart met $E$ vervolgens wordt de boom uitgebreid aan de hand van de regels van de CFG. De regel waarbij $E$ echter waardes krijgt ($E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$) wordt pas in de volgende stap gebruikt. %TODO afbeelding bewerkingsboom% 
+\subsubsection*{Het uitwerken van de vergelijkingen}
+In deze stap wordt de regel $E \rightarrow a,b,\dotsc$ gebruikt om elke vergelijking in de bewerkingsboom een waarde te geven. Enkel deze regel wordt gebruikt en elke mogelijkheid bij elke vergelijking wordt afgegaan. %TODO afbeelding uitgewerkte bewerkingsboom%
+\subsubsection*{Het resultaat}
+Zolang er vergelijkingen worden gezocht waarin geen constanten voorkomen vind dit algoritme in theorie altijd een oplossing. Het is echter wel zeer inefficiënt, zeker naarmate het aantal kolomwaarden  %TODO andere naam?%
+toeneemt.
 \subsection{Toevoegen van gewichten}
-Verhoogt de zoekruimte $\rightarrow$ vertraagt maar hogere oplossingsgraad
-\subsection{Prunen op basis van vergelijkingen}
-Verkleint zoekruimte zonder de oplossingsgraad te verlagen
-\subsection{Prunen op basis van vergelijkingen en gewichten}
-Verkleint de zoekruimte enorm maar sommige oplossingen kunnen niet gevonden worden, toch de beste keuze zal blijen uit experimenten
+Ons doel %TODO geen ons gebruiken?%
+is het vinden van een vergelijking die de gebruiker verlangt. Aangezien een vergelijking zoals $2 \times x+1$ vaak voorkomt moeten er ook constanten toegelaten worden. Om dit te bereiken manier moet er slechts één wijziging plaatsvinden in het vorige algoritme. Namelijk bij het uitwerken van de vergelijkingen moeten we de regel $E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$ gebruiken in plaats van $E \rightarrow a,b,\dotsc$.
+\subsubsection*{Het resultaat}
+Het gevolg is dat de uitwerkingstijd van de bewerkingsboom sterk toeneemt. De oplossingsgraad %TODO ander woord%
+neemt echter ook sterk toe. De optimale verhouding tussen deze twee wordt bereikt door de keuze van de juiste constanten. Deze keuze zal uit later uit experimenten blijken. Dit algoritme zal gebruikt worden als benchmark.
+\subsection{Prunen}
+In de bewerkingsboom van het brute force algoritme staan redundante knopen. Hiermee wordt bedoelt: vergelijkingen die altijd hetzelfde resultaat zullen opleveren. Bijvoorbeeld $E \times E+E+E$ en $E+E \times +E$. Echter moet er een verschil gemaakt worden tussen absoluut en relatief redundante knopen.%TODO Definitie in probleemstelling, hier of als sterretje beneden? Absoluut = schrappen ook op diepere niveaus, relatief = enkel op huidige niveaus}%
+
 \end{document}
