@@ -33,9 +33,10 @@ public class Experiments {
 	private static int NROFEXAMPLES;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
-	private final static int nrOfIterations = 1;
+	private final static int nrOfIterations = 100;
 //	public static boolean USEOPTIMALISATIONS = true;
 //	public static boolean USINGWEIGHTS = true;
+
 
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
@@ -122,8 +123,9 @@ public class Experiments {
 				main2(primeWeights,fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0){
-					for(Equation eq : Grammar.getSolutions())
+					for(Equation eq : Grammar.getSolutions()){
 						r += "\n"+eq.toString();
+					}
 					solutions.set(j,solutions.get(j)+1);
 				}
 			}

@@ -18,6 +18,12 @@
 \usepackage{amsmath}
 \usepackage{fancybox}
 \usepackage{varwidth}
+\usepackage{cite}
+\usepackage{framed}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\graphicspath { {./subfiles/images/} }
 
 % Allow to draw trees
 \usepackage{caption}
@@ -54,11 +60,15 @@
 % Put where the files are available in the appropriate places.
 
 \title{Flash fill en Equation Discovery\thanks{Voor verandering vatbaar.}}
-\author{Jeroen Craps \& Tom De Groote \\
-KU Leuven\\
-Leuven, Belgie \\
-jeroen.craps@student.kuleuven.be\\ %TODO zet namen naast elkaar%
-tom.degroote@student.kuleuven.be}
+\date{today} %TODO Fix this
+\author{ %TODO Still has to be fixed
+ \begin{tabular}[t]{c@{\extracolsep{8em}}c} 
+Craps Jeroen  & De Groote Tom \\
+\textnormal{Bachelor Informatica} & \textnormal{Bachelor Informatica} \\
+\textnormal{KU Leuven, Belgi\"e} &\textnormal{KU Leuven, Belgi\"e}  \\
+\textnormal{jeroen.craps@student.kuleuven.be} & \textnormal{tom.degroote@student.kuleuven.be}
+\end{tabular}
+}
 
 \begin{document}
 
@@ -83,13 +93,13 @@ Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kim
 \section*{Referenties}
 
 
+
 %Make all appendixes after this title
 \appendix
 
 
 %% The file named.bst is a bibliography style file for BibTeX 0.99c
 \bibliographystyle{named}
-\bibliography{ijcai11}
+%\bibliography{Main.bib} %TODO Fix this stuff
 
 \end{document}
-
