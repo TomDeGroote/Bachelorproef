@@ -13,8 +13,14 @@ Enkel tijdswinst aanhalen hier %TODO
 
 \subsection{Prunen op vergelijkingen}
 
+Uit bovenstaand experiment blijkt dat het op voorhand opstellen van de boom een $BEPAALDE$ tijdswinst oplevert. Bij de verschillende aanpakken ontstaan er verschillende bomen. De manier waarop deze bomen geoptimaliseerd kunnen worden is dus ook verschillend. De ene is afhankelijk van de productieregels van de contextvrije grammatica en andere is ook afhankelijk van de productieregels maar ook van de gegevens waarmee het algoritme moet werken. 
+\par 
+Mogelijke voorbeelden van het verschil in pruning ligt op het vlak dat er meer optimalisaties kunnen gebeuren. Verdere optimalisaties zijn bijvoorbeeld het weglaten van knopen waarbij men $1$ of $0$ bekomt door middel van respecitievelijk $K1-K1$ en $K1/K1$. Maar ook enkel knopen toe te laten waarbij $K1$ groter is dan $K2$ in gevallen zoals $K1+K2$ of $K1*K2$ aangezien er door de volgorde van bewerkingen geen verschil bestaat tussen bijvoorbeeld $K1*K2$ en $K2*K1$.
+\par 
+Op deze manier kan er nog 
 
-Boom wordt niet op voorhand opgesteld aangezien we dan meer kunnen prunen, met name K1-K1 enzo
+Het verschil in verminderen van het aantal knopen is significant genoeg om het tijdsverlies met het opstellen van de boom bij elke dataset te compenseren. Vanwege deze reden is de keuze voor verder onderzoek op de methode gevallen waarbij de boom op 'runtime' wordt opgesteld. 
+
 \subsection{Gewichten}
 Voor het bepalen van een optimale set van constante waarden, die gebruikt kunnen worden door het algoritme, wordt er op dezelfde input verscheidene sets van constanten getest. 
 

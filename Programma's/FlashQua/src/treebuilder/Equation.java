@@ -63,6 +63,7 @@ public class Equation implements Serializable {
 	 * 			The equation
 	 */
 	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
+
 		if(Main.USEOPTIMALISATIONS) {
 			// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
 			if(operand.isSplitable() && terminal.isWeight()) {
@@ -287,7 +288,7 @@ public class Equation implements Serializable {
 	public List<Integer> getTerminalCounter() {
 		return terminalCounter;
 	}
-	
+
 	/**
 	 * @return the size of this equation
 	 */

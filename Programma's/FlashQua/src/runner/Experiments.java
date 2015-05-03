@@ -37,6 +37,7 @@ public class Experiments {
 //	public static boolean USEOPTIMALISATIONS = true;
 //	public static boolean USINGWEIGHTS = true;
 
+
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
 		//comparingRandomGenerators();
@@ -122,8 +123,10 @@ public class Experiments {
 				main2(primeWeights,fileInput);
 				time.set(j,time.get(j)+elapsedTime);
 				if(Grammar.getSolutions().size() > 0){
-					for(Equation eq : Grammar.getSolutions())
+					for(Equation eq : Grammar.getSolutions()){
+						System.out.println(eq);
 						r += "\n"+eq.toString();
+					}
 					solutions.set(j,solutions.get(j)+1);
 				}
 			}
