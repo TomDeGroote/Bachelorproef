@@ -65,9 +65,9 @@ public class Equation implements Serializable {
 	public static Equation createEquation(Equation previous, Operand operand, Terminal terminal) {
 		if(Main.USEOPTIMALISATIONS) {
 			// there should only be one alone standing constant in the equation TODO zorg dat die in de equation staat
-			if(operand.isSplitable() && terminal.isWeight()) {
-				return null;
-			}
+//			if(operand.isSplitable() && terminal.isWeight()) {
+//				return null;
+//			}
 	
 			// if the weight is the neutral element of the operand than it is useless
 			if(terminal.isWeight() && operand.getNeutralElement().equals(terminal.getValue())) {
