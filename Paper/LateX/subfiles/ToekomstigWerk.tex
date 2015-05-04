@@ -1,16 +1,13 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Toekomstig werk}
-Door bepaalde omstandigheden was het onmogelijk om al het onderzoek/werk te doen dat er gedaan kan worden in verband met dit onderwerp. Een aantal zaken zaken waarover reeds nagedacht was, maar wegens tijdgebrek uiteindelijk niet verder onderzocht zijn staan hieronder vermeld.
+Door een beperkte tijd is het onmogelijk om al het onderzoek/werk te doen dat kan gedaan worden in verband met dit onderwerp. Hieronder worden een aantal mogelijkheden voor de toekomst overlopen.
 
 \subsection{Toevoegen haakjes}
-Door het toevoegen van haakjes kunnen bepaalde vergelijkingen op een hoger niveau gevonden worden, zoals bv. $(A+B)^2$ word voorlopig pas gevonden als $A^{2}+2AB+B^{2}$. Het verschil van diepte in de boom tussen deze twee termen is 3, want $(A+B)^2$ wordt al reeds na 4 stappen gevonden terwijl $A^{2}+2AB+B^{2}$ pas op diepte 7 van de boom gevonden wordt. Nadelig aan het toevoegen van haakjes is wel dat er een extra productieregel aan de contextvrije grammatica zou toegevoegd worden (nl. $E \rightarrow (E)$). Een stijging van het aantal knopen op elk niveau is wel en gevolg van deze toevoeging.
-
-Er zal dus een afweging gemaakt moeten worden tussen de kleinere diepte waarop er een geschikte vergelijking gevonden wordt en de breedte van elke diepte die toeneemt afhankelijk van het aantal productieregels die in de contextvrije grammatica aanwezig zijn.
+Door het toevoegen van haakjes kunnen bepaalde vergelijkingen op een hoger niveau gevonden worden, zoals bv. $(A+B)^2$ wordt voorlopig pas gevonden als $A^{2}+2 \ast A \ast B+B^{2}$. Het verschil int diepte tussen deze twee termen is 3, want $(A+B)^2$ wordt gevonden op niveau 4 terwijl $A^{2}+2AB+B^{2}$ pas op diepte 7 gevonden wordt. Nadelig aan het toevoegen van haakjes is dat er een extra productieregel aan de contextvrije grammatica moet worden toegevoegd (nl. $E \rightarrow (E)$). Dit zorgt voor een stijging van het aantal knopen en dus een bredere zoekruimte. De implementatie is bovendien niet vanzelfsprekend. De huidige manier van prunen maakt het toevoegen van deze productieregel moeilijk. Dit komt doordat context vrij programmeren in Java niet volledig haalbaar is. Tenslotte moet de uitkomst van de vergelijkingen kunnen worden berekend.\par 
+Het toevoegen van extra bewerkingen is echter wel triviaal. Er moet slechts \'e\'en klasse worden toegevoegd die de abstracte klasse symbol implementeerd.
 
 \subsection{Berekenen van 1 losstaand gewicht}
-Stel dat de laatste variabele berekent wordt uit de gegeven voorbeelden, dan kan er ook weer op reeds een veel lager niveau een geschikte vergelijking gevonden worden. Een gevolg hiervan is dan wel dat indien er meerdere voorbeelden zijn waarop het algoritme zich moet baseren er veel passende vergelijkingen voor het eerste voorbeeld bij de overige voorbeelden niet zal kloppen en daar dus een bepaalde overhead zal cre\"eren. Het verwachte resultaat is hier dat deze maatregel voordelig is voor vergelijkingen waar er maar \'e\'en voorbeeld is waarop er gebaseerd moet worden. Indien er meerdere voorbeelden zijn waar er op gebaseerd moet worden zal deze maatregel meer overhead veroorzaken dan effectief een verbetering zijn voor het algoritme. 
-
-%TODO Een voorbeeldje bij geven over wat we hier exact bedoelen? Nogal moeilijk om in tekst goed uit te leggen.
+Stel dat de laatste variabele berekend wordt uit de gegeven voorbeelden, dan kan er ook weer op reeds een veel lager niveau een geschikte vergelijking gevonden worden. Het toepassen van deze techniek zal een zekere overhead veroorzaken. Voor het eerste voorbeeld zullen er namelijk veel mogelijke oplossingen gevonden worden die vervolgens moeten gecontroleerd worden ten opzichte van de andere voorbeelden. Het nagaan van deze oplossing is niet triviaal en vraag een zekere rekenkracht. Wanneer deze berekening enkele duizende tot miljoenen keren moet worden uitgevoerd zal er dus wel degelijk een sterke overhead te merken zijn.
 
 \end{document}
