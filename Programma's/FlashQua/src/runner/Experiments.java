@@ -24,16 +24,16 @@ import exceptions.OutOfTimeException;
  *
  */
 public class Experiments {
-	private static int DEADLINE = 4000;
-	private final static int MAXLEVEL = 10;
+	private static int DEADLINE = -1;
+	private final static int MAXLEVEL = 4;
 	private final static boolean PRINTTOFILE = false;
-	private final static boolean MULTITHREADED = true;
+	private final static boolean MULTITHREADED = false;
 	private static int NROFKS;
-	private final static int LENGTH = 5;
+	private final static int LENGTH = 4;
 	private static int NROFEXAMPLES;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
-	private final static int nrOfIterations = 100;
+	private final static int nrOfIterations = 1;
 //	public static boolean USEOPTIMALISATIONS = true;
 //	public static boolean USINGWEIGHTS = true;
 
@@ -94,6 +94,7 @@ public class Experiments {
 		String s = "";
 		ArrayList<Double> time = new ArrayList<Double>();
 		ArrayList<Double> solutions = new ArrayList<Double>();
+		ArrayList<Double> number = new ArrayList<Double>();
 		List<double[]> weights = new ArrayList<double[]>();
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0}; weights.add(primeWeights); 
 		s += ",noOptimalisations, optimalized";
@@ -103,18 +104,22 @@ public class Experiments {
 		for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 			time.add(0.0);
 			solutions.add(0.0);
+			number.add(0.0);
 		}
 		for(int i = 0; i < nrOfIterations; i++){
 			double percentage = i % (nrOfIterations/100.0);
-			if(percentage == 0.0)
-				System.out.println(((double)i)/(nrOfIterations/100) + "%");
+			if(percentage != 0.0) {
+				System.out.println(((double)i)/(nrOfIterations/100.0) + "%");
+			}
 			NROFKS = 3;
 			NROFEXAMPLES = 2;
 			r += "\n Next Compare:";
 			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(KindOfRandom.COMPLEX);
-			for(double[] temp : fileInput.x) 
-				for(double t : temp)
+			for(double[] temp : fileInput.x) {
+				for(double t : temp) {
 					r += "\n"+t;
+				}
+			}
 			for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
 				r += "\n solutions:";
 				Main.USEOPTIMALISATIONS = (j == 0) ? false : true;
@@ -125,12 +130,16 @@ public class Experiments {
 						r += "\n"+eq.toString();
 					}
 					solutions.set(j,solutions.get(j)+1);
+					Equation eq = Controller.getBestEquation(Grammar.getSolutions());
+					number.set(j, number.get(j)+eq.getEquationQuality());
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!" + Main.USEOPTIMALISATIONS + "   " + eq + " = " + eq.getEquationQuality());
 				}
 			}
 		}
 		for(int i = 0; i < AMOUNTOFCOLUMNS; i++){
 			time.set(i,time.get(i)/nrOfIterations);
 			solutions.set(i,solutions.get(i)/nrOfIterations);
+			number.set(i, number.get(i)/nrOfIterations);
 		}
 		s += "\nTime ";
 		for(double temp : time)
@@ -138,6 +147,10 @@ public class Experiments {
 		
 		s += "\nSolution%";
 		for(double temp : solutions)
+			s += ", " + temp;
+		s += ",";
+		s += "\nNumber";
+		for(double temp : number)
 			s += ", " + temp;
 		s += ",";
 		writeToFile(s, "compareOptimalisations.csv");

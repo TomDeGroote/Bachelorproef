@@ -8,10 +8,8 @@ Om deze wiskundige relaties op te bouwen wordt er gebruikt gemaakt van een conte
 \begin{framed}
 \begin{center}
 $E \rightarrow E + E$ \\
-$E \rightarrow E - E$  \\
-$E \rightarrow E \times E$ \\
-$E \rightarrow E \div E$ \\
-$E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$
+$E \rightarrow E \ast E$ \\
+$E \rightarrow a,b,\dotsc$
 \end{center}
 \end{framed}
 
@@ -20,24 +18,9 @@ Als een andere wiskundige operatie gewenst is moet deze toegevoegd worden als ee
 \subsection{Boomstructuur}
 
 Door herhaaldelijke toepassing van de productieregels onstaat er een boomstructuur. In deze boom bevinden zich alle mogelijke samenstellingen van productieregels die door de grammatica bepaald worden. Deze operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal mogelijke productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. De groei van deze boom staat beschreven in volgende figuur en tabel.
-
+\begin{center}
 \includegraphics[width=\columnwidth]{treeSize.png}
-%TODO Tabel is overkill?
-%\begin{center}
-%\begin{tabular}{| l | r |}
-%\hline
-%	Diepte & Elementen \\ \hline \hline
-%	1 &	1 \\ \hline
-%	2 &	4 \\ \hline
-%	3 &	16 \\ \hline
-%	4 &	64 \\ \hline
-%	5 &	256 \\ \hline
-%	6 &	1024 \\ \hline
-%	7 &	4096 \\ \hline 
-%	8 &	16384 \\ \hline
-%\end{tabular}
-%\end{center}
-
+\end{center}
 Aangezien de groei van de boom exponentieel is bekomt men veel grotere berekeningstijden volgens toename van de diepte in de boom. De grote overhead die het opstellen van de boom is, heeft tot gevolg dat het ten zeerste aangeraden om deze boom slechts \'e\'enmalig op voorhand uit te werken.
 
 \subsection{Evaluatiecriteria}

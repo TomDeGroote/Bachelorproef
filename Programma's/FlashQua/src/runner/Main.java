@@ -35,7 +35,7 @@ public class Main {
 	// the weights to be used (basically constants)
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	// Deadline and maxlevel parameters
-	private final static int DEADLINE = 1;
+	private final static int DEADLINE = 500;
 	private final static int MAXLEVEL = -1;
 	
 	// Print the tree to a file or not, warning if you create many levels this writing will 

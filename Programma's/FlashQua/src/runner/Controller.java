@@ -104,7 +104,7 @@ public class Controller {
 	 * 			The equations in which to search for the best equation
 	 * @return The best equation
 	 */
-	private Equation getBestEquation(HashSet<Equation> allEquations) {
+	public static Equation getBestEquation(HashSet<Equation> allEquations) {
 		Equation best = (Equation) allEquations.toArray()[0];
 		for(Equation eq : allEquations) {
 			if(best.getEquationQuality() < eq.getEquationQuality()) {
