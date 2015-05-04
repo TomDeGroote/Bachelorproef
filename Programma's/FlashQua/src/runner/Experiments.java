@@ -24,10 +24,10 @@ import exceptions.OutOfTimeException;
  *
  */
 public class Experiments {
-	private static int DEADLINE = -1;
-	private final static int MAXLEVEL = 4;
+	private static int DEADLINE = 1000000;
+	private final static int MAXLEVEL = 5;
 	private final static boolean PRINTTOFILE = false;
-	private final static boolean MULTITHREADED = false;
+	private final static boolean MULTITHREADED = true;
 	private static int NROFKS;
 	private final static int LENGTH = 4;
 	private static int NROFEXAMPLES;
