@@ -24,8 +24,8 @@ import exceptions.OutOfTimeException;
  *
  */
 public class Experiments {
-	private static int DEADLINE = 1000000;
-	private final static int MAXLEVEL = 5;
+	private static int DEADLINE = -1;
+	private final static int MAXLEVEL = 4;
 	private final static boolean PRINTTOFILE = false;
 	private final static boolean MULTITHREADED = true;
 	private static int NROFKS;
@@ -41,8 +41,8 @@ public class Experiments {
 	
 	public static void main(String[] agrs) throws IOException, InterruptedException {
 		//comparingRandomGenerators();
-		//comparingWeights();
-		comparingOptimalisations();
+		comparingWeights();
+//		comparingOptimalisations();
 	}
 	
 	private static void comparingRandomGenerators() throws IOException, InterruptedException {
@@ -167,7 +167,7 @@ public class Experiments {
 		double[] threeWeights = new double[]{1.0, 2.0, 3.0}; weights.add(threeWeights); s += ",threeWeights";
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};weights.add(primeWeights); s += ",primeWeights";
 		double[] fiveWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0}; weights.add(fiveWeights); s += ",fiveWeights";
-//		double[] tenWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};weights.add(tenWeights); s += ",tenWeights";
+		double[] tenWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};weights.add(tenWeights); s += ",tenWeights";
 		Main.USEOPTIMALISATIONS = true;
 //		DEADLINE = -1;
 		for(int j = 0; j < weights.size(); j++){
@@ -176,8 +176,8 @@ public class Experiments {
 		}
 		for(int i = 0; i < nrOfIterations; i++){
 			double percentage = i % (nrOfIterations/100.0);
-			if(percentage == 0.0)
-				System.out.println(((double)i)/(nrOfIterations/100) + "%");
+			if(percentage != 0.0)
+				System.out.println(((double)i)/(nrOfIterations/100.0) + "%");
 			NROFKS = 3;
 			NROFEXAMPLES = 2;
 			Tuple<List<double[]>, List<Comparator>> fileInput = generateRandomInput(KindOfRandom.COMPLEX);

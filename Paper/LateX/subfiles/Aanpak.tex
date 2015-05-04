@@ -51,7 +51,7 @@ Het doel van dit algoritme is het vinden van een vergelijking die de gebruiker v
 \subsubsection*{Het resultaat}
 Het gevolg is dat de uitwerkingstijd van de bewerkingsboom sterk toeneemt. De oplossingsgraad\footnote{\label{note:oplossingsgraad}Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.}
 neemt echter ook sterk toe. De optimale verhouding tussen deze twee wordt bereikt door de keuze van de juiste constanten. Deze keuze zal uit later uit experimenten blijken. Dit algoritme zal gebruikt worden als benchmark.
-\subsection{Prunen}
+\subsection{Prunen} \label{ss:Prunen}
 \subsubsection*{Prunen in de bewerkingsboom}
 In de bewerkingsboom van het brute force algoritme staan redundante knopen. Hiermee wordt bedoelt: vergelijkingen die altijd hetzelfde resultaat zullen opleveren. Bijvoorbeeld $E \times E+E+E$ en $E+E \times +E$. Echter moet er een verschil gemaakt worden tussen absoluut\footnote{\label{note:absoluut}De knoop en zijn kinderen zijn redundant.} en relatief redundante\footnote{\label{note:relatief}De knoop is redundant maar de kinderen niet.} knopen.
 In het geval van relatief redundante knopen mag de knoop nog niet verwijderd worden wanneer het volgende niveau nog moet berekend worden. In het geval van absoluut redundante knopen mag dit wel. Wanneer de redundante knopen verwijderd worden verkleint de zoekruimte, dit doet de uitwerkingstijd dalen. De oplossingsgraad blijft echter gelijk.
@@ -81,7 +81,7 @@ links $\geq$ dan zijn rechterbuur\\
 \item[$\ast$] Niet toelaten van zelfde onsplistbare term\footnotemark[\ref{note:onsplitsbaar}]\\
 	bv. $a+a$ komt voor als $2 \times a$
 \end{itemize}
-\subsubsection*{Algoritme}
+\subsubsection*{Algoritme} \label{ssection:algorimteBesprekeing}
 Algoritme \ref{VindVergelijkingen} bevat de pseudocode van het uiteindelijke resultaat.
 %TODO mooier laten uitzien.. niet leesbaar in 1 kolom, miss als bijlage?
 \begin{algorithm}[!htb]
