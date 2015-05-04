@@ -92,15 +92,17 @@ Craps Jeroen  & De Groote Tom \\
 \section*{Dankwoord}
 Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kimmig bedanken voor hun begeleiding en hulp gedurende dit project.
 
-\section*{Referenties}
-
+%% The file named.bst is a bibliography style file for BibTeX 0.99c
+\bibliographystyle{named}
+\bibliography{bibtex.bib}
+\nocite{exampleLearning}
+\nocite{spreadsheet}
 
 %Make all appendixes after this title
-\newpage
+
 \begin{appendix}
 \section{Algoritme} \label{sec:algorimteBesprekeing}
-Algoritme \ref{VindVergelijkingen} bevat de pseudocode van het uiteindelijke resultaat.
-%TODO mooier laten uitzien.. niet leesbaar in 1 kolom, miss als bijlage?
+
 \begin{algorithm}[!htb]
 \caption{Vind alle mogelijke vergelijkingen}
 \label{VindVergelijkingen}
@@ -138,8 +140,5 @@ Algoritme \ref{VindVergelijkingen} bevat de pseudocode van het uiteindelijke res
 \end{algorithm}
 \end{appendix}
 
-%% The file named.bst is a bibliography style file for BibTeX 0.99c
-\bibliographystyle{named}
-%\bibliography{Main.bib} %TODO Fix this stuff
 
 \end{document}
