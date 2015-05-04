@@ -5,22 +5,30 @@ Voor het verder verklaren van de experimenten zijn er een aantal zaken die verme
 \par
 Indien er niet gebaseerd wordt op de resultaten van vorige experimenten, dan zijn sommige van de latere experimenten enorm tijdrovend. Deze tijdrovende experimenten tonen ook niets aan wat niet aangetoond kan worden met de huidige manier van experimenteren.
 \par
-Alle experimenten zijn uitgevoerd op een $'2.26 GHz Intel Core 2 Duo'$ processor. Het aantal iteraties van elk experiment is 500 en de gebruikte diepte van de boom is tot en met 5 termen breed, een voorbeeld van een vergelijking op die diepte is $K1^{K2}+K3 \div K4*K5$.
+Alle experimenten zijn uitgevoerd op een \textit{2.26 GHz Intel Core 2 Duo} processor. Het aantal iteraties van elk experiment is 500 en de gebruikte diepte van de boom is tot en met 5 termen breed, een voorbeeld van een vergelijking op die diepte is $K1^{K2}+K3 \div K4*K5$. Bij elk van deze iteratie worden er twee voorbeelden gegeven waaraan de vergelijking moet voldoen.
 
 \subsection{Oude pruning}
 
 In de opvoorhand gegenereerde boom bestaat er de mogelijkheid om te prunen. Op experimentele wijze wordt nu onderzocht hoeveel knopen overbodig zijn in de bewerkingsboom. Hiervoor wordt er een vergelijking gemaakt tussen het aantal knopen van de originele boom en het aantal knopen is deze nieuwe boom.
+\par Zoals op de figuur te zien valt is er een stagnatie vanaf diepte 5 waarbij er 35\% minder knopen aanwezig zijn ten opzichte van de originele boom. 
 \begin{center}
 \includegraphics[width=\columnwidth]{treePrune.png}
 \end{center}
-Zoals op de figuur te zien valt is er een stagnatie vanaf diepte 5 waarbij er 35\% minder knopen aanwezig zijn ten opzichte van de originele boom. 
 
 \subsection{Gewichten}
 De volgende stap is het bepalen welke invloed het toevoegen van een set van constante waarden heeft op de snelheid en de oplossingsgraad van het algoritme. In dit experiment worden er vier verschillende sets van waarden gebruikt, deze zijn $(1,2,3), (1,2,3,4,5), (1,2,3,5,7)$ en $(1,2,3,4,5,6,7,8,9)$. Ook wordt dit bij experiment het algoritme gebruikt zonder constanten, dit om te bepalen welke invloed het toevoegen van constanten heeft.
 
-Uit de looptijd van de verschillende sets van waarden valt af te leiden dat deze zoals verwacht stijgt. Om voor meer constanten te kiezen is het dus nodig dat de oplossingsgraad ook stijgt. Indien de vergelijking gemaakt wordt tussen de verschillende oplossingsgraden, dan valt meteen op dat deze volgens een andere curve stijgt. Om nu het algoritme te optimaliseren met er een afweging gemaakt worden tussen tijd en oplossingsgraad. 
+\begin{center}
+\includegraphics[width=\columnwidth]{treePrune.png} 
+\end{center}
 
-Uit de combinatie van beide grafieken valt nu te zien dat de optimale combinatie van snelheid en oplossingsgraad gevonden wordt door het algoritme waar er $(1,2,3,5,7)$ gebruikt worden als constanten. 
+Uit de looptijd van de verschillende sets van waarden valt af te leiden dat deze zoals verwacht stijgt. Om voor meer constanten te kiezen is het dus nodig dat de oplossingsgraad ook stijgt. 
+
+\begin{center}
+\includegraphics[width=\columnwidth]{treePrune.png} 
+\end{center}
+
+Door toevoeging van meer constanten wordt er vaker een passende vergelijking gevonden. Indien de vergelijking gemaakt wordt tussen de verschillende sets van constanten, dan valt meteen op dat de oplossingsgraad volgens een andere curve stijgt dan de tijdsverloop. Om nu het algoritme te verbeteren wordt er een afweging gemaakt worden tussen tijd en oplossingsgraad. Uit deze afweging wordt er een set van getallen gekozen die het meest geschikt lijken voor het gegeven probleem. In dit geval is de set van \textit{(1,2,3,5,7)} gevonden als meest geschikte set van constante waarden. 
 
 \subsection{Prunen op vergelijkingen}
 
@@ -34,6 +42,6 @@ Het verschil in verminderen van het aantal knopen is significant genoeg om het t
 
 \subsection{Brute force vs Optimaliseren}
 
-Niveau 5 met 7 seconden.
+Als laatste experiment is het nu interessant om te zien wat het verschil in tijd en oplossingsgraad is van het uiteindelijke algoritme ten opzichte van de originele brute-force manier. Bij dit experiment word
 
 \end{document}

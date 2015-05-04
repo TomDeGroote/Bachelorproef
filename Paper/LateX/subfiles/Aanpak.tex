@@ -1,10 +1,9 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Aanpak}
-%TODO verander CFG van voobeeld zodat het aan de boom voorbeelden voldoet%
-Omdat de beperkingen van het 'Countdown' probleem niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als benchmark wordt een brute force algoritme gebruikt. Dit algoritme wordt vervolgens verbeterd door op een efficiënte manier bepaalde vergelijkingen niet uit te rekenen.
+Omdat de beperkingen van het 'Countdown' probleem niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als benchmark wordt een brute force algoritme gebruikt. Dit algoritme wordt vervolgens verbeterd door op een effici\"ente manier bepaalde vergelijkingen niet uit te rekenen of in het algemeen te vermijden.
 \subsection{Brute Force}
-Het brute force algoritme bestaat uit twee stappen. De stappen moeten niet afzonderlijk worden uitgevoerd maar het leverd een tijdsvoordeel op indien dit wel gedaan wordt. De bewerkingsboom kan namelijk eenmalig opgesteld worden en later doorlopen worden.
+Het brute force algoritme bestaat uit twee stappen. De stappen moeten niet afzonderlijk worden uitgevoerd, maar het levert wel een tijdsvoordeel op indien dit gedaan wordt. De bewerkingsboom kan namelijk eenmalig opgesteld worden en later doorlopen worden.
 \subsubsection*{Het opstellen van de bewerkingsboom}
 Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de context-vrije grammatica. De root van de bewerkingsboom $E$ wordt uitgebreid aan de hand van de regels van de CFG. De regel $E \rightarrow a,b,\dotsc$) wordt pas in de volgende stap gebruikt. Figuur \ref{fig:bewerkingsboom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$.
 \begin{figure}[!htb]
@@ -25,7 +24,7 @@ Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de c
 \caption{Brute force bewerkingsboom} \label{fig:bewerkingsboom}
 \end{figure}
 \subsubsection*{Het uitwerken van de vergelijkingen}
-In deze stap wordt de regel $E \rightarrow a,b,\dotsc$ gebruikt om elke vergelijking in de bewerkingsboom een waarde te geven. Enkel deze regel wordt gebruikt en elke mogelijkheid bij elke vergelijking wordt afgegaan. Figuur \ref{fig:uitwerkingsboom} toont een gedeeltelijke uitwerking van de bewerkingsboom uit figuur \ref{fig:bewerkingsboom}.
+In deze stap wordt de regel $E \rightarrow a,b,\dotsc$ gebruikt om elke vergelijking in de bewerkingsboom een waarde te geven. Enkel deze regel wordt gebruikt en voor elke vergelijking wordt elke mogelijkheid afgegaan. Figuur \ref{fig:uitwerkingsboom} toont een gedeeltelijke uitwerking van de bewerkingsboom uit figuur \ref{fig:bewerkingsboom}.
 \begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[level distance=1cm,
@@ -45,10 +44,10 @@ In deze stap wordt de regel $E \rightarrow a,b,\dotsc$ gebruikt om elke vergelij
 \caption{Uitwerking bewerkingsboom (1 knoop per level)} \label{fig:uitwerkingsboom}
 \end{figure}
 \subsubsection*{Het resultaat}
-Zolang er vergelijkingen worden gezocht waarin geen constanten voorkomen vind dit algoritme in theorie altijd een oplossing. Het is echter wel zeer inefficiënt, zeker naarmate het aantal kolomwaarden\footnote{\label{note:kolomwaarden}De waarden die door de gebruiker worden meegegeven verschillend van de oplossing. In de voorbeelden aangegeven als $a$ en $b$.}
+Zolang er vergelijkingen worden gezocht waarin geen constanten voorkomen vind dit algoritme in theorie altijd een oplossing. Het is echter wel zeer inefficiënt, zeker naarmate het aantal kolomwaarden\footnote{\label{note:kolomwaarden} De waarden die door de gebruiker worden meegegeven verschillend van de oplossing. In de voorbeelden aangegeven als $a$ en $b$.}
 toeneemt.
 \subsection{Toevoegen van gewichten}
-Het doel van dit algoritme is het vinden van een vergelijking die de gebruiker verlangt. Aangezien een vergelijking zoals $2 \times x+1$ vaak voorkomt moeten er ook constanten toegelaten worden. Om dit te bereiken manier moet er slechts één wijziging plaatsvinden in het vorige algoritme. Namelijk bij het uitwerken van de vergelijkingen moeten we de regel $E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$ gebruiken in plaats van $E \rightarrow a,b,\dotsc$.
+Het doel van dit algoritme is het vinden van een vergelijking die de gebruiker verlangt. Aangezien een vergelijking zoals $2 \ast x+1$ vaak voorkomt moeten er ook constanten toegelaten worden. Om dit te bereiken manier moet er slechts één wijziging plaatsvinden in het vorige algoritme. Namelijk bij het uitwerken van de vergelijkingen moeten we de regel $E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$ gebruiken in plaats van $E \rightarrow a,b,\dotsc$.
 \subsubsection*{Het resultaat}
 Het gevolg is dat de uitwerkingstijd van de bewerkingsboom sterk toeneemt. De oplossingsgraad\footnote{\label{note:oplossingsgraad}Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.}
 neemt echter ook sterk toe. De optimale verhouding tussen deze twee wordt bereikt door de keuze van de juiste constanten. Deze keuze zal uit later uit experimenten blijken. Dit algoritme zal gebruikt worden als benchmark.
