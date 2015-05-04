@@ -1,7 +1,6 @@
 \documentclass[Main.tex]{subfiles}
 
 \begin{document}
-%TODO Voorbeelden geven?
 \section{Dataset}
 
 Zoals reeds in de introductie aangehaald is geweest is er op het moment van schrijven geen bestaande dataset die geschikt is voor het onderzochte probleem. Aangezien het noodszakelijk is om te experimenteren op de verschillende aanpakken die hierboven beschreven staan, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om datasets te genereren die ongeveer voldoen aan de vereisten voor het algoritme.
@@ -13,6 +12,32 @@ Elke waarde die gegenereerd is is een willekeurig getal tussen 0 en 100. Het voo
 \subsubsection*{Gestructureerd}
 De doelwaarde van deze datasets wordt bepaald door een willekeurige vergelijking die bestaat uit de door de gebruiker gegeven operatoren en de waarden die reeds gegenereerd waren op een willekeurige manier. Voordelig hieraan is dat er altijd een oplossing is voor deze datasets, indien alle mogelijkheid van de boom ge\"evalueerd worden. Het feit dat er altijd een oplossing gevonden wordt, toont aan dat er een bepaald voordeel gegeven wordt aan hoe het algoritme momenteel bestaat.
 
+\begin{center}
+\begin{tabular}{@{} *5l @{}}    \toprule
+\multicolumn{5}{l}{\emph{Volledig willekeurig}}\\\midrule
+ Vergelijking & A  & B  & C  & D  \\ 
+ Vgl 1. & 2 & 17 & 33 & 3\\ 
+ Vgl 2. & 19 & 78 & 10 & 63\\\bottomrule
+ \hline
+\end{tabular}
+
+\begin{tabular}{@{} *5l @{}}    \toprule
+\multicolumn{5}{l}{\emph{Gestructureerd: } $B*C+C+A = D$} \\ \midrule
+ Vergelijkingen & A  & B  & C  & D  \\ 
+ Vgl 1. & 2 & 7 & 3 & 30\\ 
+ Vgl 2. & 14 & 18 & 1 & 50\\\bottomrule
+ \hline
+\end{tabular}
+
+\begin{tabular}{@{} *5l @{}}    \toprule
+\multicolumn{5}{l}{\emph{Complex gestructureerd:}  $4*A+C*C$}\\\midrule
+ Vergelijkingen & A  & B  & C  & D  \\ 
+ Vgl 1. & 2 & 7 & 3 & 17\\ 
+ Vgl 2. & 14 & 18 & 1 & 57\\\bottomrule
+ \hline
+\end{tabular}
+\end{center}
+
 \subsubsection*{Complex gestructureerd}
 Hierbij worden de doelwaarden van de willekeurige gegenereerde dataset bepaald door een willekeurige combinatie van willekeurige operaties tussen de reeds willekeurig bepaalde dataset en de constante waarden. Indien de doelwaarde voor deze eerste vergelijking is bepaald, wordt de vergelijking gebruikt om mogelijk meerder voorbeelden van dezelfde vergelijking te bekomen. 
 
@@ -21,8 +46,6 @@ Hierbij worden de doelwaarden van de willekeurige gegenereerde dataset bepaald d
 \end{center}
 
 \subsection{Verantwoording keuze}
-Om de meeste geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden door de verschillende generatoren. Het criteria waaraan voldaan moet worden is dat de gegenereerde dataset zo dicht mogelijk bij re\"ele gebruikersdata moet liggen. Er wordt dus vergeleken in hoeveel van de gevallen er op een brute-force manier een oplossing zou gevonden worden in de genereerde dataset. Hierbij bleek dat de \textit{$3^{e}$ datagenerator} de meest geschikte was om gebruikersdata na te bootsen. Alle experimenten die van hieraf aan beschreven staan zijn gebeurd met datasets gegenereerd door deze datagenerator.
-
-
+Om de meeste geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden door de verschillende generatoren. Het criteria waaraan voldaan moet worden is dat de gegenereerde dataset zo dicht mogelijk bij re\"ele gebruikersdata moet liggen. Er wordt dus vergeleken in hoeveel van de gevallen er op een brute-force manier een oplossing zou gevonden worden in de genereerde dataset. Hierbij blijkt dat de \textit{$3^{e}$ datagenerator} de meest geschikte is om gebruikersdata na te bootsen. Alle experimenten die vanaf hier beschreven staan zijn gebeurd met datasets gegenereerd door deze datagenerator. Omdat deze volgens onze criteria als beste mogelijke gebruikersdata kan nabootsen.
 
 \end{document}
