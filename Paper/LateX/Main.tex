@@ -112,20 +112,20 @@ Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kim
 \State $\textit{nextLevel} \gets$new $\textit{List}$
 \State $\textit{solutions} \gets$new $\textit{List}$
 \While{$\neg\textit{runOutOfTime}$}
-	\ForAll{$\textit{curEq} \gets \textit{currentLevel}$}
+	\ForAll{$\textit{currentEquation} \gets \textit{currentLevel}$}
 		\If{getRunOutOfTime()}
 			\State $\textit{runOutOfTime} \gets \textit{true}$
 			\State break
 		\EndIf
-		\ForAll{$\textit{nTRule} \gets \textit{CFG}$.getNonTRules()}
-			\ForAll{$\textit{TRule} \gets \textit{CFG}$.getTRules()}
-				\State $\textit{newEq} \gets$ ex($\textit{curEq, nTRule, TRule}$)
-				\If{isAbsoluteRedundant($\textit{newEq}$)} 
+		\ForAll{$\textit{nonTerminalRule} \gets \textit{CFG}$.getNonTerminalRules()}
+			\ForAll{$\textit{terminalRule} \gets \textit{CFG}$.getTerminalRules()}
+				\State $\textit{newEquation} \gets$ expand($\textit{currentEquation, nonTerminalRule, terminalRule}$)
+				\If{isAbsoluteRedundant($\textit{newEquation}$)} 
 					\State break
-				\ElsIf{$\neg$shouldBePruned($\textit{newEq}$)}
-					\State $\textit{nextLevel}$.add($\textit{newEq}$)
-					\If{$\textit{newEq}$.isGoalReached()} 
-						\State $\textit{solutions}$.add($\textit{newEq}$)
+				\ElsIf{$\neg$shouldBePruned($\textit{newEquation}$)}
+					\State $\textit{nextLevel}$.add($\textit{newEquation}$)
+					\If{$\textit{newEquation}$.isGoalReached()} 
+						\State $\textit{solutions}$.add($\textit{newEquation}$)
 					\EndIf
 				\EndIf
 
