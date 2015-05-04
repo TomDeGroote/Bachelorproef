@@ -47,7 +47,7 @@ public abstract class Grammar {
 		otherEqs = new ArrayList<HashMap<String, Double>>();
 		otherGoals = new ArrayList<Double>();
 		otherComparators = new ArrayList<Comparator>();
-		solutions = new HashSet<Equation>(); 
+		solutions = new HashSet<Equation>();
 	}
 	
 	/**
@@ -143,8 +143,7 @@ public abstract class Grammar {
 		}
 		solutions.add(eq);
 		return true;
-	}
-	
+	}	
 
 	/**
 	 * Calculates the value of column values based on a given equation

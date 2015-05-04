@@ -24,12 +24,12 @@ import exceptions.OutOfTimeException;
  *
  */
 public class Experiments {
-	private static int DEADLINE = -1;
-	private final static int MAXLEVEL = 4;
+	private static int DEADLINE = 4000;
+	private final static int MAXLEVEL = 10;
 	private final static boolean PRINTTOFILE = false;
 	private final static boolean MULTITHREADED = true;
 	private static int NROFKS;
-	private final static int LENGTH = 4;
+	private final static int LENGTH = 5;
 	private static int NROFEXAMPLES;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
@@ -55,7 +55,6 @@ public class Experiments {
 		
 		s += ",realRandom, ComplexRandom, easyRandom";
 		String r = ""; 
-		DEADLINE = -1;
 		Main.USINGWEIGHTS = true;
 		
 		List<KindOfRandom> kors = new ArrayList<KindOfRandom>();
@@ -99,7 +98,6 @@ public class Experiments {
 		double[] primeWeights = new double[]{1.0, 2.0, 3.0, 5.0, 7.0}; weights.add(primeWeights); 
 		s += ",noOptimalisations, optimalized";
 		String r = ""; 
-		DEADLINE = -1;
 		Main.USINGWEIGHTS = true;
 		int AMOUNTOFCOLUMNS = 2;
 		for(int j = 0; j < AMOUNTOFCOLUMNS; j++){
@@ -158,7 +156,7 @@ public class Experiments {
 		double[] fiveWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0}; weights.add(fiveWeights); s += ",fiveWeights";
 //		double[] tenWeights = new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};weights.add(tenWeights); s += ",tenWeights";
 		Main.USEOPTIMALISATIONS = true;
-		DEADLINE = -1;
+//		DEADLINE = -1;
 		for(int j = 0; j < weights.size(); j++){
 			time.add(0.0);
 			solutions.add(0.0);

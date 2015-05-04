@@ -80,14 +80,14 @@ public class Equation implements Serializable {
 			NonSplittable newNonSplittable = new NonSplittable(operand, terminal);
 			if(Main.USEOPTIMALISATIONS) {
 				// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
-				for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
-					if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
-						if(previous.getEquationParts().get(i).getValue() > terminal.getValue()) {
-							return null;
-						}
-						break;
-					}
-				}
+//				for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
+//					if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
+//						if(previous.getEquationParts().get(i).getValue() > terminal.getValue()) {
+//							return null;
+//						}
+//						break;
+//					}
+//				}
 	
 				// There should not be a -K1 if there is a +K1
 				if(previous.getEquationParts().contains(new NonSplittable(operand.getInverseOperand(), terminal))) {
@@ -123,14 +123,14 @@ public class Equation implements Serializable {
 				}
 	
 				// The value of the terminal we are going to add should be bigger than (or equal) to the last terminal part that starts with the same operand
-				for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
-					if(previous.getLastNonSplittable().getSymbols().get(i).equals(operand)) {
-						if(((Terminal) previous.getLastNonSplittable().getSymbols().get(i+1)).getValue() > terminal.getValue()) {
-							return null;
-						}
-						break;
-					}
-				}
+//				for(int i = previous.getLastNonSplittable().getSymbols().size()-2; i >= 0; i = i-2) {
+//					if(previous.getLastNonSplittable().getSymbols().get(i).equals(operand)) {
+//						if(((Terminal) previous.getLastNonSplittable().getSymbols().get(i+1)).getValue() > terminal.getValue()) {
+//							return null;
+//						}
+//						break;
+//					}
+//				}
 	
 	
 				// The value of the terminal we are going to add keep the new NonSplittable part bigger than (or equal) to the last nonSplittable part that starts with the same operand
