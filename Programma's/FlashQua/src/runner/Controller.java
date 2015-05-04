@@ -19,7 +19,7 @@ public class Controller {
 	private static HashSet<Equation> allEquations;
 	
 	// Deadline and maxlevel parameters
-	private final static int DEADLINE = 20000;
+	private final static int DEADLINE = 2000;
 	private final static int MAXLEVEL = -1;
 	
 	// the weights to be used (basically constants)
