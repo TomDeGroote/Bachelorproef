@@ -46,7 +46,7 @@ In deze stap wordt de regel $E \rightarrow a,b,\dotsc$ gebruikt om elke vergelij
 \subsubsection*{Het resultaat}
 Zolang er vergelijkingen worden gezocht waarin geen constanten voorkomen vind dit algoritme in theorie altijd een oplossing. Het is echter wel zeer inefficiënt, zeker naarmate het aantal kolomwaarden\footnote{\label{note:kolomwaarden} De waarden die door de gebruiker worden meegegeven verschillend van de oplossing. In de voorbeelden aangegeven als $a$ en $b$.}
 toeneemt.
-\subsection{Toevoegen van gewichten}
+\subsection{Toevoegen van constanten}
 Het doel van dit algoritme is het vinden van een vergelijking die de gebruiker verlangt. Aangezien een vergelijking zoals $2 \ast x+1$ vaak voorkomt moeten er ook constanten toegelaten worden. Om aan deze manier te voldoen moet er slechts één wijziging plaatsvinden in het vorige algoritme. Namelijk bij het uitwerken van de vergelijkingen moeten we de regel $E \rightarrow 1,2,\dotsc,9,a,b,\dotsc$ gebruiken in plaats van $E \rightarrow a,b,\dotsc$.
 \subsubsection*{Het resultaat}
 Het gevolg is dat de uitwerkingstijd van de bewerkingsboom sterk toeneemt. De oplossingsgraad\footnote{\label{note:oplossingsgraad}Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.}
@@ -76,7 +76,7 @@ links $\geq$ dan zijn rechterbuur\\
 	bv. $a \times 1$
 \item[-] Relatief redundante knopen in bewerkingsboom\\
 	bv. $E+E \ast E$ en $E \ast E+E$
-\item[$\ast$] Toelaten van slechts één losstaand gewicht\\
+\item[$\ast$] Toelaten van slechts één losstaande constante \\
 	bv. $a+1+1$ komt voor als $a+2$
 \item[$\ast$] Niet toelaten van zelfde onsplistbare term\footnotemark[\ref{note:onsplitsbaar}]\\
 	bv. $a+a$ komt voor als $2 \ast a$
