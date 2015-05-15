@@ -99,46 +99,4 @@ Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kim
 \nocite{exampleLearning}
 \nocite{spreadsheet}
 
-%Make all appendixes after this title
-\section*{Algoritme} \label{sec:algorimteBesprekeing}
-
-\begin{algorithm*}[!htb]
-\caption{Vind alle mogelijke vergelijkingen}
-\label{VindVergelijkingen}
-\begin{algorithmic}[1]
-\Procedure{Search Equations}{}
-\State $\textit{runOutOfTime} \gets \textit{false}$
-\State $\textit{currentLevel} \gets \textit{CFG}$.getTerminalRulesAsEquations()
-\State $\textit{nextLevel} \gets$new $\textit{List}$
-\State $\textit{solutions} \gets$new $\textit{List}$
-\While{$\neg\textit{runOutOfTime}$}
-	\ForAll{$\textit{currentEquation} \gets \textit{currentLevel}$}
-		\If{getRunOutOfTime()}
-			\State $\textit{runOutOfTime} \gets \textit{true}$
-			\State break
-		\EndIf
-		\ForAll{$\textit{nonTerminalRule} \gets \textit{CFG}$.getNonTerminalRules()}
-			\ForAll{$\textit{terminalRule} \gets \textit{CFG}$.getTerminalRules()}
-				\State $\textit{newEquation} \gets$ expand($\textit{currentEquation, nonTerminalRule, terminalRule}$)
-				\If{isAbsoluteRedundant($\textit{newEquation}$)} 
-					\State break
-				\ElsIf{$\neg$shouldBePruned($\textit{newEquation}$)}
-					\State $\textit{nextLevel}$.add($\textit{newEquation}$)
-					\If{$\textit{newEquation}$.isGoalReached()} 
-						\State $\textit{solutions}$.add($\textit{newEquation}$)
-					\EndIf
-				\EndIf
-
-			\EndFor
-		\EndFor
-	\EndFor
-	\State $\textit{currentLevel} \gets \textit{nextLevel}$
-\EndWhile
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
-
-
-
 \end{document}
