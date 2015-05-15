@@ -48,10 +48,30 @@ Door herhaaldelijke toepassing van de productieregels onstaat er een boomstructu
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=\columnwidth]{treeSize.png}
+%Make all appendixes after this title
+\begin{tikzpicture}
+\begin{axis}[
+	ymode=log,
+	xlabel=Diepte boom,
+	ylabel=Aantal knopen,
+	xtick=data,]
+\addplot[smooth,mark=*,blue] coordinates {
+	(1,   1)
+	(2,   6)
+	(3,   31)
+	(4,   156)
+	(5,   781)
+	(6,   3906)
+	(7,   19531)
+	(8,   97656)
+};
+\end{axis}
+\end{tikzpicture}
 \caption{Toename van het aantal knopen}
 \label{fig:treeSize}
 \end{figure}
+
+
 
 Aangezien de groei van de boom exponentieel is bekomt men veel grotere berekeningstijden. Deze groei valt samen met de toename van de diepte in de boom. Het opstellen van de boom veroorzaakt een grote rekenkost. Dit heeft tot gevolg dat het ten zeerste aangeraden om deze boom slechts \'e\'enmalig op voorhand uit te werken.
 
@@ -61,7 +81,7 @@ Aangezien de groei van de boom exponentieel is bekomt men veel grotere berekenin
 \begin{itemize}
 \item Hypothese 1: Er zijn redundante knopen in de originele boom.
 \item Hypothese 2: Toevoeging van constanten aan de regels van de context vrije grammatica heeft een positieve invoed.
-\item Hypothese 3: Er bestaat een optimale afweging tussen de oplossingsgraad en de benodigde tijd bij het toevoegen van constanten
+\item Hypothese 3: Er bestaat een optimale afweging tussen de oplossingsgraad\footnote{\label{note:oplossingsgraad}Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.} en de benodigde tijd bij het toevoegen van constanten
 \item Hypothese 4: Het vermijden van redundante uitwerkingen heeft een positieve invloed op de tijd. 
 \end{itemize}
 

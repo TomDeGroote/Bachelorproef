@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,8 +36,8 @@ public class Main {
 	// the weights to be used (basically constants)
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	// Deadline and maxlevel parameters
-	private final static int DEADLINE = 500;
-	private final static int MAXLEVEL = -1;
+	private final static int DEADLINE = -1;
+	private final static int MAXLEVEL = 2;
 	
 	// Print the tree to a file or not, warning if you create many levels this writing will 
 	// take a very long time
@@ -52,6 +53,7 @@ public class Main {
 	private final static int NROFEXAMPLES = 2;
 	private final static int MIN = 0;
 	private final static int MAX = 100;
+	
 	public static boolean USEOPTIMALISATIONS = true;
 	public static boolean USINGWEIGHTS = true;
 
@@ -93,6 +95,15 @@ public class Main {
 			System.out.println(eq);
 		}
 		
+		System.out.println("Nr of knots: ");
+		int i = 0;
+		for(HashSet<Equation> level : tree.getTree()) {
+			System.out.println("Level " + i + ": " +level.size());
+			for(Equation eq : level) {
+				System.out.print(eq + "  ");
+			}
+			i++;
+		}
 		// Write the tree to the file if nessecary
 		if(PRINTTOFILE) {
 			System.out.println("Writing to file!");

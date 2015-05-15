@@ -1,14 +1,11 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Toekomstig werk}
-Door een beperkte tijd is het onmogelijk om al het onderzoek/werk te doen dat kan gedaan worden in verband met dit onderwerp. Hieronder worden een aantal mogelijkheden voor de toekomst overlopen.
+Door een beperkte tijd is het onmogelijk om al het onderzoek/werk te doen dat kan gedaan worden in verband met dit onderwerp. Hieronder worden een mogelijkheid voor de toekomst overlopen.
 
-\subsection{Toevoegen haakjes}
-Door het toevoegen van haakjes kunnen bepaalde vergelijkingen op een hoger niveau gevonden worden, zoals bv. $(A+B)^2$ wordt voorlopig pas gevonden als $A^{2}+2 \ast A \ast B+B^{2}$. Het verschil int diepte tussen deze twee termen is 3, want $(A+B)^2$ wordt gevonden op niveau 4 terwijl $A^{2}+2AB+B^{2}$ pas op diepte 7 gevonden wordt. Nadelig aan het toevoegen van haakjes is dat er een extra productieregel aan de contextvrije grammatica moet worden toegevoegd (nl. $E \rightarrow (E)$). Dit zorgt voor een stijging van het aantal knopen en dus een bredere zoekruimte. 
+\subsection*{Toevoegen haakjes}
+Door het toevoegen van haakjes kunnen bepaalde vergelijkingen op een hoger niveau gevonden worden, zoals bv. $(A+B)^2$ wordt voorlopig pas gevonden als $A^{2}+2 \ast A \ast B+B^{2}$. Het verschil in diepte tussen deze twee termen is 3, want $(A+B)^2$ wordt gevonden op niveau 4 terwijl $A^{2}+2AB+B^{2}$ pas op diepte 7 gevonden wordt. Nadelig aan het toevoegen van haakjes is dat er een extra productieregel aan de contextvrije grammatica moet worden toegevoegd (nl. $E \rightarrow (E)$). Dit zorgt voor een stijging van het aantal knopen en dus een bredere zoekruimte. 
 
-\par De implementatie is bovendien niet vanzelfsprekend. De huidige manier van prunen maakt het toevoegen van deze productieregel moeilijk. Dit komt doordat context vrij programmeren in Java niet volledig haalbaar is. Tenslotte moet de uitkomst van de vergelijkingen kunnen worden berekend. Het toevoegen van extra bewerkingen is echter wel triviaal. Er moet slechts \'e\'en klasse worden toegevoegd die de abstracte klasse symbol implementeerd.
-
-\subsection{Berekenen van 1 losstaande constante}
-Stel dat de laatste variabele berekend wordt uit de gegeven voorbeelden, dan kan er ook weer op reeds een veel lager niveau een geschikte vergelijking gevonden worden. Het toepassen van deze techniek zal een zekere overhead veroorzaken. Voor het eerste voorbeeld zullen er namelijk veel mogelijke oplossingen gevonden worden die vervolgens moeten gecontroleerd worden ten opzichte van de andere voorbeelden. Het nagaan van deze oplossing is niet triviaal en vraag een zekere rekenkracht. Wanneer deze berekening enkele duizende tot miljoenen keren moet worden uitgevoerd zal er dus wel degelijk een sterke overhead te merken zijn.
+\par De huidige manier van prunen maakt de implementatie van deze productieregel moeilijk, dit komt doordat context vrij programmeren in Java niet volledig haalbaar is. Een mogelijkheid is om de regel $E \rightarrow (E operand E)$ te implementeren, maar door de meeste rechtse invulling die gebruikt word in dit programma zijn er dan bepaalde zaken die niet gevonden kunnen worden. Tenslotte moet de uitkomst van de vergelijkingen kunnen worden berekend. Het toevoegen van extra bewerkingen is echter wel triviaal. Er moet slechts \'e\'en klasse worden toegevoegd die de abstracte klasse symbol implementeerd.
 
 \end{document}

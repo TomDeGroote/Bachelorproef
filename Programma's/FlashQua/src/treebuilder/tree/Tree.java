@@ -50,13 +50,13 @@ public abstract class Tree {
 	 * 		The tree
 	 */
 	public List<HashSet<Equation>> getTree() {
-		return this.tree;
+		return tree;
 	}
 
 	@Override
 	public String toString() {
 		String result = "";
-		for (HashSet<Equation> level : this.tree) {
+		for (HashSet<Equation> level : tree) {
 			for (Equation eq : level) {
 				result += eq.toString() + "  ";
 			}
