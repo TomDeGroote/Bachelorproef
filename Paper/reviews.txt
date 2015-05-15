@@ -1,0 +1,162 @@
+
+Samenvatting van de paper (een 5 a 10 lijntjes):
+De auteurs willen een vergelijking vinden die geldig is tussen
+een aantal variabelen in een spreadsheet. Dit naar analogie met Flashfill. Ze gebruiken een contextvrije grammatica om vergelijkingen
+op te stellen en evt. te snoeien
+
+Samenvatting beoordeling (een 5 a 10 lijntjes): o.a.
+leest de paper goed ?
+is de lijn van het verhaal duidelijk en volledig ?
+werden de doelstellingen van het project behaald ? Belangrijker: is de argumentatie volledig en verantwoord ? Gebruik vriendelijke en constructieve taal !
+
+Een drietal sterke punten:
+- het systeem lijkt te werken
+- de experimentele setup lijkt bruikbaar
+
+Een drietal zwakke punten:
+- de paper is niet goed geschreven
+- het taalgebruik is slordig
+- de probleemstelling en de aanpak zijn niet te reconstrueren uit de paper.
+
+Inhoudelijke vragen & suggesties voor verbetering:
+
+Het belangrijkste probleem met de huidige paper is dat de tekst en het taalgebruik ondermaats zijn.
+Voor wat betreft taal, staan er heel wat -dt fouten, grammaticale fouten, fouten die door een spellchecker makkelijk geidentificeerd kunnen worden, en zinnen die niet helemaal kloppen.
+Dit is gewoon ergerlijk, geeft een slechte indruk en haalt het niveau van het werk naar beneden.
+Ook is stijl waarin het werk geschreven is niet de juiste. Zo is bvb. de probleemstelling onduidelijk.
+Dit geldt ook voor de snoeimethodes en het algoritme. Het probleem is dat de auteurs dit allemaal omschrijven ipv het precies te definieren. Als je nog niet vertrouwd bent met Flashfill heb je ook maar weinig aan de inleiding.
+Je moet dit illustreren a.d.h.v. een voorbeeld.
+Een probleemstelling (zoals gezien in de cursus) bestaat uit Given A B C D Vind E
+In jullie geval (eerste aanzet).
+
+gegeven een verzameling variabelen uit een spreadsheet/tabel een (of meerdere) rijen in die spreadsheet
+een contextvrije grammatica
+vind een vergelijking in de taal van de contextvrije grammatica die geldig is op alle rijen ...
+En dan verwacht je in een paper een voorbeeld/ illustratie van zo’n probleem.
+Het heeft ook geen zin die hypotheses op te lijsten alvorens je gezegd hebt wat die boom is ...,
+wat de zoekstrategie is. Bij het aangeven van die concepten zou je moeten gebruik maken van standaard concepten zoals een parse-tree, een zoekboom, ...
+Ook zou je verwachten dat je de volledige grammatica beschikbaar maakt in de paper.
+Verder moeten ook de concepten die je nu in een voetnoot opneemt als definities in de tekst
+opgenomen worden. Ook de Opsomming van de snoeiregels (pruning) moet van die aard zijn
+dat ik dat kan reconstrueren. Dus elke van die regels moet precies gedefinieerd zijn. Wat is relatieve redundantie ? ... dit moet herschreven worden.
+Dit stuk moet preciezer !
+Het algoritme kan volgens mij ook eenvoudiger opnieuw als je over parse-trees e.d. praat.
+Dan is alles eigenlijk standaard denk ik ... het mengen met running out of time ... dat is niet zo interessant.
+Conceptueel begrijp ik niet waarom je de hele boom wil bijhouden ? Wat is het voordeel hiervan ?
+Waarom zijn fig 6 en 9 identiek ?
+De laatste twee refs zijn onvolledig. Wat is JFP ? Welke paper van Nelson ? Ook wat is het verband met equation discovery ...
+Constraint logic programming — eigenlijk moet je gewoon een of meerdere vgl kunnen oplossen.
+Als je een vb. hebt en een kandidaat vgl dan kan je daaruit een variabele afleiden.
+Als je twee vbn. ... twee variabelen afleiden.
+Dat is het idee en dat zou je kunnen illustreren in je paper. De volledige 8 pagina’s werden ook nog niet ten volle benut.
+Kortom, er is nog veel werk aan deze paper vooraleer hij aanvaard kan worden. Contact opnemen met je begeleiders is strikt noodzakelijk.
+
+————————
+(STUDENT)
+Samenvatting van de paper:
+In de paper wordt een algoritme gezocht om een vergelijking te vinden voor een gegeven reeks getallen. Hiervoor wordt gebruik gemaakt van een bewerkingsboom die de vergelijking voorstelt. De boom wordt opgesteld door elke knoop uit te breiden door het toepassen van regels van een CFG. Omdat de boom snel in grootte kan toenemen, worden enkele prunemogelijkheden onderzocht om zo een efficiënter algoritme te bekomen.
+
+Samenvatting beoordeling:
+De paper heeft een duidelijke structuur. Voor de bespreking van de gebruikte methodes wordt voldoende aandacht besteed aan de vereiste achtergrondkennis over context-vrije grammatica’s. Ook worden de experimenten in detail besproken. De sub-hypothesen in de probleemstelling zouden echter wel beter pas later in de paper aan bod komen, aangezien sommige termen (zoals “de originele boom”) op dat moment nog niet duidelijk zijn.
+
+Een drietal sterke punten:
+- Er wordt voldoende aandacht besteed aan de vereiste achtergrondkennis om
+de paper te kunnen lezen.
+- De experimenten voor de vergelijking van het brute force algoritme en het algoritme met optimalisaties worden uitgebreid besproken op vlak van uitvoeringstijd voor verschillende datasets.
+- Het is goed dat in het besluit duidelijk voor elke sub-hypothese de resultaten worden samengevat.
+
+Een drietal zwakke punten:
+- Bij figuur 6 (let op: dit is dezelfde figuur als figuur 9) wordt niet uitgelegd wat
+de percentages op de verticale as betekenen.
+- Er wordt misschien iets te weinig verwezen naar het algoritme op de laatste pagina.
+- Er staan op dit moment nog een aantal taalfouten in de tekst. (zie suggesties
+voor verbetering)
+
+Inhoudelijke vragen & suggesties voor verbetering:
+- In sectie 4.1 wordt bij “Gestructureerd” gezegd dat elke kolomwaarde slechts
+één maal voorkomt. Wat wordt hiermee bedoeld? Misschien is het
+interessant om dit in de paper te verduidelijken.
+- Taalfouten: verbeter zeker de dt-fouten en lees ook de tekst nog eens na om
+foute zinsconstructies eruit te halen. Misschien een detail, maar
+verschillende zinnen beginnen met “Echter ...” (en dat zou niet mogen: http://taaladvies.net/taal/advies/vraag/236/echter_aan_het_begin_van_de_zin/ ) Gebruik ook niet te veel “er”. Let als laatste er ook op dat elke zin een echte
+zin is (er staat bijvoorbeeld in de conclusie “Wat ervoor zorgt dat ...”).
+
+—————————
+(STUDENT)
+Samenvatting van de paper (een 5 a 10 lijntjes):
+Paper beschrijft een algoritme om vanuit een gegeven set een passende (wiskundige) vergelijking te vinden om vervolgens een andere set te vervolledigen. Het algoritme wordt
+uitvoerig besproken en vergeleken met een bruteforce
+algoritme op basis van nauwkeurigheid en uitvoeringstijd. Er werd geconcludeerd dat het geoptimaliseerde algoritme sneller werkt, maar daarom niet beter.
+
+Samenvatting beoordeling (een 5 a 10 lijntjes):
+In het algemeen leest de paper goed. Dit komt voornamelijk door de logische opbouw, maar ook door het gebruik van voorbeelden om bepaalde concepten uit te leggen. De paper bevat wel veel schrijffouten. De doelstellingen werden behaald, maar jullie hadden
+er volgens mij wel meer van verwacht.
+Is de argumentatie volledig en verantwoord ?
+In het algemeen werden beslissingen altijd verantwoord. Ik heb wel nog een paar vragen
+(zie “inhoudelijke verbeteringen en vragen”lijst).
+
+Een drietal sterke punten:
+Structuur
+van de paper: logische opbouw
+Niveau:
+juiste niveau waardoor alles goed te volgen is.
+Voorbeelden:
+Goed gebruik van voorbeelden om CFG etc. uit te leggen.
+
+Een drietal zwakke punten:
+Schrijffouten:
+de paper best veel schrijffouten (enkele dtfouten
+: bedoelt en vind)
+Figuur
+dubbel: figuur 6 en figuur 9 zijn hetzelfde, denk ik.
+
+Inhoudelijke verbeteringen en vragen:
+Abstract:
+Ik denk dat in de abstract ook resultaten (cijfers) mogen staan.
+2.
+Probleemstelling: klein detail: in hypothese 3 wordt het woord: oplossingsgraad voor het eerst gebruikt, maar er wordt dan niet verwezen naar de voetnoot.
+3.1.
+Brute force: Misschien in de inleiding ook de twee stappen al vernoemen.
+Bij
+opsomming prunemogelijkheden: misschien het gebruik van de
+verschillende symbolen hier ook uitleggen, zo is deze opsomming ook leesbaar als men niet de tekst leest.
+Zoals
+weergegeven in figuur 6 stagneert de besparing rond de 35%
+>
+Als ik de grafiek lees, lijkt het te stagneren bij 6065%.
+Of wordt er 100%65%
+bedoeld?
+Constanten
+: best de set van constanten steeds tussen haakjes zetten, dat maakt het leesbaarder. Waarom nemen jullie die sets van constanten? Waarom niet (1,2,3), (1,2,3,4)
+en (1,2,3,4,5)? Waarom ontbreekt 4 en 6 in de laatste set?
+(na het lezen van de grafiekjes had ik door dat gebruik gemaakt werd van priemgetallen in
+de laatste dataset. Misschien moet dit ook al eerder vermeld worden.
+
+————————————
+Samenvatting van de paper (een 5 a 10 lijntjes):
+De paper bekijkt een situatie gelijkaardig aan FlashFill, maar met getallen waarvoor een vergelijking moet worden gevonden. Dit gebeurd door op basis van een grammatica een zoekruimte van mogelijke vergelijkingen op te bouwen en deze op verschillende manieren te prunen. De experimenten tonen aan dat het mogelijk is om vergelijkingen van beperkte lengte snel te vinden, ook al blijft het algoritme wel exponentieel.
+
+Samenvatting beoordeling (een 5 a 10 lijntjes):
+De belangrijkste punten zitten in de paper, maar het verhaal is niet altijd makkelijk te volgen (zie ook suggesties beneden). De discussie en motivatie van de gemaakte keuzes zijn goed, evenals de discussie en verklaring van de behaalde resultaten. Wel is het niet geheel duidelijk hoe dit werk binnen ander onderzoek past, bv. binnen de in de titel genoemde equation discovery, of ook de technische kant van FlashFill.
+
+Een drietal sterke punten:
+- interessante experimenten
+- implementatie werkt met spreadsheet - goede discussie van opties
+
+Een drietal zwakke punten:
+- spelling en grammatica!
+- sommige stukken zijn niet echt duidelijk (bv. 6.4, 7.2) - probleemstelling kan duidelijker (gegeven ... vind ...)
+
+Inhoudelijke vragen & suggesties voor verbetering:
+- lees de tekst zeker goed na, ook qua spelling, correcte zinnen, ...
+
+- in het begin van 2 zijn de hypotheses niet goed te begrijpen, bv. wat is “de boom” of “toevoeging van constanten”; ik zou hier eerst en “gegeven - zoek” probleemstelling geven, en dan kort uitleggen hoe je dit (door een boom te bekijken)
+ oplost
+
+- pruning: het verschil tussen relatief en absoluut is niet zo duidelijk, geef best voorbeelden (met uitleg; bv. wat is het verschil tussen punt 1 en 5 in de opsomming?) - 4.2: “hieruit blijkt...” hoe blijkt dit uit de figuur?
+- ik zou in het begin van de experimenten al linken na de vragen / hypothesen; waar gaan de experimenten naar toe?
+- ik snap niet goed wat jullie bedoelen met “de volgorde van de experimenten is van belang”
+ probeer 6.4 en 7.2 beter uit te leggen, misschien met voorbeeld
+- 7.1: waarom kun je niet gewoon elke E -> E op E vervangen door E -> (E op E) ?
+- referenties onvolledig
+- is het algoritme gewoon breedte-eerst met pruning? in dat geval ie het misschien niet nodig om echt pseudocode te geven 

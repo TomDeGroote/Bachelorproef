@@ -1,11 +1,11 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Aanpak}
-Omdat de beperkingen van het 'Countdown' probleem niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als benchmark wordt een brute force algoritme gebruikt. Dit algoritme wordt vervolgens verbeterd door op een effici\"ente manier bepaalde vergelijkingen niet uit te rekenen of in het algemeen te vermijden.
+Omdat de beperkingen van het 'Countdown' probleem niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als baseline wordt een brute force algoritme gebruikt. Dit algoritme wordt vervolgens verbeterd door op een effici\"ente manier bepaalde vergelijkingen niet uit te rekenen of in het algemeen te vermijden.
 \subsection{Brute Force}
 Het brute force algoritme bestaat uit twee stappen. De stappen moeten niet afzonderlijk worden uitgevoerd, maar het levert wel een tijdsvoordeel op indien dit gedaan wordt. De bewerkingsboom kan namelijk eenmalig opgesteld worden en later doorlopen worden.
 \subsubsection*{Het opstellen van de bewerkingsboom}
-Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de context-vrije grammatica. De root van de bewerkingsboom $E$ wordt uitgebreid aan de hand van de regels van de CFG. De regel $E \rightarrow a,b,\dotsc$ wordt pas in de volgende stap gebruikt. Figuur \ref{fig:bewerkingsboom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$.
+Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de context-vrije grammatica. De root van de bewerkingsboom $E$ wordt uitgebreid aan de hand van de regels van de context vrije grammatica. De regel $E \rightarrow a,b,\dotsc$ wordt pas in de volgende stap gebruikt. Figuur \ref{fig:bewerkingsboom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$.
 \begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[level distance=1cm,
