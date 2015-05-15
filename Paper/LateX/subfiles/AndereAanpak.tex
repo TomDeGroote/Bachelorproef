@@ -2,7 +2,7 @@
 \begin{document}
 \section{Limieten van het onderzoek}
 
-Er zijn een aantal methoden die wegens verscheidene redenen niet onderzocht zijn. Hieronder is een overzicht te vinden van deze methoden en de verklaring waarom deze paden niet bewandeld zijn. 
+Wegens verscheidene redenen zijn een aantal methoden niet onderzocht. Hieronder is een overzicht te vinden van deze methoden en de verklaring waarom deze paden niet bewandeld zijn. 
 
 \subsection{Heuristiek}
 Een mogelijk hulpmiddel bij het verbeteren van zoekalgoritmes is het implementeren van een passende heuristiek. In het onderzoek naar een heuristiek voor dit project is gebleken dat de waarde van knopen enorm snel kunnen verschillen, zoals de invloed van $\times$, $\div$ en \^{}. Om de oplossingsgraad die op dit moment bereikt wordt te bewaren is het onmogelijk een goede heuristiek te vinden. Omdat er in dit onderzoek vanuit gegaan is dat de gebruiker geen extreem lange vergelijkingen zoekt, zal de heuristiek bijgevolg ook geen meerwaarde bieden. Mocht later blijken dat er vraag is naar het vinden van grotere vergelijkingen zal deze denkpiste opnieuw geopend worden.
@@ -14,6 +14,6 @@ Het bepalen van deze vergelijkingen kan gemakkelijk gezien worden als een 'Const
 Er is een poging gewaagd het project te implementeren met behulp van een programmeertaal dan Java. Door onze beperkte kennis van Prolog en Haskell zijn we hier echter niet in geslaagd. De problemen bevonden zich vooral in het prunen van de boom. We zijn geslaagd in het implementeren van het brute force algoritme. De snelheid van het huidige algoritme was echter hoger. Er is dan ook voor gekozen dit pad niet verder te bewandelen.
 
 \subsection{Op basis van onbekende}
-Voor elk van de gegeven voorbeelden kan er een onbekende bepaald worden. Er kan een stelsel van vergelijkingen opgesteld worden waarbij er evenveel onbekenden zijn als er vergelijkingen zijn. Mogelijke problemen hiermee zijn dat er te veel constanten gebruikt worden en dat de gevonden vergelijking te weinig gegeven waarden bevat. Hierdoor zullen de overige voorbeelden naar alle waarschijnlijkheid niet naar de verwachtingswaarde van de gebruiker zijn.\par
-Bovendien moet er vermeld worden dat er altijd een grote hoeveelheid oplossingen gevonden zullen worden voor een bepaald voorbeeld. Het nagaan of deze oplossingen ook voldoet aan de andere voorbeelden zorgt voor een grote overhead. Uit een klein gevoerd onderzoek werd bevestigd dat deze overhead het programma inderdaad enorm vertraagd. Hoewel met een betere implementatie de overhead misschien kan dalen betwijfelen we dat er betere resultaten zullen worden bekomen.
+Elke vergelijking met \'e\'en onbekende variabele is oplosbaar. Indien er meerdere vergelijkingen zijn dan mogen er ook meerdere variabelen onbekend zijn en blijft het stelsel van deze vergelijkingen oplosbaar. Problemen hierdoor zijn dat bij het toepassen van dit principe op een kleine set van vergelijkingen er enorme hoeveelheid van mogelijke oplossingen gevonden worden. In deze set van oplossingen bevinden zich een groot deel van vergelijkingen die gebruik maken van constanten en dus naar grote waarschijnlijkheid niet zullen geschikt zullen zijn voor verder voorbeelden. De extra controle die nodig is om dit soort van zaken na te gaan is een te grote overhead ten opzichte van de rest van het programma dat dit geen goede piste voor het onderzoek leek.
+
 \end{document}
