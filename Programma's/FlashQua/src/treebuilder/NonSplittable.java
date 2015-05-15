@@ -100,7 +100,7 @@ public class NonSplittable {
 		}
 		
 		List<Symbol> copyOfSymbolsThis = new ArrayList<Symbol>(this.getSymbols());
-		List<Symbol> copyOfSymbolsOther = new ArrayList<Symbol>(this.getSymbols());
+		List<Symbol> copyOfSymbolsOther = new ArrayList<Symbol>(otherNonSplittable.getSymbols());
 		
 		copyOfSymbolsOther.set(0, new Multiplication());
 		copyOfSymbolsThis.set(0, new Multiplication());

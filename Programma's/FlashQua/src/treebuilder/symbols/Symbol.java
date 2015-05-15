@@ -65,7 +65,7 @@ public abstract class Symbol implements Serializable {
 		Symbol otherSymbol = (Symbol) obj;
 		return new EqualsBuilder().
 				// if deriving: appendSuper(super.equals(obj)).
-				append(representation, otherSymbol.representation).
+				append(toString(), otherSymbol.toString()).
 				append(isOperand(), otherSymbol.isOperand()).
 				append(isTerminal(), otherSymbol.isTerminal()).
 				append(isNonTerminal(), otherSymbol.isNonTerminal()).

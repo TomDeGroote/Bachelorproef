@@ -37,7 +37,7 @@ public class Main {
 	private static double[] WEIGHTS = new double[]{1.0, 2.0, 3.0, 5.0, 7.0};
 	// Deadline and maxlevel parameters
 	private final static int DEADLINE = -1;
-	private final static int MAXLEVEL = 2;
+	private final static int MAXLEVEL = 4;
 	
 	// Print the tree to a file or not, warning if you create many levels this writing will 
 	// take a very long time
@@ -99,9 +99,6 @@ public class Main {
 		int i = 0;
 		for(HashSet<Equation> level : tree.getTree()) {
 			System.out.println("Level " + i + ": " +level.size());
-			for(Equation eq : level) {
-				System.out.print(eq + "  ");
-			}
 			i++;
 		}
 		// Write the tree to the file if nessecary
