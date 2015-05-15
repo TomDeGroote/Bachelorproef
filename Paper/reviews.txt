@@ -1,18 +1,3 @@
-
-Samenvatting van de paper (een 5 a 10 lijntjes):
-De auteurs willen een vergelijking vinden die geldig is tussen
-een aantal variabelen in een spreadsheet. Dit naar analogie met Flashfill. Ze gebruiken een contextvrije grammatica om vergelijkingen
-op te stellen en evt. te snoeien
-
-Samenvatting beoordeling (een 5 a 10 lijntjes): o.a.
-leest de paper goed ?
-is de lijn van het verhaal duidelijk en volledig ?
-werden de doelstellingen van het project behaald ? Belangrijker: is de argumentatie volledig en verantwoord ? Gebruik vriendelijke en constructieve taal !
-
-Een drietal sterke punten:
-- het systeem lijkt te werken
-- de experimentele setup lijkt bruikbaar
-
 Een drietal zwakke punten:
 - de paper is niet goed geschreven
 - het taalgebruik is slordig
@@ -23,32 +8,28 @@ Inhoudelijke vragen & suggesties voor verbetering:
 Het belangrijkste probleem met de huidige paper is dat de tekst en het taalgebruik ondermaats zijn.
 Voor wat betreft taal, staan er heel wat -dt fouten, grammaticale fouten, fouten die door een spellchecker makkelijk geidentificeerd kunnen worden, en zinnen die niet helemaal kloppen.
 Dit is gewoon ergerlijk, geeft een slechte indruk en haalt het niveau van het werk naar beneden.
-Ook is stijl waarin het werk geschreven is niet de juiste. Zo is bvb. de probleemstelling onduidelijk.
-Dit geldt ook voor de snoeimethodes en het algoritme. Het probleem is dat de auteurs dit allemaal omschrijven ipv het precies te definieren. Als je nog niet vertrouwd bent met Flashfill heb je ook maar weinig aan de inleiding.
-Je moet dit illustreren a.d.h.v. een voorbeeld.
-Een probleemstelling (zoals gezien in de cursus) bestaat uit Given A B C D Vind E
-In jullie geval (eerste aanzet).
 
-gegeven een verzameling variabelen uit een spreadsheet/tabel een (of meerdere) rijen in die spreadsheet
-een contextvrije grammatica
-vind een vergelijking in de taal van de contextvrije grammatica die geldig is op alle rijen ...
-En dan verwacht je in een paper een voorbeeld/ illustratie van zo’n probleem.
-Het heeft ook geen zin die hypotheses op te lijsten alvorens je gezegd hebt wat die boom is ...,
-wat de zoekstrategie is. Bij het aangeven van die concepten zou je moeten gebruik maken van standaard concepten zoals een parse-tree, een zoekboom, ...
-Ook zou je verwachten dat je de volledige grammatica beschikbaar maakt in de paper.
+Ook is stijl waarin het werk geschreven is niet de juiste. Zo is bvb. de probleemstelling onduidelijk.
+
+Dit geldt ook voor de snoeimethodes en het algoritme. 
+Het probleem is dat de auteurs dit allemaal omschrijven ipv het precies te definieren. 
+
 Verder moeten ook de concepten die je nu in een voetnoot opneemt als definities in de tekst
 opgenomen worden. Ook de Opsomming van de snoeiregels (pruning) moet van die aard zijn
-dat ik dat kan reconstrueren. Dus elke van die regels moet precies gedefinieerd zijn. Wat is relatieve redundantie ? ... dit moet herschreven worden.
+dat ik dat kan reconstrueren. 
+
+Dus elke van die regels moet precies gedefinieerd zijn. Wat is relatieve redundantie ? ... dit moet herschreven worden.
 Dit stuk moet preciezer !
+
 Het algoritme kan volgens mij ook eenvoudiger opnieuw als je over parse-trees e.d. praat.
 Dan is alles eigenlijk standaard denk ik ... het mengen met running out of time ... dat is niet zo interessant.
 Conceptueel begrijp ik niet waarom je de hele boom wil bijhouden ? Wat is het voordeel hiervan ?
-Waarom zijn fig 6 en 9 identiek ?
-De laatste twee refs zijn onvolledig. Wat is JFP ? Welke paper van Nelson ? Ook wat is het verband met equation discovery ...
-Constraint logic programming — eigenlijk moet je gewoon een of meerdere vgl kunnen oplossen.
+
+
 Als je een vb. hebt en een kandidaat vgl dan kan je daaruit een variabele afleiden.
 Als je twee vbn. ... twee variabelen afleiden.
 Dat is het idee en dat zou je kunnen illustreren in je paper. De volledige 8 pagina’s werden ook nog niet ten volle benut.
+
 Kortom, er is nog veel werk aan deze paper vooraleer hij aanvaard kan worden. Contact opnemen met je begeleiders is strikt noodzakelijk.
 
 ————————
@@ -77,14 +58,13 @@ Brute force: Misschien in de inleiding ook de twee stappen al vernoemen.
 Bij
 opsomming prunemogelijkheden: misschien het gebruik van de
 verschillende symbolen hier ook uitleggen, zo is deze opsomming ook leesbaar als men niet de tekst leest.
-Zoals
-weergegeven in figuur 6 stagneert de besparing rond de 35%
->
-Als ik de grafiek lees, lijkt het te stagneren bij 6065%.
-Of wordt er 100%65%
-bedoeld?
-Constanten
-: best de set van constanten steeds tussen haakjes zetten, dat maakt het leesbaarder. Waarom nemen jullie die sets van constanten? Waarom niet (1,2,3), (1,2,3,4)
+
+Zoals weergegeven in figuur 6 stagneert de besparing rond de 35%
+Als ik de grafiek lees, lijkt het te stagneren bij 60 ~ 65%.
+Of wordt er 100% ~ 65% bedoeld?
+
+Constanten: 
+Waarom nemen jullie die sets van constanten? Waarom niet (1,2,3), (1,2,3,4)
 en (1,2,3,4,5)? Waarom ontbreekt 4 en 6 in de laatste set?
 (na het lezen van de grafiekjes had ik door dat gebruik gemaakt werd van priemgetallen in
 de laatste dataset. Misschien moet dit ook al eerder vermeld worden.
@@ -97,7 +77,6 @@ Een drietal sterke punten:
 
 Een drietal zwakke punten:
 - spelling en grammatica!
-- sommige stukken zijn niet echt duidelijk (bv. 7.2)
 
 Inhoudelijke vragen & suggesties voor verbetering:
 - lees de tekst zeker goed na, ook qua spelling, correcte zinnen, ...
