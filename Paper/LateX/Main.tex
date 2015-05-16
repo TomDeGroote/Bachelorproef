@@ -19,7 +19,6 @@
 \usepackage{amsmath}
 \usepackage{fancybox}
 \usepackage{varwidth}
-\usepackage{cite}
 \usepackage{framed}
 \usepackage{graphics}
 \usepackage{graphicx}
@@ -101,24 +100,5 @@ Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kim
 \bibliography{bibtex.bib}
 \nocite{exampleLearning}
 \nocite{spreadsheet}
-
-%Make all appendixes after this title
-\begin{tikzpicture}
-  \begin{axis}[
-    ybar,
-    enlarge x limits=0.4,
-    enlarge y limits=0.15,
-    ylabel={\ oplossingsgraad (\%)},
-    symbolic x coords={willekeurig,complex,gestructureerd,},
-    xtick=data,
-    nodes near coords, 
-	nodes near coords align={vertical},
-    x tick label style={rotate=0,anchor=mid,yshift=-1.5ex},
-    bar width=30,
-    ]
-    \addplot coordinates {(willekeurig, 8.0) (complex, 93.0) 
-		(gestructureerd,97.0)};
-  \end{axis}
-\end{tikzpicture}
 
 \end{document}
