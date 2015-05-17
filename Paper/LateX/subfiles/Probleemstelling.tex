@@ -1,8 +1,7 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Probleemstelling}
-Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. Toch kan de gebruiker op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: "Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker.". 
-%TODO Voorbeeld 
+Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. Toch kan de gebruiker op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: \textbf{"Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker."}. 
 
 \begin{figure}[!htb]
 \centering
@@ -24,8 +23,6 @@ Gezocht: & $X*Y = Z$
 
 \par De volgende subsecties geven de benodigde voorkennis weer voor het vervolg van de paper.
 
- 
-
 \subsection{Contextvrije grammatica}
 Om wiskundige vergelijkingen op te bouwen wordt er gebruik gemaakt van een contextvrije grammatica \cite{equationDisc}. Volgens de \textit{formele taal theorie} \cite{cfg} is een contextvrije grammatica een formele grammatica waarbij elke productieregel er uit ziet als volgt: $V \rightarrow w$. Hier staat $V$  voor \'e\'en niet-terminaal symbool en $w$ voor een tekenreeks van niet-terminale en terminale symbolen. Contextvrij betekent dat de productieregels kunnen toegepast worden los van de context waarin het niet-terminaal symbool zich bevindt.
 
@@ -33,18 +30,39 @@ Om wiskundige vergelijkingen op te bouwen wordt er gebruik gemaakt van een conte
 \centering
 \begin{framed}
 $E \rightarrow E + E$ \\
+$E \rightarrow E - E$ \\
 $E \rightarrow E \ast E$ \\
+$E \rightarrow E \div E$ \\
+$E \rightarrow E^{E}$ \\
 $E \rightarrow a | b | \dotsc$
 \end{framed}
-\caption{Voorbeeld van contextvrije grammatica}
+\caption{De contextvrije grammatica}
 \label{fig:cfg}
 \end{figure}
-%TODO Checken figuur 5 hier misschien te plaatsen
-Als een andere wiskundige operatie gewenst is, moet deze toegevoegd worden als een productieregel aan de bovenstaande grammatica. Voordelig aan het werken met een contextvrije grammatica is de gemakkelijke aanpasbaarheid. Omdat productieregels volledig onafhankelijk zijn van elkaar, is het eenvoudig om de gewenste operaties door de gebruiker te laten defini\"eren. In de voorbeelden die hierna zullen volgen wordt de grammatica uit Figuur \ref{fig:cfgVol} gebruikt. De productieregels die het algoritme bevat zijn: $+, -, \ast, \div$ en \^{}.
+
+Als een andere wiskundige operatie gewenst is, moet deze toegevoegd worden als een productieregel aan de bovenstaande grammatica. Voordelig aan het werken met een contextvrije grammatica is de gemakkelijke aanpasbaarheid. Omdat productieregels volledig onafhankelijk zijn van elkaar, is het eenvoudig om de gewenste operaties door de gebruiker te laten defini\"eren. In de voorbeelden die hierna zullen volgen wordt de grammatica uit Figuur \ref{fig:cfg} gebruikt. De productieregels die het algoritme bevat zijn: $+, -, \ast, \div$ en \^{}.
 
 \subsection{Boomstructuur}
 
-Door de herhaaldelijke toepassing van productieregels onstaat er een boomstructuur. In deze boom bevinden zich alle mogelijke samenstellingen van productieregels die door de grammatica bepaald kunnen worden. Deze operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. De groei van deze boom staat uitgetekend in Figuur \ref{fig:treeSize}.
+Door de herhaaldelijke toepassing van productieregels onstaat er een boomstructuur. In deze boom bevinden zich alle mogelijke samenstellingen van productieregels die door de grammatica bepaald kunnen worden. Deze operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. Figuur \ref{fig:vbBoom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$. Het verloop van de groei van deze boom staat uitgetekend in Figuur \ref{fig:treeSize}.
+
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}[level distance=1cm,
+  		level 1/.style={sibling distance=4cm},
+  		level 2/.style={sibling distance=2cm}]
+  		\node {$E$}
+    		child {node {$E+E$}
+      		child {node {$E+E+E$}}
+      		child {node {$E+E \ast E$}}
+    		}
+    		child {node {$E \ast E$}
+    			child {node {$E \ast E+E$}}
+      		child {node {$E \ast E\ast E$}}
+    		};
+\end{tikzpicture}
+\caption{Voorbeeld van een bewerkingsboom} \label{fig:vbBoom}
+\end{figure}
 
 \begin{figure}[!htb]
 \centering
@@ -72,7 +90,6 @@ Door de herhaaldelijke toepassing van productieregels onstaat er een boomstructu
 
 
 Aangezien de groei van de boom exponentieel is, bekomt men veel grotere berekeningstijden. Deze groei valt samen met de toename van de diepte in de boom. Het opstellen van de boom veroorzaakt een grote rekenkost. Dit heeft tot gevolg dat het ten zeerste aangeraden is om deze boom slechts \'e\'enmaal op voorhand uit te werken.
-%TODO Voorbeeld hier plaatsen van boom door + en *
 
 \subsection{Subhypothesen} \label{ssec:subhypothesen}
 \par Hieronder vindt u een oplijsting van de subhypothesen:

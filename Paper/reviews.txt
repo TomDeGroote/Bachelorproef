@@ -5,10 +5,6 @@ Een drietal zwakke punten:
 
 Inhoudelijke vragen & suggesties voor verbetering:
 
-Het belangrijkste probleem met de huidige paper is dat de tekst en het taalgebruik ondermaats zijn.
-Voor wat betreft taal, staan er heel wat -dt fouten, grammaticale fouten, fouten die door een spellchecker makkelijk geidentificeerd kunnen worden, en zinnen die niet helemaal kloppen.
-Dit is gewoon ergerlijk, geeft een slechte indruk en haalt het niveau van het werk naar beneden.
-
 Ook is stijl waarin het werk geschreven is niet de juiste. Zo is bvb. de probleemstelling onduidelijk.
 
 Dit geldt ook voor de snoeimethodes en het algoritme. 
@@ -32,52 +28,9 @@ Dat is het idee en dat zou je kunnen illustreren in je paper. De volledige 8 pag
 
 Kortom, er is nog veel werk aan deze paper vooraleer hij aanvaard kan worden. Contact opnemen met je begeleiders is strikt noodzakelijk.
 
-————————
-(STUDENT)
-Een drietal zwakke punten:
-- Er staan op dit moment nog een aantal taalfouten in de tekst. (zie suggesties
-voor verbetering)
-
-Inhoudelijke vragen & suggesties voor verbetering:
-
-- Taalfouten: verbeter zeker de dt-fouten en lees ook de tekst nog eens na om
-foute zinsconstructies eruit te halen. Misschien een detail, maar
-verschillende zinnen beginnen met “Echter ...” (en dat zou niet mogen: http://taaladvies.net/taal/advies/vraag/236/echter_aan_het_begin_van_de_zin/ ) Gebruik ook niet te veel “er”. Let als laatste er ook op dat elke zin een echte
-zin is (er staat bijvoorbeeld in de conclusie “Wat ervoor zorgt dat ...”).
-
-—————————
-(STUDENT)
-
-Een drietal zwakke punten:
-Schrijffouten:
-de paper best veel schrijffouten (enkele dt-fouten : bedoelt en vind)
 
 Inhoudelijke verbeteringen en vragen:
 3.1.
 Brute force: Misschien in de inleiding ook de twee stappen al vernoemen.
-Bij
-opsomming prunemogelijkheden: misschien het gebruik van de
-verschillende symbolen hier ook uitleggen, zo is deze opsomming ook leesbaar als men niet de tekst leest.
 
-Zoals weergegeven in figuur 6 stagneert de besparing rond de 35%
-Als ik de grafiek lees, lijkt het te stagneren bij 60 ~ 65%.
-Of wordt er 100% ~ 65% bedoeld?
-
-Constanten: 
-Waarom nemen jullie die sets van constanten? Waarom niet (1,2,3), (1,2,3,4)
-en (1,2,3,4,5)? Waarom ontbreekt 4 en 6 in de laatste set?
-(na het lezen van de grafiekjes had ik door dat gebruik gemaakt werd van priemgetallen in
-de laatste dataset. Misschien moet dit ook al eerder vermeld worden.
-
-————————————
-
-Een drietal sterke punten:
-- interessante experimenten
-- implementatie werkt met spreadsheet - goede discussie van opties
-
-Een drietal zwakke punten:
-- spelling en grammatica!
-
-Inhoudelijke vragen & suggesties voor verbetering:
-- lees de tekst zeker goed na, ook qua spelling, correcte zinnen, ...
 - pruning: het verschil tussen relatief en absoluut is niet zo duidelijk, geef best voorbeelden (met uitleg; bv. wat is het verschil tussen punt 1 en 5 in de opsomming?) - 4.2: “hieruit blijkt...” hoe blijkt dit uit de figuur?

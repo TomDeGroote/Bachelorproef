@@ -1,0 +1,24 @@
+\BOOKMARK [1][-]{section.1}{Inleiding}{}% 1
+\BOOKMARK [1][-]{section.2}{Probleemstelling}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Contextvrije grammatica}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Boomstructuur}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Subhypothesen}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Evaluatiecriteria}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Aanpak}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Brute Force}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.2}{Toevoegen van constanten}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Prunen}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Dataset}{}% 11
+\BOOKMARK [2][-]{subsection.4.1}{Verschillende randomgeneratoren}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.2}{Verantwoording keuze}{section.4}% 13
+\BOOKMARK [1][-]{section.5}{Experimenten en resultaten}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{Pruning in bewerkingsboom}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.2}{Constanten}{section.5}% 16
+\BOOKMARK [2][-]{subsection.5.3}{Brute force vs Optimaliseren}{section.5}% 17
+\BOOKMARK [1][-]{section.6}{Limieten van het onderzoek}{}% 18
+\BOOKMARK [2][-]{subsection.6.1}{Heuristiek}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.2}{Andere talen}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.3}{Op basis van onbekende}{section.6}% 21
+\BOOKMARK [1][-]{section.7}{Toekomstig werk}{}% 22
+\BOOKMARK [1][-]{section.8}{Conclusie}{}% 23
+\BOOKMARK [1][-]{section.9}{Code}{}% 24
