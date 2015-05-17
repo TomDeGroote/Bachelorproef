@@ -78,15 +78,15 @@ public class Equation implements Serializable {
 		if(operand.isSplitable()) {
 			NonSplittable newNonSplittable = new NonSplittable(operand, terminal);
 			if(Main.USEOPTIMALISATIONS) {
-				// The value of the terminal we are going to add should be bigger than (or equal) to the last nonSplittable part that starts with the same operand
-//				for(int i = previous.getEquationParts().size()-1; i >= 0; i--) {
-//					if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
-//						if(previous.getEquationParts().get(i).getValue() > terminal.getValue()) {
-//							return null;
-//						}
-//						break;
-//					}
-//				}
+				// the nonsplittable created last time should be smaller than the nonsplittable created the time before that
+				for(int i = previous.getEquationParts().size()-2; i >= 0; i--) {
+					if(previous.getEquationParts().get(i).getFirstOperand().equals(operand)) {
+						if(previous.getEquationParts().get(i).getValue() > previous.getEquationParts().get( previous.getEquationParts().size()-1).getValue()) {
+							return null;
+						}
+						break;
+					}
+				}
 	
 				// There should not be a -K1 if there is a +K1
 				if(previous.getEquationParts().contains(new NonSplittable(operand.getInverseOperand(), terminal))) {
