@@ -3,11 +3,11 @@
 \begin{document}
 \section{Dataset}
 
-Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodszakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen.
+Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodszakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze datasets te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen.
   
 \subsection{Verschillende randomgeneratoren}
 \subsubsection*{Volledig willekeurig}
-Elke waarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat net hetgene zijn waar het algoritme naar zoekt. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
+Elke waarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat precies datgene zijn waar het algoritme naar zoekt. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
 
 \subsubsection*{Gestructureerd}
 Het doel van de randomgenerator is een willekeurige vergelijking te genereren waaraan vervolgens de data zullen voldoen. Er wordt vanuit gegaan dat er \'e\'en constante gezocht wordt en dat elke waarde die reeds willekeurig gegenereerd is slechts \'e\'enmaal voorkomt. Een voordeel hiervan is dat er altijd een oplossing bestaat. Indien alle mogelijkheden van de boom ge\"evalueerd worden, zal er dus altijd een oplossing gevonden worden. Gezien dit feit wordt er een voordeel gegeven aan het algoritme dat gebruikt maakt van constanten.
@@ -69,6 +69,6 @@ Deze datagenerator heeft als doel de gebruikersdata beter te benaderen. Dit word
 \end{figure}
 
 \subsection{Verantwoording keuze}
-Om de meest geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden. Er moet voldaan zijn aan het volgende criterium: de gegenereerde dataset ligt zo dicht mogelijk bij re\"ele gebruikersdata. De generatoren worden vergeleken met behulp van een 'brute force algorithm'. Het geoptimaliseerd algoritme zal nooit vergelijkingen vinden die het 'brute force algorithm' niet vindt. Om representatief te zijn voor de gebruiker moet de data een hoge oplossingsgraad hebben. In Figuur \ref{fig:datageneratoren} wordt de oplossingsgraad weergegeven. Het gebruik van de complex gestructureerde dataset geeft een oplossingsgraad die het dichtste bij de verwachte gebruikersdata ligt. Er wordt geen oplossingsgraad van 100\% verwacht. Volgens deze figuur wordt in 93\% van de gevallen een mogelijke oplossing gevonden. Daarom zullen de experimenten ook met behulp van deze generator worden uitgevoerd.
+Om de meest geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden. Er moet voldaan zijn aan het volgende criterium: de gegenereerde dataset ligt zo dicht mogelijk bij re\"ele gebruikersdata. De generatoren worden vergeleken met behulp van een 'brute force algorithm'. Het geoptimaliseerd algoritme zal nooit vergelijkingen vinden die het 'brute force algorithm' niet vindt. Om representatief te zijn voor de gebruiker moetenen de data een hoge oplossingsgraad hebben. In Figuur \ref{fig:datageneratoren} wordt de oplossingsgraad weergegeven. Het gebruik van de complex gestructureerde dataset geeft een oplossingsgraad die het dichtste bij de verwachte gebruikersdata ligt. Er wordt geen oplossingsgraad van 100\% verwacht. Volgens deze figuur wordt in 93\% van de gevallen een mogelijke oplossing gevonden. Daarom zullen de experimenten ook met behulp van deze generator worden uitgevoerd.
 
 \end{document}

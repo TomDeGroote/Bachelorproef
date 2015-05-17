@@ -1,50 +1,16 @@
 \documentclass[Main.tex]{subfiles}
-%TODO Kinderen van knooppunten uitleggen, geen kennis van mensen zonder CW achtergrond
 \begin{document}
 \section{Aanpak}
-Aangezien de beperkingen van het \textit{Countdown probleem} niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als baseline wordt er gebruik gemaakt van een brute force algoritme. Dit algoritme wordt vervolgens verbeterd door op een effici\"ente manier bepaalde vergelijkingen niet uit te rekenen of in het algemeen te vermijden.
+Aangezien de beperkingen van het \textit{Countdown probleem} niet van toepassing zijn, kunnen een groot deel van de gekende optimalisaties niet gebruikt worden. Als baseline wordt er gebruik gemaakt van een 'brute force algorithm'. Dit algoritme wordt vervolgens verbeterd door op een effici\"ente manier bepaalde vergelijkingen niet uit te rekenen of in het algemeen te vermijden.
+
 \subsection{Brute Force}
-Het brute force algoritme bestaat uit twee stappen. Eerst moet de bewerkingsboom opgesteld worden en vervolgens worden de knopen in de bewerkingsboom uitgewerkt. Zolang de grammatica niet wijzigt wijzigt de bewerkingsboom niet. Dit biedt de mogelijkheid om de bewerkingsboom \'e\'enmalig op voorhand te berekenen. Zo wordt er een beetje tijd bespaard. %TODO zin herschrijven
-Verder in deze paper zal duidelijk gemaakt worden waarom deze keuze toch niet is gemaakt. Er is gekozen om de twee stappen synchroon uit te voeren. Elke keer een knoop van de bewerkingsboom wordt uitgewerkt, wordt de vergelijking uitgewerkt. Op deze manier moeten enkel de knopen die de gewenste oplossing hebben en de knopen die nog moeten worden uitgebreid bijgehouden worden. Dit zal enorm veel geheugen besparen. Hieronder zullen de twee stappen in meer detail overlopen worden. 
+Het 'brute force algorithm' bestaat uit twee stappen. Eerst moet de bewerkingsboom opgesteld worden en vervolgens worden de knopen in de bewerkingsboom uitgewerkt. Zolang de grammatica niet wijzigt, wijzigt de bewerkingsboom niet. Dit biedt de mogelijkheid om de bewerkingsboom \'e\'enmalig op voorhand te berekenen. Hierdoor kan er tijd bespaard worden. Verder in deze paper zal duidelijk gemaakt worden waarom deze keuze toch niet gemaakt werd. Er werd gekozen om de twee stappen synchroon uit te voeren. Elke keer een knoop van de bewerkingsboom wordt uitgewerkt, wordt de vergelijking uitgewerkt. Op deze manier moeten enkel de knopen die de gewenste oplossing hebben en de knopen die nog moeten worden uitgebreid bijgehouden worden. Dit zal enorm veel geheugen besparen. Hieronder zullen de twee stappen in meer detail overlopen worden. 
 
 \subsubsection*{Het opstellen van de bewerkingsboom}
-Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de context vrije grammatica uit figuur \ref{fig:cfgVol}. 
-\begin{figure}[!htb]
-\centering
-\begin{framed}
-$E \rightarrow E + E$ \\
-$E \rightarrow E - E$ \\
-$E \rightarrow E \ast E$ \\
-$E \rightarrow E \div E$ \\
-$E \rightarrow E^{E}$ \\
-$E \rightarrow a | b | \dotsc$
-\end{framed}
-\caption{De gebruikte contextvrije grammatica}
-\label{fig:cfgVol}
-\end{figure}
-De root van de bewerkingsboom $E$ wordt uitgebreid aan de hand van de regels van de context vrije grammatica. De regel $E \rightarrow a | b | \dotsc$ wordt pas in de volgende stap gebruikt. Figuur \ref{fig:bewerkingsboom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$.
+Het opstellen van de bewerkingsboom wordt bereikt door gebruik te maken van de context vrije grammatica uit figuur \ref{fig:cfg}. De root van de bewerkingsboom $E$ wordt uitgebreid aan de hand van de regels van de context vrije grammatica. De regel $E \rightarrow a | b | \dotsc$ wordt pas in de volgende stap gebruikt. Met de kinderen van een knoop worden de vergelijkingen bedoeld die gecre\"eerd worden door toepassing van de verschillende productieregels uit de contextvrije grammatica. Een voorbeeld hier van is dat $E+E$ en $E*E$ kinderen zijn van de knoop $E$ in Figuur \ref{fig:vbBoom}.
 
-
-
-\begin{figure}[!htb]
-\centering
-\begin{tikzpicture}[level distance=1cm,
-  		level 1/.style={sibling distance=4cm},
-  		level 2/.style={sibling distance=2cm}]
-  		\node {$E$}
-    		child {node {$E+E$}
-      		child {node {$E+E+E$}}
-      		child {node {$E+E \ast E$}}
-    		}
-    		child {node {$E \ast E$}
-    			child {node {$E \ast E+E$}}
-      		child {node {$E \ast E\ast E$}}
-    		};
-\end{tikzpicture}
-\caption{Brute force bewerkingsboom} \label{fig:bewerkingsboom}
-\end{figure}
 \subsubsection*{Het uitwerken van de vergelijkingen}
-In deze stap wordt de regel $E \rightarrow a | b | \dotsc$ gebruikt om elke vergelijking in de bewerkingsboom een waarde te geven. Enkel deze regel wordt gebruikt en voor elke vergelijking wordt elke mogelijkheid afgegaan. Figuur \ref{fig:uitwerkingsboom} toont een gedeeltelijke uitwerking van de bewerkingsboom uit figuur \ref{fig:bewerkingsboom}.
+In deze stap wordt de regel $E \rightarrow a | b | \dotsc$ gebruikt om elke vergelijking in de bewerkingsboom een waarde te geven. Enkel deze regel wordt gebruikt en voor elke vergelijking wordt elke mogelijkheid afgegaan. Figuur \ref{fig:uitwerkingsboom} toont een gedeeltelijke uitwerking van de bewerkingsboom uit figuur \ref{fig:vbBoom}.
 \begin{figure}[!htb]
 \centering
 \begin{tikzpicture}[level distance=1cm,
@@ -63,25 +29,26 @@ In deze stap wordt de regel $E \rightarrow a | b | \dotsc$ gebruikt om elke verg
 \end{tikzpicture}
 \caption{Uitwerking bewerkingsboom (1 knoop per level)} \label{fig:uitwerkingsboom}
 \end{figure}
+
 \subsubsection*{Het resultaat}
-Zolang er vergelijkingen worden zonder constanten gezocht worden bepaalt dit algoritme in theorie altijd een oplossing. Het is echter wel zeer ineffici\"ent, zeker naarmate het aantal kolomwaarden\footnote{\label{note:kolomwaarden} De waarden die door de gebruiker worden meegegeven verschillend van de oplossing. In de voorbeelden aangegeven als $a$ en $b$.} toeneemt.
+Zolang er vergelijkingen gezocht worden waarin er zich geen constanten bevinden, bepaalt dit algoritme in theorie altijd een oplossing. Het is echter wel zeer ineffici\"ent, zeker naarmate het aantal kolomwaarden\footnote{\label{note:kolomwaarden} De waarden die door de gebruiker worden meegegeven verschillend van de oplossing. In de voorbeelden aangegeven als $a$ en $b$.} toeneemt.
 
 \subsection{Toevoegen van constanten}
 Het doel van het algoritme is dat er een vergelijking gevonden wordt die de gebruiker verlangt. Om een vergelijking zoals $2 \ast x+1$ te kunnen bepalen moeten er ook constanten toegelaten worden. Om hieraan te voldoen moet er slechts \'e\'en wijziging gebeuren in het vorige algoritme. Tijdens de uitwerking van de vergelijkingen wordt dan de regel $E \rightarrow 1 | 2 .. 9 | a | b | \dotsc$ gebruikt in plaats van $E \rightarrow a | b | \dotsc$ om tot het gewenste resultaat te komen.
 
 \subsubsection*{Het resultaat}
-Door het toevoegen van constanten neemt de breedte van de uitgewerkte bewerkingsboom sterk toe. Met als gevolg dat de uitwerkingstijd sterk stijgt. De oplossingsgraad neemt echter ook sterk toe. De optimale verhouding tussen deze twee wordt bereikt door de keuze van de juiste constanten. Om de jusite keuze te kunnen maken zijn er experimenten uitgevoerd met verschillende sets van constanten. In de sectie experimenten %TODO verwijzen 
-wordt duidelijk gemaakt waarom de set ${1, 2, 3, 5, 7}$ wordt gekozen. Het brute-force algoritme met constanten deze set van constanten zal gebruikt worden als baseline voor onze optimaliseringen.
+Door het toevoegen van constanten neemt de breedte van de uitgewerkte bewerkingsboom sterk toe. Met als gevolg dat de uitwerkingstijd sterk stijgt. De oplossingsgraad neemt echter ook sterk toe. De optimale verhouding tussen deze twee wordt bereikt door de keuze van de juiste constanten. Om de juiste keuze te kunnen maken zijn er experimenten uitgevoerd met verschillende sets van constanten. In de sectie experimenten \ref{ssec:constanten}
+wordt duidelijk gemaakt waarom de set ${1, 2, 3, 5, 7}$ wordt gekozen. Als baseline voor het optimaliseren van dit proces zal het brute force algoritme met de set ${1, 2, 3, 5, 7}$ als constanten gebruikt worden.
 
 \subsection{Prunen} \label{ssec:Prunen}
 \subsubsection*{Prunen in de bewerkingsboom}
-In de bewerkingsboom van het brute force algoritme staan knopen die bij uitwerking altijd hetzelfde resultaat zullen opleveren. De knopen zijn redundant. Bijvoorbeeld $E \ast E+E+E$ en $E+E \ast E +E$. Van sommige redundante knopen zijn ook al de kinderen redundante knopen. Indien dit soort knopen verwijderd wordt moeten de kindereren dus niet meer worden uitgerekend. Een voorbeeld van twee knopen die ook dezelfde kinderen hebben is hetvolgende: $E+E \ast E+E$ en $E \ast E+E+E$. Door middel van communativiteit kunnen de vergelijkingen herschreven worden zodat ze exact dezelfde zijn. Naar deze knopen zal verwezen worden als absoluut redundant. Er bevinden zich ook knopen in de bewerkingsboom waarvan de kinderen niet exact dezelfde zijn maar de ouders wel. Een voorbeeld hiervan is het volgende: $E \ast E+E$ en $E+E \ast E$. De kinderen zijn niet redundant omdat de knoop rechts wordt uitgebreid. Een kind van $E \ast E+E$ is bijvoorbeeld $E \ast E+E \ast$. Dit kind zal nooit een kind zijn van $E+E \ast E$. Er zijn verschillende momenten wanneer er gepruned kan worden. Deze zullen in de subsecties hieronder worden aangehaald.
+In de bewerkingsboom van het brute force algoritme staan knopen die bij uitwerking altijd hetzelfde resultaat zullen opleveren. De knopen zijn redundant. Bijvoorbeeld $E \ast E+E+E$ en $E+E \ast E +E$. Van sommige redundante knopen zijn ook al de kinderen redundante knopen. Indien dit soort knopen verwijderd wordt moeten de kindereren dus niet meer worden uitgerekend. Een voorbeeld van twee knopen die ook dezelfde kinderen hebben is hetvolgende: $E+E \ast E+E$ en $E \ast E+E+E$. Door middel van commutativiteit kunnen de vergelijkingen herschreven worden zodat ze exact dezelfde zijn. Naar deze knopen zal verwezen worden als absoluut redundant. Er bevinden zich ook knopen in de bewerkingsboom waarvan de kinderen niet exact dezelfde zijn maar de ouders wel. Een voorbeeld hiervan is het volgende: $E \ast E+E$ en $E+E \ast E$. De kinderen zijn niet redundant omdat de knoop rechts wordt uitgebreid. Een kind van $E \ast E+E$ is bijvoorbeeld $E \ast E+E \ast$. Dit kind zal nooit een kind zijn van $E+E \ast E$. Er zijn verschillende momenten wanneer er gepruned kan worden. Deze zullen in de subsecties hieronder worden aangehaald.
 
-\subsubsection*{Het op voorhand berkenen van de bewerkingsboom}
+\subsubsection*{Het op voorhand berekenen van de bewerkingsboom}
 Het zoeken van redundante knopen vraagt tijd. De bewerkingsboom veranderd niet zolang de CFG niet wijzigt. Zoals reeds aangehaald bestaat dus de mogelijkheid om de boom \'e\'enmalig op voorhand op te stellen. Een nadeel aan deze optie is dat het prunen van de uitgewerkte boom (zie verder) tijdrovender wordt. Uit experimenten blijkt dat de tijdswinst van het op voorhand berekenen niet opweegt tegenover het tijdsverlies. Dit komt voornamelijk doordat de tijdswinst op lage niveaus in de berekingsboom ($< 8$) niet groot is en er verwacht wordt dat de gebruiker geen vergelijkingen zoekt van lengte groter dan 6. Het zal later ook blijken dat deze te veel tijd vragen om te berekenen. 
 
 \subsubsection*{Prunen in de uitwerking van de bewerkingsboom}
-In de uitwerking van de bewerkingsboom komen er redundante vergelijkingen naar boven. Zo zal de vergelijking $E+E-E$ in sommige gevallen redundant worden. Bijvoorbeeld wanneer ze wordt vervangen door $a+a-a$. Echter is ze niet altijd redundant, ze kan namelijk ook vervangen worden door $a+a-b$. Wanneer er vanuit gegaan wordt dat er constanten in de uitwerking voorkomen onstaan er nog meer redundaties. Zo zal de vergelijking $E+E$ ook terug te vinden zijn als $2*E$. Door deze vergelijkingen niet uit te werken wordt de zoekruimte verkleint zonder de oplossingsgraad te verkleinen.
+In de uitwerking van de bewerkingsboom komen er redundante vergelijkingen naar boven. Zo zal de vergelijking $E+E-E$ in sommige gevallen redundant worden. Bijvoorbeeld wanneer ze wordt vervangen door $a+a-a$. Echter is ze niet altijd redundant, ze kan namelijk ook vervangen worden door $a+a-b$. Wanneer er vanuit gegaan wordt dat er constanten in de uitwerking voorkomen, onstaan er nog meer redundaties. Zo zal de vergelijking $E+E$ ook terug te vinden zijn als $2*E$. Door deze vergelijkingen niet uit te werken wordt de zoekruimte verkleint zonder de oplossingsgraad te verkleinen.
 
 \subsubsection*{Prunen in realiteit}
 Het is mogelijk om alle redundaties te verwijderen zonder de oplossingsgraad\footnotemark[\ref{note:oplossingsgraad}] te verlagen, dit proces vraagt veel rekenwerk en bijgevolg veel tijd. Daarom is er gekozen om sommige redundaties niet te verwijderen (hieronder aangegeven als -), sommige te bewaren (hieronder aangegeven als +) en andere op eenvoudigere wijze uit te werken (hieronder aangegeven als $\ast$). Dit laatste puntje zorgt er echter voor dat er ook niet redundante knopen zullen verloren gaan. Bijvoorbeeld $a+1+1$ kan vervangen worden door $a+2$. Echter vraagt het zoeken van deze redundantie veel tijd. Algemener kan er gezegd worden dat er slechts \'e\'en losstaande constante mag voorkomen. Het nadeel hiervan is dat het aantal constanten beperkt is, en bijvoorbeeld de vergelijking $a+100$ verloren zal gaan. Maar omdat het doel is te voldoen aan de gebruiker zijn verwachtingen en dus niet alle mogelijkheden te berekenen, is in dit geval de tijdswinst belangrijker dan de lichte daling in oplossingsgraad\footnotemark[\ref{note:oplossingsgraad}].
