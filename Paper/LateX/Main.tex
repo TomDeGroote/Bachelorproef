@@ -19,6 +19,7 @@
 \usepackage{amsmath}
 \usepackage{fancybox}
 \usepackage{varwidth}
+\usepackage{cite}
 \usepackage{framed}
 \usepackage{graphics}
 \usepackage{graphicx}
@@ -37,12 +38,6 @@
 \usepackage{algpseudocode}
 \usepackage{pifont}
 
-% for charts
-\usepackage{pgfplots}
-
-% Definition
-\usepackage{amsthm}
-\newtheorem{definitie}{Definition}
 
 % Use figuur ipv figure
 \renewcommand{\figurename}{Figuur}
@@ -71,7 +66,7 @@
 \date{today}
 \author{ 
  \begin{tabular}[t]{c@{\extracolsep{8em}}c} 
-Jeroen Craps  & Tom De Groote \\
+Craps Jeroen  & De Groote Tom \\
 \textnormal{Bachelor Informatica} & \textnormal{Bachelor Informatica} \\
 \textnormal{KU Leuven, Belgi\"e} &\textnormal{KU Leuven, Belgi\"e}  \\
 \textnormal{jeroen.craps@student.kuleuven.be} & \textnormal{tom.degroote@student.kuleuven.be}
@@ -95,7 +90,7 @@ Jeroen Craps  & Tom De Groote \\
 
 
 \section*{Dankwoord}
-Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kimmig bedanken voor hun hulp en advies gedurende dit project.
+Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kimmig bedanken voor hun begeleiding en hulp gedurende dit project.
 
 
 %% The file named.bst is a bibliography style file for BibTeX 0.99c
@@ -103,5 +98,47 @@ Bij deze willen we graag onze begeleiders Prof. Luc De Raedt en Dr. Angelika Kim
 \bibliography{bibtex.bib}
 \nocite{exampleLearning}
 \nocite{spreadsheet}
+
+%Make all appendixes after this title
+\section*{Algoritme} \label{sec:algorimteBesprekeing}
+
+\begin{algorithm*}[!htb]
+\caption{Vind alle mogelijke vergelijkingen}
+\label{VindVergelijkingen}
+\begin{algorithmic}[1]
+\Procedure{Search Equations}{}
+\State $\textit{runOutOfTime} \gets \textit{false}$
+\State $\textit{currentLevel} \gets \textit{CFG}$.getTerminalRulesAsEquations()
+\State $\textit{nextLevel} \gets$new $\textit{List}$
+\State $\textit{solutions} \gets$new $\textit{List}$
+\While{$\neg\textit{runOutOfTime}$}
+	\ForAll{$\textit{currentEquation} \gets \textit{currentLevel}$}
+		\If{getRunOutOfTime()}
+			\State $\textit{runOutOfTime} \gets \textit{true}$
+			\State break
+		\EndIf
+		\ForAll{$\textit{nonTerminalRule} \gets \textit{CFG}$.getNonTerminalRules()}
+			\ForAll{$\textit{terminalRule} \gets \textit{CFG}$.getTerminalRules()}
+				\State $\textit{newEquation} \gets$ expand($\textit{currentEquation, nonTerminalRule, terminalRule}$)
+				\If{isAbsoluteRedundant($\textit{newEquation}$)} 
+					\State break
+				\ElsIf{$\neg$shouldBePruned($\textit{newEquation}$)}
+					\State $\textit{nextLevel}$.add($\textit{newEquation}$)
+					\If{$\textit{newEquation}$.isGoalReached()} 
+						\State $\textit{solutions}$.add($\textit{newEquation}$)
+					\EndIf
+				\EndIf
+
+			\EndFor
+		\EndFor
+	\EndFor
+	\State $\textit{currentLevel} \gets \textit{nextLevel}$
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+
 
 \end{document}

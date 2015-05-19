@@ -44,7 +44,7 @@ public class Main {
 	private final static boolean PRINTTOFILE = false;
 	
 	// Multithreaded or not
-	private final static boolean MULTITHREADED = true;
+	private final static boolean MULTITHREADED = false;
 
 	// Random settings
 	private final static boolean USERANDOM = false;
@@ -54,7 +54,7 @@ public class Main {
 	private final static int MIN = 0;
 	private final static int MAX = 100;
 	
-	public static boolean USEOPTIMALISATIONS = false;
+	public static boolean USEOPTIMALISATIONS = true;
 	public static boolean USINGWEIGHTS = true;
 
 	public static void main(String[] args) throws IOException, InterruptedException {
