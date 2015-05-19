@@ -1,0 +1,11 @@
+How to use the application:
+
+1. Select with the 'browse' button an excel file that contains your data and examples.
+	-> An example excel file can be found in the folder of this file.
+2. Give the column letter of the solutions (in the example file this is column C) followed by the example rows separeted by a space.
+	-> e.g. C 1 2 (points to column C and uses row 1 and 2 as examples)
+3. Select the comparator you want to use
+4. Give the column letters of the columns to be used as examples
+	-> With the example file A B
+4. Press the green button.
+5. See your found equation

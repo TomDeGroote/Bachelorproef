@@ -1,7 +1,7 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Experimenten en resultaten}
-Voor het verklaren van de experimenten zijn er een aantal zaken die vermeld moeten worden. De meeste experimenten zijn gebaseerd op de resultaten van de voorgaande experimenten. Daarom worden de experimenten in een bepaalde volgorde uitgevoerd. Er worden verschillende beoordelingswijzen gebruikt bij het onderzoeken van de experimenten. Enerzijds testen de experimenten op oplossingsgraad\footnotemark[\ref{note:oplossingsgraad}] en anderzijds op de tijd die het algoritme nodig heeft. 
+Voor het verklaren van de experimenten zijn er een aantal zaken die vermeld moeten worden. De meeste experimenten zijn gebaseerd op de resultaten van de voorgaande experimenten. Daarom worden de experimenten in een bepaalde volgorde uitgevoerd. Er worden verschillende beoordelingswijzen gebruikt bij het onderzoeken van de experimenten. Enerzijds testen de experimenten op oplossingsgraad en anderzijds op de tijd die het algoritme nodig heeft. 
 \par Indien er geen rekening gehouden wordt met de resultaten van vorige experimenten, dan zijn sommige van de latere experimenten enorm tijdrovend. Deze laatste tonen ook niets aan wat niet aangetoond kan worden met de resultaten uit de voorgaande experimenten. \par Alle experimenten zijn uitgevoerd op een \textit{2.26 GHz Intel Core 2 Duo} processor en zijn uitgevoerd met 500 iteraties. Deze zijn gedaan op een bewerkingsboom met diepte vijf, tenzij anders vermeld. Een bewerkingsboom van diepte vijf betekent dat vergelijkingingen zoals $A^{B}+C \div D \ast E$ met vijf waarden gevonden kunnen worden maar $A^{B}+C \div D \ast E \ast A$ met zes waarden niet. Bij elk van deze iteraties worden er twee voorbeelden gegeven waaraan de vergelijking moet voldoen. De experimenten volgen de subhypothesen in sectie \ref{ssec:subhypothesen}.  
 
 \subsection{Pruning in bewerkingsboom} \label{ssec:pruning}
@@ -90,7 +90,7 @@ De volgende stap is het bepalen wat de invloed van het toevoegen van constanten 
 \end{figure}
 
 \subsection{Brute force vs Optimaliseren}
-In de laatste sectie zal het 'brute force algorithm' vergeleken worden met het geoptimaliseerde algoritme, wat overeenkomt met de laatste subhypothese uit sectie \ref{ssec:subhypothesen}. In Figuur \ref{fig:brutevsopttijd} wordt de onderlinge tijd vergeleken. Er wordt waargenomen dat het geoptimaliseerde algoritme weldegelijk sneller de boom doorloopt. Naarmate er dieper wordt gezocht neemt het tijdsverschil toe, maar beide algoritmes blijven exponentieel toenemen in tijd. De oplossingsgraad van beide zijn ongeveer gelijk. Het geoptimaliseerde algoritme vindt in bepaalde situaties betere oplossingen. Hiermee worden vergelijkingen bedoeld die meer in het verwachtingspatroon van de gebruiker liggen. De gebruiker heeft liever een vergelijking waarin weinig constanten worden gebruikt, maar wel alle gegeven waarden. Desondanks de betere oplossingen en snellere uitvoeringstijd zijn de resultaten eerder negatief. Daarom is er gezocht naar een eventuele heuristiek om de zoekboom sneller te doorlopen. Er werd geen heuristiek gevonden, omdat de productieregels van de contextvrije grammatica toelaten dat de resulaten van ouder naar kind enorm verschillen.
+In de laatste sectie zal het 'brute force algorithm' vergeleken worden met het geoptimaliseerde algoritme, wat overeenkomt met de laatste subhypothese uit sectie \ref{ssec:subhypothesen}. In Figuur \ref{fig:brutevsopttijd} wordt de onderlinge tijd vergeleken. Er wordt waargenomen dat het geoptimaliseerde algoritme weldegelijk sneller de boom doorloopt. Naarmate er dieper wordt gezocht neemt het tijdsverschil toe, maar beide algoritmes blijven exponentieel toenemen in tijd. De oplossingsgraad van beide zijn ongeveer gelijk. Het geoptimaliseerde algoritme vindt in bepaalde situaties betere oplossingen. Hiermee worden vergelijkingen bedoeld die meer in het verwachtingspatroon van de gebruiker liggen. De gebruiker heeft liever een vergelijking waarin weinig constanten worden gebruikt, maar wel alle gegeven waarden. 
 
 
 \begin{figure}[!htb]
@@ -100,13 +100,14 @@ In de laatste sectie zal het 'brute force algorithm' vergeleken worden met het g
 	ymode=log,
 	xlabel=diepte boom,
 	ylabel=tijd (ms),
-	xtick=data,]
+	xtick=data,
+	legend style={legend pos=north west}]]
 \addplot[smooth,mark=*,blue] coordinates {
 	(1,   4)
 	(2,   4)
 	(3,   92)
 	(4,   2209)
-	(5,   136920)
+	(5,   1420266)
 };
 \addplot[smooth,mark=*,green] coordinates {
 	(1,   8)
@@ -115,6 +116,7 @@ In de laatste sectie zal het 'brute force algorithm' vergeleken worden met het g
 	(4,   882)
 	(5,   18223)
 };
+\legend{brute force,geoptimaliseerd}
 \end{axis}
 \end{tikzpicture}
 \caption{Vergelijking van de tijd die het 'brute force algorithm' nodig heeft en die het geoptimaliseerde algoritme nodig heeft om 5 niveaus diep te berekenen.} \label{fig:brutevsopttijd}
