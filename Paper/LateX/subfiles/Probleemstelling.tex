@@ -1,7 +1,7 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Probleemstelling}
-Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. Toch kan de gebruiker op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: \textbf{"Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker."}. 
+Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. Toch kan de gebruiker op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: \textbf{"Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker."}. Gegeven een tabel van waarden en \'e\'en kolom van doelwaarden zoals in Figuur \ref{fig:psvb} en een aantal regels zoals in Figuur \ref{fig:cfg}, moet er een vergelijking gevonden worden. Door invulling van de waarden in de vergelijking moet de kolom van doelwaarden bekomen worden. Dit proces moet gebeuren in een beperkte tijd. De oplossingsgraad van dit probleem is het percentage van gevallen waar er een geschikte vergelijking gevonden wordt met behulp van de waarden uit de tabel en de gebruikte regels.
 
 \begin{figure}[!htb]
 \centering
@@ -44,7 +44,7 @@ Als een andere wiskundige operatie gewenst is, moet deze toegevoegd worden als e
 
 \subsection{Boomstructuur}
 
-Door de herhaaldelijke toepassing van productieregels onstaat er een boomstructuur. In deze boom bevinden zich alle mogelijke samenstellingen van productieregels die door de grammatica bepaald kunnen worden. Deze operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. Figuur \ref{fig:vbBoom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$. Het verloop van de groei van deze boom staat uitgetekend in Figuur \ref{fig:treeSize}.
+Door de herhaaldelijke toepassing van productieregels onstaat er een boomstructuur. In deze boom bevinden zich alle mogelijke samenstellingen van productieregels die door de grammatica bepaald kunnen worden. Bij het opstellen van deze boom wordt er gebruik gemaakt van de meest rechtse invulling van de knopen. Het gebruik van deze meest rechtse invulling zorgt voor een kleinere boom zonder dat er knopen niet gevonden worden. Deze operatie zorgt voor een exponenti\"ele groei $r^{d}$ waarbij $d$ staat voor de diepte van de boom en $r$ voor het aantal productieregels van de vorm $E \rightarrow E$  $operand$ $ E$. Figuur \ref{fig:vbBoom} toont een voorbeeld van de bewerkingsboom waarbij enkel gebruikt gemaakt wordt van de regels $E \rightarrow E+E$ en $E \rightarrow E \ast E$. Het verloop van de groei van deze boom staat uitgetekend in Figuur \ref{fig:treeSize}.
 
 \begin{figure}[!htb]
 \centering
@@ -97,7 +97,7 @@ Aangezien de groei van de boom exponentieel is, bekomt men veel grotere berekeni
 \begin{itemize}
 \item Subhypothese 1: Er zijn redundante knopen in de originele boom.
 \item Subhypothese 2: Toevoeging van constanten aan de regels van de contextvrije grammatica heeft een positieve invloed op het vinden van mogelijke vergelijkingen.
-\item Subhypothese 3: Er bestaat een optimale afweging tussen de oplossingsgraad\footnote{\label{note:oplossingsgraad}Het percentage van gevallen waarvoor er een passende oplossing gevonden wordt.} en de benodigde tijd bij het toevoegen van constanten.
+\item Subhypothese 3: Er bestaat een optimale afweging tussen de oplossingsgraad en de benodigde tijd bij het toevoegen van constanten.
 \item Subhypothese 4: Het vermijden van redundante uitwerkingen heeft een positieve invloed op de tijd. 
 \end{itemize}
 

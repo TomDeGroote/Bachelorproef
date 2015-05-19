@@ -1,0 +1,230 @@
+%%%% ijcai11.tex
+
+\typeout{Review van de WV paper}
+
+% These are the instructions for authors for IJCAI-11.
+% They are the same as the ones for IJCAI-07 with superficical wording
+%   changes only.
+
+\documentclass{article}
+
+% Use the postscript times font!
+\usepackage{times}
+
+% the following package is optional:
+\usepackage{latexsym}
+\usepackage{subfiles} 
+\usepackage{amsmath}
+\usepackage{fancybox}
+\usepackage{varwidth}
+\usepackage{framed}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{booktabs}
+
+% Allow to draw trees
+\usepackage{caption}
+\usetikzlibrary{trees}
+
+% pseudocode\\
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pifont}
+
+% for charts
+\usepackage{pgfplots}
+
+% Definition
+\usepackage{amsthm}
+\newtheorem{definitie}{Definition}
+
+% Use figuur ipv figure
+\renewcommand{\figurename}{Figuur}
+
+\title{Flash Fill en Equation Discovery: \\ Reviews}
+\author{  Jeroen Craps \& Tom De Groote \\ \textnormal{Bachelor Informatica} \\ \textnormal{KU Leuven, Belgi\"e} \\ \textnormal{jeroen.craps@student.kuleuven.be} \\ \textnormal{tom.degroote@student.kuleuven.be} }
+
+\begin{document}
+
+\maketitle
+\section{Review 1}
+\subsection*{Samenvatting beoordeling}
+
+\subsubsection*{Een drietal sterke punten:}
+\begin{itemize}
+\item Het systeem lijkt te werken
+\item De experimentele setup lijkt bruikbaar
+\end{itemize}
+
+\subsubsection*{Een drietal zwakke punten:}
+\begin{itemize}
+\item De paper is niet goed geschreven
+\item Het taalgebruik is slordig
+\item De probleemstelling en de aanpak zijn niet te reconstrueren uit de paper.
+\end{itemize}
+
+\subsubsection*{Inhoudelijke vragen \& suggesties voor verbetering:}
+
+Het belangrijkste probleem met de huidige paper is dat de tekst en het taalgebruik ondermaats zijn.
+Voor wat betreft taal, staan er heel wat -dt fouten, grammaticale fouten, fouten die door een spellchecker makkelijk ge\"identificeerd kunnen worden, en zinnen die niet helemaal kloppen. Dit is gewoon ergerlijk, geeft een slechte indruk en haalt het niveau van het werk naar beneden.\\
+\textit{Taal en schrijffouten zouden nu volledig uit de paper moeten zijn verwijderd.} \\ \\
+
+Ook is stijl waarin het werk geschreven is niet de juiste. Zo is bvb. de probleemstelling onduidelijk. Dit geldt ook voor de snoeimethodes en het algoritme. Het probleem is dat de auteurs dit allemaal omschrijven ipv het precies te defin\"ieren. \\
+\textit{De probleemstelling, snoeimethodes en het algoritme zijn concreter gemaakt.} \\ \\ 
+
+Als je nog niet vertrouwd bent met Flashfill heb je ook maar weinig aan de inleiding. Je moet dit illustreren a.d.h.v. een voorbeeld. \\
+\textit{Er staat nu een voorbeeld in de inleiding die FlashFill duidelijk maakt.} \\ \\
+
+Een probleemstelling (zoals gezien in de cursus) bestaat uit Given A B C D Vind E. In jullie geval (eerste aanzet). Gegeven een verzameling variabelen uit een spreadsheet/tabel een (of meerdere) rijen in die spreadsheet een contextvrije grammatica vind een vergelijking in de taal van de contextvrije grammatica die geldig is op alle rijen ... \\En dan verwacht je in een paper een voorbeeld/ illustratie van zo’n probleem.\\
+\textit{De probleemstelling is aangepast en een illustratie is toegevoegd.} \\ \\
+
+Het heeft ook geen zin die hypotheses op te lijsten alvorens je gezegd hebt wat die boom is ...,
+wat de zoekstrategie is. Bij het aangeven van die concepten zou je moeten gebruik maken van standaard concepten zoals een parse-tree, een zoekboom, ... \\
+\textit{Termen worden nu altijd verklaard voor deze gebruikt worden in de tekst.} \\ \\ 
+
+Ook zou je verwachten dat je de volledige grammatica beschikbaar maakt in de paper. \\
+\textit{De volledige grammatica is nu beschikbaar in de paper.} \\ \\
+
+Verder moeten ook de concepten die je nu in een voetnoot opneemt als definities in de tekst
+opgenomen worden. Ook de Opsomming van de snoeiregels (pruning) moet van die aard zijn dat ik dat kan reconstrueren. Dus elke van die regels moet precies gedefinieerd zijn. Wat is relatieve redundantie ? ... dit moet herschreven worden. \\
+Dit stuk moet preciezer ! \\
+\textit{Definities worden nu in de tekst zelf uitgelegd. Voor de rest is dit stuk aangepast zodat dit een stuk preciezer is voor de lezer.} \\ \\
+
+Het algoritme kan volgens mij ook eenvoudiger opnieuw als je over parse-trees e.d. praat. Dan is alles eigenlijk standaard denk ik ... het mengen met running out of time ... dat is niet zo interessant. \\
+\textit{Wegens oninteressant is de pseudo-code van het algoritme weggelaten.} \\ \\
+
+Conceptueel begrijp ik niet waarom je de hele boom wil bijhouden? Wat is het voordeel hiervan? \\ 
+\textit{De reden hiervoor staat nu verduidelijkt in de paper.} \\ \\
+
+Waarom zijn fig 6 en 9 identiek ? \\
+\textit{Figuren zijn nu aangepast.} \\ \\
+De laatste twee refs zijn onvolledig. Wat is JFP ? Welke paper van Nelson ? Ook wat is het verband met equation discovery ... \\
+\textit{Referenties zijn aangepast en het verband met equation discovery is ook duidelijk gemaakt.} \\ \\
+
+Constraint logic programming — eigenlijk moet je gewoon een of meerdere vgl kunnen oplossen.
+Als je een vb. hebt en een kandidaat vgl dan kan je daaruit een variabele afleiden.
+Als je twee vbn. ... twee variabelen afleiden. Dat is het idee en dat zou je kunnen illustreren in je paper. \\
+\textit{Wegens plaatsgebrek wordt dit niet verder besproken in de paper.} \\ \\
+
+De volledige 8 pagina’s werden ook nog niet ten volle benut. \\
+\textit{De volledige paper is in volume toegenomen.} \\ \\
+
+Kortom, er is nog veel werk aan deze paper vooraleer hij aanvaard kan worden. Contact opnemen met je begeleiders is strikt noodzakelijk.\\
+\textit{Dit is dan ook gebeurd.}
+
+\section{Review 2}
+\subsection*{Samenvatting beoordeling}
+
+De paper heeft een duidelijke structuur. Voor de bespreking van de gebruikte methodes wordt voldoende aandacht besteed aan de vereiste achtergrondkennis over contextvrije grammatica’s. Ook worden de experimenten in detail besproken. De sub-hypothesen in de probleemstelling zouden echter wel beter pas later in de paper aan bod komen, aangezien sommige termen (zoals “de originele boom”) op dat moment nog niet duidelijk zijn. \\
+\textit{De volgorde van de probleemstelling is aangepast om dit probleem op te lossen.}
+
+\subsubsection*{Een drietal sterke punten:}
+\begin{itemize}
+\item Er wordt voldoende aandacht besteed aan de vereiste achtergrondkennis om de paper te kunnen lezen.
+\item De experimenten voor de vergelijking van het brute force algoritme en het algoritme met optimalisaties worden uitgebreid besproken op vlak van uitvoeringstijd voor verschillende datasets.
+\item Het is goed dat in het besluit duidelijk voor elke sub-hypothese de resultaten worden samengevat.
+\end{itemize}
+
+\subsubsection*{Een drietal zwakke punten:}
+\begin{itemize}
+\item Bij figuur 6 (let op: dit is dezelfde figuur als figuur 9) wordt niet uitgelegd wat de percentages op de verticale as betekenen.
+\item Er wordt misschien iets te weinig verwezen naar het algoritme op de laatste pagina.
+\item Er staan op dit moment nog een aantal taalfouten in de tekst. (zie suggesties voor verbetering)
+\end{itemize}
+\textit{De figuur is verduidelijkt en de taalfouten zijn normaal uit de tekst verwijderd.}
+
+\subsubsection*{Inhoudelijke vragen \& suggesties voor verbetering:}
+In sectie 4.1 wordt bij “Gestructureerd” gezegd dat elke kolomwaarde slechts
+één maal voorkomt. Wat wordt hiermee bedoeld? Misschien is het
+interessant om dit in de paper te verduidelijken. \\ 
+\textit{Dit is verduidelijkt in de paper.} \\ \\
+Taalfouten: verbeter zeker de dt-fouten en lees ook de tekst nog eens na om foute zinsconstructies eruit te halen. Misschien een detail, maar verschillende zinnen beginnen met “Echter ...” Gebruik ook niet te veel “er”. Let als laatste er ook op dat elke zin een echte zin is (er staat bijvoorbeeld in de conclusie “Wat ervoor zorgt dat ...”). \\
+\textit{Ook hier is rekening mee gehouden bij het herschrijven van de paper.}
+
+\section{Review 3}
+
+\subsection*{Samenvatting beoordeling}
+
+In het algemeen leest de paper goed. Dit komt voornamelijk door de logische opbouw, maar ook door het gebruik van voorbeelden om bepaalde concepten uit te leggen. De paper bevat wel veel schrijffouten. De doelstellingen werden behaald, maar jullie hadden er volgens mij wel meer van verwacht.
+
+\par Is de argumentatie volledig en verantwoord ? In het algemeen werden beslissingen altijd verantwoord. Ik heb wel nog een paar vragen (zie “inhoudelijke verbeteringen en vragen”lijst).
+
+\subsubsection{Een drietal sterke punten:}
+\begin{itemize}
+\item Structuur van de paper: logische opbouw
+\item Niveau: juiste niveau waardoor alles goed te volgen is.
+\item Voorbeelden: Goed gebruik van voorbeelden om CFG etc. uit te leggen.
+\end{itemize}
+
+\subsubsection{Een drietal zwakke punten:}
+\begin{itemize}
+\item Schrijffouten: de paper best veel schrijffouten (enkele dtfouten: bedoelt en vind)
+\item Figuur dubbel: figuur 6 en figuur 9 zijn hetzelfde, denk ik.
+\end{itemize}
+\textit{De figuur is aangepast en de taalfouten zijn normaal uit de tekst verwijderd.}
+
+\subsubsection{Inhoudelijke vragen \& suggesties voor verbetering:}
+Abstract: Ik denk dat in de abstract ook resultaten (cijfers) mogen staan.\\
+\textit{Er staan nu ook resultaten in het abstract.} \\ \\
+2. Probleemstelling: klein detail: in hypothese 3 wordt het woord: oplossingsgraad voor het eerst gebruikt, maar er wordt dan niet verwezen naar de voetnoot. \\
+\textit{Dit is opgelost.} \\ \\
+3.1. Brute force: Misschien in de inleiding ook de twee stappen al vernoemen. \\
+\textit{In de inleiding van de sectie worden de twee stappen vernoemt.} \\ \\
+Bij opsomming prunemogelijkheden: misschien het gebruik van de verschillende symbolen hier ook uitleggen, zo is deze opsomming ook leesbaar als men niet de tekst leest. Zoals weergegeven in figuur 6 stagneert de besparing rond de 35\% Als ik de grafiek lees, lijkt het te stagneren bij 60 65\%. Of wordt er 100\% 65\% bedoeld? \\
+\textit{We begrijpen niet wat hiermee bedoeld wordt. Met de commentaar op de opsomming van de pruneregels zijn we niet akkoord.} \\ \\ 
+
+Constanten: best de set van constanten steeds tussen haakjes zetten, dat maakt het leesbaarder. Waarom nemen jullie die sets van constanten? Waarom niet (1,2,3), (1,2,3,4) en (1,2,3,4,5)? Waarom ontbreekt 4 en 6 in de laatste set? (na het lezen van de grafiekjes had ik door dat gebruik gemaakt werd van priemgetallen in de laatste dataset. Misschien moet dit ook al eerder vermeld worden.) \\
+\textit{Dit is verduidelijkt in de paper.}
+
+\section{Review 4}
+\subsection*{Samenvatting beoordeling}
+
+De belangrijkste punten zitten in de paper, maar het verhaal is niet altijd makkelijk te volgen (zie ook suggesties beneden). De discussie en motivatie van de gemaakte keuzes zijn goed, evenals de discussie en verklaring van de behaalde resultaten. Wel is het niet geheel duidelijk hoe dit werk binnen ander onderzoek past, bv. binnen de in de titel genoemde equation discovery, of ook de technische kant van FlashFill.
+
+\subsubsection{Een drietal sterke punten:}
+\begin{itemize}
+\item Interessante experimenten
+\item Implementatie werkt met spreadsheet - goede discussie van opties
+\end{itemize}
+
+\subsubsection{Een drietal zwakke punten:}
+\begin{itemize}
+\item Spelling en grammatica!
+\item Sommige stukken zijn niet echt duidelijk (bv. 6.4, 7.2) - probleemstelling kan duidelijker (gegeven ... vind ...)
+\end{itemize}
+
+\subsubsection{Inhoudelijke vragen \& suggesties voor verbetering:}
+\begin{itemize}
+\item Lees de tekst zeker goed na, ook qua spelling, correcte zinnen, ...
+\\	\textit{Dit is nu ook gebeurd.}
+\item Is het gebruik van CFGs voor het vinden van vergelijkingen nieuw?
+\\	\textit{De nodige referenties zijn toegevoegd.}
+\item Auteurs als voornaam achternaam
+\\	\textit{In orde gebracht.}
+\item Introductie: geef voorbeeld voor flashfill (en citatie), en dan ook voor je eigen toepassing
+\\	\textit{De nodige voorbeelden staan nu in de paper.}
+\item In het begin van 2 zijn de hypotheses niet goed te begrijpen, bv. wat is “de boom” of “toevoeging van constanten”; ik zou hier eerst en “gegeven - zoek” probleemstelling geven, en dan kort uitleggen hoe je dit (door een boom te bekijken) oplost
+\\	\textit{De termen die nodig zijn om de hypothesen te begrijpen worden nu voordien uitgelegd.}
+\item 2.1 geen overgang tussen paragrafen? ook: wat betekent “,” in regel?
+\\	\textit{Er is voor een kleine overgang gezorgd, "," is aangepast naar "|".}
+\item 3: benchmark = baseline? hebben jullie “CFG” eerder vermeldt?
+\\	\textit{Baseline is hier inderdaad de correcte term.}
+\item Pruning: het verschil tussen relatief en absoluut is niet zo duidelijk, geef best voorbeelden (met uitleg; bv. wat is het verschil tussen punt 1 en 5 in de opsomming?) - 4.2: “hieruit blijkt...” hoe blijkt dit uit de figuur?
+\\	\textit{Het verschil is verduidelijkt en de uitleg bij de figuur is ook verbeterd.}
+\item Ik zou in het begin van de experimenten al linken na de vragen / hypothesen; waar gaan de experimenten naar toe?
+\\	\textit{De experimenten zijn nu beter geplaatst ten opzichte van de hypothesen.}
+\item Ik snap niet goed wat jullie bedoelen met “de volgorde van de experimenten is van belang” probeer 6.4 en 7.2 beter uit te leggen, misschien met voorbeeld
+\\	\textit{Er zijn voorbeelden toegevoegd ter verduidelijking van de uitleg.}
+\item 7.1: waarom kun je niet gewoon elke E -> E op E vervangen door E -> (E op E) ?
+\\	\textit{Staat nu beschreven in de paper.}
+\item Referenties onvolledig
+\\	\textit{Referenties zijn vervolledigd.}
+\item Is het algoritme gewoon breedte-eerst met pruning? in dat geval ie het misschien niet nodig om echt pseudocode te geven.
+\\	\textit{Het algoritme is om deze reden dan ook niet meer terug te vinden in de paper.}
+
+\end{itemize}
+
+\end{document}
