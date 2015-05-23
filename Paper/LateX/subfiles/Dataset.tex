@@ -3,39 +3,57 @@
 \begin{document}
 \section{Dataset}
 
-Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodszakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze datasets te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen.
+Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodzakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze datasets te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen.
   
 \subsection{Verschillende randomgeneratoren}
+De algemene parameters van de generatoren zijn:
+\begin{itemize}
+\item $\#$Voorbeelden = 2
+\item $\#$Kolommen = 4
+\item $\#$Termen van de vergelijking = 5
+\item $\#$Operatoren = 4
+\item Constante c: $ c \in 1,\dotsc,100$ 
+\end{itemize}
+Deze parameters zullen ook gebruikt worden in de experimenten.
+
 \subsubsection*{Volledig willekeurig}
-Elke waarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat precies datgene zijn waar het algoritme naar zoekt. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
+Elke kolomwaarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat precies datgene zijn waar het algoritme naar opzoek is. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
 
 \subsubsection*{Gestructureerd}
-Het doel van de randomgenerator is een willekeurige vergelijking te genereren waaraan vervolgens de data zullen voldoen. Er wordt vanuit gegaan dat er \'e\'en constante gezocht wordt en dat elke waarde die reeds willekeurig gegenereerd is slechts \'e\'enmaal voorkomt. Een voordeel hiervan is dat er altijd een oplossing bestaat. Indien alle mogelijkheden van de boom ge\"evalueerd worden, zal er dus altijd een oplossing gevonden worden. Gezien dit feit wordt er een voordeel gegeven aan het algoritme dat gebruikt maakt van constanten.
+Het doel van de randomgenerator is een willekeurige vergelijking te genereren waaraan vervolgens de data zullen voldoen.
+Het generatie gaat als volgt:
+\begin{itemize}
+\item[1.] Genereren van waarden voor alle kolommen behalve de laatste voor alle voorbeelden
+\item[2.] Genereren van een willekeurige vergelijking uit deze kolommen, \'e\'en constante en de operaties uit de grammatica.
+\item[3.] Bepalen van de laatste kolom, de doelwaarden voor alle voorbeelden
+\end{itemize}
+
+Een voordeel hiervan is dat er altijd een oplossing bestaat. Indien alle mogelijkheden van de boom ge\"evalueerd worden, zal er dus altijd een oplossing gevonden worden. Gezien dit feit wordt er een voordeel gegeven aan het algoritme dat gebruikt maakt van constanten.
 
 \begin{figure}[!htb]
 \centering
 \begin{tabular}{ l }
 \begin{tabular}{@{} *5l @{}}    \toprule
 \multicolumn{5}{l}{\emph{Volledig willekeurig}}\\\midrule
- Vergelijking & A  & B  & C  & D  \\ 
- Vgl 1. & 2 & 17 & 33 & 3\\ 
- Vgl 2. & 19 & 78 & 10 & 63\\\bottomrule
+   & A  & B  & C  & D  \\ 
+ Vb 1. & 2 & 17 & 33 & 3\\ 
+ Vb 2. & 19 & 78 & 10 & 63\\\bottomrule
  \hline
 \end{tabular} \\
 \\
 \begin{tabular}{@{} *5l @{}}    \toprule
 \multicolumn{5}{l}{\emph{Gestructureerd: } $B*2+C+A = D$} \\ \midrule
- Vergelijkingen & A  & B  & C  & D  \\ 
- Vgl 1. & 2 & 7 & 3 & 19\\ 
- Vgl 2. & 14 & 18 & 1 & 51\\\bottomrule
+   & A  & B  & C  & D  \\ 
+ Vb 1. & 2 & 7 & 3 & 19\\ 
+ Vb 2. & 14 & 18 & 1 & 51\\\bottomrule
  \hline
 \end{tabular} \\ 
 \\
 \begin{tabular}{@{} *5l @{}}    \toprule
 \multicolumn{5}{l}{\emph{Complex gestructureerd:}  $4*A+C*C$}\\\midrule
- Vergelijkingen & A  & B  & C  & D  \\ 
- Vgl 1. & 2 & 7 & 3 & 17\\ 
- Vgl 2. & 14 & 18 & 1 & 57\\ \bottomrule
+   & A  & B  & C  & D  \\ 
+ Vb 1. & 2 & 7 & 3 & 17\\ 
+ Vb 2. & 14 & 18 & 1 & 57\\ \bottomrule
  \hline
 \end{tabular}
 \end{tabular}
@@ -44,7 +62,7 @@ Het doel van de randomgenerator is een willekeurige vergelijking te genereren wa
 \end{figure}
 
 \subsubsection*{Complex gestructureerd}
-Deze datagenerator heeft als doel de gebruikersdata beter te benaderen. Dit wordt bereikt door randomfactoren toe te voegen aan het bepalen van de vergelijking. In deze generator wordt er gekozen tussen een willekeurig aantal constanten, liggend tussen nul en twee. Het aantal keer dat een reeds bepaalde waarde voorkomt is willekeurig. Zo is het mogelijk dat in de gezochte vergelijking een bepaalde waarde niet voorkomt en een andere meermaals.
+Deze datagenerator heeft als doel de gebruikersdata beter te benaderen. Dit wordt bereikt door de generatie van de vergelijking uit de vorige generator willekeurig te maken. In deze generator wordt er gekozen tussen een willekeurig aantal constanten, het aantal liggend tussen nul en twee. Het aantal keer dat een kolomwaarde voorkomt is eveneens willekeurig. Zo is het mogelijk dat in de gezochte vergelijking een kolomwaarde niet voorkomt en een andere meermaals.
 
 \begin{figure}
 \centering
@@ -53,7 +71,7 @@ Deze datagenerator heeft als doel de gebruikersdata beter te benaderen. Dit word
     ybar,
     enlarge x limits=0.4,
     enlarge y limits=0.15,
-    ylabel={\ oplossingsgraad (\%)},
+    ylabel={\ Oplossingsgraad (\%)},
     symbolic x coords={willekeurig,complex,gestructureerd,},
     xtick=data,
     nodes near coords, 
@@ -65,10 +83,10 @@ Deze datagenerator heeft als doel de gebruikersdata beter te benaderen. Dit word
 		(gestructureerd,97.0)};
   \end{axis}
 \end{tikzpicture}
-\caption{Vergelijking datageneratoren met gebruik van brute force algoritme} \label{fig:datageneratoren}
+\caption{Vergelijking datageneratoren met gebruik van 'brute force algorithm'} \label{fig:datageneratoren}
 \end{figure}
 
 \subsection{Verantwoording keuze}
-Om de meest geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden. Er moet voldaan zijn aan het volgende criterium: de gegenereerde dataset ligt zo dicht mogelijk bij re\"ele gebruikersdata. De generatoren worden vergeleken met behulp van een 'brute force algorithm'. Het geoptimaliseerd algoritme zal nooit vergelijkingen vinden die het 'brute force algorithm' niet vindt. Om representatief te zijn voor de gebruiker moetenen de data een hoge oplossingsgraad hebben. In Figuur \ref{fig:datageneratoren} wordt de oplossingsgraad weergegeven. Het gebruik van de complex gestructureerde dataset geeft een oplossingsgraad die het dichtste bij de verwachte gebruikersdata ligt. Er wordt geen oplossingsgraad van 100\% verwacht. Volgens deze figuur wordt in 93\% van de gevallen een mogelijke oplossing gevonden. Daarom zullen de experimenten ook met behulp van deze generator worden uitgevoerd.
+Om de meest geschikte datagenerator te bepalen is er een vergelijking nodig tussen de datasets die gecre\"eerd worden. Er moet voldaan zijn aan het volgende criterium: de gegenereerde dataset ligt zo dicht mogelijk bij re\"ele gebruikersdata. De generatoren worden vergeleken met behulp van een 'brute force algorithm'. Het geoptimaliseerd algoritme zal nooit vergelijkingen vinden die het 'brute force algorithm' niet vindt. Om representatief te zijn voor de gebruiker moeten de data een hoge oplossingsgraad hebben. In Figuur \ref{fig:datageneratoren} wordt de oplossingsgraad weergegeven. Het gebruik van de complex gestructureerde dataset geeft een oplossingsgraad die het dichtste bij de verwachte gebruikersdata ligt. Er wordt geen oplossingsgraad van 100\% verwacht, maar eerder een percentage dat realistischer lijkt. Volgens deze figuur wordt er voor 93\% een mogelijke oplossing gevonden. Daarom zullen de experimenten ook met behulp van deze generator worden uitgevoerd.
 
 \end{document}
