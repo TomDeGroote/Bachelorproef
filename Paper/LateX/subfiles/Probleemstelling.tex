@@ -1,7 +1,7 @@
 \documentclass[Main.tex]{subfiles}
 \begin{document}
 \section{Probleemstelling}
-Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. Toch kan de gebruiker op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: \textbf{"Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker."}. \\ \\
+Gebruikers hebben reeds de mogelijkheid om patroonherkenning te gebruiken op hun dataset. De gebruiker kan op zoek zijn naar een wiskundige relatie in zijn dataset in plaats van een patroon. De hoofdhypothese van dit onderzoek is de volgende: \textbf{"Er kan voor een gegeven dataset binnen een beperkte tijd een passende vergelijking gevonden worden die voldoet aan de verwachtingen van de gebruiker."}. \\ \\
 \newpage
 \noindent
 Gegeven: 
@@ -17,12 +17,12 @@ Vind:
 \item Functie f in de taal van G zodat $f(a_{1}(i),\dotsc ,a_{n}(i)) = b(i)$ voor elke rij $i$ in T
 \end{itemize}
 \noindent
-Dit proces moet gebeuren in een beperkte tijd. De oplossingsgraad van dit probleem is het percentage van tabellen waar er een geschikte functie, in de taal van de contextvrije grammatica, gevonden wordt. Met de term kolomwaarden wordt bedoeld: de waarden die door de gebruiker worden meegegeven verschillend van de oplossing. Deze worden in de voorbeelden aangegeven als $a$ en $b$.
+Dit proces moet gebeuren in een beperkte tijd. De \textit{oplossingsgraad} van dit probleem is het percentage van tabellen waar er een geschikte functie, in de taal van de contextvrije grammatica, gevonden wordt. Met de term \textit{kolomwaarden} wordt bedoeld: de waarden die door de gebruiker worden meegegeven verschillend van de oplossing. Deze worden in de voorbeelden aangegeven als $a$ en $b$.
 
 \par De volgende subsecties geven de benodigde voorkennis weer voor het vervolg van de paper.
 
 \subsection{Contextvrije grammatica}
-Om wiskundige vergelijkingen op te bouwen wordt er gebruik gemaakt van een contextvrije grammatica (CFG) \cite{equationDisc}. Volgens de \textit{formele taal theorie} \cite{cfg} is een contextvrije grammatica een formele grammatica waarbij elke productieregel er uit ziet als volgt: $V \rightarrow w$. Hier staat $V$  voor \'e\'en niet-terminaal symbool en $w$ voor een tekenreeks van niet-terminale en terminale symbolen. Contextvrij betekent dat de productieregels kunnen toegepast worden los van de context waarin het niet-terminaal symbool zich bevindt.
+In het domein van \textit{Equation Discovery} wordt er gebruik gemaakt van een contextvrije grammatica (CFG) om wiskundige vergelijkingen op te bouwen\cite{equationDisc}. Volgens de \textit{formele taal theorie} \cite{cfg} is een contextvrije grammatica een formele grammatica waarbij elke productieregel er uit ziet als volgt: $V \rightarrow w$. Hier staat $V$  voor \'e\'en niet-terminaal symbool en $w$ voor een tekenreeks van niet-terminale en terminale symbolen. Contextvrij betekent dat de productieregels kunnen toegepast worden los van de context waarin het niet-terminaal symbool zich bevindt.
 
 \begin{figure}[!htb]
 \centering
@@ -38,7 +38,7 @@ $E \rightarrow a | b | \dotsc$
 \label{fig:cfg}
 \end{figure}
 
-Als een andere wiskundige operatie gewenst is, kan er een productieregel met deze operatie aan de bovenstaande grammatica worden toegevoegd. Voordelig aan het werken met een contextvrije grammatica is de gemakkelijke aanpasbaarheid. Omdat productieregels volledig onafhankelijk zijn van elkaar, is het eenvoudig om de gewenste operaties door de gebruiker te laten defini\"eren. In de voorbeelden die hierna zullen volgen wordt de grammatica uit Figuur \ref{fig:cfg} gebruikt. De productieregels die het algoritme bevat zijn: $+, -, \ast, \div$ en~\^{}.
+Als een andere wiskundige operatie gewenst is, kan er een productieregel met deze operatie aan de bovenstaande grammatica worden toegevoegd. Voordelig aan het werken met een contextvrije grammatica is de gemakkelijke aanpasbaarheid. Omdat productieregels volledig onafhankelijk zijn van elkaar, is het eenvoudig om de gewenste operaties door de gebruiker te laten defini\"eren. In de voorbeelden die hierna zullen volgen wordt slechts een deel van de grammatica uit Figuur \ref{fig:cfg} gebruikt. De productieregels die het algoritme bevat zijn: $+, -, \ast, \div$ en~\^{}.
 
 \subsection{Boomstructuur}
 
@@ -62,7 +62,7 @@ Door de herhaaldelijke toepassing van de productieregels, met uitzondering van d
 \caption{Voorbeeld van een bewerkingsboom} \label{fig:vbBoom}
 \end{figure}
 
-Aangezien de groei van de boom exponentieel is, bekomt men zeer grote berekeningstijden om de lagere dieptes van de boom te berekenen. Deze groei valt samen met de toename van de diepte in de boom. Het opstellen van de boom veroorzaakt een grote rekenkost. Dit heeft tot gevolg dat het ten zeerste aangeraden is om deze boom slechts \'e\'enmaal op voorhand uit te werken.
+Aangezien de groei van de boom exponentieel is, bekomt men zeer grote berekeningstijden om de lagere dieptes van de boom te berekenen. 
 
 \subsection{Subhypothesen} \label{ssec:subhypothesen}
 \par Hieronder vindt u een oplijsting van de subhypothesen:

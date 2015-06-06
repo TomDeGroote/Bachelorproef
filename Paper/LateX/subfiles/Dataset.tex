@@ -3,7 +3,7 @@
 \begin{document}
 \section{Dataset}
 
-Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodzakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze datasets te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen.
+Zoals reeds in de inleiding aangehaald, is er op het moment van dit onderzoek geen bestaande dataset beschikbaar voor het onderzochte probleem. Aangezien een dataset noodzakelijk is om te kunnen experimenteren, is er nood aan zelfgegenereerde datasets. Er zijn verschillende manieren om deze datasets te genereren. Het doel is om de verwachte gebruikersdata zo goed mogelijk na te bootsen. Mogelijke voorbeelden van dit soort datasets zijn terug te vinden in Figuur \ref{fig:randomGeneratorExample}.
   
 \subsection{Verschillende randomgeneratoren}
 De algemene parameters van de generatoren zijn:
@@ -17,11 +17,11 @@ De algemene parameters van de generatoren zijn:
 Deze parameters zullen ook gebruikt worden in de experimenten.
 
 \subsubsection*{Volledig willekeurig}
-Elke kolomwaarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat precies datgene zijn waar het algoritme naar opzoek is. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
+Elke kolomwaarde die gegenereerd wordt, is een willekeurig getal tussen 0 en 100. Het voordeel van deze generator is dat geen enkel algoritme wordt bevoordeeld. Een nadeel is echter dat er weinig tot geen structuur zit in een willekeurige reeks van getallen, laat dat precies datgene zijn waar het algoritme naar op zoek is. Bovendien wordt er verwacht dat er een zekere structuur zit in de door de gebruiker gedefinieerde data.
 
 \subsubsection*{Gestructureerd}
 Het doel van de randomgenerator is een willekeurige vergelijking te genereren waaraan vervolgens de data zullen voldoen.
-Het generatie gaat als volgt:
+Het genereren van de data gaat als volgt:
 \begin{itemize}
 \item[1.] Genereren van waarden voor alle kolommen behalve de laatste voor alle voorbeelden
 \item[2.] Genereren van een willekeurige vergelijking uit deze kolommen, \'e\'en constante en de operaties uit de grammatica.
